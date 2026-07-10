@@ -1,0 +1,1163 @@
+[
+  {
+    "url": "https://framerusercontent.com/images/wGAHOWhVswEtWkOKTJN6s2CW0.svg?width=96&amp;height=96",
+    "kind": "css-url",
+    "files": [
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ]
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/geist/v5/gyBhhwUxId8gMGYQMKR3pzfaWI_Re-Q4mJPby1QNtA.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Geist",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/geist/v5/gyBhhwUxId8gMGYQMKR3pzfaWI_RQuQ4mJPby1QNtA.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Geist",
+    "style": "normal"
+  },
+  {
+    "url": "https://fonts.gstatic.com/s/geist/v5/gyBhhwUxId8gMGYQMKR3pzfaWI_RruM4mJPby1QNtA.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Geist",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/0E7IMbDzcGABpBwwqNEt60wU0w.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/1K3W8DizY3v4emK8Mb08YHxTbs.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/2A4Xx7CngadFGlVV4xrO06OBHY.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/43sJ6MfOPh1LCJt46OvyDuSbA6o.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/4hhgqiTCDCCa8WhFmTB7QXODupk.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "800",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/4RAEQdEOrcnDkhHiiCbJOw92Lk.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/5A3Ce6C9YYmCjpQx9M4inSaKU.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/5vvr9Vy74if2I6bQbJvbw7SY1pQ.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/6mJuEAguuIuMog10gGvH5d3cl8.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/867QObYax8ANsfX4TGEVU9YiCM.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/8E92vrr3j1gDqzepmeSbD2u0JxA.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/9Nu9BRcGkRrLnJCGqVdSUXJt2Ig.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "800",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/9WZaFuMg9OiQ7an8bugAJkUG04.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "800",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/A0Wcc7NgXMjUuFdquHDrIZpzZw0.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "600",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/A5P4nkYCJlLQxGxaS1lzG8PNSc.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/b6Y37FthZeALduNqHicBT6FutY.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/cdAe8hgZ1cMyLu9g005pAW3xMo.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/CfMzU8w2e7tHgF4T4rATMPuWosA.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/cRJyLNuTJR5jbyKzGi33wU9cqIQ.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "600",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/d3tHnaQIAeqiE5hGcRw4mmgWYU.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/DOfvtmE1UplCq161m6Hj8CSQYg.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/DolVirEGb34pEXEp8t8FQBSK4.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/DpPBYI0sL4fYLgAkX8KXOPVt7c.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/DXD0Q7LSl7HEvDzucnyLnGBHM.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/e97VFGU1js4GGgvQCnvIiHpRf0.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "800",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/EOr0mi4hNtlgWNn9if640EZzXCo.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/gawbeo7iEJSRZ4kcrh6YRrU8o.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/GIryZETIX4IFypco5pYZONKhJIo.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/H89BbHkbHDzlxZzxi8uPzTsp90.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/hyOgCu0Xnghbimh0pE8QTvtt2AU.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "600",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/ia3uin3hQWqDrVloC1zEtYHWw.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/JEXmejW8mXOYMtt0hyRg811kHac.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/JeYwfuaPfZHQhEG8U5gtPDZ7WQ.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/jplzYzqFHXreyADwk9yrkQlWQ.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/Kc2pkIGjh9K7EmlGx2sorKHcJDw.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "800",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/khkJkwSL66WFg8SX6Wa726c.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/ksvR4VsLksjpSwnC2fPgHRNMw.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/lEJLP4R0yuCaMCjSXYHtJw72M.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "600",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/NeGmSOXrPBfEFIy5YZeHq17LEDA.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "600",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/NTJ0nQgIF0gcDelS14zQ9NR9Q.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/otTaNuNpVK4RbdlT7zDDdKvQBA.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/oYaAX5himiTPYuN8vLWnqBbfD2s.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "600",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/Oyn2ZbENFdnW7mt2Lzjk1h9Zb9k.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/OYrD2tBIBPvoJXiIHnLoOXnY9M.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/pFve2DToKu0uyKsWs4NBTHpK7Vc.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "800",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/pKRFNWFoZl77qYCAIp84lN1h944.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/QrcNhgEPfRl0LS8qz5Ln8olanl8.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/Qx95Xyt0Ka3SGhinnbXIGpEIyP4.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/QxmhnWTzLtyjIiZcfaLIJ8EFBXU.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/RDJfWXA0aFdpD2OO2AJLBh2Z7E.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "800",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/RkMAGv2iAm3rw7tZzs7FaZf0rM.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/sSIKP2TfVPvfK7YVENPE5H87A.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/tKtBcDnBMevsEEJKdNGhhkLzYo.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/tUSCtfYVM1I1IchuyCwz9gDdQ.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/u6gJwDuwB143kpNK1T1MDKDWkMc.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/UjlFhCnUjxhNfep4oYBPqnEssyo.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/uy9s0iWuxiNnVt8EpTI3gzohpwo.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/VgYFWiwsAC5OYxAycRXXvhze58.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/vQyevYAyHtARFwPqUzQGpnDs.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/vuPfygr1n1zYxscvWgGI8hRf3LE.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter Display",
+    "weight": "500",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/wccHG0r4gBDAIRhfHiOlq6oEkqw.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/WZ367JPwf9bRW6LdTHN8rXgSjw.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "700",
+    "style": "italic"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/xYYWaj7wCU5zSQH0eXvSaS19wo.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "500",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/Y9k9QrlZAqio88Klkmbd8VoMQc.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/assets/yDtI2UI8XcEg1W2je9XPN3Noo.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Inter",
+    "weight": "600",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/third-party-assets/fontshare/wf/ZLH2B3SFZRQ3US4ZUYG2367OYUMTVTGK/RSOPFK2EORTGBCOBZRY42GDLXFFB4IQW/JZ35FM4UJSKC7X2PM65RH75Q5KLE552S.woff2",
+    "kind": "font",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ],
+    "family": "Plus Jakarta Sans",
+    "style": "normal"
+  },
+  {
+    "url": "https://framerusercontent.com/images/aYgMfimlHcPCGWKxNr32g9oGyvY.png?width=952&amp;height=1690",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) calc(max((min(min(100vw - 72px, 1520px), 1200px) - 54px) / 3, 50px) - 8px), (max-width: 809.98px) calc(calc(min(min(100vw - 40px, 1520px), 1200px) - 40px) - 8px), (min-width: 810px) and (max-width: 1199.98px) calc(max((min(min(100vw - 60px, 1520px), 1200px) - 47px) / 2, 50px) - 8px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/BYXGeVf9YprAhwJohGnDFjAhDg.svg?width=8&amp;height=12",
+    "kind": "img",
+    "files": [
+      "kontakt.html"
+    ],
+    "alt": "Arrow"
+  },
+  {
+    "url": "https://framerusercontent.com/images/DcpfTXNhMMqeiUYKPZKBW342AUA.png?width=1228&amp;height=712",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 270px, (min-width: 810px) and (max-width: 1199.98px) 270px, (max-width: 809.98px) 270px"
+  },
+  {
+    "url": "https://framerusercontent.com/images/GCl9FUkRRgOwAZGbcXzc3CG4Gw.png?width=1448&amp;height=1086",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 270px, (max-width: 809.98px) 270px, (min-width: 810px) and (max-width: 1199.98px) 230px"
+  },
+  {
+    "url": "https://framerusercontent.com/images/MSEgnmYfk3YCG5Q92etBwkI6tM.png?width=645&amp;height=931",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 232.4356px, (max-width: 809.98px) 156.2272px, (min-width: 810px) and (max-width: 1199.98px) 204.7234px"
+  },
+  {
+    "url": "https://framerusercontent.com/images/nNyHDv8BNGHKAVZYuRQnU.png?width=538&amp;height=740",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 100vw, (min-width: 810px) and (max-width: 1199.98px) 100vw, (max-width: 809.98px) max(min(100vw, 1050px) - 104px, 1px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/PKIazMQyiejlgMtrHhyFbsAbGQ.png?width=2342&amp;height=1561",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 100vw, (min-width: 810px) and (max-width: 1199.98px) 100vw, (max-width: 809.98px) max(min(100vw, 1050px) - 104px, 1px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/Q5r7fpAq13uQIpsgMW4HOugIBg.jpg?width=2268&amp;height=4032",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 100vw, (min-width: 810px) and (max-width: 1199.98px) 100vw, (max-width: 809.98px) max(min(100vw, 1050px) - 104px, 1px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/sGKta004kQytOPjOrm4SRWFkv0.png?width=1672&amp;height=941",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) min(max(min(100vw - 80px, 1200px) - 60px, 1px), 1200px), (max-width: 809.98px) min(max(min(100vw - 24px, 1200px) - 20px, 1px), 1200px), (min-width: 810px) and (max-width: 1199.98px) min(max(min(100vw - 80px, 1200px) - 40px, 1px), 1200px)",
+    "alt": "Hero Image"
+  },
+  {
+    "url": "https://framerusercontent.com/images/Za6hHwGHvKvFYT0XRSZ476WUsA.png?width=1020&amp;height=1812",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) calc(max((min(min(100vw - 72px, 1520px), 1200px) - 54px) / 3, 50px) - 8px), (max-width: 809.98px) calc(calc(min(min(100vw - 40px, 1520px), 1200px) - 40px) - 8px), (min-width: 810px) and (max-width: 1199.98px) calc(max((min(min(100vw - 60px, 1520px), 1200px) - 47px) / 2, 50px) - 8px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/ZJapR4hJ1ypWXF7uRVXdHLOkR8.png?width=1024&amp;height=1826",
+    "kind": "img",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) calc(max((min(min(100vw - 72px, 1520px), 1200px) - 54px) / 3, 50px) - 8px), (max-width: 809.98px) calc(calc(min(min(100vw - 40px, 1520px), 1200px) - 40px) - 8px), (min-width: 810px) and (max-width: 1199.98px) calc(max((min(min(100vw - 60px, 1520px), 1200px) - 47px) / 2, 50px) - 8px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/aYgMfimlHcPCGWKxNr32g9oGyvY.png?scale-down-to=1024&amp;width=952&amp;height=1690",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) calc(max((min(min(100vw - 72px, 1520px), 1200px) - 54px) / 3, 50px) - 8px), (max-width: 809.98px) calc(calc(min(min(100vw - 40px, 1520px), 1200px) - 40px) - 8px), (min-width: 810px) and (max-width: 1199.98px) calc(max((min(min(100vw - 60px, 1520px), 1200px) - 47px) / 2, 50px) - 8px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/DcpfTXNhMMqeiUYKPZKBW342AUA.png?scale-down-to=1024&amp;width=1228&amp;height=712",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 270px, (min-width: 810px) and (max-width: 1199.98px) 270px, (max-width: 809.98px) 270px"
+  },
+  {
+    "url": "https://framerusercontent.com/images/DcpfTXNhMMqeiUYKPZKBW342AUA.png?scale-down-to=512&amp;width=1228&amp;height=712",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 270px, (min-width: 810px) and (max-width: 1199.98px) 270px, (max-width: 809.98px) 270px"
+  },
+  {
+    "url": "https://framerusercontent.com/images/GCl9FUkRRgOwAZGbcXzc3CG4Gw.png?scale-down-to=1024&amp;width=1448&amp;height=1086",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 270px, (max-width: 809.98px) 270px, (min-width: 810px) and (max-width: 1199.98px) 230px"
+  },
+  {
+    "url": "https://framerusercontent.com/images/GCl9FUkRRgOwAZGbcXzc3CG4Gw.png?scale-down-to=512&amp;width=1448&amp;height=1086",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 270px, (max-width: 809.98px) 270px, (min-width: 810px) and (max-width: 1199.98px) 230px"
+  },
+  {
+    "url": "https://framerusercontent.com/images/PKIazMQyiejlgMtrHhyFbsAbGQ.png?scale-down-to=1024&amp;width=2342&amp;height=1561",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 100vw, (min-width: 810px) and (max-width: 1199.98px) 100vw, (max-width: 809.98px) max(min(100vw, 1050px) - 104px, 1px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/PKIazMQyiejlgMtrHhyFbsAbGQ.png?scale-down-to=2048&amp;width=2342&amp;height=1561",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 100vw, (min-width: 810px) and (max-width: 1199.98px) 100vw, (max-width: 809.98px) max(min(100vw, 1050px) - 104px, 1px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/PKIazMQyiejlgMtrHhyFbsAbGQ.png?scale-down-to=512&amp;width=2342&amp;height=1561",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 100vw, (min-width: 810px) and (max-width: 1199.98px) 100vw, (max-width: 809.98px) max(min(100vw, 1050px) - 104px, 1px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/Q5r7fpAq13uQIpsgMW4HOugIBg.jpg?scale-down-to=1024&amp;width=2268&amp;height=4032",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 100vw, (min-width: 810px) and (max-width: 1199.98px) 100vw, (max-width: 809.98px) max(min(100vw, 1050px) - 104px, 1px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/Q5r7fpAq13uQIpsgMW4HOugIBg.jpg?scale-down-to=2048&amp;width=2268&amp;height=4032",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) 100vw, (min-width: 810px) and (max-width: 1199.98px) 100vw, (max-width: 809.98px) max(min(100vw, 1050px) - 104px, 1px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/sGKta004kQytOPjOrm4SRWFkv0.png?scale-down-to=1024&amp;width=1672&amp;height=941",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) min(max(min(100vw - 80px, 1200px) - 60px, 1px), 1200px), (max-width: 809.98px) min(max(min(100vw - 24px, 1200px) - 20px, 1px), 1200px), (min-width: 810px) and (max-width: 1199.98px) min(max(min(100vw - 80px, 1200px) - 40px, 1px), 1200px)",
+    "alt": "Hero Image"
+  },
+  {
+    "url": "https://framerusercontent.com/images/sGKta004kQytOPjOrm4SRWFkv0.png?scale-down-to=512&amp;width=1672&amp;height=941",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) min(max(min(100vw - 80px, 1200px) - 60px, 1px), 1200px), (max-width: 809.98px) min(max(min(100vw - 24px, 1200px) - 20px, 1px), 1200px), (min-width: 810px) and (max-width: 1199.98px) min(max(min(100vw - 80px, 1200px) - 40px, 1px), 1200px)",
+    "alt": "Hero Image"
+  },
+  {
+    "url": "https://framerusercontent.com/images/Za6hHwGHvKvFYT0XRSZ476WUsA.png?scale-down-to=1024&amp;width=1020&amp;height=1812",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) calc(max((min(min(100vw - 72px, 1520px), 1200px) - 54px) / 3, 50px) - 8px), (max-width: 809.98px) calc(calc(min(min(100vw - 40px, 1520px), 1200px) - 40px) - 8px), (min-width: 810px) and (max-width: 1199.98px) calc(max((min(min(100vw - 60px, 1520px), 1200px) - 47px) / 2, 50px) - 8px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/ZJapR4hJ1ypWXF7uRVXdHLOkR8.png?scale-down-to=1024&amp;width=1024&amp;height=1826",
+    "kind": "img-srcset",
+    "files": [
+      "index.html"
+    ],
+    "sizes": "(min-width: 1200px) calc(max((min(min(100vw - 72px, 1520px), 1200px) - 54px) / 3, 50px) - 8px), (max-width: 809.98px) calc(calc(min(min(100vw - 40px, 1520px), 1200px) - 40px) - 8px), (min-width: 810px) and (max-width: 1199.98px) calc(max((min(min(100vw - 60px, 1520px), 1200px) - 47px) / 2, 50px) - 8px)"
+  },
+  {
+    "url": "https://framerusercontent.com/images/2C8IrIx7QAKpXrItlw3ji4Ms2yA.svg",
+    "kind": "meta",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ]
+  },
+  {
+    "url": "https://framerusercontent.com/images/7sUkiGMPAINKhFQUVwpFkQvCCwk.png",
+    "kind": "meta",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ]
+  },
+  {
+    "url": "https://framerusercontent.com/images/B93zwhmOBw8e45vkC6CAatwlJ7c.png",
+    "kind": "meta",
+    "files": [
+      "datenschutz.html",
+      "impressum.html",
+      "index.html",
+      "kontakt.html"
+    ]
+  }
+]
