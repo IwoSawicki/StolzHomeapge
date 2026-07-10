@@ -159,6 +159,14 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Hero | CTA 2 | transparent, 1px Rahmen #222 (::after), Text 15px dunkel | Button `light` (Rahmen direkt am Element) | Schrift +1px |
 | Hero | Bild-Abstand | 26,4 / 31,7 / 69,7 | `xl:mt-6` (24) / `md:mt-7` (28) / `mt-17` (68) | −2,4 / −3,7 / −1,7 (kompensiert Buttonhöhe) |
 | Hero | Bild-Breite | 95% (Desktop) / ~106% (Tablet/Phone), Aspect 1.54993 | identisch, `max-w-[1520px]` Desktop | 0 |
+| Einblicke | Section-Padding | 80/40/100 (D) · 70/28/90 (T) · 56/18/72 (P) | `pt-20 px-10 pb-25` / `md: 72/28/88` / `56/18/72` | ≤2px |
+| Einblicke | Label-Pill | Radius 100, #0084FF/8%, Pad 4/9/4/7, Gap 7, Icon 14 blau, Text 13/600 | identisch, Text 12px (`text-xs`) | Schrift −1px |
+| Einblicke | H2 | 48/40/34, 700, −0.06em, 1.05, balance | `xl:text-5xl md:text-40 text-4xl` | Phone +2px (34→36) |
+| Einblicke | Abstand Desc→Badges | 39 (D/T) / 28 (P) | `md:mt-10 mt-7` | +1 / 0 |
+| Einblicke | Spaltenreihe | max 1240, Gap 24/16/12, Spalte 292/230/47% | identisch (`flex-1` bzw. `w-[47%]`) | 0 |
+| Einblicke | Stagger | D+T: Spalten 2+3 (+70/+50), P: Spalten 2+4 (+70) | `pt-17`/`md:pt-12`/`xl:pt-17` je Spalte | −2 (70→68), −2 (50→48) |
+| Einblicke | Badge | Radius 14, ::after-Rahmen #0084FF/35%, Shadow 0 6 16 slate/6%, Chip 34 rund #0084FF/10, Text 14/600 slate | identisch (Rahmen direkt) | 0 |
+| Einblicke | Video-Frame | 9/16, Radius 20, Gradient 160° #0A0D12→#232A36, Play 58 weiß/14% | identisch | 0 |
 
 ---
 

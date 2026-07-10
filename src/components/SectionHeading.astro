@@ -1,0 +1,32 @@
+---
+// Label + H2 + optionale Beschreibung (Framer „Heading Content").
+// H2: Inter 700, Desktop 48 / Tablet 40 / Phone 34→36, −0.06em, lh 1.05, balance.
+// Beschreibung: 18px 500, lh 1.4, −0.01em. Abstände: Label→H2 8, H2→Text 8.
+import SectionLabel from './SectionLabel.astro';
+
+interface Props {
+  label: string;
+  align?: 'center' | 'left';
+  /** max-Breite der H2 in px (Original variiert je Sektion) */
+  headingMaxWidth?: number;
+  descriptionMaxWidth?: number;
+}
+const { label, align = 'center', headingMaxWidth, descriptionMaxWidth = 720 } = Astro.props;
+const centered = align === 'center';
+---
+
+<div class={`flex flex-col ${centered ? 'items-center text-center' : 'items-start text-left'}`}>
+  <SectionLabel text={label}><slot name="icon" /></SectionLabel>
+  <h2
+    class="mt-2 text-4xl font-bold text-balance md:text-40 xl:text-5xl leading-[1.05] tracking-[-0.06em] text-dark"
+    style={headingMaxWidth ? `max-width:${headingMaxWidth}px` : undefined}
+  >
+    <slot />
+  </h2>
+  <p
+    class="mt-2 text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-dark empty:hidden"
+    style={`max-width:${descriptionMaxWidth}px`}
+  >
+    <slot name="description" />
+  </p>
+</div>

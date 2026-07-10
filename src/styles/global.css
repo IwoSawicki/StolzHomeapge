@@ -133,6 +133,8 @@
   --color-border: #e5eaf0;
   --color-border-gray: #dde0e3;
   --color-border-dark: #222222; /* 1px-Rahmen des Text-CTA (Original ::after) */
+  --color-video-dark-1: #0a0d12; /* Video-Frame-Gradient (Einblicke) */
+  --color-video-dark-2: #232a36;
 
   /* Schriftgrößen ohne sinnvollen Tailwind-Nachbarn (Original-px) */
   --text-40: 40px;
