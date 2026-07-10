@@ -1,0 +1,79 @@
+---
+// Leistungen (#leistungen) – „Warum wir?": Bento-Grid mit 3 Karten.
+// Desktop: links hohe Karte (382×600, Bild unten mittig), rechts 2 Karten
+// (771×295, Text links vertikal zentriert, Bild rechts). Tablet/Phone: gestapelt.
+// Karten: weiß, Radius 30, Rahmen #E5EAF0 (wie Probleme-Karten), Pad 20.
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import kundengewinnung from '../../assets/leistung-kundengewinnung.png';
+import mitarbeitergewinnung from '../../assets/leistung-mitarbeitergewinnung.png';
+import sichtbarkeit from '../../assets/leistung-sichtbarkeit-google-ki.png';
+---
+
+<section id="leistungen" class="px-3 py-12 md:px-10 md:py-25">
+  <SectionHeading label="Warum wir?" headingMaxWidth={800}>
+    Wir bauen, was funktioniert. Den Rest lassen wir weg.
+  </SectionHeading>
+
+  <div class="mx-auto mt-15 grid max-w-[1200px] grid-cols-1 gap-2 rounded-30 bg-bg-soft p-5 shadow-stack xl:grid-cols-[382px_1fr]">
+    <!-- Karte 1: Kundengewinnung (hoch) -->
+    <article class="flex flex-col rounded-30 border border-border bg-white md:max-xl:flex-row md:max-xl:items-end md:max-xl:justify-between">
+      <div class="p-5">
+        <h3 class="text-2xl font-medium leading-[1.3] tracking-[-0.03em] text-dark">Kundengewinnung</h3>
+        <p class="mt-[7px] text-base font-medium leading-normal tracking-[-0.02em] text-dark/60">
+          Google- und Meta-Kampagnen, die Menschen erreichen, die aktiv nach Ihrer Leistung suchen oder kurz vor
+          einer Entscheidung stehen. Mit passender Landingpage, damit aus Klicks echte Anfragen werden.
+        </p>
+      </div>
+      <Image
+        src={kundengewinnung}
+        alt="Smartphone-Ansicht einer Werbekampagne zur Kundengewinnung für Handwerksbetriebe"
+        class="mx-auto mt-auto w-[156px] shrink-0 md:w-[205px] xl:w-[232px]"
+        widths={[232, 464, 645]}
+        sizes="232px"
+      />
+    </article>
+
+    <div class="grid grid-cols-1 gap-2.5">
+      <!-- Karte 2: Mitarbeitergewinnung -->
+      <article class="flex flex-col gap-6 rounded-30 border border-border bg-white p-5 md:flex-row md:items-center md:justify-between">
+        <div class="max-w-[371px]">
+          <h3 class="text-2xl font-medium leading-[1.3] tracking-[-0.03em] text-dark">Mitarbeitergewinnung</h3>
+          <p class="mt-[7px] text-base font-medium leading-normal tracking-[-0.02em] text-dark/60">
+            Kampagnen, die passende Fachkräfte erreichen – auch dann, wenn sie nicht aktiv auf Jobsuche sind. Mit
+            Bewerbungsseite, die schnell Vertrauen schafft und die Hürde zur Anfrage senkt.
+          </p>
+        </div>
+        <Image
+          src={mitarbeitergewinnung}
+          alt="Anzeige zur Mitarbeitergewinnung mit Bewerbungsseite für Fachkräfte"
+          class="h-[148px] w-[270px] shrink-0 rounded-14 object-cover"
+          widths={[270, 540, 1228]}
+          sizes="270px"
+        />
+      </article>
+
+      <!-- Karte 3: Mehr Sichtbarkeit auf Google & KI -->
+      <article class="flex flex-col gap-6 rounded-30 border border-border bg-white p-5 md:flex-row md:items-center md:justify-between">
+        <div class="max-w-[391px]">
+          <!-- max-w erzwingt den zweizeiligen Umbruch wie im Original (25px-Schrift) -->
+          <h3 class="max-w-[340px] text-2xl font-medium leading-[1.3] tracking-[-0.03em] text-dark">
+            Mehr Sichtbarkeit auf Google &amp; KI
+          </h3>
+          <p class="mt-[7px] text-base font-medium leading-normal tracking-[-0.02em] text-dark/60">
+            Wir sorgen dafür, dass Ihr Betrieb bei Google, Google Maps und relevanten KI-Antworten besser sichtbar
+            wird. Mit lokaler SEO, optimiertem Google-Unternehmensprofil und Inhalten, die langfristig Vertrauen
+            aufbauen.
+          </p>
+        </div>
+        <Image
+          src={sichtbarkeit}
+          alt="Google-Suchergebnis und KI-Antwort mit besserer Sichtbarkeit eines Handwerksbetriebs"
+          class="h-[222px] w-[270px] shrink-0 rounded-14 object-cover md:max-xl:h-[208px] md:max-xl:w-[230px]"
+          widths={[270, 540, 1448]}
+          sizes="270px"
+        />
+      </article>
+    </div>
+  </div>
+</section>

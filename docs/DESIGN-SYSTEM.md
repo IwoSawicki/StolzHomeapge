@@ -185,6 +185,11 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Probleme | Karten-Text | 15/500, lh 1.55, Opacity 0.6, Gap 50 | `text-base text-dark/60 mt-12` | +1px Schrift, −2 Gap |
 | Probleme | Abschluss + CTA | 18/500 zentriert; CTA blau mit Blau-Glow, Gap 15 | identisch, `mt-4` | +1 |
 | Label-Pills | Icon je Sektion | Einblicke: Play · übrige: Plus (2 weiße Balken) | Play-SVG per Slot, Plus als Default | 0 |
+| Leistungen | Bento-Grid | Container wie Probleme; links 382×600, rechts 2× 771×295, Gaps 7/10 | `xl:grid-cols-[382px_1fr]`, `gap-2`/`gap-2.5` | +1 |
+| Leistungen | Karten-H3 | 25/500/−0.03em/1.3 | `text-2xl` (24px) | −1px |
+| Leistungen | Karten-Text | 15/500/1.5, Opacity 0.6 | `text-base text-dark/60` | +1px |
+| Leistungen | Bilder | Karte 1: 232 unten mittig · Karte 2: 270×148,5 rechts · Karte 3: 270×221,7 rechts (Original beschnitten dargestellt) | identisch (object-cover), Platzhalter bis Original-Assets verfügbar | 0 |
+| Leistungen | H2→Grid-Abstand | 59 | `mt-15` (60) | +1 |
 
 ---
 

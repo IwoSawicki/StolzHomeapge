@@ -47,6 +47,14 @@ await page.evaluate(() => {
     ].join('\n'),
   });
 }
+// Einmal durchscrollen, damit lazy geladene Bilder im Screenshot erscheinen
+await page.evaluate(async () => {
+  for (let y = 0; y < document.body.scrollHeight; y += 800) {
+    window.scrollTo(0, y);
+    await new Promise((r) => setTimeout(r, 40));
+  }
+  window.scrollTo(0, 0);
+});
 await page.waitForTimeout(1200);
 if (mode === 'fullpage') await page.screenshot({ path: out, fullPage: true });
 else if (mode === 'viewport') await page.screenshot({ path: out });
