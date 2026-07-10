@@ -50,6 +50,9 @@ await page.evaluate(() => {
 await page.waitForTimeout(1200);
 if (mode === 'fullpage') await page.screenshot({ path: out, fullPage: true });
 else if (mode === 'viewport') await page.screenshot({ path: out });
-else await page.locator(mode).first().screenshot({ path: out });
+else if (mode.startsWith('clip:')) {
+  const [x, y, cw, ch] = mode.slice(5).split(',').map(Number);
+  await page.screenshot({ path: out, fullPage: true, clip: { x, y, width: cw, height: ch } });
+} else await page.locator(mode).first().screenshot({ path: out });
 await browser.close();
 console.log('✓', out);

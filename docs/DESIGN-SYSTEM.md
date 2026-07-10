@@ -176,6 +176,15 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Painpoints | Fließtext | 17/500, lh 1.55, slate/65 %, max 560 | `text-lg` (18px) | +1px |
 | Painpoints | Karten-Fußnote | 14/500 slate/50 % | identisch | 0 |
 | Painpoints | Tab-Inhalte 1–4 | nicht im Export (JS-nachgeladen) | Texte von Iwo (Frage D); linke Karte bleibt bei allen Tabs konstant | inhaltlich ergänzt |
+| Probleme | Section-Padding | 100/40 (D/T) · 50/12 (P) | `md:py-25 md:px-10` / `py-12 px-3` | −2 (50→48) |
+| Probleme | Container | 1200, Radius 30, Pad 20, Shadow-Stack, bg #F9FAFB | identisch, bg → `--color-bg-soft` #FAFAFA | Farb-Merge #F9FAFB→#FAFAFA |
+| Probleme | Grid | 3 (D) / 2 (T) / 1 (P) Spalten, Gap 7 | identisch, Gap 8 | +1 |
+| Probleme | Karte | weiß, Radius 30, Pad 20, Rahmen (::after) #E5EAF0 | identisch (Rahmen direkt) | 0 |
+| Probleme | Icon-Quadrat | 36×36, Radius 12, rgba(255,149,0,.09), ohne Grafik | identisch (Token orange-soft) | 0 |
+| Probleme | Karten-H3 | 20/500/−0.03em, Gap Icon→H3 7 | `text-xl font-medium mt-[7px]` | 0 |
+| Probleme | Karten-Text | 15/500, lh 1.55, Opacity 0.6, Gap 50 | `text-base text-dark/60 mt-12` | +1px Schrift, −2 Gap |
+| Probleme | Abschluss + CTA | 18/500 zentriert; CTA blau mit Blau-Glow, Gap 15 | identisch, `mt-4` | +1 |
+| Label-Pills | Icon je Sektion | Einblicke: Play · übrige: Plus (2 weiße Balken) | Play-SVG per Slot, Plus als Default | 0 |
 
 ---
 

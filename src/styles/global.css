@@ -131,6 +131,7 @@
   --color-bg-green-bright: #edffe3;
   --color-bg-blue: #f4f7fa;
   --color-bg-blue-light: #e8f3ff; /* Painpoint-Tabs-Box */
+  --color-orange-soft: rgba(255, 149, 0, 0.09); /* Icon-Quadrate Problem-Karten */
   --color-border: #e5eaf0;
   --color-border-gray: #dde0e3;
   --color-border-dark: #222222; /* 1px-Rahmen des Text-CTA (Original ::after) */

@@ -11,10 +11,9 @@ const { text } = Astro.props;
 <div class="inline-flex items-center gap-[7px] rounded-full bg-blue-bright/8 py-1 pr-[9px] pl-[7px]">
   <span class="flex size-3.5 items-center justify-center rounded-full bg-blue text-white">
     <slot>
-      <!-- Standard-Icon: Play (Original-Icon der Labels) -->
-      <svg class="size-[7px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z"
-        ></path>
+      <!-- Standard-Icon: Plus (Original: zwei weiße Balken im blauen Kreis) -->
+      <svg class="size-[7px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M12 4v16M4 12h16"></path>
       </svg>
     </slot>
   </span>
