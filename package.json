@@ -23,6 +23,7 @@
     "@fontsource/geist-sans": "^5.2.5",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/plus-jakarta-sans": "^5.2.8",
-    "inter-ui": "^4.1.1"
+    "inter-ui": "^4.1.1",
+    "playwright": "^1.61.1"
   }
 }

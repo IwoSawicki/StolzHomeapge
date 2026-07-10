@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+import ogImage from '../assets/og-image-stolz-marketing.png';
+
+interface Props {
+  /** Seitentitel; Original nutzt auf allen Seiten denselben Titel */
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'STOLZ Marketing | Mehr Anfragen für Handwerksbetriebe',
+  description = 'STOLZ Marketing hilft Handwerksbetrieben mehr qualifizierte Anfragen und passende Bewerbungen zu gewinnen. Transparent, messbar und verständlich.',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage.src, Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'STOLZ Marketing',
+  description,
+  url: Astro.site?.toString(),
+  email: 'iwo@stolz-marketing.de',
+  telephone: '+49 178 4444156',
+  founder: { '@type': 'Person', name: 'Iwo Sawicki' },
+  vatID: 'DE350093785',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Heidelbergerstraße 15D',
+    postalCode: '64385',
+    addressLocality: 'Reichelsheim',
+    addressCountry: 'DE',
+  },
+  areaServed: 'Rhein-Main-Gebiet',
+};
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="robots" content="max-image-preview:large" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Kritische Schriftschnitte vorladen (Headlines + Body) -->
+    <link rel="preload" href="/fonts/inter-display-800-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Google Analytics (wie Original, Freigabe Iwo – Frage G1) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZK7F06197Z"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-ZK7F06197Z');
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

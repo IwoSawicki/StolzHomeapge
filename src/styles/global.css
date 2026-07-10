@@ -1,0 +1,183 @@
+/* STOLZ Marketing – Design-Tokens (Quelle: original/*.html, Framer-Export)
+   Alle Normalisierungs-Entscheidungen sind in docs/DESIGN-SYSTEM.md dokumentiert. */
+
+@import 'tailwindcss';
+
+/* ---------- Selbst gehostete Fonts (public/fonts/, Latin-Subsets) ---------- */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-500-italic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-700-italic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Display';
+  src: url('/fonts/inter-display-800-normal.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Display';
+  src: url('/fonts/inter-display-500-italic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/plus-jakarta-sans-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Design-Tokens ---------- */
+
+@theme {
+  /* Breakpoints exakt wie Framer: Phone < 810, Tablet 810–1199, Desktop ≥ 1200 */
+  --breakpoint-md: 810px;
+  --breakpoint-xl: 1200px;
+
+  /* Schriftfamilien */
+  --font-sans:
+    'Inter', 'Inter Placeholder', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Inter Display', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-geist: 'Geist', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Farben (Zusammenfassungen siehe docs/DESIGN-SYSTEM.md) */
+  --color-white: #ffffff;
+  --color-dark: #0a0a0a; /* fasst #0A0A0A, #0F0F0F, #141414 zusammen */
+  --color-slate: #0f172a;
+  --color-blue: #0571ff;
+  --color-blue-bright: #0099ff; /* fasst #0099FF, #0084FF zusammen */
+  --color-blue-soft: #6f8eff;
+  --color-lime: #ccfc7e; /* fasst #CCFC7E, #C2FA69 zusammen */
+  --color-green-status: #3fd400;
+  --color-green-dark: #1f3630;
+  --color-cream: #fdfcee;
+  --color-gray: #636363; /* fasst #636363, #6C6B6B zusammen */
+  --color-gray-slate: #5a6272;
+  --color-white-soft: #f5fffd; /* Button-Text auf Blau (Original exakt) */
+  --color-bg-soft: #fafafa;
+  --color-bg-green: #f8faf5;
+  --color-bg-green-bright: #edffe3;
+  --color-bg-blue: #f4f7fa;
+  --color-border: #e5eaf0;
+  --color-border-gray: #dde0e3;
+
+  /* Schriftgrößen ohne sinnvollen Tailwind-Nachbarn (Original-px) */
+  --text-40: 40px;
+  --text-40--line-height: 1.1;
+  --text-52: 52px;
+  --text-52--line-height: 1.05;
+  --text-85: 85px;
+  --text-85--line-height: 1.05;
+
+  /* Radius (25→24 normalisiert, siehe DESIGN-SYSTEM.md) */
+  --radius-10: 10px;
+  --radius-14: 14px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-28: 28px;
+  --radius-30: 30px;
+
+  /* Schatten (exakt aus dem Original) */
+  --shadow-card: 0px 20px 40px 0px rgba(15, 23, 42, 0.08);
+  --shadow-card-soft: 0 6px 16px rgba(15, 23, 42, 0.06);
+  --shadow-blue-glow: 0px 0px 39px -10px rgba(4, 69, 255, 0.65);
+  --shadow-white-glow: 0px 0px 39px -10px rgba(255, 255, 255, 0.65);
+  --shadow-lime-inset: inset 0px 0px 13px -8px #ccfc7e;
+  /* Mehrstufige weiche Framer-Karten-Schatten */
+  --shadow-stack:
+    0px 1.34px 0.54px -0.625px rgba(0, 0, 0, 0.09), 0px 3.18px 1.27px -1.25px rgba(0, 0, 0, 0.09),
+    0px 5.81px 2.32px -1.875px rgba(0, 0, 0, 0.08), 0px 9.66px 3.86px -2.5px rgba(0, 0, 0, 0.08),
+    0px 15.6px 6.24px -3.125px rgba(0, 0, 0, 0.07), 0px 25.53px 10.21px -3.75px rgba(0, 0, 0, 0.06),
+    0px 43.96px 17.58px -4.375px rgba(0, 0, 0, 0.04), 0px 80px 32px -5px rgba(0, 0, 0, 0);
+  --shadow-stack-strong:
+    0 4.85px 3.4px -0.5625px rgba(0, 0, 0, 0.11), 0 11.5px 8.05px -1.125px rgba(0, 0, 0, 0.1),
+    0 20.99px 14.69px -1.6875px rgba(0, 0, 0, 0.1), 0 34.89px 24.42px -2.25px rgba(0, 0, 0, 0.1),
+    0 56.34px 39.44px -2.8125px rgba(0, 0, 0, 0.09), 0 92.23px 64.56px -3.375px rgba(0, 0, 0, 0.08),
+    0 158.81px 111.17px -3.9375px rgba(0, 0, 0, 0.06), 0 289px 202.3px -4.5px rgba(0, 0, 0, 0.01);
+}
+
+/* ---------- Basis ---------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

@@ -1,0 +1,22 @@
+---
+// CTA-Button. Varianten aus dem Original:
+// blue  = blauer Pill-Button (Header „Kontakt", Hero-CTA 1)
+// light = weißer Pill-Button mit Rahmen (Hero-CTA 2 „Direkt anrufen")
+// dark  = dunkler Pill-Button (FooterCta)
+interface Props {
+  href: string;
+  variant?: 'blue' | 'light' | 'dark';
+  class?: string;
+}
+const { href, variant = 'blue', class: extra = '' } = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center rounded-full px-[30px] py-2.5 text-base font-medium leading-normal tracking-[-0.02em] transition-colors duration-200';
+const variants = {
+  blue: 'bg-blue text-white-soft shadow-stack hover:bg-blue-bright',
+  light: 'bg-white text-dark border border-border-gray hover:border-dark',
+  dark: 'bg-dark text-white shadow-stack hover:bg-black',
+};
+---
+
+<a href={href} class={`${base} ${variants[variant]} ${extra}`}><slot /></a>

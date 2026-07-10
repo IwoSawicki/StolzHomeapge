@@ -8,6 +8,7 @@ export default defineConfig({
   site: 'https://stolz-marketing.de',
   output: 'static',
   trailingSlash: 'never',
+  devToolbar: { enabled: false },
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
