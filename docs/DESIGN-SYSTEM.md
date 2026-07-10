@@ -196,6 +196,8 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Prozess | H4→h3 | 28/500/1.2/−0.05em | `text-3xl` (30px), als h3 (H-Hierarchie) | +2px |
 | Prozess | Step-Text | 16/500/1.5/−0.05em, #636363 | identisch (`text-gray`) | 0 |
 | Prozess | Phone-Layout | Rail links (Dot 30), Inhalt ab x84; Bild 261 hoch | identisch (`ml-[34px]`) | 0 |
+| Ergebnis | Aufbau | identisch zu Probleme (Container/Grid/Karten), Icon-Quadrate Blau 15 % | identisch (`bg-blue/15`) | 0 |
+| global | 15px-Karten-Fließtexte | 15px | Custom-Token `--text-15` statt 16px-Mapping (16px erzeugte zusätzliche Zeilen → sichtbar höhere Karten) | 0 (bewusste Ausnahme) |
 
 ---
 

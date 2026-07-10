@@ -139,6 +139,8 @@
   --color-video-dark-2: #232a36;
 
   /* Schriftgrößen ohne sinnvollen Tailwind-Nachbarn (Original-px) */
+  --text-15: 15px; /* mehrzeilige Karten-Texte: 16px würde Umbrüche/Kartenhöhen ändern */
+  --text-15--line-height: 1.5;
   --text-34: 34px; /* Painpoint-H3: 36px würde den Umbruch verändern */
   --text-34--line-height: 1.15;
   --text-40: 40px;

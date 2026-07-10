@@ -1,0 +1,50 @@
+---
+// Ergebnis (#ergebnis) – „Resultate": 6 Karten im grauen Container.
+// Struktur identisch zur Probleme-Sektion, Icon-Quadrate hier Blau 15 %.
+import SectionHeading from '../SectionHeading.astro';
+
+const karten = [
+  {
+    titel: 'Qualifizierte Anfragen',
+    text: 'Anfragen von Interessenten, die wirklich kaufen wollen – passend zum Auftragsvolumen, das Sie tatsächlich annehmen.',
+  },
+  {
+    titel: 'Kalkulierbare Kosten pro Anfrage',
+    text: 'Sie wissen, was eine Anfrage kostet – planbar, vergleichbar, kontrollierbar.',
+  },
+  {
+    titel: 'Bewerbungen, die passen',
+    text: 'Fachkräfte, die zu Ihrem Betrieb passen – nicht jeder, der irgendwo geklickt hat.',
+  },
+  {
+    titel: 'Monatlicher Klartext-Report',
+    text: 'Klare Zahlen, ehrliche Einschätzung, nächste Schritte – jeden Monat, in einer Sprache, die Sie verstehen.',
+  },
+  {
+    titel: 'Werbebudget mit Wirkung',
+    text: 'Jeder investierte Euro hat eine Antwort: Was hat er gebracht? Wo lohnt sich mehr? Wo nicht?',
+  },
+  {
+    titel: 'Planbares Wachstum',
+    text: 'Statt Schwankungen zwischen "Tür rennt ein" und "Telefon klingelt nicht": stetiger, planbarer Anfragenfluss.',
+  },
+];
+---
+
+<section id="ergebnis" class="px-3 py-12 md:px-10 md:py-25">
+  <SectionHeading label="Resultate" headingMaxWidth={800}>Das Ergebnis</SectionHeading>
+
+  <div class="mx-auto mt-10 max-w-[1200px] rounded-30 bg-bg-soft p-5 shadow-stack">
+    <ul class="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
+      {
+        karten.map((karte) => (
+          <li class="rounded-30 border border-border bg-white p-5">
+            <div class="size-9 rounded-[12px] bg-blue/15" aria-hidden="true"></div>
+            <h3 class="mt-[7px] text-xl font-medium tracking-[-0.03em] text-dark">{karte.titel}</h3>
+            <p class="mt-12 text-15 font-medium tracking-[-0.01em] text-dark/60">{karte.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
