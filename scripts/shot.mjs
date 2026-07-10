@@ -50,6 +50,8 @@ await page.evaluate(() => {
 // Appear-Anfangszustaende neutralisieren (Framer-JS fehlt lokal):
 // Elemente mit inline opacity:0 + translateY sichtbar machen.
 await page.evaluate(() => {
+  // blur-Neutralisierung (Word-Reveal-Effekte)
+  for (const el of document.querySelectorAll('[style*="blur"]')) el.style.filter = 'none';
   for (const el of document.querySelectorAll('[style*="opacity:0"], [style*="opacity: 0"]')) {
     el.style.opacity = '1';
     if (/translateY/.test(el.style.transform)) el.style.transform = 'none';
