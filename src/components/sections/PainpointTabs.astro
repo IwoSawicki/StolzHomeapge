@@ -1,0 +1,139 @@
+---
+// „Deine Herausforderungen" – 5 Painpoint-Tabs.
+// Nur der Tab „Keine Zeit" war im Framer-Export enthalten; die Inhalte der
+// anderen 4 Tabs stammen von Iwo (Antwort auf offene Frage D).
+// Die linke weiße Karte („Wir übernehmen" + Chips) ist im Export nur für
+// „Keine Zeit" belegt und bleibt daher bei allen Tabs konstant —
+// falls die Live-Seite pro Tab andere Karten zeigt, bitte nachliefern.
+// Maße: Box max 1240, Radius 32, bg #E8F3FF, Padding 40/36/48;
+// weiße Karte Radius 24, Padding 28; Tabs: Pill 14/600, aktiv Slate.
+
+const tabs = [
+  {
+    id: 'keine-ergebnisse',
+    label: 'Keine Ergebnisse',
+    headline: 'Beiträge laufen, aber die Zahlen bewegen sich nicht?',
+    text: 'Die meisten Inhalte überzeugen nicht, weil sie ohne klares Ziel erstellt werden. Wir produzieren Content, der vom ersten Frame an auf Ergebnisse ausgelegt ist – mit bewährten Strukturen, die aus Interesse echte Anfragen machen.',
+  },
+  {
+    id: 'zu-teuer',
+    label: 'Zu teuer',
+    headline: 'Produktion kostet ein Vermögen, aber die Ergebnisse bleiben aus?',
+    text: 'Klassische Agenturen verlangen Tausende für Content, der gut aussieht, aber keine Zahlen bewegt. Bei uns bekommst du strategisch geplanten Content und bewährte Taktiken zum fairen Preis – ohne versteckte Kosten, mit messbaren Ergebnissen.',
+  },
+  {
+    id: 'wo-anfangen',
+    label: 'Wo anfangen?',
+    headline: 'Du willst auf Social Media sichtbar sein – weißt aber nicht wie?',
+    text: 'Jede Plattform hat ihre eigenen Spielregeln. Wir kennen die Besonderheiten aller relevanten Kanäle und entwickeln eine Strategie, die zu deinem Betrieb passt. Vom ersten Beitrag bis zum ersten Durchbruch begleiten wir jeden Schritt.',
+  },
+  {
+    id: 'keine-ideen',
+    label: 'Keine Ideen',
+    headline: 'Du weißt nicht, was du posten sollst, damit es wirklich funktioniert?',
+    text: 'Algorithmen ändern sich, Trends kommen und gehen. Wir beobachten, was in deiner Branche funktioniert, und erstellen dir einen kompletten Content-Plan. Jeden Monat prüfen und optimieren wir ihn neu – damit dir nie die Ideen ausgehen.',
+  },
+  {
+    id: 'keine-zeit',
+    label: 'Keine Zeit',
+    headline: 'Du weißt, dass du Content brauchst – hast aber keine Zeit dafür?',
+    text: 'Dein Betrieb braucht deine volle Energie. Wir übernehmen den kompletten Prozess – von der Idee über Produktion und Postproduktion bis zu Veröffentlichung und Analyse. So wächst deine Sichtbarkeit, während du dich auf dein Handwerk konzentrierst.',
+  },
+];
+const aktiverTab = tabs.length - 1; // „Keine Zeit" ist im Original vorausgewählt
+const chips = ['Idee', 'Produktion', 'Veröffentlichung', 'Analyse'];
+---
+
+<section class="px-3 md:px-6 xl:px-10">
+  <div
+    class="mx-auto max-w-[1240px] rounded-[32px] bg-bg-blue-light px-9 pt-10 pb-12"
+    data-tabs
+  >
+    <div class="flex flex-col gap-10 xl:flex-row xl:items-start xl:justify-between xl:gap-6">
+      <h2 class="max-w-[300px] shrink-0 text-5xl leading-[1.05] tracking-[-0.04em] text-slate">
+        <em class="font-display font-medium italic">Deine</em>
+        <span class="block font-display font-extrabold">Heraus&shy;forderungen</span>
+      </h2>
+      <div class="flex flex-wrap gap-2" role="tablist" aria-label="Herausforderungen">
+        {
+          tabs.map((tab, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${tab.id}`}
+              aria-selected={i === aktiverTab ? 'true' : 'false'}
+              aria-controls={`panel-${tab.id}`}
+              class="cursor-pointer rounded-full bg-white px-[15px] py-2.5 text-sm font-semibold tracking-[-0.01em] text-slate transition-colors duration-200 aria-selected:bg-slate aria-selected:text-white"
+            >
+              {tab.label}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-10 xl:mt-16 xl:flex-row xl:gap-16">
+      <!-- Weiße Karte (im Export nur für „Keine Zeit" hinterlegt, bleibt konstant) -->
+      <div class="w-full shrink-0 rounded-24 bg-white p-7 xl:w-[475px]">
+        <div class="flex items-center justify-between">
+          <p class="text-lg font-bold tracking-[-0.01em] text-slate">Wir übernehmen</p>
+          <span class="flex size-8.5 items-center justify-center rounded-full bg-blue-bright/10 text-blue-bright">
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M 12 7 L 12 12 L 15 14" />
+            </svg>
+          </span>
+        </div>
+        <ul class="mt-8 grid grid-cols-2 gap-2.5">
+          {
+            chips.map((chip) => (
+              <li class="flex min-w-0 items-center gap-2 rounded-10 bg-bg-blue py-2.5 pr-3.5 pl-3 text-sm font-semibold tracking-[-0.01em] wrap-break-word text-slate">
+                <svg class="size-3.5 shrink-0 text-blue-bright" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="m 8.5 12 2.5 2.5 5 -5" />
+                </svg>
+                {chip}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-10 text-sm font-medium leading-[1.45] text-slate/50">
+          Du kümmerst dich um deinen Betrieb. Wir kümmern uns um den Rest.
+        </p>
+      </div>
+
+      <div class="min-h-[210px] flex-1">
+        {
+          tabs.map((tab, i) => (
+            <div
+              id={`panel-${tab.id}`}
+              role="tabpanel"
+              aria-labelledby={`tab-${tab.id}`}
+              class:list={['transition-opacity duration-200', i !== aktiverTab && 'hidden']}
+            >
+              <h3 class="max-w-[630px] font-display text-34 font-extrabold tracking-[-0.03em] text-slate">
+                {tab.headline}
+              </h3>
+              <p class="mt-5 max-w-[560px] text-lg font-medium leading-[1.55] tracking-[-0.01em] text-slate/65">
+                {tab.text}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector('[data-tabs]')!;
+  const tabButtons = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+  const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      tabButtons.forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+      panels.forEach((p) => p.classList.toggle('hidden', p.id !== btn.getAttribute('aria-controls')));
+    });
+  });
+</script>

@@ -167,6 +167,15 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Einblicke | Stagger | D+T: Spalten 2+3 (+70/+50), P: Spalten 2+4 (+70) | `pt-17`/`md:pt-12`/`xl:pt-17` je Spalte | −2 (70→68), −2 (50→48) |
 | Einblicke | Badge | Radius 14, ::after-Rahmen #0084FF/35%, Shadow 0 6 16 slate/6%, Chip 34 rund #0084FF/10, Text 14/600 slate | identisch (Rahmen direkt) | 0 |
 | Einblicke | Video-Frame | 9/16, Radius 20, Gradient 160° #0A0D12→#232A36, Play 58 weiß/14% | identisch | 0 |
+| Painpoints | Box | max 1240, Radius 32, #E8F3FF, Pad 40/36/48 | identisch (`rounded-[32px]`, Token bg-blue-light) | 0 |
+| Painpoints | H2 | „Deine" ID 500 Italic + „Heraus­forderungen" ID 800, 46px/1.05/−0.04em, max 300px | `text-5xl` (48px) | +2px (46→48) |
+| Painpoints | Tab-Pill | weiß, Pad 10×15, Radius 100, 14/600 slate; aktiv: Slate-BG, weiß | identisch | 0 |
+| Painpoints | Weiße Karte | Radius 24, Pad 28, Breite 475 (Desktop) | identisch | 0 |
+| Painpoints | Chips | bg #F4F7FA, Radius 10, Pad 10/14/10/12, 14/600, Check-Icon blau | identisch | 0 |
+| Painpoints | H3 | ID 800 34px/1.15/−0.03em (34→36 würde Umbruch ändern) | Custom-Token `--text-34` | 0 (bewusst kein Mapping) |
+| Painpoints | Fließtext | 17/500, lh 1.55, slate/65 %, max 560 | `text-lg` (18px) | +1px |
+| Painpoints | Karten-Fußnote | 14/500 slate/50 % | identisch | 0 |
+| Painpoints | Tab-Inhalte 1–4 | nicht im Export (JS-nachgeladen) | Texte von Iwo (Frage D); linke Karte bleibt bei allen Tabs konstant | inhaltlich ergänzt |
 
 ---
 

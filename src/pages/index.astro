@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/sections/Hero.astro';
 import Einblicke from '../components/sections/Einblicke.astro';
+import PainpointTabs from '../components/sections/PainpointTabs.astro';
 ---
 
 <BaseLayout>
@@ -10,7 +11,8 @@ import Einblicke from '../components/sections/Einblicke.astro';
   <main>
     <Hero />
     <Einblicke />
-    <!-- Sektionen folgen: PainpointTabs, Probleme, Leistungen,
+    <PainpointTabs />
+    <!-- Sektionen folgen: Probleme, Leistungen,
          Prozess, Ergebnis, Projekte, Statistics, FooterCta -->
   </main>
 </BaseLayout>
