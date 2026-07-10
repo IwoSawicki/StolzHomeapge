@@ -1,0 +1,41 @@
+---
+// Hero (#start). Gemessene Originalwerte (docs/DESIGN-SYSTEM.md):
+// H1 Inter 500, Desktop 85px / Tablet 60px / Phone 40px, ls −0.06em, lh 1;
+// zweite Zeile Inter 400 in Grau. Subline 18px/1.4 max 600px.
+// CTA-Reihe: Gap 10px; CTA 1 blau mit Blau-Glow, CTA 2 mit 1px-Rahmen.
+// Bild: Desktop 95% (max 1520), Tablet/Phone ~106% (ragt seitlich hinaus).
+import { Image } from 'astro:assets';
+import Button from '../Button.astro';
+import dashboard from '../../assets/stolz-marketing-dashboard-auswertung.png';
+---
+
+<section id="start" class="overflow-x-clip bg-white pt-10 md:pt-12 xl:pt-25">
+  <div class="mx-auto flex flex-col items-center px-3 md:px-10 xl:max-w-[1280px] xl:px-0">
+    <h1
+      class="text-center font-medium text-balance tracking-[-0.06em] text-dark leading-none text-40 md:text-6xl xl:text-85"
+    >
+      Mehr Anfragen für Ihr Unternehmen. <br />
+      <span class="font-normal text-gray">Messbar &amp; Planbar.</span>
+    </h1>
+    <p class="mt-5 max-w-[600px] text-center text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-dark">
+      Wir bringen Handwerksbetrieben im Rhein-Main-Gebiet planbare Anfragen – ohne Marketingblabla.{' '}
+      <strong>Nur Ergebnisse, die auf deiner Rechnung auftauchen.</strong>
+    </p>
+    <div class="mt-6 flex flex-col items-center gap-2.5 md:flex-row">
+      <Button href="/kontakt" variant="blue" shadow="blue-glow">Jetzt Potenzial checken lassen</Button>
+      <Button href="tel:+491784444156" variant="light">Direkt anrufen – 0178 4444 156</Button>
+    </div>
+  </div>
+
+  <div class="mx-auto mt-17 w-[106.5%] max-w-none md:mt-7 md:w-[106%] xl:mt-6 xl:w-[95%] xl:max-w-[1520px]">
+    <Image
+      src={dashboard}
+      alt="Dashboard mit Kampagnen-Auswertung: mehr Anfragen für Handwerksbetriebe"
+      class="aspect-[1.54993] w-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+      widths={[640, 1024, 1440, 1672]}
+      sizes="(min-width: 1200px) 95vw, 106vw"
+    />
+  </div>
+</section>

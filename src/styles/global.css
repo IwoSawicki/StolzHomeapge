@@ -132,6 +132,7 @@
   --color-bg-blue: #f4f7fa;
   --color-border: #e5eaf0;
   --color-border-gray: #dde0e3;
+  --color-border-dark: #222222; /* 1px-Rahmen des Text-CTA (Original ::after) */
 
   /* Schriftgrößen ohne sinnvollen Tailwind-Nachbarn (Original-px) */
   --text-40: 40px;

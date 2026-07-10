@@ -1,22 +1,29 @@
 ---
 // CTA-Button. Varianten aus dem Original:
-// blue  = blauer Pill-Button (Header „Kontakt", Hero-CTA 1)
-// light = weißer Pill-Button mit Rahmen (Hero-CTA 2 „Direkt anrufen")
+// blue  = blauer Pill-Button (Header „Kontakt": Shadow-Stack; Hero-CTA 1: Blau-Glow)
+// light = Pill mit 1px-Rahmen #222, transparent (Hero-CTA 2 „Direkt anrufen")
 // dark  = dunkler Pill-Button (FooterCta)
 interface Props {
   href: string;
   variant?: 'blue' | 'light' | 'dark';
+  /** Schatten: Header-Button nutzt 'stack', Hero-CTA 'blue-glow' */
+  shadow?: 'stack' | 'blue-glow' | 'none';
   class?: string;
 }
-const { href, variant = 'blue', class: extra = '' } = Astro.props;
+const { href, variant = 'blue', shadow = variant === 'blue' ? 'stack' : 'none', class: extra = '' } = Astro.props;
 
 const base =
   'inline-flex items-center justify-center rounded-full px-[30px] py-2.5 text-base font-medium leading-normal tracking-[-0.02em] transition-colors duration-200';
 const variants = {
-  blue: 'bg-blue text-white-soft shadow-stack hover:bg-blue-bright',
-  light: 'bg-white text-dark border border-border-gray hover:border-dark',
-  dark: 'bg-dark text-white shadow-stack hover:bg-black',
+  blue: 'bg-blue text-white-soft hover:bg-blue-bright',
+  light: 'bg-transparent text-dark border border-border-dark hover:bg-bg-soft',
+  dark: 'bg-dark text-white hover:bg-black',
+};
+const shadows = {
+  stack: 'shadow-stack',
+  'blue-glow': 'shadow-blue-glow',
+  none: '',
 };
 ---
 
-<a href={href} class={`${base} ${variants[variant]} ${extra}`}><slot /></a>
+<a href={href} class={`${base} ${variants[variant]} ${shadows[shadow]} ${extra}`}><slot /></a>

@@ -6,16 +6,29 @@ import { resolve } from 'node:path';
 const [, , target, out, w = '1440', h = '900', mode = 'fullpage'] = process.argv;
 const url = target.startsWith('http') ? target : 'file://' + resolve(target);
 
-const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--allow-file-access-from-files'] });
 const page = await browser.newPage({ viewport: { width: +w, height: +h } });
 await page.goto(url, { waitUntil: 'load', timeout: 30000 }).catch((e) => console.error('goto:', e.message));
 // Beim Original (file://) die selbst gehosteten Fonts injizieren, damit
 // Original und Nachbau mit identischen Schriften verglichen werden
 // (Font-CDNs sind aus der Umgebung nicht erreichbar).
 if (url.startsWith('file://')) {
+// Kaputte CDN-@font-face-Regeln entfernen (framerusercontent/gstatic sind
+// blockiert; sonst greift das Font-Matching nie auf die injizierten Fonts zu).
+await page.evaluate(() => {
+  for (const sheet of document.styleSheets) {
+    try {
+      for (let i = sheet.cssRules.length - 1; i >= 0; i--) {
+        const rule = sheet.cssRules[i];
+        if (rule instanceof CSSFontFaceRule && /framerusercontent|gstatic|fontshare/.test(rule.cssText)) sheet.deleteRule(i);
+      }
+    } catch {}
+  }
+});
+  const { readFileSync } = await import('node:fs');
   const fontsDir = resolve('public/fonts');
   const face = (fam, file, w, style = 'normal') =>
-    `@font-face{font-family:'${fam}';src:url('file://${fontsDir}/${file}') format('woff2');font-weight:${w};font-style:${style}}`;
+    `@font-face{font-family:'${fam}';src:url(data:font/woff2;base64,${readFileSync(`${fontsDir}/${file}`).toString('base64')}) format('woff2');font-weight:${w};font-style:${style}}`;
   await page.addStyleTag({
     content: [
       face('Inter', 'inter-400-normal.woff2', 400),

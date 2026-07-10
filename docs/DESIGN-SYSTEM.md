@@ -150,6 +150,15 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Header | Hamburger | 44×44, Radius 10, #0A0A0A, Linien 20×2 weiß | identisch | 0 |
 | Header | Sticky | top −1px, z-index 10 | `sticky -top-px z-10` | 0 |
 | Header | Logo | Inter Display 800 30px/−0.05em + Sparkle-SVG (33×22, absolut rechts −15/unten −10) | identisch (SVG inline übernommen) | 0 |
+| Hero | Abstand Header→H1 | 100 (Desktop) / 50 (Tablet) / 40 (Phone) | `pt-25` / `md:pt-12` (48) / `pt-10` | 0 / −2 / 0 |
+| Hero | H1 | Inter 500, 85/60/40px, −0.06em, lh 1, `text-wrap: balance` | `xl:text-85 md:text-6xl text-40 text-balance` | 0 |
+| Hero | Zeile 2 („Messbar & Planbar.") | Inter 400, #6C6B6B | `font-normal text-gray` (#636363) | Farb-Merge dokumentiert |
+| Hero | Subline | 18px 500, lh 1.4, −0.01em, max 600px, Gap 20 | identisch (`mt-5`) | 0 |
+| Hero | CTA-Reihe | Gap 10px, mt 24 | `gap-2.5 mt-6` | 0 |
+| Hero | CTA 1 | Blau, Padding 10×30, Radius 50, Blau-Glow, Text 15px weiß | Button `blue` + `shadow-blue-glow` | Schrift +1px → Button +1,5px höher |
+| Hero | CTA 2 | transparent, 1px Rahmen #222 (::after), Text 15px dunkel | Button `light` (Rahmen direkt am Element) | Schrift +1px |
+| Hero | Bild-Abstand | 26,4 / 31,7 / 69,7 | `xl:mt-6` (24) / `md:mt-7` (28) / `mt-17` (68) | −2,4 / −3,7 / −1,7 (kompensiert Buttonhöhe) |
+| Hero | Bild-Breite | 95% (Desktop) / ~106% (Tablet/Phone), Aspect 1.54993 | identisch, `max-w-[1520px]` Desktop | 0 |
 
 ---
 
