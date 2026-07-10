@@ -198,6 +198,11 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Prozess | Phone-Layout | Rail links (Dot 30), Inhalt ab x84; Bild 261 hoch | identisch (`ml-[34px]`) | 0 |
 | Ergebnis | Aufbau | identisch zu Probleme (Container/Grid/Karten), Icon-Quadrate Blau 15 % | identisch (`bg-blue/15`) | 0 |
 | global | 15px-Karten-Fließtexte | 15px | Custom-Token `--text-15` statt 16px-Mapping (16px erzeugte zusätzliche Zeilen → sichtbar höhere Karten) | 0 (bewusste Ausnahme) |
+| Projekte | Section-Padding | 150/36/100 | `md:pt-[150px] md:px-9 md:pb-25` | 0 |
+| Projekte | Karte | Header-Box Radius 18 (Pad 24/18), Bild-Box Radius 18 + 4px-Frame, Gap 4 | identisch | 0 |
+| Projekte | Bildhöhen | 501,8 (D) / 611,9 (T) / 413,7 (P) | 494+8 Frame / 604+8 / 406+8 | ≤2 |
+| Projekte | Karten-Abstand H2→Container | 70 | `mt-17` (68) | −2 |
+| Projekte | CTA-Reihe | Gap 10, mt 50; Tel-CTA 0173 4388519 | `mt-12` (48); Tel einheitlich 0178 4444 156 | −2; Nummer gemäß Antwort A |
 
 ---
 

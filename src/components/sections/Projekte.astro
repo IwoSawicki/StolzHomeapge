@@ -1,0 +1,69 @@
+---
+// Projekte (#projekte) – „Kunden": 3 Projekt-Karten im grauen Container.
+// Karte = weißer Header (Radius 18: Titel 18/600 + Text 16/600 grau) +
+// weiße Bildbox (Radius 18, 4px Innenabstand). Links bewusst ohne href
+// (Original leer; später Projekt-Unterseiten — Antwort Iwo, Frage E).
+// CTAs darunter: blau mit Glow + Rahmen-Variante (Tel-Nr. gemäß Antwort A).
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import stech from '../../assets/projekt-s-tech-fahrzeugbau.png';
+import saan from '../../assets/projekt-saan-wasserstrahl.png';
+import raumkonzept from '../../assets/projekt-raum-konzept.png';
+
+const projekte = [
+  {
+    name: 'S-Tech Fahrzeugbau',
+    text: 'Mehr passende Fachkräfte durch gezielte Kampagnen für technische Berufe.',
+    bild: stech,
+    alt: 'Projekt S-Tech Fahrzeugbau: Social-Media-Kampagne für technische Fachkräfte',
+  },
+  {
+    name: 'SAAN Wasserstrahl',
+    text: 'Mehr qualifizierte Mitarbeiter-Anfragen für Wasserstrahlschneidarbeiten.',
+    bild: saan,
+    alt: 'Projekt SAAN Wasserstrahl: Kampagne für Mitarbeitergewinnung',
+  },
+  {
+    name: 'raum.Konzept',
+    text: 'Mehr Projektanfragen und Bewerbungen durch eine klare Online-Positionierung.',
+    bild: raumkonzept,
+    alt: 'Projekt raum.Konzept: Online-Positionierung für mehr Projektanfragen',
+  },
+];
+---
+
+<section id="projekte" class="px-3 pt-24 pb-12 md:px-9 md:pt-[150px] md:pb-25">
+  <SectionHeading label="Kunden" headingMaxWidth={800}>Erfolgreiche Projekte</SectionHeading>
+
+  <div class="mx-auto mt-17 max-w-[1200px] rounded-30 bg-bg-soft p-5 shadow-stack">
+    <ul class="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
+      {
+        projekte.map((projekt) => (
+          <li class="flex flex-col gap-1">
+            <div class="rounded-[18px] bg-white px-6 pt-[18px] pb-[18px]">
+              <h3 class="text-lg font-semibold tracking-[-0.01em] text-dark">{projekt.name}</h3>
+              <p class="mt-[7px] text-base font-semibold leading-[1.2] tracking-[-0.01em] text-gray">
+                {projekt.text}
+              </p>
+            </div>
+            <div class="rounded-[18px] bg-white p-1">
+              <Image
+                src={projekt.bild}
+                alt={projekt.alt}
+                class="h-[406px] w-full rounded-14 object-cover md:h-[604px] xl:h-[494px]"
+                widths={[374, 748, 952]}
+                sizes="374px"
+              />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="mt-12 flex flex-col items-center justify-center gap-2.5 md:flex-row">
+    <Button href="/kontakt" variant="blue" shadow="blue-glow">Jetzt unverbindlich anfragen</Button>
+    <Button href="tel:+491784444156" variant="light">Direkt anrufen – 0178 4444 156</Button>
+  </div>
+</section>
