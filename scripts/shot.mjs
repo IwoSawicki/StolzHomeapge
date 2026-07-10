@@ -47,6 +47,14 @@ await page.evaluate(() => {
     ].join('\n'),
   });
 }
+// Appear-Anfangszustaende neutralisieren (Framer-JS fehlt lokal):
+// Elemente mit inline opacity:0 + translateY sichtbar machen.
+await page.evaluate(() => {
+  for (const el of document.querySelectorAll('[style*="opacity:0"], [style*="opacity: 0"]')) {
+    el.style.opacity = '1';
+    if (/translateY/.test(el.style.transform)) el.style.transform = 'none';
+  }
+});
 // Einmal durchscrollen, damit lazy geladene Bilder im Screenshot erscheinen
 await page.evaluate(async () => {
   for (let y = 0; y < document.body.scrollHeight; y += 800) {

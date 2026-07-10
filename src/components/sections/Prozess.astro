@@ -1,0 +1,92 @@
+---
+// Prozess (#prozess) – 3 Steps mit mittiger Timeline (Desktop/Tablet) bzw.
+// linker Timeline (Phone). Maße: Step 1000×365 (Desktop), Bild 431×295
+// Radius 28, Timeline-Spalte 138 mit blauem 30er-Dot (weiße Nummer) und
+// 2px-Linien (68 oben / Rest unten, Gaps 10). Bilder alternieren links/rechts.
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import workshop from '../../assets/prozess-workshop-strategie.png';
+import umsetzung from '../../assets/prozess-umsetzung.jpg';
+import skalierung from '../../assets/prozess-skalierung-optimierung.png';
+
+const steps = [
+  {
+    nr: '01',
+    titel: 'Workshop & Strategie',
+    text: 'In einem kompakten Workshop lernen wir Ihr Unternehmen, Ihre Zielgruppe und Ihren Markt kennen. Daraus entsteht eine klare Strategie für Kampagnen, Landingpages und die nächsten sinnvollen Schritte.',
+    bild: workshop,
+    alt: 'Workshop-Situation: Strategie-Erarbeitung mit einem Handwerksbetrieb',
+  },
+  {
+    nr: '02',
+    titel: 'Umsetzung',
+    text: 'Wir setzen die Kampagnen, Landingpages und Inhalte um, die für Ihr Ziel relevant sind. Sie bekommen regelmäßige Updates und behalten jederzeit den Überblick.',
+    bild: umsetzung,
+    alt: 'Dreharbeiten für Content-Produktion bei einem Handwerksbetrieb',
+  },
+  {
+    nr: '03',
+    titel: 'Skalierung & Optimierung',
+    text: 'Nach dem Start optimieren wir laufend: Anzeigen, Zielgruppen, Landingpages und Budgetverteilung. So wird Ihr Marketing mit jedem Monat planbarer.',
+    bild: skalierung,
+    alt: 'Auswertung und Optimierung laufender Kampagnen am Bildschirm',
+  },
+];
+---
+
+<section id="prozess" class="py-14 max-md:px-5 md:px-6">
+  <SectionHeading label="Prozess" headingMaxWidth={800}>
+    Unser Prozess zum Erfolg
+    <Fragment slot="description">
+      Von der ersten Analyse bis zur laufenden Optimierung begleiten wir Ihr Marketing mit einem klaren Fahrplan.
+      Sie wissen jederzeit, was passiert, warum es passiert und welches Ergebnis erwartet wird.
+    </Fragment>
+  </SectionHeading>
+
+  <div class="mx-auto mt-18 max-w-[1000px]">
+    {
+      steps.map((step, i) => (
+        <div class="flex md:h-[365px] md:items-center">
+          {/* Bild (Desktop/Tablet, alterniert) */}
+          <div class:list={['hidden flex-1 md:block', i % 2 === 1 ? 'md:order-3' : 'md:order-1']}>
+            <Image
+              src={step.bild}
+              alt={step.alt}
+              class="h-[295px] w-full rounded-28 object-cover"
+              widths={[431, 862]}
+              sizes="431px"
+            />
+          </div>
+
+          {/* Timeline */}
+          <div class="flex w-[30px] shrink-0 flex-col items-center gap-2.5 self-stretch max-md:pt-0 md:order-2 md:w-[138px]">
+            <span
+              class:list={['w-0.5 flex-none basis-[68px] opacity-20', i > 0 ? 'bg-blue' : 'bg-linear-to-b from-white to-blue']}
+            ></span>
+            <span class="flex size-[30px] shrink-0 items-center justify-center rounded-full bg-blue text-sm font-medium text-white">
+              {step.nr}
+            </span>
+            <span
+              class:list={['w-0.5 flex-1 opacity-20', i < steps.length - 1 ? 'bg-blue' : 'bg-linear-to-b from-blue to-white']}
+            ></span>
+          </div>
+
+          {/* Text (Phone: inkl. Bild) */}
+          <div class:list={['min-w-0 flex-1 max-md:ml-[34px] max-md:pb-2', i % 2 === 1 ? 'md:order-1' : 'md:order-3']}>
+            <Image
+              src={step.bild}
+              alt={step.alt}
+              class="mt-[35px] mb-0 h-[261px] w-full rounded-28 object-cover md:hidden"
+              widths={[431, 862]}
+              sizes="(min-width: 810px) 431px, 90vw"
+            />
+            <h3 class="mt-0 text-3xl font-medium leading-[1.2] tracking-[-0.05em] text-dark max-md:mt-0">
+              {step.titel}
+            </h3>
+            <p class="mt-4 text-base font-medium leading-normal tracking-[-0.05em] text-gray">{step.text}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

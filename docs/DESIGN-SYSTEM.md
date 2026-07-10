@@ -190,6 +190,12 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Leistungen | Karten-Text | 15/500/1.5, Opacity 0.6 | `text-base text-dark/60` | +1px |
 | Leistungen | Bilder | Karte 1: 232 unten mittig · Karte 2: 270×148,5 rechts · Karte 3: 270×221,7 rechts (Original beschnitten dargestellt) | identisch (object-cover), Platzhalter bis Original-Assets verfügbar | 0 |
 | Leistungen | H2→Grid-Abstand | 59 | `mt-15` (60) | +1 |
+| Prozess | Section-Padding | 58/0 | `py-14` (56) | −2 |
+| Prozess | Step | 1000×365; Bild 431×295 Radius 28; Timeline-Spalte 138 | identisch | 0 |
+| Prozess | Timeline | Dot 30 blau, Nummer 14 weiß; Linien 2px blau 20 % (erste/letzte mit Weiß-Verlauf), Segmente 68/247, Gaps 10 | identisch (`opacity-20`, `bg-linear-to-b`) | 0 |
+| Prozess | H4→h3 | 28/500/1.2/−0.05em | `text-3xl` (30px), als h3 (H-Hierarchie) | +2px |
+| Prozess | Step-Text | 16/500/1.5/−0.05em, #636363 | identisch (`text-gray`) | 0 |
+| Prozess | Phone-Layout | Rail links (Dot 30), Inhalt ab x84; Bild 261 hoch | identisch (`ml-[34px]`) | 0 |
 
 ---
 

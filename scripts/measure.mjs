@@ -50,6 +50,14 @@ await page.addStyleTag({
 });
 await page.evaluate(() => document.fonts.ready);
 await page.waitForTimeout(400);
+// Appear-Anfangszustaende neutralisieren (Framer-JS fehlt lokal):
+// Elemente mit inline opacity:0 + translateY sichtbar machen.
+await page.evaluate(() => {
+  for (const el of document.querySelectorAll('[style*="opacity:0"], [style*="opacity: 0"]')) {
+    el.style.opacity = '1';
+    if (/translateY/.test(el.style.transform)) el.style.transform = 'none';
+  }
+});
 const result = await page.evaluate(js);
 console.log(JSON.stringify(result, null, 2));
 await browser.close();
