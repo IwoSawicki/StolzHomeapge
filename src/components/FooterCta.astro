@@ -1,0 +1,29 @@
+---
+// CTA-Block „Kostenlose Analyse anfragen" (auf allen Seiten vor dem Footer).
+// Blaue Box (Radius oben 30, 20px Seitenränder), Inhalt max 1200:
+// H2 48 weiß, Text 18, weißer Pill-Button mit Weiß-Glow.
+// Hintergrund-Muster: Original-SVG (framerusercontent) nicht abrufbar →
+// dezente Näherung als CSS-Gitter, dokumentiert in DESIGN-SYSTEM.md.
+import Button from './Button.astro';
+---
+
+<div class="relative overflow-hidden rounded-t-30 bg-blue">
+  <div
+    class="pointer-events-none absolute inset-0 opacity-30"
+    style="background-image: linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 26.5px 26.5px;"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="relative mx-auto max-w-[1200px] px-5 pt-14 pb-12 md:px-25 md:pt-24 md:pb-18">
+    <h2 class="text-5xl font-bold text-balance leading-[1.1] tracking-[-0.05em] text-white">
+      Kostenlose Analyse anfragen
+    </h2>
+    <p class="mt-4 max-w-[750px] text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-white">
+      Unverbindlich, verständlich und mit konkreten Empfehlungen für Ihre Website, Google-Präsenz und
+      Werbekampagnen.
+    </p>
+    <Button href="/kontakt" variant="white" shadow="white-glow" class="mt-5">
+      Website &amp; Sichtbarkeit prüfen lassen
+    </Button>
+  </div>
+</div>

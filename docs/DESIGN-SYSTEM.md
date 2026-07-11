@@ -203,6 +203,17 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Projekte | Bildhöhen | 501,8 (D) / 611,9 (T) / 413,7 (P) | 494+8 Frame / 604+8 / 406+8 | ≤2 |
 | Projekte | Karten-Abstand H2→Container | 70 | `mt-17` (68) | −2 |
 | Projekte | CTA-Reihe | Gap 10, mt 50; Tel-CTA 0173 4388519 | `mt-12` (48); Tel einheitlich 0178 4444 156 | −2; Nummer gemäß Antwort A |
+| Statistics | Statement | 2× p, 52/600/1em/−0.04em, balance; Phone 40 | `md:text-52 text-40 text-balance` | 0 |
+| Statistics | Werte | 50px Inter 400 blau, lh 1.3; Text 20px | `text-5xl` (48) / `text-xl` | −2 |
+| Statistics | Grid | 3 Spalten à 360, Gap 60; T: 2 Spalten; P: 1 | identisch | 0 |
+| FooterCta | Box | Ränder 20 (P: 10), Radius oben 30, blau; Inhalt max 1200, Pad ~94/100/74 | `pt-24 px-25 pb-18` | +2/0/−2 |
+| FooterCta | Muster | getiltes SVG (framerusercontent, 26,5px) — nicht abrufbar | dezentes CSS-Gitter 26,5px weiß/6 % als Näherung | Platzhalter |
+| FooterCta | Button | weiß, Weiß-Glow, Text 15 dunkel | Button-Variante `white` | Schrift +1px |
+| Footer | Dunkle Box | Radius unten 30, #0A0A0A, Pad 60/40; Inhalt max 1160 | identisch | 0 |
+| Footer | Wortmarke | „Stolz Marketing" via SVG auf 1320 skaliert (eff. ~194,6px bei 1440) | `<p>` mit `calc((100vw−120px)·0.14743)` | 0 (gleicher Effekt) |
+| Footer | Spalten | Links max 300; Navigation 192; Kontakt 368 | `md:grid-cols-[192px_368px]` | 0 |
+| Footer | Navigation | tote Links Vorteile/Anwendung/Branchen/Preise/Ablauf | echte Anker Startseite/Leistungen/Prozess/Ergebnis/Projekte | Antwort Iwo (Frage C) |
+| Footer | Export-Artefakt | Footer überlappt Statistics um 170px (main-Höhe im Export fehlerhaft) | ohne Überlappung gebaut | bewusste Korrektur |
 
 ---
 

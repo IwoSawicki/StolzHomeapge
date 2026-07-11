@@ -5,9 +5,9 @@
 // dark  = dunkler Pill-Button (FooterCta)
 interface Props {
   href: string;
-  variant?: 'blue' | 'light' | 'dark';
-  /** Schatten: Header-Button nutzt 'stack', Hero-CTA 'blue-glow' */
-  shadow?: 'stack' | 'blue-glow' | 'none';
+  variant?: 'blue' | 'light' | 'dark' | 'white';
+  /** Schatten: Header-Button nutzt 'stack', Hero-CTA 'blue-glow', FooterCta 'white-glow' */
+  shadow?: 'stack' | 'blue-glow' | 'white-glow' | 'none';
   class?: string;
 }
 const { href, variant = 'blue', shadow = variant === 'blue' ? 'stack' : 'none', class: extra = '' } = Astro.props;
@@ -18,10 +18,12 @@ const variants = {
   blue: 'bg-blue text-white-soft hover:bg-blue-bright',
   light: 'bg-transparent text-dark border border-border-dark hover:bg-bg-soft',
   dark: 'bg-dark text-white hover:bg-black',
+  white: 'bg-white text-dark hover:bg-bg-soft',
 };
 const shadows = {
   stack: 'shadow-stack',
   'blue-glow': 'shadow-blue-glow',
+  'white-glow': 'shadow-white-glow',
   none: '',
 };
 ---

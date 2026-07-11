@@ -1,0 +1,102 @@
+---
+// Footer: FooterCta (blau) + dunkle Box (Radius unten 30) mit Logo, Claim,
+// Status-Badge, Linkspalten, Riesen-Wortmarke (SVG-skaliert) und Legal-Zeile.
+// Footer-Navigation zeigt auf die echten Sektions-Anker (Antwort Iwo, Frage C —
+// Original hatte tote Template-Links „Vorteile/Anwendung/Branchen/Preise").
+import FooterCta from './FooterCta.astro';
+
+const navigation = [
+  { label: 'Startseite', href: '/#start' },
+  { label: 'Leistungen', href: '/#leistungen' },
+  { label: 'Prozess', href: '/#prozess' },
+  { label: 'Ergebnis', href: '/#ergebnis' },
+  { label: 'Projekte', href: '/#projekte' },
+];
+---
+
+<footer class="px-2.5 md:px-5">
+  <FooterCta />
+
+  <div class="rounded-b-30 bg-dark px-5 py-15 md:px-10">
+    <div class="mx-auto max-w-[1160px]">
+      <div class="flex flex-col gap-14 md:flex-row md:justify-between md:gap-6">
+        <!-- Logo, Claim, Status -->
+        <div class="max-w-[300px]">
+          <a href="/" class="flex items-center gap-3.5" aria-label="STOLZ Marketing – Startseite">
+            <svg class="h-[22px] w-[33px]" viewBox="0 0 32.514 21.435" overflow="visible" aria-hidden="true">
+              <path
+                d="M 19.003 8.874 C 17.234 9.041 15.465 9.208 13.696 9.373 C 9.804 9.738 3.903 10.29 0 10.657 C 0.042 10.736 0.086 10.754 0.131 10.758 C 4.053 11.127 9.052 11.603 12.976 11.958 C 15.099 12.156 17.181 12.349 19.264 12.546 C 20.07 12.623 20.17 12.713 20.344 13.503 C 20.727 15.248 21.106 16.994 21.489 18.74 C 21.681 19.618 21.877 20.496 22.084 21.435 C 22.12 21.297 22.143 21.228 22.155 21.157 C 22.582 18.685 23.029 16.216 23.421 13.738 C 23.528 13.056 23.808 12.645 24.49 12.527 C 24.581 12.511 24.669 12.479 24.76 12.458 C 26.662 12.027 28.565 11.596 30.467 11.164 C 31.15 11.009 31.832 10.85 32.514 10.693 C 32.437 10.615 32.363 10.598 32.288 10.585 C 29.908 10.154 27.528 9.722 25.147 9.294 C 24.146 9.114 23.946 8.929 23.74 7.94 C 23.274 5.702 22.811 3.464 22.345 1.226 C 22.26 0.817 22.168 0.409 22.08 0 C 21.983 0.186 21.945 0.365 21.909 0.545 C 21.445 2.904 20.984 5.265 20.516 7.623 C 20.31 8.663 20.236 8.723 19.176 8.855 C 19.119 8.863 19.061 8.869 19.003 8.874 Z"
+                fill="var(--color-white)"></path>
+            </svg>
+            <span class="font-display text-[22px] leading-none font-extrabold tracking-[-0.05em] text-white">STOLZ</span>
+          </a>
+          <p class="mt-5 text-lg font-medium leading-[1.45] text-white">
+            <strong class="font-semibold">STOLZ Marketing</strong><br />
+            Für Handwerksbetriebe<br />im Rhein-Main-Gebiet
+          </p>
+          <p class="mt-8 flex items-center gap-2 text-base text-white">
+            <span class="inline-block size-2 rounded-full bg-green-status" aria-hidden="true"></span>
+            Alle Systeme live
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-10 md:grid md:grid-cols-[192px_368px] md:gap-0">
+          <!-- Navigation -->
+          <nav aria-label="Footer-Navigation">
+            <p class="text-lg font-medium text-white">Navigation</p>
+            <ul class="mt-5 flex flex-col gap-2.5">
+              {
+                navigation.map((link) => (
+                  <li>
+                    <a href={link.href} class="text-base font-medium text-white transition-opacity duration-200 hover:opacity-70">
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+
+          <!-- Kontakt -->
+          <div>
+            <p class="text-lg font-medium text-white">Kontakt</p>
+            <ul class="mt-5 flex flex-col gap-2.5">
+              <li>
+                <a href="mailto:iwo@stolz-marketing.de" class="text-base font-medium text-white transition-opacity duration-200 hover:opacity-70">
+                  iwo@stolz-marketing.de
+                </a>
+              </li>
+              <li>
+                <a href="tel:+491784444156" class="text-base font-medium text-white transition-opacity duration-200 hover:opacity-70">
+                  0178 4444 156
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Riesen-Wortmarke: volle Breite (breiter als der 1160er-Inhalt), skaliert
+         mit dem Viewport wie im Original (215,8px bei 1440 ≙ 16,35 % der Inhaltsbreite) -->
+    <p
+      class="mt-3 text-[calc((100vw-60px)*0.14743)] leading-[1.07] font-bold tracking-[-0.06em] whitespace-nowrap text-white md:text-[calc((100vw-120px)*0.14743)]"
+      aria-hidden="true"
+    >
+      Stolz Marketing
+    </p>
+
+    <div class="mx-auto max-w-[1160px]">
+      <div
+        class="mt-6 flex flex-col gap-3 border-t border-white/15 pt-5 text-base font-medium text-white md:flex-row md:items-center md:justify-between"
+      >
+        <div class="flex gap-8">
+          <a href="/impressum" class="transition-opacity duration-200 hover:opacity-70">Impressum</a>
+          <a href="/datenschutz" class="transition-opacity duration-200 hover:opacity-70">Datenschutz</a>
+        </div>
+        <p>©Stolz Marketing</p>
+      </div>
+    </div>
+  </div>
+</footer>
