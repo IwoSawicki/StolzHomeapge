@@ -24,6 +24,7 @@
     "@fontsource/inter": "^5.2.8",
     "@fontsource/plus-jakarta-sans": "^5.2.8",
     "inter-ui": "^4.1.1",
+    "lighthouse": "^13.4.0",
     "playwright": "^1.61.1"
   }
 }
