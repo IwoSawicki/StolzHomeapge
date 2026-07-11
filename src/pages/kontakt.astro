@@ -1,0 +1,227 @@
+---
+// Kontakt-Seite: Intro + Kontaktdaten (links) / Formular-Karte (rechts),
+// Ablauf (3 Steps), FAQ-Akkordeon (8 Fragen, 2 Spalten), FooterCta + Footer.
+// HINWEIS Formular: Das Framer-Backend entfällt — der Endpoint ist ein klar
+// markierter Platzhalter (offene Frage G2, Versandweg folgt).
+// HINWEIS FAQ: Die Antworten sind im Framer-Export NICHT enthalten
+// (JS-nachgeladen) und von Iwo nachzuliefern — Platzhalter markiert.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+
+const felder = [
+  { name: 'name', type: 'text', placeholder: 'Ihr Name*', required: true },
+  { name: 'email', type: 'email', placeholder: 'Ihre E-Mail-Adresse*', required: true },
+  { name: 'telefon', type: 'tel', placeholder: 'Ihre Telefonnummer*', required: true },
+  { name: 'webseite', type: 'text', placeholder: 'Ihre Webseite (optional)', required: false },
+];
+
+const ablauf = [
+  {
+    nr: '1',
+    titel: 'Website einreichen',
+    text: 'Sie schicken uns Ihre Homepage und nennen kurz Ihr Ziel: mehr Anfragen, mehr Bewerbungen oder bessere Sichtbarkeit.',
+  },
+  {
+    nr: '2',
+    titel: 'Analyse erhalten',
+    text: 'Wir prüfen Auftritt, Google-Sichtbarkeit und mögliche Kampagnenchancen mit klarem Blick auf Umsatz und Qualität.',
+  },
+  {
+    nr: '3',
+    titel: 'Nächste Schritte klären',
+    text: 'Sie bekommen konkrete Empfehlungen und entscheiden danach in Ruhe, ob eine Zusammenarbeit sinnvoll ist.',
+  },
+];
+
+// Antworten folgen von Iwo (im Export nicht enthalten)
+const antwortPlatzhalter = '[Antwort folgt – Text wird aus dem Framer-Editor übernommen.]';
+const faq = [
+  'Ist die Analyse wirklich kostenlos?',
+  'Für wen ist STOLZ Marketing geeignet?',
+  'Muss ich bereits Werbung schalten?',
+  'Arbeiten Sie nur im Rhein-Main-Gebiet?',
+  'Was brauche ich für den Start?',
+  'Wie schnell bekomme ich eine Rückmeldung?',
+  'Was passiert nach der Anfrage?',
+  'Bin ich danach zu einer Zusammenarbeit verpflichtet?',
+];
+---
+
+<BaseLayout>
+  <Header />
+  <main>
+    <!-- Intro + Formular -->
+    <section class="px-4.5 py-14 md:px-10 md:py-30">
+      <div class="mx-auto flex max-w-[1170px] flex-col gap-10 xl:flex-row xl:justify-between xl:gap-15">
+        <div class="max-w-[610px]">
+          <SectionLabel text="Kontakt" />
+          <h1 class="mt-2 text-4xl font-bold text-balance leading-[1.1] tracking-[-0.05em] text-dark md:text-5xl">
+            Kostenlose Potenzial-Analyse anfragen
+          </h1>
+          <p class="mt-4 text-lg font-medium leading-[1.4] tracking-[-0.01em] text-dark">
+            Wir prüfen Ihre Website, Ihre Sichtbarkeit und Ihre aktuellen Chancen für mehr Anfragen oder
+            Bewerbungen. Verständlich, unverbindlich und mit konkreten nächsten Schritten.
+          </p>
+          <hr class="mt-10 border-border" />
+          <ul class="mt-10 flex flex-col gap-5">
+            <li>
+              <a href="tel:+491784444156" class="flex items-center gap-4 text-2xl font-semibold tracking-[-0.02em] text-dark">
+                <svg class="size-6 text-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                +49 178 4444 156
+              </a>
+            </li>
+            <li>
+              <a href="mailto:iwo@stolz-marketing.de" class="flex items-center gap-4 text-2xl font-semibold tracking-[-0.02em] text-dark">
+                <svg class="size-6 text-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="m22 7-10 6L2 7"></path>
+                </svg>
+                iwo@stolz-marketing.de
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Formular-Karte -->
+        <div class="w-full max-w-[500px] shrink-0 rounded-10 bg-bg-soft p-[30px]">
+          <h2 class="text-40 font-semibold tracking-[-0.04em] text-dark">Ihre Analyse-Anfrage</h2>
+          <!-- PLATZHALTER-Backend: Versandweg folgt (offene Frage G2).
+               Der Submit wird clientseitig abgefangen, bis ein Endpoint existiert. -->
+          <form class="mt-4" method="post" action="#" data-form-platzhalter>
+            <div class="flex flex-col gap-4">
+              {
+                felder.map((feld) => (
+                  <label class="block rounded-10 bg-bg-field px-4 py-3">
+                    <span class="sr-only">{feld.placeholder}</span>
+                    <input
+                      class="w-full border-0 bg-transparent text-lg text-dark outline-none placeholder:text-dark/40"
+                      type={feld.type}
+                      name={feld.name}
+                      placeholder={feld.placeholder}
+                      required={feld.required}
+                    />
+                  </label>
+                ))
+              }
+              <label class="block rounded-10 bg-bg-field px-4 py-3">
+                <span class="sr-only">Nachricht (optional)</span>
+                <textarea
+                  class="min-h-[72px] w-full resize-y border-0 bg-transparent text-lg text-dark outline-none placeholder:text-dark/40"
+                  name="nachricht"
+                  placeholder="Nachricht (optional)"></textarea>
+              </label>
+              <!-- einfacher Honeypot (unsichtbar; Original-Framer-Honeypots nicht übernommen) -->
+              <input class="hidden" type="text" name="firma" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            </div>
+            <button
+              type="submit"
+              class="mt-5 w-full cursor-pointer rounded-full bg-blue py-[18px] text-lg font-medium tracking-[-0.01em] text-white transition-colors duration-200 hover:bg-blue-bright"
+            >
+              Analyse anfragen
+            </button>
+            <p class="mt-4 text-xs leading-[1.3] text-dark/60">
+              Durch das Abschicken erklärst du dich mit unserer
+              <a href="/datenschutz" class="underline">Datenschutzerklärung</a> einverstanden.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ablauf -->
+    <section class="bg-bg-gray px-3 py-12 md:px-10 md:py-25">
+      <div class="flex flex-col items-center text-center">
+        <SectionLabel text="Ablauf" />
+        <h2 class="mt-2 max-w-[800px] text-3xl font-bold text-balance leading-[1.1] tracking-[-0.05em] text-dark">
+          Von der ersten Einschätzung bis zur Umsetzung: ein klarer Prozess für mehr Anfragen und Bewerbungen.
+        </h2>
+      </div>
+
+      <div class="mx-auto mt-10 max-w-[1200px] rounded-30 bg-bg-soft p-5 shadow-stack">
+        <ol class="grid grid-cols-1 gap-2 md:grid-cols-3">
+          {
+            ablauf.map((step) => (
+              <li class="rounded-[18px] bg-white p-5">
+                <span class="flex size-[30px] items-center justify-center rounded-10 bg-blue/10 text-base font-semibold text-blue">
+                  {step.nr}
+                </span>
+                <h3 class="mt-4 text-xl font-semibold tracking-[-0.02em] text-dark">{step.titel}</h3>
+                <p class="mt-12 text-15 font-medium tracking-[-0.01em] text-dark/60">{step.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="px-4.5 py-14 md:px-10 md:py-25">
+      <h2 class="text-center text-40 font-semibold text-balance tracking-[-0.03em] text-navy">
+        FAQ zur Potenzial-Analyse
+      </h2>
+      <div class="mx-auto mt-4 grid max-w-[1170px] grid-cols-1 gap-x-20 md:grid-cols-2" data-faq>
+        {
+          [faq.slice(0, 4), faq.slice(4)].map((spalte, s) => (
+            <div>
+              {spalte.map((frage, i) => (
+                <div class:list={['border-b-2', i % 2 === 0 ? 'border-blue' : 'border-gray']}>
+                  <button
+                    type="button"
+                    class="flex w-full cursor-pointer items-center justify-between gap-4 py-[30px] text-left"
+                    aria-expanded="false"
+                    aria-controls={`faq-antwort-${s}-${i}`}
+                  >
+                    <span class="text-xl font-semibold leading-[1.3] tracking-[-0.03em] text-navy">{frage}</span>
+                    <svg
+                      class="size-3 shrink-0 rotate-90 text-gray transition-transform duration-200"
+                      viewBox="0 0 8 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="m 1.5 1.5 5 4.5 -5 4.5" />
+                    </svg>
+                  </button>
+                  <div id={`faq-antwort-${s}-${i}`} class="hidden pb-[30px]" role="region">
+                    <p class="text-base font-medium leading-[1.5] text-dark/60">{antwortPlatzhalter}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  // FAQ-Akkordeon
+  document.querySelectorAll('[data-faq] button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const offen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!offen));
+      const antwort = document.getElementById(btn.getAttribute('aria-controls')!)!;
+      antwort.classList.toggle('hidden', offen);
+      btn.querySelector('svg')!.classList.toggle('rotate-90', offen);
+      btn.querySelector('svg')!.classList.toggle('-rotate-90', !offen);
+    });
+  });
+
+  // Formular-PLATZHALTER: kein Backend vorhanden (offene Frage G2).
+  // Verhindert den Versand und weist freundlich auf die Alternativen hin.
+  document.querySelector('[data-form-platzhalter]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert(
+      'Das Formular ist noch nicht angebunden. Bitte kontaktieren Sie uns direkt: iwo@stolz-marketing.de oder +49 178 4444 156.'
+    );
+  });
+</script>

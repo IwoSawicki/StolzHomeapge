@@ -214,6 +214,14 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 | Footer | Spalten | Links max 300; Navigation 192; Kontakt 368 | `md:grid-cols-[192px_368px]` | 0 |
 | Footer | Navigation | tote Links Vorteile/Anwendung/Branchen/Preise/Ablauf | echte Anker Startseite/Leistungen/Prozess/Ergebnis/Projekte | Antwort Iwo (Frage C) |
 | Footer | Export-Artefakt | Footer überlappt Statistics um 170px (main-Höhe im Export fehlerhaft) | ohne Überlappung gebaut | bewusste Korrektur |
+| Kontakt | Hero | Container 1170; links 610 (H1 48, Intro 18, Trennlinie, Tel/Mail 22–24 mit blauen Icons); rechts Karte 500, bg #FAFAFA, Radius 10, Pad 30 | identisch | 0 |
+| Kontakt | Formular | Felder bg #F5F5F5, Radius 10, Pad 12/16, Text 18; Submit blau, Pill, H 58; Hinweis 13px mit Link | identisch; Backend = Platzhalter (Frage G2), einfacher Honeypot | 0 |
+| Kontakt | Formulartitel | 38px/600 | `--text-40` (40px) | +2 |
+| Kontakt | Ablauf | bg #F2F2F2, Karten-Container wie Probleme; H2 30/700/balance max 800 | identisch; Steps 1/2/3 statt „1/1/1" (Original-Bug) | Nummern-Fix, s. Bericht |
+| Kontakt | FAQ | H2 38/600 #133475; 2 Spalten (spaltenweise), Fragen 20/600 navy, Pad 30/0, Divider 2px blau/grau alternierend, Pfeil 8×12 | identisch; **Antworten fehlen im Export → Platzhalter, Texte von Iwo** | Frage-Region → Rhein-Main (Antwort B) |
+| Impressum | Layout | max 1300: links H1 60/600 („." blau), rechts 810; H6→h2 40/500; Text 18/500 #767676 | identisch (h2 statt h6, SEO) | 0 |
+| Impressum | Korrekturen | tel:-Link defekt; mailto → florian@rebland-marketing.de (Template-Rest); Nummer 0173 4388519 | tel:+491784444156, mailto:iwo@…, Nummer 0178 4444 156 | Antwort A + offensichtliche Bugs |
+| Datenschutz | Inhalt | leere JS-Shell im Export | Platzhalter-Seite im Impressum-Layout, Text folgt von Iwo | Frage F |
 
 ---
 

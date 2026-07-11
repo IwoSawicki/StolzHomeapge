@@ -1,0 +1,30 @@
+---
+// Datenschutz – PLATZHALTER-Seite.
+// original/datenschutz.html ist eine leere JS-Shell (kein SSR-Inhalt) und die
+// Live-Domain ist aus dieser Umgebung nicht erreichbar (Egress-Policy).
+// Der Text wird von Iwo nachgeliefert (offene Frage F) und hier im selben
+// Layout wie das Impressum eingesetzt.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Datenschutz | STOLZ Marketing">
+  <Header />
+  <main>
+    <section class="px-4.5 pt-14 pb-20 md:px-10 md:pt-26 md:pb-36">
+      <div class="mx-auto flex max-w-[1300px] flex-col gap-10 md:flex-row md:justify-between">
+        <h1 class="text-5xl font-semibold tracking-[-0.03em] text-black md:text-6xl">
+          Datenschutz<span class="text-blue">.</span>
+        </h1>
+        <div class="w-full max-w-[810px]">
+          <p class="text-lg font-medium leading-[1.5] text-gray-light">
+            [Platzhalter: Der Text der Datenschutzerklärung wird übernommen, sobald er aus dem Framer-Editor
+            vorliegt – der Export enthält ihn nicht.]
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -125,12 +125,16 @@
   --color-cream: #fdfcee;
   --color-gray: #636363; /* fasst #636363, #6C6B6B zusammen */
   --color-gray-slate: #5a6272;
+  --color-gray-light: #767676; /* Fließtext Impressum/Datenschutz */
   --color-white-soft: #f5fffd; /* Button-Text auf Blau (Original exakt) */
   --color-bg-soft: #fafafa;
   --color-bg-green: #f8faf5;
   --color-bg-green-bright: #edffe3;
   --color-bg-blue: #f4f7fa;
   --color-bg-blue-light: #e8f3ff; /* Painpoint-Tabs-Box */
+  --color-bg-gray: #f2f2f2; /* Ablauf-Sektion (Kontakt) */
+  --color-bg-field: #f5f5f5; /* Formularfelder */
+  --color-navy: #133475; /* FAQ-Überschriften */
   --color-orange-soft: rgba(255, 149, 0, 0.09); /* Icon-Quadrate Problem-Karten */
   --color-border: #e5eaf0;
   --color-border-gray: #dde0e3;
