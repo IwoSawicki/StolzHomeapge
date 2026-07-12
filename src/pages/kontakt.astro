@@ -197,7 +197,7 @@ const faq = [
         {
           [faq.slice(0, 4), faq.slice(4)].map((spalte, s) => (
             <div>
-              {spalte.map((frage, i) => (
+              {spalte.map((item, i) => (
                 <div class:list={['border-b-2', i % 2 === 0 ? 'border-blue' : 'border-gray']}>
                   <button
                     type="button"
@@ -205,7 +205,7 @@ const faq = [
                     aria-expanded="false"
                     aria-controls={`faq-antwort-${s}-${i}`}
                   >
-                    <span class="text-xl font-semibold leading-[1.3] tracking-[-0.03em] text-navy">{frage}</span>
+                    <span class="text-xl font-semibold leading-[1.3] tracking-[-0.03em] text-navy">{item.frage}</span>
                     <svg
                       class="size-3 shrink-0 rotate-90 text-gray transition-transform duration-200"
                       viewBox="0 0 8 12"
@@ -220,7 +220,7 @@ const faq = [
                     </svg>
                   </button>
                   <div id={`faq-antwort-${s}-${i}`} class="hidden pb-[30px]" role="region">
-                    <p class="text-base font-medium leading-[1.5] text-dark/60">{antwortPlatzhalter}</p>
+                    <p class="text-base font-medium leading-[1.5] text-dark/60">{item.antwort}</p>
                   </div>
                 </div>
               ))}
