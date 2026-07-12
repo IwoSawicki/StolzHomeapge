@@ -12,5 +12,9 @@ export default defineConfig({
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
+    preview: {
+      // astro preview läuft hinter dem Dokploy-Proxy: eigene Domains erlauben
+      allowedHosts: ['dev.stolz-ki.de', 'stolz-marketing.de', 'www.stolz-marketing.de'],
+    },
   },
 });
