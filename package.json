@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "STOLZ Marketing – Website (Astro + Tailwind CSS v4)",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/IwoSawicki/StolzHomeapge.git"
