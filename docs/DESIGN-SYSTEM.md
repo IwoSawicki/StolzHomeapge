@@ -227,11 +227,15 @@ Letter-Spacing (−0.01em … −0.06em) und Line-Heights (1 / 1.05 / 1.1 / 1.15
 
 ## 7. Bilder (Platzhalter → Austausch ausstehend)
 
-`framerusercontent.com` ist aus der Build-Umgebung nicht erreichbar
-(Egress-Policy 403, ebenso Live-Domain). Alle Bilder liegen daher als
-**exakt dimensionierte Platzhalter** unter `src/assets/` (generiert via
-`scripts/make-placeholders.mjs`). Beim Austausch die Originaldatei einfach
-unter gleichem Namen ablegen — kein Code-Change nötig.
+**Stand 12.07.2026: Alle 10 Inhaltsbilder wurden von Iwo geliefert und
+ersetzen die Platzhalter** (Hero heißt jetzt `stolz-marketing-team.png` —
+Team-Foto statt des im PLAN vermuteten Dashboard-Mockups). Das OG-Bild ist
+ein 1200×630-Ausschnitt aus dem Team-Foto (Original-OG lag nicht vor).
+Noch Platzhalter: Favicon, Apple-Touch-Icon, CTA-Hintergrund-Muster.
+
+Ursprüngliche Situation: `framerusercontent.com` war aus der Build-Umgebung
+nicht erreichbar (Egress-Policy 403, ebenso Live-Domain), daher exakt
+dimensionierte Platzhalter via `scripts/make-placeholders.mjs`.
 
 | Zieldatei (src/assets/) | Maße | Original-URL (framerusercontent.com/images/…) | Verwendung |
 |---|---|---|---|

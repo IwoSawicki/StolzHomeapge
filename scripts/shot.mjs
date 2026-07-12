@@ -57,15 +57,20 @@ await page.evaluate(() => {
     if (/translateY/.test(el.style.transform)) el.style.transform = 'none';
   }
 });
-// Einmal durchscrollen, damit lazy geladene Bilder im Screenshot erscheinen
-await page.evaluate(async () => {
-  for (let y = 0; y < document.body.scrollHeight; y += 800) {
-    window.scrollTo(0, y);
-    await new Promise((r) => setTimeout(r, 40));
-  }
-  window.scrollTo(0, 0);
-});
-await page.waitForTimeout(1200);
+// Lazy-Loading nur für den Screenshot aufheben (die Website selbst bleibt
+// lazy) und warten, bis alle Bilder geladen und dekodiert sind.
+await page.evaluate(() =>
+  Promise.allSettled(
+    [...document.images].map((img) => {
+      img.loading = 'eager';
+      return img.decode ? img.decode().catch(() => {}) : null;
+    })
+  )
+);
+await page
+  .waitForFunction(() => [...document.images].every((i) => i.complete && i.naturalWidth > 0), { timeout: 20000 })
+  .catch(() => {});
+await page.waitForTimeout(500);
 if (mode === 'fullpage') await page.screenshot({ path: out, fullPage: true });
 else if (mode === 'viewport') await page.screenshot({ path: out });
 else if (mode.startsWith('clip:')) {
