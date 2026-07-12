@@ -39,7 +39,13 @@ const karten = [
       {
         karten.map((karte) => (
           <li class="rounded-30 border border-border bg-white p-5">
-            <div class="size-9 rounded-[12px] bg-blue/15" aria-hidden="true"></div>
+            <div class="flex size-9 items-center justify-center rounded-[12px] bg-blue/15 text-blue" aria-hidden="true">
+              {/* Check-Circle (Duotone), Original-Icon der Resultate-Karten */}
+              <svg class="size-6" viewBox="0 0 256 256" fill="currentColor">
+                <path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"></path>
+                <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+              </svg>
+            </div>
             <h3 class="mt-[7px] text-xl font-medium tracking-[-0.03em] text-dark">{karte.titel}</h3>
             <p class="mt-12 text-15 font-medium tracking-[-0.01em] text-dark/60">{karte.text}</p>
           </li>
