@@ -1,0 +1,74 @@
+---
+// /projekte – Übersichtsseite (v1).
+// Zeigt alle Projekte im Clean-Showcase-Stil (Variante A); sobald die
+// Design-Entscheidung für die Startseiten-Sektion gefallen ist, gleichen
+// wir die Darstellung an. Projekt-Unterseiten (/projekte/[slug]) folgen
+// im nächsten Step — die Karten sind dafür vorbereitet.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import BrowserMockup from '../components/BrowserMockup.astro';
+import VideoTile from '../components/VideoTile.astro';
+import Button from '../components/Button.astro';
+import { projekte } from '../data/projekte';
+---
+
+<BaseLayout
+  title="Projekte | STOLZ Marketing"
+  description="Websites, Kampagnen und Recruiting-Content für Handwerksbetriebe: eine Auswahl erfolgreicher Projekte von STOLZ Marketing."
+>
+  <Header />
+  <main>
+    <section class="px-3 pt-14 pb-12 md:px-9 md:pt-24 md:pb-25">
+      <div class="flex flex-col items-center text-center">
+        <SectionLabel text="Projekte" />
+        <h1 class="mt-2 max-w-[800px] text-4xl font-bold text-balance leading-[1.05] tracking-[-0.06em] text-dark md:text-40 xl:text-5xl">
+          Erfolgreiche Projekte
+        </h1>
+        <p class="mt-2 max-w-[720px] text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-dark">
+          Websites, Kampagnen und Recruiting-Content für Handwerksbetriebe – transparent, messbar und auf
+          Ergebnisse gebaut.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-17 grid max-w-[1200px] grid-cols-1 gap-2 md:grid-cols-3 md:[grid-auto-rows:480px] xl:[grid-auto-rows:560px]">
+        {
+          [0, 1, 3, 2, 4, 5, 6, 7].map((idx) => projekte[idx]).map((projekt) => (
+            <article
+              class:list={[
+                'group relative overflow-hidden rounded-20 bg-dark max-md:h-[420px]',
+                projekt.art === 'website' && 'md:col-span-2',
+              ]}
+            >
+              <div class="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.02]">
+                {projekt.art === 'website' ? (
+                  <BrowserMockup domain={projekt.domain!} alt={`Website-Projekt ${projekt.name}`} class="rounded-none border-0" />
+                ) : (
+                  <VideoTile bild={projekt.bild} alt={`Video-Projekt ${projekt.name}`} />
+                )}
+              </div>
+              <div class="absolute top-4 left-4 flex flex-wrap gap-1.5">
+                {projekt.kategorien.map((kategorie) => (
+                  <span class="rounded-full bg-dark/50 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
+                    {kategorie}
+                  </span>
+                ))}
+              </div>
+              <div class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/75 via-black/35 to-transparent px-6 pt-16 pb-5">
+                <h3 class="text-2xl font-semibold tracking-[-0.02em] text-white">{projekt.name}</h3>
+                <p class="mt-0.5 text-15 font-medium text-white/75">{projekt.beschreibung}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="mt-14 flex flex-col items-center justify-center gap-2.5 md:flex-row">
+        <Button href="/kontakt" variant="blue" shadow="blue-glow">Jetzt unverbindlich anfragen</Button>
+        <Button href="tel:+491784444156" variant="light">Direkt anrufen – 0178 4444 156</Button>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
