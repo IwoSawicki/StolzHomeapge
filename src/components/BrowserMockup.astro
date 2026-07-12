@@ -10,14 +10,16 @@ interface Props {
   /** optionaler echter Screenshot */
   bild?: ImageMetadata;
   alt?: string;
+  /** Browser-Leiste anzeigen (false = nur rohe Medienfläche, cleaner Look) */
+  chrome?: boolean;
   class?: string;
 }
-const { domain, bild, alt = `Website ${domain}`, class: extra = '' } = Astro.props;
+const { domain, bild, alt = `Website ${domain}`, chrome = true, class: extra = '' } = Astro.props;
 const wortmarke = domain.replace(/^www\./, '').split('.')[0];
 ---
 
 <div class={`flex h-full w-full flex-col overflow-hidden rounded-14 border border-border bg-white ${extra}`}>
-  <div class="flex shrink-0 items-center gap-1.5 border-b border-border bg-bg-soft px-3.5 py-2.5">
+  <div class:list={['flex shrink-0 items-center gap-1.5 border-b border-border bg-bg-soft px-3.5 py-2.5', !chrome && 'hidden']}>
     <span class="size-2 rounded-full bg-border-gray"></span>
     <span class="size-2 rounded-full bg-border-gray"></span>
     <span class="size-2 rounded-full bg-border-gray"></span>

@@ -1,0 +1,63 @@
+---
+// DESIGN-VARIANTE D – „Projekt-Index" (Listen-Look):
+// Radikal reduziert: nummerierte Zeilenliste mit großen Projektnamen und
+// Kategorien als Textzeile, feine Trennlinien. Beim Hover erscheint rechts
+// eine schwebende Medien-Vorschau (nur Desktop). Sehr typografisch,
+// komplett ohne Karten, Pills und Farben.
+import BrowserMockup from '../BrowserMockup.astro';
+import VideoTile from '../VideoTile.astro';
+import { startseitenProjekte } from '../../data/projekte';
+---
+
+<section class="px-5 pt-24 pb-16 md:px-10 md:pt-[150px] md:pb-28">
+  <p class="mb-10 text-center text-xs font-medium tracking-wide text-gray uppercase">
+    Design-Variante D · Projekt-Index (zur Auswahl, wird später entfernt)
+  </p>
+
+  <div class="mx-auto max-w-[1100px]">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Ausgewählte Projekte</p>
+      <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">2023 – 2026</p>
+    </div>
+
+    <ul class="mt-8 border-t border-border">
+      {
+        startseitenProjekte.map((projekt, i) => (
+          <li class="group relative border-b border-border">
+            <a href="/projekte" class="flex flex-wrap items-baseline gap-x-8 gap-y-1 py-7 md:py-9">
+              <span class="w-10 text-sm font-medium text-gray tabular-nums">0{i + 1}</span>
+              <h3 class="text-3xl font-semibold tracking-[-0.03em] text-dark transition-transform duration-300 md:text-40 md:group-hover:translate-x-3">
+                {projekt.name}
+              </h3>
+              <span class="ml-auto text-sm font-medium text-gray">{projekt.kategorien.join(' · ')}</span>
+            </a>
+
+            {/* Schwebende Vorschau beim Hover (Desktop) */}
+            <div
+              class:list={[
+                'pointer-events-none absolute top-1/2 right-[18%] z-10 hidden w-[240px] -translate-y-1/2 rotate-[-2deg] opacity-0 shadow-stack-strong transition-all duration-300 group-hover:opacity-100 group-hover:rotate-0 xl:block',
+                'overflow-hidden rounded-10',
+                projekt.art === 'website' ? 'aspect-[4/3]' : 'aspect-[9/13]',
+              ]}
+            >
+              {projekt.art === 'website' ? (
+                <BrowserMockup domain={projekt.domain!} alt={`Website-Projekt ${projekt.name}`} chrome={false} class="border-0" />
+              ) : (
+                <VideoTile bild={projekt.bild} alt={`Video-Projekt ${projekt.name}`} />
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-10 flex justify-end">
+      <a href="/projekte" class="group inline-flex items-center gap-2 text-base font-medium text-dark transition-opacity duration-200 hover:opacity-60">
+        Alle Projekte ansehen
+        <svg class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+---
+// DESIGN-VARIANTE C – „Editorial" (inspiriert von madebyshape.co.uk):
+// Keine Karten, keine Pills — rohe Medienflächen auf Weiß, versetztes
+// 2-Spalten-Raster, Projektname + dezente Meta-Zeile UNTER dem Medium,
+// linksbündige Typo-Headline statt Label-Pill. Maximaler Weißraum.
+import BrowserMockup from '../BrowserMockup.astro';
+import VideoTile from '../VideoTile.astro';
+import { startseitenProjekte } from '../../data/projekte';
+---
+
+<section class="px-5 pt-24 pb-16 md:px-10 md:pt-[150px] md:pb-28">
+  <p class="mb-10 text-center text-xs font-medium tracking-wide text-gray uppercase">
+    Design-Variante C · Editorial (zur Auswahl, wird später entfernt)
+  </p>
+
+  <div class="mx-auto max-w-[1200px]">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Projekte</p>
+        <h2 class="mt-3 max-w-[560px] text-4xl font-semibold text-balance leading-[1.08] tracking-[-0.03em] text-dark md:text-5xl">
+          Arbeiten, die Anfragen bringen.
+        </h2>
+      </div>
+      <a
+        href="/projekte"
+        class="group inline-flex items-center gap-2 pb-1 text-base font-medium text-dark transition-opacity duration-200 hover:opacity-60"
+      >
+        Alle Projekte
+        <svg class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        </svg>
+      </a>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-20">
+      {
+        startseitenProjekte.map((projekt, i) => (
+          <article class:list={['group', i % 2 === 1 && 'md:mt-24 md:-mb-24']}>
+            <div
+              class:list={[
+                'overflow-hidden rounded-14',
+                projekt.art === 'website' ? 'aspect-[4/3]' : 'aspect-[4/4.6]',
+              ]}
+            >
+              <div class="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.015]">
+                {projekt.art === 'website' ? (
+                  <BrowserMockup domain={projekt.domain!} alt={`Website-Projekt ${projekt.name}`} chrome={false} class="border-0" />
+                ) : (
+                  <VideoTile bild={projekt.bild} alt={`Video-Projekt ${projekt.name}`} />
+                )}
+              </div>
+            </div>
+            <div class="mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+              <h3 class="text-lg font-semibold tracking-[-0.01em] text-dark">{projekt.name}</h3>
+              <p class="text-sm font-medium text-gray">{projekt.kategorien.join(' · ')}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
