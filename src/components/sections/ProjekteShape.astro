@@ -5,7 +5,7 @@
 // gemeinsame Projekt-Raster (ProjekteGrid) und der Link zur Projektseite.
 import SectionHeading from '../SectionHeading.astro';
 import ProjekteGrid from '../ProjekteGrid.astro';
-import { startseitenProjekte } from '../../data/projekte';
+import { projekte, startseitenProjekte } from '../../data/projekte';
 ---
 
 <section id="projekte" class="px-5 pt-24 pb-16 md:px-10 md:pt-[150px] md:pb-28">
@@ -30,7 +30,7 @@ import { startseitenProjekte } from '../../data/projekte';
         href="/projekte"
         class="group inline-flex items-center gap-2 text-base font-medium text-dark transition-opacity duration-200 hover:opacity-60"
       >
-        Alle Projekte ansehen
+        Alle Projekte ansehen ({projekte.length})
         <svg class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M5 12h14M13 6l6 6-6 6"></path>
         </svg>

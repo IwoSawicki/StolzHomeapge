@@ -8,10 +8,12 @@ import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
 import BrowserMockup from '../BrowserMockup.astro';
 import VideoTile from '../VideoTile.astro';
-import { startseitenProjekte } from '../../data/projekte';
+import { projekte } from '../../data/projekte';
 
 // Reihen-Muster: [Website breit + Video] / [Video + Website breit] / …
-const reihenfolge = [0, 1, 3, 2, 4, 5].map((i) => startseitenProjekte[i]);
+// (Archiv-Design, feste 6er-Auswahl unabhängig von der Startseiten-Anzahl)
+const ersteSechs = projekte.slice(0, 6);
+const reihenfolge = [0, 1, 3, 2, 4, 5].map((i) => ersteSechs[i]);
 ---
 
 <section class="px-3 pt-24 pb-12 md:px-9 md:pt-[150px] md:pb-25">

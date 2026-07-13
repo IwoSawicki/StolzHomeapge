@@ -5,10 +5,11 @@
 // Overlays. Ruhig, monochrom, ohne Kartenoptik.
 import BrowserMockup from '../BrowserMockup.astro';
 import VideoTile from '../VideoTile.astro';
-import { startseitenProjekte } from '../../data/projekte';
+import { projekte } from '../../data/projekte';
 
 // Web/Video im Wechsel übers Raster verteilt
-const galerie = [0, 1, 2, 3, 4, 5].map((i) => startseitenProjekte[i]);
+// (Archiv-Design, feste 6er-Auswahl unabhängig von der Startseiten-Anzahl)
+const galerie = projekte.slice(0, 6);
 ---
 
 <section class="bg-bg-soft px-5 pt-24 pb-16 md:px-10 md:pt-[150px] md:pb-28">

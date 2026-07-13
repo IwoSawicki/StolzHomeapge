@@ -376,5 +376,5 @@ export const projekte: Projekt[] = [
   },
 ];
 
-/** die 6 Projekte der Startseiten-Sektion (Reihenfolge = Vorgabe Iwo) */
-export const startseitenProjekte = projekte.slice(0, 6);
+/** die 4 Projekte der Startseiten-Sektion (Reihenfolge = Vorgabe Iwo) */
+export const startseitenProjekte = projekte.slice(0, 4);

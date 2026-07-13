@@ -1,6 +1,7 @@
 ---
-// Hochformat-Video-Kachel (Still + Play-Button) im Stil der Einblicke-Frames.
-// `bild` ist das Video-Standbild; ohne Bild dunkler Gradient wie im Original.
+// Hochformat-Video-Kachel (Still, ohne Play-Button) im Stil der
+// Einblicke-Frames. `bild` ist das Video-Standbild; ohne Bild dunkler
+// Gradient wie im Original.
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 
@@ -18,11 +19,4 @@ const { bild, alt = 'Video-Beispiel', class: extra = '' } = Astro.props;
       <Image src={bild} alt={alt} class="absolute inset-0 h-full w-full object-cover" widths={[380, 576, 760]} sizes="(min-width: 810px) 33vw, 100vw" />
     )
   }
-  <span class="absolute inset-0 flex items-center justify-center">
-    <span class="flex size-[58px] items-center justify-center rounded-full bg-white/14 backdrop-blur-[2px]">
-      <svg class="size-[22px] translate-x-px" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z" />
-      </svg>
-    </span>
-  </span>
 </div>
