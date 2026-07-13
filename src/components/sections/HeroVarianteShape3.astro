@@ -1,0 +1,159 @@
+---
+// HERO-VARIANTE 3 „Shape-Treppe" (Nachbau des Shape-Hero-Prinzips):
+// Große dunkle Canvas-Fläche; Eyebrow, jede Headline-Zeile und die
+// Button-Reihe sind eigene weiße „Stufen", die treppenartig in die
+// Fläche schneiden — an jedem Absatz sitzen die umgekehrten Kurven
+// (Inverted Corners, pures CSS). Hochkant-Video rechts in der Fläche,
+// Statement-Zeile unten links, „Einblick"-Pill auf dem Video.
+//
+// WICHTIG für die Treppe: Die Zeilen brechen manuell um (jede Zeile ein
+// eigener Block) und müssen von oben nach unten schmaler werden
+// (Eyebrow < Zeile 1, Zeile 1 > 2 > 3, Buttons breiter als Zeile 3).
+// Das ist bei diesen Texten auf allen Breakpoints stabil, weil alle
+// Zeilen mit derselben Schriftgröße skalieren.
+//
+// VIDEO EINBINDEN: wie bei Variante 1/2 — MP4 nach
+// public/videos/hero-hochkant.mp4 laden (Poster optional daneben).
+import { existsSync } from 'node:fs';
+import Button from '../Button.astro';
+
+const hatVideo = existsSync(new URL('../../../public/videos/hero-hochkant.mp4', import.meta.url));
+const hatPoster = existsSync(new URL('../../../public/videos/hero-hochkant-poster.jpg', import.meta.url));
+---
+
+<section class="px-5 pt-16 pb-16 md:px-10 md:pt-24 md:pb-24">
+  <p class="mb-8 text-center text-xs font-medium tracking-wide text-gray uppercase">
+    Hero-Variante 3 · Shape-Treppe (zur Auswahl, wird später entfernt)
+  </p>
+
+  <div class="mx-auto max-w-[1240px]">
+    <!-- Canvas: dunkle Fläche; die Stufen hängen oben links über den Rand -->
+    <div class="v3-canvas relative mt-6 ml-5 rounded-[32px] bg-linear-160 from-video-dark-1 to-video-dark-2 md:ml-6 xl:min-h-[720px]">
+      <!-- Treppen-Stufen -->
+      <div class="relative z-10 -ml-5 w-max max-w-none pt-0 md:-ml-6">
+        <p class="v3-step v3-eyebrow -mt-6 flex w-max items-center gap-2.5 rounded-tr-[14px] bg-white pr-6 pb-2 text-sm font-medium text-dark">
+          <span class="size-1.5 rounded-full bg-dark" aria-hidden="true"></span>
+          Hey, wir sind Stolz Marketing 👋
+        </p>
+        {/* bewusst kein <h1>: das hat die bestehende Hero; wird diese
+            Variante gewählt, wird die Treppe zum echten h1 */}
+        <p class="text-3xl font-semibold leading-none tracking-[-0.04em] text-dark md:text-52 xl:text-6xl">
+          <span class="v3-step v3-zeile1 block w-max rounded-tr-[20px] bg-white pr-8 pb-2 xl:pb-3">Ein Ansprechpartner</span>
+          <span class="v3-step v3-zeile block w-max bg-white pr-8 pb-2 xl:pb-3">für Ihr gesamtes</span>
+          <span class="v3-step v3-zeile v3-zeile3 block w-max bg-white pr-8 pb-1">Marketing.</span>
+        </p>
+        <div class="v3-step v3-cta w-max rounded-tr-[20px] rounded-br-[24px] bg-white pt-4 pr-8 pb-6">
+          <div class="flex flex-col items-start gap-2.5 md:flex-row md:items-center">
+            <Button href="/kontakt" variant="blue" shadow="blue-glow">Jetzt Potenzial checken lassen</Button>
+            <Button href="tel:+491784444156" variant="light">Direkt anrufen – 0178 4444 156</Button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statement unten links in der Fläche -->
+      <p class="max-w-[440px] px-6 pt-10 text-2xl font-semibold text-balance leading-[1.15] tracking-[-0.02em] text-white md:px-8 xl:absolute xl:bottom-10 xl:left-10 xl:px-0 xl:pt-0 xl:text-3xl">
+        Mehr Anfragen für Ihr Unternehmen.{' '}
+        <span class="text-white/50">Messbar &amp; Planbar.</span>
+      </p>
+
+      <!-- Hochkant-Video rechts in der Fläche -->
+      <div class="relative mx-auto mt-8 w-[calc(100%-2.5rem)] max-w-[400px] pb-5 md:pb-6 xl:absolute xl:top-1/2 xl:right-10 xl:mt-0 xl:w-[340px] xl:-translate-y-1/2 xl:pb-0">
+        <div class="aspect-[9/16] overflow-hidden rounded-24 bg-white/6 ring-1 ring-white/10">
+          {
+            hatVideo ? (
+              <video
+                class="h-full w-full object-cover"
+                src="/videos/hero-hochkant.mp4"
+                poster={hatPoster ? '/videos/hero-hochkant-poster.jpg' : undefined}
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+              />
+            ) : (
+              <div class="flex h-full w-full flex-col items-center justify-center gap-4 px-8 text-center">
+                <span class="flex size-[58px] items-center justify-center rounded-full bg-white/14 backdrop-blur-[2px]">
+                  <svg class="size-[22px] translate-x-px" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z" />
+                  </svg>
+                </span>
+                <p class="text-sm font-medium text-white/60">
+                  Hochkant-Video folgt — Datei nach{' '}
+                  <code class="text-white/80">public/videos/hero-hochkant.mp4</code> laden
+                </p>
+              </div>
+            )
+          }
+        </div>
+        <div class="absolute right-3 bottom-8 flex items-center gap-3 rounded-full bg-white py-2 pr-5 pl-2 shadow-card md:bottom-9 xl:bottom-3">
+          <span class="flex size-9 items-center justify-center rounded-full bg-dark">
+            <svg class="size-3.5 translate-x-px" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+              <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z" />
+            </svg>
+          </span>
+          <span class="text-sm leading-tight font-semibold text-dark">
+            Einblick in unsere Arbeit
+            <span class="block text-xs font-medium text-gray">STOLZ Marketing</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Treppen-Stufen: umgekehrte Kurven an jedem Absatz.
+     Jede Stufe ist ein weißer Block (w-max); die Quadrate mit
+     Radial-Gradient zeichnen die konkaven Übergänge:
+     – wird die nächste Stufe BREITER (Eyebrow→Zeile 1, Zeile 3→Buttons),
+       bekommt die schmalere Stufe die Kurve unten rechts außen;
+     – wird sie SCHMALER (Zeile 1→2→3), bekommt die schmalere Stufe die
+       Kurve oben rechts außen. */
+  .v3-canvas {
+    --v3-gutter: 1.25rem; /* = ml-5 / -ml-5 */
+    --v3-r: 20px;
+  }
+  @media (min-width: 810px) {
+    .v3-canvas {
+      --v3-gutter: 1.5rem; /* = md:ml-6 / md:-ml-6 */
+    }
+  }
+  .v3-step {
+    position: relative;
+  }
+  .v3-step::before,
+  .v3-step::after {
+    position: absolute;
+    width: var(--v3-r);
+    height: var(--v3-r);
+  }
+  /* schmalere Stufe → nächste ist breiter: Kurve unten rechts */
+  .v3-eyebrow::after,
+  .v3-zeile3::after {
+    content: '';
+    right: calc(-1 * var(--v3-r));
+    bottom: 0;
+    background: radial-gradient(circle at 100% 0, transparent var(--v3-r), var(--color-white) var(--v3-r));
+  }
+  /* Stufe ist schmaler als die darüber: Kurve oben rechts */
+  .v3-zeile::before {
+    content: '';
+    right: calc(-1 * var(--v3-r));
+    top: 0;
+    background: radial-gradient(circle at 100% 100%, transparent var(--v3-r), var(--color-white) var(--v3-r));
+  }
+  /* Zeile 1 und 2 sind breiter als die jeweils folgende: konvexe Ecke */
+  .v3-zeile1,
+  .v3-zeile:not(.v3-zeile3) {
+    border-bottom-right-radius: var(--v3-r);
+  }
+  /* Unter der Button-Stufe beginnt die sichtbare linke Canvas-Kante:
+     Kurve unten links am Übergang zur weißen Rinne */
+  .v3-cta::before {
+    content: '';
+    left: var(--v3-gutter);
+    bottom: calc(-1 * var(--v3-r));
+    background: radial-gradient(circle at 100% 100%, transparent var(--v3-r), var(--color-white) var(--v3-r));
+  }
+</style>
