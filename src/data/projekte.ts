@@ -20,6 +20,7 @@ import websiteJhoch2 from '../assets/projekte/website-jhoch2-wasserschaden.png';
 import websiteBadenBatterie from '../assets/projekte/website-badenbatterie.png';
 import websitePannach from '../assets/projekte/website-pannach-messtechnik.png';
 import drehDmk from '../assets/projekte/video-dreh-dmk-bau.jpg';
+import dmkPreview2 from '../assets/projekte/dmkbau/dmkbau-preview2.webp';
 import drehSaan1 from '../assets/projekte/video-dreh-saan-wasserstrahl-1.jpg';
 import drehSaan2 from '../assets/projekte/video-dreh-saan-wasserstrahl-2.jpg';
 import drehSaan3 from '../assets/projekte/video-dreh-saan-wasserstrahl-3.jpg';
@@ -80,7 +81,7 @@ export const projekte: Projekt[] = [
     slug: 'dmk-bau',
     name: 'DMK Bau',
     art: 'video',
-    bild: drehDmk,
+    bild: dmkPreview2,
     beschreibung: 'Kampagnen für Kundengewinnung und neue Fachkräfte im Bau.',
     ziel: 'Kundengewinnung & Recruiting',
     kategorien: ['Social Media Ads'],
