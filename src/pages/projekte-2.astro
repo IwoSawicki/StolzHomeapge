@@ -1,0 +1,36 @@
+---
+// /projekte-2 – internes Archiv der NICHT gewählten Projekt-Grid-Designs
+// (A Clean Showcase, B Case Cards, D Projekt-Index, E Galerie + die alte
+// 1:1-Nachbau-Sektion). Nur als Referenz, falls später ein Design
+// wiederverwendet werden soll. Nicht verlinkt und für Suchmaschinen
+// gesperrt (noindex in robots.txt ergänzt).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProjekteVarianteA from '../components/sections/ProjekteVarianteA.astro';
+import ProjekteVarianteB from '../components/sections/ProjekteVarianteB.astro';
+import ProjekteVarianteD from '../components/sections/ProjekteVarianteD.astro';
+import ProjekteVarianteE from '../components/sections/ProjekteVarianteE.astro';
+import Projekte from '../components/sections/Projekte.astro';
+---
+
+<BaseLayout
+  title="Projekt-Design-Archiv | STOLZ Marketing"
+  description="Internes Archiv nicht verwendeter Projekt-Grid-Designs."
+>
+  <Header />
+  <main>
+    <div class="px-5 pt-14 text-center md:px-10 md:pt-20">
+      <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Internes Archiv</p>
+      <h1 class="mt-3 text-3xl font-semibold tracking-[-0.03em] text-dark">
+        Nicht verwendete Projekt-Grid-Designs
+      </h1>
+    </div>
+    <ProjekteVarianteD />
+    <ProjekteVarianteE />
+    <ProjekteVarianteA />
+    <ProjekteVarianteB />
+    <Projekte />
+  </main>
+  <Footer />
+</BaseLayout>

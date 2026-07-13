@@ -9,7 +9,12 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'never',
   devToolbar: { enabled: false },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // internes Design-Archiv nicht in die Sitemap aufnehmen
+      filter: (page) => !page.includes('/projekte-2'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
     preview: {

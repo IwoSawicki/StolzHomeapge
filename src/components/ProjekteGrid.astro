@@ -1,0 +1,124 @@
+---
+// Projekt-Raster im Shape-Stil (gewähltes Design, ehem. Variante C):
+// rohe Medienflächen, alle Kacheln gleich hoch (4:3), Kategorie-Pills
+// dauerhaft oben rechts in ausgeschnittener Ecke mit umgekehrten Kurven,
+// Projektname + Meta-Zeile + Statement darunter. Beim Hover wird die
+// Maus über den Karten zum blauen Kreis mit Pfeil (CI-Farbe).
+// WICHTIG: Die Pills-Ecke ist weiß — das Raster gehört auf weiße Flächen.
+import BrowserMockup from './BrowserMockup.astro';
+import VideoTile from './VideoTile.astro';
+import type { Projekt } from '../data/projekte';
+
+interface Props {
+  projekte: Projekt[];
+  /** Spalten am Desktop (Startseite 2, /projekte 2) */
+  class?: string;
+}
+const { projekte, class: extra = '' } = Astro.props;
+---
+
+<div class:list={['grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-20', extra]} data-shape-grid>
+  {
+    projekte.map((projekt) => (
+      <a href="/projekte" class="group block" data-shape-karte>
+        <div class="relative aspect-[4/3] overflow-hidden rounded-24">
+          <div class="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.015]">
+            {projekt.art === 'website' ? (
+              <BrowserMockup domain={projekt.domain!} alt={`Website-Projekt ${projekt.name}`} chrome={false} class="border-0" />
+            ) : (
+              <VideoTile bild={projekt.bild} alt={`Video-Projekt ${projekt.name}`} />
+            )}
+          </div>
+
+          {/* Kategorie-Pills in ausgeschnittener Ecke (umgekehrte Kurven) */}
+          <div class="shape-notch absolute top-0 right-0 rounded-bl-[18px] bg-white pb-2 pl-2">
+            <div class="flex flex-wrap justify-end gap-1.5">
+              {projekt.kategorien.map((kategorie) => (
+                <span class="rounded-full bg-bg-soft px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap text-dark">
+                  {kategorie}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <p class="flex items-center gap-2 text-sm font-medium text-gray">
+            {projekt.name}
+            <span class="size-1 rounded-full bg-gray/60" aria-hidden="true" />
+            {projekt.art === 'website' ? 'Website' : 'Video-Content'}
+          </p>
+          <h3 class="mt-1.5 max-w-[480px] text-2xl font-semibold text-balance leading-[1.15] tracking-[-0.02em] text-dark">
+            {projekt.beschreibung}
+          </h3>
+        </div>
+      </a>
+    ))
+  }
+</div>
+
+{/* Eigener Hover-Cursor: blauer Kreis (CI) mit Pfeil, folgt der Maus über den Karten */}
+<div
+  class="shape-cursor pointer-events-none fixed top-0 left-0 z-50 hidden size-16 items-center justify-center rounded-full bg-blue md:flex"
+  data-shape-cursor
+  aria-hidden="true"
+>
+  <svg class="size-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 17 17 7M9 7h8v8"></path>
+  </svg>
+</div>
+
+<style>
+  /* Umgekehrte Kurven: zwei Quadrate neben/unter der weißen Ecke, deren
+     Radial-Gradient die konkave Rundung in Seitenhintergrund-Farbe zeichnet */
+  .shape-notch::before,
+  .shape-notch::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 0 100%, transparent 18px, var(--color-white) 18px);
+  }
+  .shape-notch::before {
+    top: 0;
+    left: -18px;
+  }
+  .shape-notch::after {
+    top: 100%;
+    right: 0;
+  }
+
+  /* Über den Karten übernimmt der blaue Kreis die Maus */
+  @media (hover: hover) {
+    [data-shape-karte] {
+      cursor: none;
+    }
+  }
+  .shape-cursor {
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 200ms ease;
+    will-change: transform;
+  }
+  .shape-cursor.ist-aktiv {
+    transform: translate(-50%, -50%) scale(1);
+  }
+</style>
+
+<script>
+  // Blauer Cursor folgt der Maus über den Projekt-Karten (nur Geräte mit
+  // Hover); robust für mehrere Raster pro Seite, ein Cursor genügt.
+  const cursor = document.querySelector<HTMLElement>('[data-shape-cursor]');
+  if (cursor && window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('[data-shape-grid]').forEach((grid) => {
+      grid.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e as MouseEvent;
+        cursor.style.left = `${clientX}px`;
+        cursor.style.top = `${clientY}px`;
+      });
+      grid.querySelectorAll('[data-shape-karte]').forEach((karte) => {
+        karte.addEventListener('mouseenter', () => cursor.classList.add('ist-aktiv'));
+        karte.addEventListener('mouseleave', () => cursor.classList.remove('ist-aktiv'));
+      });
+    });
+  }
+</script>

@@ -1,0 +1,33 @@
+---
+// Projekte-Sektion der Startseite (gewähltes Design: „Shape", ehem.
+// Variante C). Kopfzeile mit Label + Statement-Headline + Link zur
+// Projektseite, darunter das gemeinsame Projekt-Raster (ProjekteGrid).
+import ProjekteGrid from '../ProjekteGrid.astro';
+import { startseitenProjekte } from '../../data/projekte';
+---
+
+<section id="projekte" class="px-5 pt-24 pb-16 md:px-10 md:pt-[150px] md:pb-28">
+  <div class="mx-auto max-w-[1200px]">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Projekte</p>
+        <h2 class="mt-3 max-w-[560px] text-4xl font-semibold text-balance leading-[1.08] tracking-[-0.03em] text-dark md:text-5xl">
+          Arbeiten, die Anfragen bringen.
+        </h2>
+      </div>
+      <a
+        href="/projekte"
+        class="group inline-flex items-center gap-2 pb-1 text-base font-medium text-dark transition-opacity duration-200 hover:opacity-60"
+      >
+        Alle Projekte
+        <svg class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        </svg>
+      </a>
+    </div>
+
+    <div class="mt-16">
+      <ProjekteGrid projekte={startseitenProjekte} />
+    </div>
+  </div>
+</section>
