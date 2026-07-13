@@ -5,10 +5,10 @@
 // Desktop: maus-folgender blauer Pfeil-Kreis (cursor:none).
 // Mobil/Tablet: Pfeil-Kreis dauerhaft zwischen den Sätzen.
 // Endlos-Loop per CSS, respektiert prefers-reduced-motion.
-const phrase = 'Lassen Sie uns zusammenarbeiten.';
-// 6 Einheiten füllen jede Breite; der Track enthält sie doppelt, damit
-// die -50%-Verschiebung nahtlos loopt.
-const einheiten = Array.from({ length: 6 });
+const phrase = 'Kontaktieren';
+// genug Einheiten, um jede Breite zu füllen; der Track enthält sie
+// doppelt, damit die -50%-Verschiebung nahtlos loopt.
+const einheiten = Array.from({ length: 8 });
 
 const pfeil =
   'M7 17 17 7M9 7h8v8';
@@ -25,14 +25,16 @@ const pfeil =
       <div class:list={['flex w-max whitespace-nowrap', `marquee-${richtung}`, richtung === 'rechts' && 'mt-2 md:mt-4']}>
         {[...einheiten, ...einheiten].map(() => (
           <span class="flex items-center" aria-hidden="true">
-            <span class="px-5 text-5xl font-semibold tracking-[-0.03em] text-dark md:px-7 md:text-7xl xl:text-8xl">
+            <span class="px-6 text-5xl font-semibold tracking-[-0.03em] text-dark md:px-8 md:text-7xl xl:px-10 xl:text-8xl">
               {phrase}
             </span>
+            {/* Trenner: Mobil Pfeil-Kreis, Desktop dezenter blauer Punkt */}
             <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-blue text-white md:size-14 xl:hidden">
               <svg class="size-5 md:size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d={pfeil} />
               </svg>
             </span>
+            <span class="hidden size-3 shrink-0 rounded-full bg-blue xl:block" aria-hidden="true"></span>
           </span>
         ))}
       </div>
@@ -60,8 +62,8 @@ const pfeil =
     from { transform: translateX(-50%); }
     to { transform: translateX(0); }
   }
-  .marquee-links { animation: marquee-nach-links 32s linear infinite; }
-  .marquee-rechts { animation: marquee-nach-rechts 32s linear infinite; }
+  .marquee-links { animation: marquee-nach-links 60s linear infinite; }
+  .marquee-rechts { animation: marquee-nach-rechts 60s linear infinite; }
 
   /* Desktop: eigener Cursor über der ganzen Fläche */
   @media (hover: hover) {
