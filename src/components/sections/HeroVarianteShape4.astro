@@ -5,12 +5,14 @@
 // Die Headline-Zeilen schneiden als weiße Treppen-Stufen von links ins
 // Video — Abstufungen wie v3, umgekehrte Kurven an jedem Absatz.
 //
-// GEOMETRIE (Desktop ≥ 1200px): Die Videokante liegt exakt bei 50 %.
-// Jede Stufe bekommt eine Mindestbreite (50 % + feste Stufentiefe:
-// Zeile 1 +180 / Zeile 2 +90 / Zeile 3 +24 / Buttons +64 px) — die
-// Treppe ist damit unabhängig von Textlängen und auf jeder
-// Viewport-Breite identisch. Nur die Eyebrow muss schmaler als 50 %
-// bleiben (aktuell ~260px, unkritisch).
+// GEOMETRIE (Desktop ≥ 1200px): Inhalt bündig mit dem Header
+// (max-w 1200 im px-10-Raster → Text links am Logo, Video rechts am
+// Kontakt-Button ausgerichtet). Video: 50 % Breite × 80vh. Die
+// Videokante liegt exakt bei 50 %; jede Stufe bekommt eine
+// Mindestbreite (50 % + feste Stufentiefe: Zeile 1 +180 / Zeile 2 +90 /
+// Zeile 3 +24 / Buttons +64 px) — die Treppe ist damit unabhängig von
+// Textlängen und auf jeder Viewport-Breite identisch. Nur die Eyebrow
+// muss schmaler als 50 % bleiben (aktuell ~260px, unkritisch).
 //
 // VIDEO EINBINDEN: MP4 nach public/videos/hero-hochkant.mp4 laden;
 // am Desktop füllt es die rechte Hälfte (object-cover beschneidet),
@@ -22,26 +24,22 @@ const hatVideo = existsSync(new URL('../../../public/videos/hero-hochkant.mp4', 
 const hatPoster = existsSync(new URL('../../../public/videos/hero-hochkant-poster.jpg', import.meta.url));
 ---
 
-<section class="px-5 pt-16 pb-16 md:px-10 md:pt-24 md:pb-24 xl:px-0 xl:pt-10 xl:pb-24">
-  <p class="mb-8 text-center text-xs font-medium tracking-wide text-gray uppercase">
-    Hero-Variante 4 · Skizze: Video 50 % + Treppe (zur Auswahl, wird später entfernt)
-  </p>
-
-  <div class="v4-hero relative grid grid-cols-1 xl:min-h-svh xl:items-center">
+<section class="px-5 pt-6 pb-16 md:px-10 md:pt-8 md:pb-24">
+  <div class="v4-hero relative mx-auto grid max-w-[1200px] grid-cols-1 xl:min-h-[80vh] xl:items-center">
     <!-- Text mit Treppen-Stufen (schneiden am Desktop ins Video) -->
     <div class="v4-text relative z-10 w-full">
-      <p class="flex w-max items-center gap-2.5 bg-white pr-7 pb-3 text-sm font-medium text-dark xl:pl-16">
+      <p class="flex w-max items-center gap-2.5 bg-white pr-7 pb-3 text-sm font-medium text-dark">
         <span class="size-1.5 rounded-full bg-dark" aria-hidden="true"></span>
         Hey, wir sind Stolz Marketing 👋
       </p>
       {/* bewusst kein <h1>: das hat die bestehende Hero; wird diese
           Variante gewählt, wird die Treppe zum echten h1 */}
       <p class="v4-headline relative text-3xl font-semibold leading-none tracking-[-0.04em] text-dark md:text-52 xl:text-7xl">
-        <span class="v4-step v4-zeile1 block w-max rounded-tr-[20px] bg-white pr-8 pb-2 xl:min-w-[calc(50%+180px)] xl:pl-16 xl:pb-3">Ein Ansprechpartner</span>
-        <span class="v4-step v4-zeile block w-max bg-white pr-8 pb-2 xl:min-w-[calc(50%+90px)] xl:pl-16 xl:pb-3">für Ihr gesamtes</span>
-        <span class="v4-step v4-zeile v4-zeile3 block w-max bg-white pr-8 pb-1 xl:min-w-[calc(50%+24px)] xl:pl-16">Marketing.</span>
+        <span class="v4-step v4-zeile1 block w-max rounded-tr-[20px] bg-white pr-8 pb-2 xl:min-w-[calc(50%+180px)] xl:pb-3">Ein Ansprechpartner</span>
+        <span class="v4-step v4-zeile block w-max bg-white pr-8 pb-2 xl:min-w-[calc(50%+90px)] xl:pb-3">für Ihr gesamtes</span>
+        <span class="v4-step v4-zeile v4-zeile3 block w-max bg-white pr-8 pb-1 xl:min-w-[calc(50%+24px)]">Marketing.</span>
       </p>
-      <div class="v4-step v4-cta w-max rounded-tr-[20px] rounded-br-[24px] bg-white pt-4 pr-10 pb-1 xl:min-w-[calc(50%+64px)] xl:pt-5 xl:pb-2 xl:pl-16">
+      <div class="v4-step v4-cta w-max rounded-tr-[20px] rounded-br-[24px] bg-white pt-4 pr-10 pb-1 xl:min-w-[calc(50%+64px)] xl:pt-5 xl:pb-2">
         <div class="flex flex-col items-start gap-2.5 md:flex-row md:items-center">
           <Button href="/projekte" variant="blue" shadow="blue-glow">Projekte ansehen</Button>
           {/* Ziel folgt, sobald die Über-uns-Sektion existiert */}
@@ -51,8 +49,8 @@ const hatPoster = existsSync(new URL('../../../public/videos/hero-hochkant-poste
     </div>
 
     <!-- Video: rechte Hälfte, volle Hero-Höhe (mobil hochkant unter dem Text) -->
-    <div class="relative mx-auto mt-10 w-full max-w-[440px] xl:absolute xl:top-0 xl:right-0 xl:mx-0 xl:mt-0 xl:h-full xl:w-1/2 xl:max-w-none">
-      <div class="aspect-[9/16] overflow-hidden rounded-[32px] bg-linear-160 from-video-dark-1 to-video-dark-2 xl:aspect-auto xl:h-full xl:rounded-r-none xl:rounded-l-[32px]">
+    <div class="relative mx-auto mt-10 w-full max-w-[440px] xl:absolute xl:top-1/2 xl:right-0 xl:mx-0 xl:mt-0 xl:h-[80vh] xl:w-1/2 xl:max-w-none xl:-translate-y-1/2">
+      <div class="aspect-[9/16] overflow-hidden rounded-[32px] bg-linear-160 from-video-dark-1 to-video-dark-2 xl:aspect-auto xl:h-full">
         {
           hatVideo ? (
             <video
@@ -80,7 +78,7 @@ const hatPoster = existsSync(new URL('../../../public/videos/hero-hochkant-poste
           )
         }
       </div>
-      <div class="absolute right-4 bottom-4 flex items-center gap-3 rounded-full bg-white py-2 pr-5 pl-2 shadow-card xl:right-6 xl:bottom-6">
+      <div class="absolute right-4 bottom-4 flex items-center gap-3 rounded-full bg-white py-2 pr-5 pl-2 shadow-card">
         <span class="flex size-9 items-center justify-center rounded-full bg-dark">
           <svg class="size-3.5 translate-x-px" viewBox="0 0 24 24" fill="white" aria-hidden="true">
             <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z" />
