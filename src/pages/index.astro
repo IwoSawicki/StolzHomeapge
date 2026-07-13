@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/sections/Hero.astro';
+import UeberUns from '../components/sections/UeberUns.astro';
 import HeroVarianteShape from '../components/sections/HeroVarianteShape.astro';
 import HeroVarianteShape2 from '../components/sections/HeroVarianteShape2.astro';
 import HeroVarianteShape3 from '../components/sections/HeroVarianteShape3.astro';
@@ -19,20 +20,21 @@ import Footer from '../components/Footer.astro';
 <BaseLayout>
   <Header />
   <main>
-    <!-- Hero-Varianten zur Auswahl (v2 zuerst); nach der Entscheidung
-         bleibt nur eine. -->
     <HeroVarianteShape2 />
-    <HeroVarianteShape4 />
-    <HeroVarianteShape />
-    <HeroVarianteShape3 />
-    <Hero />
+    <UeberUns />
+    <ProjekteShape />
     <Einblicke />
     <PainpointTabs />
     <Leistungen />
     <Prozess />
     <Ergebnis />
-    <ProjekteShape />
     <Statistics />
+    <!-- Übrige Hero-Varianten zur Auswahl; werden nach der finalen
+         Entscheidung entfernt. -->
+    <HeroVarianteShape4 />
+    <HeroVarianteShape />
+    <HeroVarianteShape3 />
+    <Hero />
   </main>
   <Footer />
 </BaseLayout>
