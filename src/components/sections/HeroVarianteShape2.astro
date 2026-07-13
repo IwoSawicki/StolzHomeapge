@@ -1,39 +1,31 @@
 ---
 // HERO-VARIANTE 2 „Shape-Überlappung" (inspiriert von madebyshape.co.uk):
-// Großes Hochkant-Video rechts; das weiße Text-Panel überlappt am Desktop
-// links ins Video hinein — mit den Shape-typischen Außenrundungen:
-// konvexer Panel-Kante plus umgekehrten Kurven (Inverted Corners) oben
-// und unten am Übergang. Mobil: Text oben, Video darunter.
+// Großes Hochkant-Video rechts (bündig mit der Kontakt-Button-Kante);
+// das weiße Text-Panel überlappt am Desktop links ins Video hinein —
+// mit den Shape-typischen Außenrundungen: konvexe Panel-Kante plus
+// umgekehrten Kurven (Inverted Corners) oben und unten am Übergang.
+// Mobil: Text oben, Video darunter.
 //
-// VIDEO EINBINDEN: wie bei der ersten Variante — MP4 nach
-// public/videos/hero-hochkant.mp4 laden (Poster optional daneben).
-import { existsSync } from 'node:fs';
+// Video: Shape-Showreel (1920×1080, mit Ton) — läuft in der Kachel
+// stumm und endlos (object-cover beschneidet aufs Hochformat).
+// Klick auf „Einblick in unsere Arbeit" öffnet das Showreel groß im
+// Overlay (Seite dahinter geblurrt) und spielt es mit Ton von vorn.
 import Button from '../Button.astro';
-
-const hatVideo = existsSync(new URL('../../../public/videos/hero-hochkant.mp4', import.meta.url));
-const hatPoster = existsSync(new URL('../../../public/videos/hero-hochkant-poster.jpg', import.meta.url));
+import showreel from '../../assets/shape-showreel-2024_looping-v3.mp4';
 ---
 
-<section class="px-5 pt-16 pb-16 md:px-10 md:pt-24 md:pb-24">
-  <p class="mb-8 text-center text-xs font-medium tracking-wide text-gray uppercase">
-    Hero-Variante 2 · Shape-Überlappung (zur Auswahl, wird später entfernt)
-  </p>
-
+<section class="px-5 pt-6 pb-16 md:px-10 md:pt-8 md:pb-24">
   <div class="mx-auto max-w-[1200px] xl:flex xl:items-center">
     {/* Text-Panel: überlappt am Desktop ins Video, mit Außenrundungen */}
-    <div class="shape2-panel relative z-10 bg-white xl:-mr-28 xl:rounded-r-[32px] xl:py-12 xl:pr-14">
+    <div class="shape2-panel relative z-10 bg-white xl:-mr-28 xl:flex-1 xl:rounded-r-[32px] xl:py-12 xl:pr-14">
       <p class="flex items-center gap-2.5 text-sm font-medium text-dark">
         <span class="size-1.5 rounded-full bg-dark" aria-hidden="true"></span>
-        Hey, wir sind Stolz Marketing
+        Hallo, wir sind STOLZ 👋
       </p>
       {/* bewusst kein <h1>: das hat die bestehende Hero; wird diese Variante
           gewählt, übernimmt diese Zeile das h1 */}
       <p class="mt-4 max-w-[560px] text-40 font-semibold text-balance leading-[1.02] tracking-[-0.04em] text-dark md:text-52 xl:text-6xl">
-        Ein Ansprechpartner für Ihr gesamtes Marketing.
-      </p>
-      <p class="mt-6 max-w-[460px] text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-dark">
-        Wir bringen Handwerksbetrieben im Rhein-Main-Gebiet planbare Anfragen – ohne Marketingblabla.{' '}
-        <strong>Nur Ergebnisse, die auf Ihrer Rechnung auftauchen.</strong>
+        Mehr Anfragen für Ihr Unternehmen. <span class="text-gray">Messbar &amp; Planbar.</span>
       </p>
       <div class="mt-8 flex flex-col items-start gap-2.5 md:flex-row md:items-center">
         <Button href="/projekte" variant="blue" shadow="blue-glow">Projekte ansehen</Button>
@@ -42,38 +34,17 @@ const hatPoster = existsSync(new URL('../../../public/videos/hero-hochkant-poste
       </div>
     </div>
 
-    {/* Großes Hochkant-Video rechts */}
-    <div class="relative mx-auto mt-10 w-full max-w-[440px] shrink-0 xl:mx-0 xl:mt-0 xl:w-[500px] xl:max-w-none">
+    {/* Großes Hochkant-Video rechts: Showreel als stummer Endlos-Loop */}
+    <div class="relative mx-auto mt-10 w-full max-w-[440px] shrink-0 xl:mx-0 xl:mt-0 xl:w-[540px] xl:max-w-none">
       <div class="aspect-[9/16] overflow-hidden rounded-[32px] bg-linear-160 from-video-dark-1 to-video-dark-2">
-        {
-          hatVideo ? (
-            <video
-              class="h-full w-full object-cover"
-              src="/videos/hero-hochkant.mp4"
-              poster={hatPoster ? '/videos/hero-hochkant-poster.jpg' : undefined}
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="metadata"
-            />
-          ) : (
-            <div class="flex h-full w-full flex-col items-center justify-center gap-4 px-8 text-center">
-              <span class="flex size-[58px] items-center justify-center rounded-full bg-white/14 backdrop-blur-[2px]">
-                <svg class="size-[22px] translate-x-px" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z" />
-                </svg>
-              </span>
-              <p class="text-sm font-medium text-white/60">
-                Hochkant-Video folgt — Datei nach{' '}
-                <code class="text-white/80">public/videos/hero-hochkant.mp4</code> laden
-              </p>
-            </div>
-          )
-        }
+        <video class="h-full w-full object-cover" src={showreel} autoplay muted loop playsinline aria-label="Showreel von STOLZ Marketing (stumm)"></video>
       </div>
 
-      <div class="absolute right-4 bottom-4 flex items-center gap-3 rounded-full bg-white py-2 pr-5 pl-2 shadow-card">
+      <button
+        type="button"
+        data-showreel-open
+        class="absolute right-4 bottom-4 flex cursor-pointer items-center gap-3 rounded-full bg-white py-2 pr-5 pl-2 text-left shadow-card transition-transform duration-200 hover:scale-[1.03]"
+      >
         <span class="flex size-9 items-center justify-center rounded-full bg-dark">
           <svg class="size-3.5 translate-x-px" viewBox="0 0 24 24" fill="white" aria-hidden="true">
             <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z" />
@@ -83,10 +54,38 @@ const hatPoster = existsSync(new URL('../../../public/videos/hero-hochkant-poste
           Einblick in unsere Arbeit
           <span class="block text-xs font-medium text-gray">STOLZ Marketing</span>
         </span>
-      </div>
+      </button>
     </div>
   </div>
 </section>
+
+{/* Showreel-Overlay: Seite geblurrt, Video mittig mit Ton */}
+<div
+  class="fixed inset-0 z-[100] hidden items-center justify-center bg-dark/70 p-5 backdrop-blur-lg md:p-10"
+  data-showreel-modal
+  role="dialog"
+  aria-modal="true"
+  aria-label="Showreel in groß"
+>
+  <button
+    type="button"
+    data-showreel-close
+    class="absolute top-5 right-5 flex size-11 cursor-pointer items-center justify-center rounded-full bg-white text-dark transition-transform duration-200 hover:scale-105"
+    aria-label="Video schließen"
+  >
+    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path d="M6 6l12 12M18 6 6 18"></path>
+    </svg>
+  </button>
+  <video
+    class="max-h-[85vh] w-auto max-w-full rounded-24 shadow-stack-strong"
+    src={showreel}
+    controls
+    playsinline
+    preload="none"
+    data-showreel-video
+  ></video>
+</div>
 
 <style>
   /* Umgekehrte Kurven am Übergang Panel → Video (nur Desktop-Layout):
@@ -113,3 +112,39 @@ const hatPoster = existsSync(new URL('../../../public/videos/hero-hochkant-poste
     }
   }
 </style>
+
+<script>
+  // Showreel-Overlay: öffnet das Video groß mit Ton von Anfang an;
+  // schließen über X, Klick auf den Hintergrund oder Escape.
+  const modal = document.querySelector<HTMLElement>('[data-showreel-modal]');
+  const video = document.querySelector<HTMLVideoElement>('[data-showreel-video]');
+  const oeffnen = document.querySelector<HTMLElement>('[data-showreel-open]');
+  const schliessenBtn = document.querySelector<HTMLElement>('[data-showreel-close]');
+
+  function oeffneModal() {
+    if (!modal || !video) return;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    video.currentTime = 0;
+    video.muted = false;
+    video.volume = 1;
+    void video.play();
+  }
+  function schliesseModal() {
+    if (!modal || !video) return;
+    video.pause();
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  oeffnen?.addEventListener('click', oeffneModal);
+  schliessenBtn?.addEventListener('click', schliesseModal);
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) schliesseModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) schliesseModal();
+  });
+</script>
