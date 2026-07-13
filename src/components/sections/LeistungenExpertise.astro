@@ -1,25 +1,39 @@
 ---
-// Leistungs-Sektion, volle Breite auf schwarzer Fläche (Nachbau Shape
-// „Our Expertise"): Kopf dreispaltig (Eyebrow / Headline / Kurztext +
-// CTA), darunter die Leistungen als riesige Zeilen mit Trennlinien.
-// Beim Hover leuchtet die Zeile auf, die übrigen dimmen, und der Maus
-// folgt ein blauer Pfeil-Kreis (wie im Projekt-Grid).
+// Leistungs-Sektion (Nachbau Shape „Our Expertise"): schwarze Fläche
+// vollflächig (Hintergrund randlos), Inhalt aber auf Seitenbreite
+// (max 1200, bündig mit dem Header). Kopf dreispaltig, Leistungen als
+// riesige Zeilen mit Trennlinien.
+// Hover: aktive Zeile leuchtet, übrige dimmen; links wächst ein
+// Vorschaubild von Breite 0 auf, der Zeilentext weicht dabei nach rechts
+// aus (kein Fade); zusätzlich folgt der Maus ein blauer Pfeil-Kreis.
 // Die Zeilen sind noch NICHT verlinkt — Leistungs-Unterseiten
 // (/leistungen/[slug]) folgen laut Roadmap.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 import Button from '../Button.astro';
+import websiteHepa from '../../assets/projekte/website-hepabaut.png';
+import websiteJhoch2 from '../../assets/projekte/website-jhoch2-wasserschaden.png';
+import websiteBadenBatterie from '../../assets/projekte/website-badenbatterie.png';
+import drehDmk from '../../assets/projekte/video-dreh-dmk-bau.jpg';
+import drehSaan from '../../assets/projekte/video-dreh-saan-wasserstrahl-1.jpg';
+import drehWio from '../../assets/projekte/content-dreh-wio.jpg';
 
-const leistungen = [
-  'Webseiten',
-  'Google Ads & SEO',
-  'KI-Ranking',
-  'Social Media Ads',
-  'Recruiting-Kampagnen',
-  'Video- & Content-Produktion',
+interface Leistung {
+  name: string;
+  vorschau: ImageMetadata;
+}
+const leistungen: Leistung[] = [
+  { name: 'Webseiten', vorschau: websiteHepa },
+  { name: 'Google Ads & SEO', vorschau: websiteJhoch2 },
+  { name: 'KI-Ranking', vorschau: websiteBadenBatterie },
+  { name: 'Social Media Ads', vorschau: drehDmk },
+  { name: 'Recruiting-Kampagnen', vorschau: drehSaan },
+  { name: 'Foto- & Videoproduktion', vorschau: drehWio },
 ];
 ---
 
-<section id="leistungen" class="scroll-mt-24 bg-dark py-16 md:py-24 xl:py-28">
-  <div class="mx-auto max-w-[1400px] px-5 md:px-10">
+<section id="leistungen" class="scroll-mt-24 bg-dark px-5 py-16 md:px-10 md:py-24 xl:py-28">
+  <div class="mx-auto max-w-[1200px]">
     <!-- Kopf: Eyebrow / Headline / Kurztext + CTA -->
     <div class="grid grid-cols-1 gap-8 xl:grid-cols-[220px_1fr_320px] xl:gap-10">
       <p class="flex h-fit items-center gap-2.5 text-sm font-medium text-white">
@@ -46,9 +60,21 @@ const leistungen = [
             class="expertise-zeile group border-t border-white/12 py-6 transition-opacity duration-300 last:border-b md:py-7 xl:py-8"
             data-expertise-zeile
           >
-            <span class="block text-4xl font-semibold tracking-[-0.03em] text-white transition-transform duration-300 md:text-6xl xl:text-8xl xl:group-hover:translate-x-4">
-              {leistung}
-            </span>
+            <div class="flex items-center">
+              {/* Vorschaubild: wächst beim Hover von Breite 0 auf (nur Desktop) */}
+              <span class="hidden overflow-hidden transition-[width] duration-500 ease-out xl:block xl:w-0 xl:group-hover:w-[220px]">
+                <Image
+                  src={leistung.vorschau}
+                  alt=""
+                  widths={[400]}
+                  sizes="200px"
+                  class="mr-5 h-[124px] w-[200px] rounded-14 object-cover object-top"
+                />
+              </span>
+              <span class="text-3xl font-semibold tracking-[-0.03em] text-white md:text-5xl xl:text-7xl">
+                {leistung.name}
+              </span>
+            </div>
           </li>
         ))
       }
