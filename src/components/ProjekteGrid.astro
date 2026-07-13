@@ -20,7 +20,7 @@ const { projekte, class: extra = '' } = Astro.props;
 <div class:list={['grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-20', extra]} data-shape-grid>
   {
     projekte.map((projekt) => (
-      <a href="/projekte" class="group block" data-shape-karte>
+      <a href={`/projekte/${projekt.slug}`} class="group block" data-shape-karte>
         <div class="relative aspect-[4/3] overflow-hidden rounded-24">
           <div class="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.015]">
             {projekt.art === 'website' ? (
