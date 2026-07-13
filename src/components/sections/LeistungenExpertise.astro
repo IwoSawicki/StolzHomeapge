@@ -20,15 +20,17 @@ import drehWio from '../../assets/projekte/content-dreh-wio.jpg';
 
 interface Leistung {
   name: string;
+  /** kürzeres Label für Mobil (neben dem Bild), fällt auf name zurück */
+  kurz?: string;
   vorschau: ImageMetadata;
 }
 const leistungen: Leistung[] = [
   { name: 'Webseiten', vorschau: websiteHepa },
-  { name: 'Google Ads & SEO', vorschau: websiteJhoch2 },
+  { name: 'Google Ads & SEO', kurz: 'Google Ads', vorschau: websiteJhoch2 },
   { name: 'KI-Ranking', vorschau: websiteBadenBatterie },
-  { name: 'Social Media Ads', vorschau: drehDmk },
-  { name: 'Recruiting-Kampagnen', vorschau: drehSaan },
-  { name: 'Foto- & Videoproduktion', vorschau: drehWio },
+  { name: 'Social Media Ads', kurz: 'Social Ads', vorschau: drehDmk },
+  { name: 'Recruiting-Kampagnen', kurz: 'Recruiting', vorschau: drehSaan },
+  { name: 'Foto- & Videoproduktion', kurz: 'Foto & Video', vorschau: drehWio },
 ];
 ---
 
@@ -61,7 +63,17 @@ const leistungen: Leistung[] = [
             data-expertise-zeile
           >
             <div class="flex items-center">
-              {/* Vorschaubild: wächst beim Hover von Breite 0 auf (nur Desktop) */}
+              {/* Mobil/Tablet: kleines Bild dauerhaft links (wie Shape) */}
+              <span class="mr-4 block shrink-0 xl:hidden">
+                <Image
+                  src={leistung.vorschau}
+                  alt=""
+                  widths={[120]}
+                  sizes="56px"
+                  class="size-14 rounded-10 object-cover object-top"
+                />
+              </span>
+              {/* Desktop: Vorschaubild wächst beim Hover von Breite 0 auf */}
               <span class="hidden overflow-hidden transition-[width] duration-500 ease-out xl:block xl:w-0 xl:group-hover:w-[220px]">
                 <Image
                   src={leistung.vorschau}
@@ -71,8 +83,10 @@ const leistungen: Leistung[] = [
                   class="mr-5 h-[124px] w-[200px] rounded-14 object-cover object-top"
                 />
               </span>
+              {/* kurzes Label auf Mobil, volles ab Desktop */}
               <span class="text-3xl font-semibold tracking-[-0.03em] text-white md:text-5xl xl:text-7xl">
-                {leistung.name}
+                <span class="xl:hidden">{leistung.kurz ?? leistung.name}</span>
+                <span class="hidden xl:inline">{leistung.name}</span>
               </span>
             </div>
           </li>
