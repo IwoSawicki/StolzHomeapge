@@ -82,6 +82,23 @@ const drehKacheln = istWebsite ? [] : (details.drehbilder ?? [projekt.bild, proj
             <div class="aspect-[16/10] overflow-hidden rounded-24 md:aspect-[16/9]">
               <BrowserMockup domain={projekt.domain} bild={projekt.bild} alt={`Website von ${projekt.name}`} />
             </div>
+          ) : details.videos ? (
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+              {details.videos.map((video) => (
+                <div class="aspect-[9/16] overflow-hidden rounded-24 bg-dark">
+                  <video
+                    class="h-full w-full object-cover"
+                    src={video}
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    aria-label={`Social-Media-Clip für ${projekt.name} (stumm)`}
+                  />
+                </div>
+              ))}
+            </div>
           ) : (
             <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
               {drehKacheln.map((bild, i) => (
@@ -94,7 +111,7 @@ const drehKacheln = istWebsite ? [] : (details.drehbilder ?? [projekt.bild, proj
         }
         {
           /* Hinweis nur, solange noch kein echtes Material hinterlegt ist */
-          ((istWebsite && !projekt.bild) || (!istWebsite && !details.drehbilder)) && (
+          ((istWebsite && !projekt.bild) || (!istWebsite && !details.drehbilder && !details.videos)) && (
             <p class="mt-3 text-sm font-medium text-gray">
               {istWebsite
                 ? 'Platzhalter — echter Website-Screenshot folgt.'

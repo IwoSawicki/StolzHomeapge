@@ -27,6 +27,9 @@ import drehRaumkonzept from '../assets/projekte/video-dreh-raum-konzept.jpg';
 import drehAlpha1 from '../assets/projekte/video-dreh-alpha-gruppe-1.jpg';
 import drehLaserWolf from '../assets/projekte/video-dreh-laser-wolf.jpg';
 import drehWio from '../assets/projekte/content-dreh-wio.jpg';
+import dmkVideo1 from '../assets/projekte/dmkbau/DMK-SM-01-5Handwerker_1.mp4';
+import dmkVideo2 from '../assets/projekte/dmkbau/DMK-SM-03-BadScheissHandwerker_1.mp4';
+import dmkVideo3 from '../assets/projekte/dmkbau/DMK-SM-04-5Sterne100Bewertungen_1.mp4';
 
 export interface Keyfact {
   label: string;
@@ -51,6 +54,8 @@ export interface ProjektDetails {
   sitemap?: string[];
   /** nur Videos: Bilder vom Dreh */
   drehbilder?: ImageMetadata[];
+  /** nur Videos: echte Hochkant-Clips (9:16), autoplay/muted/loop */
+  videos?: string[];
   ergebnisse: Ergebnis[];
 }
 
@@ -95,6 +100,7 @@ export const projekte: Projekt[] = [
         { titel: 'Monatliche Auswertung', text: 'Was bringt Anfragen, was bringt Bewerbungen — schwarz auf weiß.' },
       ],
       drehbilder: [drehDmk],
+      videos: [dmkVideo1, dmkVideo2, dmkVideo3],
       ergebnisse: [
         { wert: 'XX', label: 'Projektanfragen' },
         { wert: 'XX', label: 'Bewerbungen' },
