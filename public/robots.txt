@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 # internes Design-Archiv
-Disallow: /projekte-2
+Disallow: /archiv
 
 Sitemap: https://stolz-marketing.de/sitemap-index.xml

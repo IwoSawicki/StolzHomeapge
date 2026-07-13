@@ -1,10 +1,11 @@
 ---
-// /projekte-2 – internes Design-Archiv: nicht gewählte Hero-Varianten
+// /archiv – internes Design-Archiv: nicht gewählte Hero-Varianten
 // (v4 Skizze, v1 Shape, v3 Shape-Treppe, alte 1:1-Original-Hero) und
 // Projekt-Grid-Designs (A Clean Showcase, B Case Cards, D Projekt-Index,
-// E Galerie + alte 1:1-Sektion). Nur als Referenz, falls später etwas
-// wiederverwendet werden soll. Nicht verlinkt und für Suchmaschinen
-// gesperrt (robots.txt + Sitemap-Filter). Mehrere h1 hier bewusst egal.
+// E Galerie + alte 1:1-Sektion) sowie die KI-Section. Nur als Referenz,
+// falls später etwas wiederverwendet werden soll. Nicht verlinkt und für
+// Suchmaschinen gesperrt (robots.txt + Sitemap-Filter). Mehrere h1 hier
+// bewusst egal.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -20,6 +21,7 @@ import ProjekteVarianteB from '../components/sections/ProjekteVarianteB.astro';
 import ProjekteVarianteD from '../components/sections/ProjekteVarianteD.astro';
 import ProjekteVarianteE from '../components/sections/ProjekteVarianteE.astro';
 import Projekte from '../components/sections/Projekte.astro';
+import KiStimmen from '../components/sections/KiStimmen.astro';
 ---
 
 <BaseLayout
@@ -54,6 +56,8 @@ import Projekte from '../components/sections/Projekte.astro';
     <ProjekteVarianteA />
     <ProjekteVarianteB />
     <Projekte />
+    <p class="mt-16 px-5 text-center text-xs font-medium tracking-wide text-gray uppercase">Sektion · KI-Stimmen (auch live auf der Startseite)</p>
+    <KiStimmen />
   </main>
   <Footer />
 </BaseLayout>
