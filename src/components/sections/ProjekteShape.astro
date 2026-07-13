@@ -1,33 +1,40 @@
 ---
 // Projekte-Sektion der Startseite (gewähltes Design: „Shape", ehem.
-// Variante C). Kopfzeile mit Label + Statement-Headline + Link zur
-// Projektseite, darunter das gemeinsame Projekt-Raster (ProjekteGrid).
+// Variante C). Kopf im SectionHeading-Design (Pill „Projekte" +
+// zentrierte Headline, wie ehem. Einblicke — Wunsch Iwo), darunter das
+// gemeinsame Projekt-Raster (ProjekteGrid) und der Link zur Projektseite.
+import SectionHeading from '../SectionHeading.astro';
 import ProjekteGrid from '../ProjekteGrid.astro';
 import { startseitenProjekte } from '../../data/projekte';
 ---
 
 <section id="projekte" class="px-5 pt-24 pb-16 md:px-10 md:pt-[150px] md:pb-28">
   <div class="mx-auto max-w-[1200px]">
-    <div class="flex flex-wrap items-end justify-between gap-6">
-      <div>
-        <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Projekte</p>
-        <h2 class="mt-3 max-w-[560px] text-4xl font-semibold text-balance leading-[1.08] tracking-[-0.03em] text-dark md:text-5xl">
-          Arbeiten, die Anfragen bringen.
-        </h2>
-      </div>
+    <SectionHeading label="Projekte" headingMaxWidth={850}>
+      <svg slot="icon" class="size-[7px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z"></path>
+      </svg>
+      Arbeiten, die Anfragen bringen.
+      <Fragment slot="description">
+        Websites, Kampagnen und Recruiting-Content für Handwerk &amp; Bau — ein Ausschnitt aus unserer
+        Arbeit.
+      </Fragment>
+    </SectionHeading>
+
+    <div class="mt-12 md:mt-16">
+      <ProjekteGrid projekte={startseitenProjekte} />
+    </div>
+
+    <div class="mt-12 flex justify-center">
       <a
         href="/projekte"
-        class="group inline-flex items-center gap-2 pb-1 text-base font-medium text-dark transition-opacity duration-200 hover:opacity-60"
+        class="group inline-flex items-center gap-2 text-base font-medium text-dark transition-opacity duration-200 hover:opacity-60"
       >
-        Alle Projekte
+        Alle Projekte ansehen
         <svg class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M5 12h14M13 6l6 6-6 6"></path>
         </svg>
       </a>
-    </div>
-
-    <div class="mt-16">
-      <ProjekteGrid projekte={startseitenProjekte} />
     </div>
   </div>
 </section>
