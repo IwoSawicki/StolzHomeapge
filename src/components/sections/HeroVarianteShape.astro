@@ -1,0 +1,92 @@
+---
+// HERO-VARIANTE „Shape" (inspiriert von madebyshape.co.uk):
+// Hochkant-Video links, Text rechts (Desktop); mobil Text oben, Video
+// darunter. Weißes Text-Panel mit Eyebrow-Punkt, große Headline,
+// CTA-Buttons; auf dem Video ein „Hear from …"-Pill wie beim Original.
+//
+// VIDEO EINBINDEN: MP4 (Hochformat 9:16, möglichst < 20 MB) einfach nach
+// public/videos/hero-hochkant.mp4 hochladen — die Sektion erkennt die
+// Datei automatisch und ersetzt den Platzhalter. Optionales Vorschaubild
+// (Poster) daneben als public/videos/hero-hochkant-poster.jpg.
+import { existsSync } from 'node:fs';
+import Button from '../Button.astro';
+
+const videoDatei = new URL('../../../public/videos/hero-hochkant.mp4', import.meta.url);
+const posterDatei = new URL('../../../public/videos/hero-hochkant-poster.jpg', import.meta.url);
+const hatVideo = existsSync(videoDatei);
+const hatPoster = existsSync(posterDatei);
+---
+
+<section class="px-5 pt-6 pb-16 md:px-10 md:pt-10 md:pb-24" id="start">
+  <p class="mb-8 text-center text-xs font-medium tracking-wide text-gray uppercase">
+    Hero-Variante · Shape (zur Auswahl, wird später entfernt)
+  </p>
+
+  <div class="mx-auto flex max-w-[1200px] flex-col gap-10 xl:flex-row xl:items-center xl:gap-20">
+    {/* Hochkant-Video (Desktop links, mobil unter dem Text) */}
+    <div class="relative order-2 mx-auto w-full max-w-[420px] shrink-0 xl:order-1 xl:mx-0 xl:w-[400px]">
+      <div class="aspect-[9/16] overflow-hidden rounded-24 bg-linear-160 from-video-dark-1 to-video-dark-2">
+        {
+          hatVideo ? (
+            <video
+              class="h-full w-full object-cover"
+              src="/videos/hero-hochkant.mp4"
+              poster={hatPoster ? '/videos/hero-hochkant-poster.jpg' : undefined}
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+            />
+          ) : (
+            <div class="flex h-full w-full flex-col items-center justify-center gap-4 px-8 text-center">
+              <span class="flex size-[58px] items-center justify-center rounded-full bg-white/14 backdrop-blur-[2px]">
+                <svg class="size-[22px] translate-x-px" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z" />
+                </svg>
+              </span>
+              <p class="text-sm font-medium text-white/60">
+                Hochkant-Video folgt — Datei nach{' '}
+                <code class="text-white/80">public/videos/hero-hochkant.mp4</code> laden
+              </p>
+            </div>
+          )
+        }
+      </div>
+
+      {/* Pill auf dem Video, wie „Hear from Andy" beim Original */}
+      <div class="absolute right-4 bottom-4 flex items-center gap-3 rounded-full bg-white py-2 pr-5 pl-2 shadow-card">
+        <span class="flex size-9 items-center justify-center rounded-full bg-dark">
+          <svg class="size-3.5 translate-x-px" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+            <path d="M 6.75 3.74 L 6.75 20.26 C 6.755 20.53 6.9 20.77 7.14 20.9 C 7.37 21.03 7.66 21.03 7.89 20.89 L 21.4 12.63 C 21.62 12.49 21.75 12.25 21.75 12 C 21.75 11.74 21.62 11.5 21.4 11.37 L 7.89 3.11 C 7.66 2.97 7.37 2.96 7.14 3.09 C 6.9 3.22 6.755 3.47 6.75 3.74 Z" />
+          </svg>
+        </span>
+        <span class="text-sm leading-tight font-semibold text-dark">
+          Einblick in unsere Arbeit
+          <span class="block text-xs font-medium text-gray">STOLZ Marketing</span>
+        </span>
+      </div>
+    </div>
+
+    {/* Text rechts (Desktop) bzw. oben (mobil) */}
+    <div class="order-1 max-w-[640px] xl:order-2">
+      <p class="flex items-center gap-2.5 text-sm font-medium text-dark">
+        <span class="size-1.5 rounded-full bg-dark" aria-hidden="true"></span>
+        Hallo, wir sind STOLZ 👋
+      </p>
+      {/* bewusst kein <h1>: das hat die bestehende Hero; wird diese Variante
+          gewählt, übernimmt diese Zeile das h1 */}
+      <p class="mt-4 text-40 font-semibold text-balance leading-[1.02] tracking-[-0.04em] text-dark md:text-52 xl:text-6xl">
+        Mehr Anfragen für Ihr Unternehmen. <span class="text-gray">Messbar &amp; Planbar.</span>
+      </p>
+      <p class="mt-6 max-w-[480px] text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-dark">
+        Wir bringen Handwerksbetrieben im Rhein-Main-Gebiet planbare Anfragen – ohne Marketingblabla.{' '}
+        <strong>Nur Ergebnisse, die auf Ihrer Rechnung auftauchen.</strong>
+      </p>
+      <div class="mt-8 flex flex-col items-start gap-2.5 md:flex-row md:items-center">
+        <Button href="/kontakt" variant="blue" shadow="blue-glow">Jetzt Potenzial checken lassen</Button>
+        <Button href="tel:+491784444156" variant="light">Direkt anrufen – 0178 4444 156</Button>
+      </div>
+    </div>
+  </div>
+</section>

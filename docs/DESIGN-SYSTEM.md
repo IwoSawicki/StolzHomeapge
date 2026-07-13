@@ -280,3 +280,4 @@ nachgebaut.
 | 14 | Durchgängig Sie-Ansprache statt Du (Hero-Subline, Painpoint-Tabs, Statistics, Kontakt-Formularhinweis) | Auftrag Iwo (Juli 2026) |
 | 15 | Projekt-Grids: alle Kacheln gleich hoch (einheitliches Seitenverhältnis statt Masonry/Stagger) | Auftrag Iwo (Juli 2026) |
 | 16 | Variante C = Nachbau madebyshape.co.uk: Kategorie-Pills erscheinen beim Hover in ausgeschnittener Ecke mit umgekehrten Kurven (Inverted Corners via Radial-Gradient-Pseudo-Elemente), eigener Lime-Kreis-Cursor mit Pfeil über den Karten (kleines Vanilla-JS, nur `hover: hover`-Geräte) | Auftrag Iwo (Juli 2026) |
+| 17 | Hero-Variante „Shape": Hochkant-Video (9:16) links, Text rechts; mobil Text oben, Video darunter; „Einblick in unsere Arbeit"-Pill auf dem Video; Video wird automatisch eingebunden, sobald `public/videos/hero-hochkant.mp4` existiert (autoplay/muted/loop/playsinline) | Auftrag Iwo (Juli 2026), zur Auswahl neben Original-Hero |
