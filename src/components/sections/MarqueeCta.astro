@@ -1,0 +1,98 @@
+---
+// Marquee-CTA (Nachbau madebyshape.co.uk, ganz unten vor dem Footer):
+// zwei Zeilen „Lassen Sie uns zusammenarbeiten." — die obere läuft nach
+// links, die untere nach rechts. Die ganze Fläche verlinkt auf /kontakt.
+// Desktop: maus-folgender blauer Pfeil-Kreis (cursor:none).
+// Mobil/Tablet: Pfeil-Kreis dauerhaft zwischen den Sätzen.
+// Endlos-Loop per CSS, respektiert prefers-reduced-motion.
+const phrase = 'Lassen Sie uns zusammenarbeiten.';
+// 6 Einheiten füllen jede Breite; der Track enthält sie doppelt, damit
+// die -50%-Verschiebung nahtlos loopt.
+const einheiten = Array.from({ length: 6 });
+
+const pfeil =
+  'M7 17 17 7M9 7h8v8';
+---
+
+<a
+  href="/kontakt"
+  class="marquee-cta group block overflow-hidden bg-bg-soft py-12 md:py-20"
+  data-marquee
+  aria-label="Lassen Sie uns zusammenarbeiten – zum Kontakt"
+>
+  {
+    ['links', 'rechts'].map((richtung) => (
+      <div class:list={['flex w-max whitespace-nowrap', `marquee-${richtung}`, richtung === 'rechts' && 'mt-2 md:mt-4']}>
+        {[...einheiten, ...einheiten].map(() => (
+          <span class="flex items-center" aria-hidden="true">
+            <span class="px-5 text-5xl font-semibold tracking-[-0.03em] text-dark md:px-7 md:text-7xl xl:text-8xl">
+              {phrase}
+            </span>
+            <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-blue text-white md:size-14 xl:hidden">
+              <svg class="size-5 md:size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d={pfeil} />
+              </svg>
+            </span>
+          </span>
+        ))}
+      </div>
+    ))
+  }
+
+  {/* Maus-folgender Pfeil-Kreis (nur Desktop mit Hover) */}
+  <span
+    class="marquee-cursor pointer-events-none fixed top-0 left-0 z-50 hidden size-16 items-center justify-center rounded-full bg-blue xl:flex"
+    data-marquee-cursor
+    aria-hidden="true"
+  >
+    <svg class="size-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d={pfeil} />
+    </svg>
+  </span>
+</a>
+
+<style>
+  @keyframes marquee-nach-links {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes marquee-nach-rechts {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+  .marquee-links { animation: marquee-nach-links 32s linear infinite; }
+  .marquee-rechts { animation: marquee-nach-rechts 32s linear infinite; }
+
+  /* Desktop: eigener Cursor über der ganzen Fläche */
+  @media (hover: hover) {
+    .marquee-cta { cursor: none; }
+  }
+  .marquee-cursor {
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 200ms ease;
+    will-change: transform;
+  }
+  .marquee-cursor.ist-aktiv {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-links,
+    .marquee-rechts { animation: none; }
+  }
+</style>
+
+<script>
+  // Blauer Pfeil-Kreis folgt der Maus über dem Marquee (nur Hover-Geräte)
+  const flaeche = document.querySelector('[data-marquee]');
+  const cursor = document.querySelector<HTMLElement>('[data-marquee-cursor]');
+  if (flaeche && cursor && window.matchMedia('(hover: hover)').matches) {
+    flaeche.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e as MouseEvent;
+      cursor.style.left = `${clientX}px`;
+      cursor.style.top = `${clientY}px`;
+    });
+    flaeche.addEventListener('mouseenter', () => cursor.classList.add('ist-aktiv'));
+    flaeche.addEventListener('mouseleave', () => cursor.classList.remove('ist-aktiv'));
+  }
+</script>
