@@ -36,8 +36,7 @@ import { startseitenProjekte } from '../../data/projekte';
             <div
               class:list={[
                 'pointer-events-none absolute top-1/2 right-[18%] z-10 hidden w-[240px] -translate-y-1/2 rotate-[-2deg] opacity-0 shadow-stack-strong transition-all duration-300 group-hover:opacity-100 group-hover:rotate-0 xl:block',
-                'overflow-hidden rounded-10',
-                projekt.art === 'website' ? 'aspect-[4/3]' : 'aspect-[9/13]',
+                'aspect-[4/3] overflow-hidden rounded-10',
               ]}
             >
               {projekt.art === 'website' ? (

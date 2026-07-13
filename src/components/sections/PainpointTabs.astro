@@ -1,5 +1,5 @@
 ---
-// „Deine Herausforderungen" – 5 Painpoint-Tabs.
+// „Ihre Herausforderungen" – 5 Painpoint-Tabs.
 // Nur der Tab „Keine Zeit" war im Framer-Export enthalten; die Inhalte der
 // anderen 4 Tabs stammen von Iwo (Antwort auf offene Frage D).
 // Die linke weiße Karte („Wir übernehmen" + Chips) ist im Export nur für
@@ -19,25 +19,25 @@ const tabs = [
     id: 'zu-teuer',
     label: 'Zu teuer',
     headline: 'Produktion kostet ein Vermögen, aber die Ergebnisse bleiben aus?',
-    text: 'Klassische Agenturen verlangen Tausende für Content, der gut aussieht, aber keine Zahlen bewegt. Bei uns bekommst du strategisch geplanten Content und bewährte Taktiken zum fairen Preis – ohne versteckte Kosten, mit messbaren Ergebnissen.',
+    text: 'Klassische Agenturen verlangen Tausende für Content, der gut aussieht, aber keine Zahlen bewegt. Bei uns erhalten Sie strategisch geplanten Content und bewährte Taktiken zum fairen Preis – ohne versteckte Kosten, mit messbaren Ergebnissen.',
   },
   {
     id: 'wo-anfangen',
     label: 'Wo anfangen?',
-    headline: 'Du willst auf Social Media sichtbar sein – weißt aber nicht wie?',
-    text: 'Jede Plattform hat ihre eigenen Spielregeln. Wir kennen die Besonderheiten aller relevanten Kanäle und entwickeln eine Strategie, die zu deinem Betrieb passt. Vom ersten Beitrag bis zum ersten Durchbruch begleiten wir jeden Schritt.',
+    headline: 'Sie wollen auf Social Media sichtbar sein – wissen aber nicht wie?',
+    text: 'Jede Plattform hat ihre eigenen Spielregeln. Wir kennen die Besonderheiten aller relevanten Kanäle und entwickeln eine Strategie, die zu Ihrem Betrieb passt. Vom ersten Beitrag bis zum ersten Durchbruch begleiten wir jeden Schritt.',
   },
   {
     id: 'keine-ideen',
     label: 'Keine Ideen',
-    headline: 'Du weißt nicht, was du posten sollst, damit es wirklich funktioniert?',
-    text: 'Algorithmen ändern sich, Trends kommen und gehen. Wir beobachten, was in deiner Branche funktioniert, und erstellen dir einen kompletten Content-Plan. Jeden Monat prüfen und optimieren wir ihn neu – damit dir nie die Ideen ausgehen.',
+    headline: 'Sie wissen nicht, was Sie posten sollen, damit es wirklich funktioniert?',
+    text: 'Algorithmen ändern sich, Trends kommen und gehen. Wir beobachten, was in Ihrer Branche funktioniert, und erstellen Ihnen einen kompletten Content-Plan. Jeden Monat prüfen und optimieren wir ihn neu – damit Ihnen nie die Ideen ausgehen.',
   },
   {
     id: 'keine-zeit',
     label: 'Keine Zeit',
-    headline: 'Du weißt, dass du Content brauchst – hast aber keine Zeit dafür?',
-    text: 'Dein Betrieb braucht deine volle Energie. Wir übernehmen den kompletten Prozess – von der Idee über Produktion und Postproduktion bis zu Veröffentlichung und Analyse. So wächst deine Sichtbarkeit, während du dich auf dein Handwerk konzentrierst.',
+    headline: 'Sie wissen, dass Sie Content brauchen – haben aber keine Zeit dafür?',
+    text: 'Ihr Betrieb braucht Ihre volle Energie. Wir übernehmen den kompletten Prozess – von der Idee über Produktion und Postproduktion bis zu Veröffentlichung und Analyse. So wächst Ihre Sichtbarkeit, während Sie sich auf Ihr Handwerk konzentrieren.',
   },
 ];
 const aktiverTab = tabs.length - 1; // „Keine Zeit" ist im Original vorausgewählt
@@ -51,7 +51,7 @@ const chips = ['Idee', 'Produktion', 'Veröffentlichung', 'Analyse'];
   >
     <div class="flex flex-col gap-10 xl:flex-row xl:items-start xl:justify-between xl:gap-6">
       <h2 class="max-w-[300px] shrink-0 text-5xl leading-[1.05] tracking-[-0.04em] text-slate">
-        <em class="font-display font-medium italic">Deine</em>
+        <em class="font-display font-medium italic">Ihre</em>
         <span class="block font-display font-extrabold">Heraus&shy;forderungen</span>
       </h2>
       <div class="flex flex-wrap gap-2" role="tablist" aria-label="Herausforderungen">
@@ -98,7 +98,7 @@ const chips = ['Idee', 'Produktion', 'Veröffentlichung', 'Analyse'];
           }
         </ul>
         <p class="mt-10 text-sm font-medium leading-[1.45] text-slate/50">
-          Du kümmerst dich um deinen Betrieb. Wir kümmern uns um den Rest.
+          Sie kümmern sich um Ihren Betrieb. Wir kümmern uns um den Rest.
         </p>
       </div>
 

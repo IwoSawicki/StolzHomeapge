@@ -1,13 +1,13 @@
 ---
-// DESIGN-VARIANTE E – „Galerie" (Masonry):
-// Natürliches Mauerwerk-Raster über CSS-Columns: Websites quer, Videos
-// hochkant in Originalproportion. Bildunterschrift wie in einer Galerie
-// (Name — Kategorien) statt Overlays. Ruhig, monochrom, ohne Kartenoptik.
+// DESIGN-VARIANTE E – „Galerie":
+// Gleichmäßiges 3-Spalten-Raster, alle Kacheln gleich hoch.
+// Bildunterschrift wie in einer Galerie (Name — Kategorien) statt
+// Overlays. Ruhig, monochrom, ohne Kartenoptik.
 import BrowserMockup from '../BrowserMockup.astro';
 import VideoTile from '../VideoTile.astro';
 import { startseitenProjekte } from '../../data/projekte';
 
-// Reihenfolge fürs Spalten-Layout mischen (Web/Video im Wechsel je Spalte)
+// Web/Video im Wechsel übers Raster verteilt
 const galerie = [0, 1, 2, 3, 4, 5].map((i) => startseitenProjekte[i]);
 ---
 
@@ -24,16 +24,11 @@ const galerie = [0, 1, 2, 3, 4, 5].map((i) => startseitenProjekte[i]);
       </h2>
     </div>
 
-    <div class="mt-16 columns-1 gap-5 md:columns-2 xl:columns-3">
+    <div class="mt-16 grid grid-cols-1 gap-x-5 gap-y-10 md:grid-cols-2 xl:grid-cols-3">
       {
         galerie.map((projekt) => (
-          <figure class="group mb-10 break-inside-avoid">
-            <div
-              class:list={[
-                'overflow-hidden rounded-14',
-                projekt.art === 'website' ? 'aspect-[4/3]' : 'aspect-[9/14]',
-              ]}
-            >
+          <figure class="group">
+            <div class="aspect-[4/3.4] overflow-hidden rounded-14">
               <div class="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.015]">
                 {projekt.art === 'website' ? (
                   <BrowserMockup domain={projekt.domain!} alt={`Website-Projekt ${projekt.name}`} chrome={false} class="border-0" />

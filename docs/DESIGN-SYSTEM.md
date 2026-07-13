@@ -276,3 +276,7 @@ nachgebaut.
 | 10 | ein `<h1>` pro Seite, semantisches HTML, keine DOM-Duplikate pro Breakpoint | CLAUDE.md (SEO) |
 | 11 | Hover-States sind dezente Näherungen (Framer-Hover-Varianten sind JS-generiert, nicht im Export enthalten; Live-Seite aus Umgebung nicht erreichbar) | technisch bedingt; bei Zugriff aufs Original nachschärfen |
 | 12 | Geöffnetes Mobilmenü ist eine Näherung (weißes Overlay, Linkliste, Kontakt-Button, Hamburger→X): Framer lädt das Menü erst clientseitig, nicht im Export | technisch bedingt |
+| 13 | Sektion „Kennen Sie das?" (Probleme) komplett entfernt | Auftrag Iwo (Juli 2026) |
+| 14 | Durchgängig Sie-Ansprache statt Du (Hero-Subline, Painpoint-Tabs, Statistics, Kontakt-Formularhinweis) | Auftrag Iwo (Juli 2026) |
+| 15 | Projekt-Grids: alle Kacheln gleich hoch (einheitliches Seitenverhältnis statt Masonry/Stagger) | Auftrag Iwo (Juli 2026) |
+| 16 | Variante C = Nachbau madebyshape.co.uk: Kategorie-Pills erscheinen beim Hover in ausgeschnittener Ecke mit umgekehrten Kurven (Inverted Corners via Radial-Gradient-Pseudo-Elemente), eigener Lime-Kreis-Cursor mit Pfeil über den Karten (kleines Vanilla-JS, nur `hover: hover`-Geräte) | Auftrag Iwo (Juli 2026) |
