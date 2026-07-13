@@ -1,12 +1,17 @@
 ---
-// /projekte-2 – internes Archiv der NICHT gewählten Projekt-Grid-Designs
-// (A Clean Showcase, B Case Cards, D Projekt-Index, E Galerie + die alte
-// 1:1-Nachbau-Sektion). Nur als Referenz, falls später ein Design
+// /projekte-2 – internes Design-Archiv: nicht gewählte Hero-Varianten
+// (v4 Skizze, v1 Shape, v3 Shape-Treppe, alte 1:1-Original-Hero) und
+// Projekt-Grid-Designs (A Clean Showcase, B Case Cards, D Projekt-Index,
+// E Galerie + alte 1:1-Sektion). Nur als Referenz, falls später etwas
 // wiederverwendet werden soll. Nicht verlinkt und für Suchmaschinen
-// gesperrt (noindex in robots.txt ergänzt).
+// gesperrt (robots.txt + Sitemap-Filter). Mehrere h1 hier bewusst egal.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import HeroVarianteShape from '../components/sections/HeroVarianteShape.astro';
+import HeroVarianteShape3 from '../components/sections/HeroVarianteShape3.astro';
+import HeroVarianteShape4 from '../components/sections/HeroVarianteShape4.astro';
 import ProjekteVarianteA from '../components/sections/ProjekteVarianteA.astro';
 import ProjekteVarianteB from '../components/sections/ProjekteVarianteB.astro';
 import ProjekteVarianteD from '../components/sections/ProjekteVarianteD.astro';
@@ -15,17 +20,26 @@ import Projekte from '../components/sections/Projekte.astro';
 ---
 
 <BaseLayout
-  title="Projekt-Design-Archiv | STOLZ Marketing"
-  description="Internes Archiv nicht verwendeter Projekt-Grid-Designs."
+  title="Design-Archiv | STOLZ Marketing"
+  description="Internes Archiv nicht verwendeter Design-Varianten."
 >
   <Header />
   <main>
     <div class="px-5 pt-14 text-center md:px-10 md:pt-20">
       <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Internes Archiv</p>
       <h1 class="mt-3 text-3xl font-semibold tracking-[-0.03em] text-dark">
-        Nicht verwendete Projekt-Grid-Designs
+        Nicht verwendete Designs
       </h1>
     </div>
+
+    <p class="mt-16 px-5 text-center text-xs font-medium tracking-wide text-gray uppercase">Hero-Variante 4 · Skizze (1:1-Video + Treppe)</p>
+    <HeroVarianteShape4 />
+    <p class="px-5 text-center text-xs font-medium tracking-wide text-gray uppercase">Hero-Variante 1 · Shape (Video links)</p>
+    <HeroVarianteShape />
+    <HeroVarianteShape3 />
+    <p class="px-5 text-center text-xs font-medium tracking-wide text-gray uppercase">Alte Hero · 1:1-Nachbau des Originals</p>
+    <Hero />
+
     <ProjekteVarianteD />
     <ProjekteVarianteE />
     <ProjekteVarianteA />

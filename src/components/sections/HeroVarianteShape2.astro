@@ -18,18 +18,16 @@ import showreel from '../../assets/shape-showreel-2024_looping-v3.mp4';
   <div class="mx-auto max-w-[1200px] xl:flex xl:items-center">
     {/* Text-Panel: überlappt am Desktop ins Video, mit Außenrundungen */}
     <div class="shape2-panel relative z-10 bg-white xl:-mr-28 xl:flex-1 xl:rounded-r-[32px] xl:py-12 xl:pr-14">
-      <p class="flex items-center gap-2.5 text-sm font-medium text-dark">
+      <p class="flex items-center gap-2.5 text-base font-medium text-dark">
         <span class="size-1.5 rounded-full bg-dark" aria-hidden="true"></span>
-        Hallo, wir sind STOLZ 👋
+        Hey, wir sind Stolz Marketing 👋
       </p>
-      {/* bewusst kein <h1>: das hat die bestehende Hero; wird diese Variante
-          gewählt, übernimmt diese Zeile das h1 */}
-      <p class="mt-4 max-w-[560px] text-40 font-semibold text-balance leading-[1.02] tracking-[-0.04em] text-dark md:text-52 xl:text-5xl">
+      <h1 class="mt-4 max-w-[560px] text-40 font-semibold text-balance leading-[1.02] tracking-[-0.04em] text-dark md:text-52">
         Volle Auftragsbücher. <span class="text-gray">Passende Bewerber.</span>
-      </p>
+      </h1>
       <p class="mt-5 max-w-[470px] text-lg font-medium text-balance leading-[1.45] tracking-[-0.01em] text-dark">
-        Marketing für Handwerk &amp; Bau — mit <strong>einem</strong> Ansprechpartner für alles:
-        Website, Google, Social Media und Recruiting. Verständlich erklärt, messbar gemacht.
+        Marketing für Handwerk &amp; Bau — mit <strong>einem</strong> Ansprechpartner für alles.
+        Verständlich erklärt, messbar gemacht.
       </p>
       <div class="mt-8 flex flex-col items-start gap-2.5 md:flex-row md:items-center">
         <Button href="/projekte" variant="blue" shadow="blue-glow">Projekte ansehen</Button>
@@ -40,7 +38,7 @@ import showreel from '../../assets/shape-showreel-2024_looping-v3.mp4';
 
     {/* Großes Hochkant-Video rechts: Showreel als stummer Endlos-Loop */}
     <div class="relative mx-auto mt-10 w-full max-w-[440px] shrink-0 xl:mx-0 xl:mt-0 xl:w-[720px] xl:max-w-none">
-      <div class="aspect-[9/16] overflow-hidden rounded-[32px] bg-linear-160 from-video-dark-1 to-video-dark-2">
+      <div class="aspect-[9/16] max-h-[80vh] w-full overflow-hidden rounded-[32px] bg-linear-160 from-video-dark-1 to-video-dark-2 xl:aspect-auto xl:h-[80vh]">
         <video class="h-full w-full object-cover" src={showreel} autoplay muted loop playsinline aria-label="Showreel von STOLZ Marketing (stumm)"></video>
       </div>
 
