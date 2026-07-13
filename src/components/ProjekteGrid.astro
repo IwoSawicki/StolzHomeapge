@@ -19,12 +19,19 @@ const { projekte, class: extra = '' } = Astro.props;
 
 <div class:list={['grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-20', extra]} data-shape-grid>
   {
-    projekte.map((projekt) => (
-      <a href={`/projekte/${projekt.slug}`} class="group block" data-shape-karte>
+    projekte.map((projekt) => {
+      /* Karten ohne Unterseite (noch kein Background) sind nicht verlinkt */
+      const Karte = projekt.details ? 'a' : 'div';
+      return (
+      <Karte
+        href={projekt.details ? `/projekte/${projekt.slug}` : undefined}
+        class="group block"
+        {...(projekt.details ? { 'data-shape-karte': true } : {})}
+      >
         <div class="relative aspect-[4/3] overflow-hidden rounded-24">
           <div class="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.015]">
             {projekt.art === 'website' ? (
-              <BrowserMockup domain={projekt.domain!} alt={`Website-Projekt ${projekt.name}`} chrome={false} class="border-0" />
+              <BrowserMockup domain={projekt.domain} bild={projekt.bild} alt={`Website-Projekt ${projekt.name}`} chrome={false} class="border-0" />
             ) : (
               <VideoTile bild={projekt.bild} alt={`Video-Projekt ${projekt.name}`} />
             )}
@@ -46,14 +53,15 @@ const { projekte, class: extra = '' } = Astro.props;
           <p class="flex items-center gap-2 text-sm font-medium text-gray">
             {projekt.name}
             <span class="size-1 rounded-full bg-gray/60" aria-hidden="true" />
-            {projekt.art === 'website' ? 'Website' : 'Video-Content'}
+            {projekt.ziel ?? (projekt.art === 'website' ? 'Website' : 'Video-Content')}
           </p>
           <h3 class="mt-1.5 max-w-[480px] text-2xl font-semibold text-balance leading-[1.15] tracking-[-0.02em] text-dark">
             {projekt.beschreibung}
           </h3>
         </div>
-      </a>
-    ))
+      </Karte>
+      );
+    })
   }
 </div>
 

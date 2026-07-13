@@ -6,7 +6,7 @@ import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 
 interface Props {
-  domain: string;
+  domain?: string;
   /** optionaler echter Screenshot */
   bild?: ImageMetadata;
   alt?: string;
@@ -14,7 +14,7 @@ interface Props {
   chrome?: boolean;
   class?: string;
 }
-const { domain, bild, alt = `Website ${domain}`, chrome = true, class: extra = '' } = Astro.props;
+const { domain = '', bild, alt = `Website ${domain}`, chrome = true, class: extra = '' } = Astro.props;
 const wortmarke = domain.replace(/^www\./, '').split('.')[0];
 ---
 

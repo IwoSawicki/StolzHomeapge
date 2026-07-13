@@ -9,8 +9,8 @@ import ProjekteGrid from '../components/ProjekteGrid.astro';
 import Button from '../components/Button.astro';
 import { projekte } from '../data/projekte';
 
-// Reihenfolge: Websites und Videos im Wechsel
-const reihenfolge = [0, 1, 2, 3, 4, 5, 6, 7].map((i) => projekte[i]);
+// alle Projekte in der Reihenfolge aus src/data/projekte.ts
+const reihenfolge = projekte;
 ---
 
 <BaseLayout
