@@ -31,7 +31,7 @@ const { projekte, class: extra = '' } = Astro.props;
         <div class="relative aspect-[4/3] overflow-hidden rounded-24">
           <div class="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.015]">
             {projekt.art === 'website' ? (
-              <BrowserMockup domain={projekt.domain} bild={projekt.bild} alt={`Website-Projekt ${projekt.name}`} chrome={false} class="border-0" />
+              <BrowserMockup domain={projekt.domain} bild={projekt.bild} alt={`Website-Projekt ${projekt.name}`} mockup />
             ) : (
               <VideoTile bild={projekt.bild} alt={`Video-Projekt ${projekt.name}`} />
             )}
