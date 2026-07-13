@@ -1,0 +1,99 @@
+---
+// Leistungs-Sektion auf dunkler Fläche (Nachbau Shape „Our Expertise"):
+// Kopf dreispaltig (Eyebrow / Headline / Kurztext + CTA), darunter die
+// Leistungen als riesige Zeilen mit Trennlinien. Beim Hover leuchtet die
+// Zeile auf, die übrigen dimmen, links erscheint eine Projekt-Vorschau
+// und ein blauer Pfeil-Kreis (nur Desktop, pures CSS).
+// Jede Zeile trägt rechts ihren Schwerpunkt (Kundengewinnung /
+// Mitarbeitergewinnung) — so verbinden sich Leistungsliste und
+// Zwei-Säulen-Positionierung.
+// Die Zeilen sind noch NICHT verlinkt — Leistungs-Unterseiten
+// (/leistungen/[slug]) folgen laut Roadmap.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import Button from '../Button.astro';
+import websiteHepa from '../../assets/projekte/website-hepabaut.png';
+import websiteJhoch2 from '../../assets/projekte/website-jhoch2-wasserschaden.png';
+import websiteBadenBatterie from '../../assets/projekte/website-badenbatterie.png';
+import drehDmk from '../../assets/projekte/video-dreh-dmk-bau.jpg';
+import drehSaan from '../../assets/projekte/video-dreh-saan-wasserstrahl-1.jpg';
+import drehWio from '../../assets/projekte/content-dreh-wio.jpg';
+
+interface Leistung {
+  name: string;
+  schwerpunkt: string;
+  vorschau: ImageMetadata;
+}
+const leistungen: Leistung[] = [
+  { name: 'Webseiten', schwerpunkt: 'Kundengewinnung', vorschau: websiteHepa },
+  { name: 'Google Ads & SEO', schwerpunkt: 'Kundengewinnung', vorschau: websiteJhoch2 },
+  { name: 'KI-Ranking', schwerpunkt: 'Kundengewinnung', vorschau: websiteBadenBatterie },
+  { name: 'Social Media Ads', schwerpunkt: 'Kunden & Mitarbeiter', vorschau: drehDmk },
+  { name: 'Recruiting-Kampagnen', schwerpunkt: 'Mitarbeitergewinnung', vorschau: drehSaan },
+  { name: 'Video- & Content-Produktion', schwerpunkt: 'Kunden & Mitarbeiter', vorschau: drehWio },
+];
+---
+
+<section id="leistungen" class="scroll-mt-24 px-3 py-8 md:px-6 md:py-12 xl:px-10">
+  <div class="mx-auto max-w-[1240px] rounded-[32px] bg-dark px-6 py-14 md:px-10 md:py-20 xl:px-14 xl:py-24">
+    <!-- Kopf: Eyebrow / Headline / Kurztext + CTA -->
+    <div class="grid grid-cols-1 gap-8 xl:grid-cols-[220px_1fr_320px] xl:gap-10">
+      <p class="flex h-fit items-center gap-2.5 text-sm font-medium text-white">
+        <span class="size-1.5 rounded-full bg-white" aria-hidden="true"></span>
+        Unsere Leistungen
+      </p>
+      <h2 class="max-w-[560px] text-3xl font-semibold text-balance leading-[1.12] tracking-[-0.02em] text-white md:text-4xl xl:mx-auto xl:text-center">
+        Womit wir Ihren Betrieb nach vorne bringen
+      </h2>
+      <div class="flex flex-col items-start gap-5">
+        <p class="text-base font-medium leading-[1.5] text-white/70">
+          Alles zahlt auf zwei Ziele ein: mehr Aufträge und passende Bewerber — Sie entscheiden, wo wir
+          ansetzen.
+        </p>
+        <Button href="/kontakt" variant="white">Kostenlose Beratung</Button>
+      </div>
+    </div>
+
+    <!-- Leistungs-Zeilen -->
+    <ul class="expertise-liste mt-14 xl:mt-20" aria-label="Unsere Leistungen im Überblick">
+      {
+        leistungen.map((leistung) => (
+          <li class="expertise-zeile group relative border-t border-white/12 py-5 transition-opacity duration-300 last:border-b md:py-6 xl:py-7">
+            {/* Vorschau (nur Desktop, beim Hover) */}
+            <span class="pointer-events-none absolute top-1/2 left-0 hidden w-[190px] -translate-y-1/2 scale-90 overflow-hidden rounded-14 opacity-0 shadow-stack-strong transition-all duration-300 group-hover:scale-100 group-hover:opacity-100 xl:block">
+              <Image src={leistung.vorschau} alt="" widths={[380]} sizes="190px" class="aspect-[16/10] h-auto w-full object-cover object-top" />
+            </span>
+
+            <div class="flex items-center justify-between gap-6 transition-transform duration-300 xl:group-hover:translate-x-[220px]">
+              <span class="text-4xl font-semibold tracking-[-0.03em] text-white md:text-6xl xl:text-7xl">
+                {leistung.name}
+              </span>
+              <span class="hidden shrink-0 text-sm font-medium text-white/40 md:block xl:group-hover:opacity-0 xl:group-hover:transition-opacity">
+                {leistung.schwerpunkt}
+              </span>
+            </div>
+
+            {/* Blauer Pfeil-Kreis (nur Desktop, beim Hover) */}
+            <span class="pointer-events-none absolute top-1/2 right-[12%] hidden size-16 -translate-y-1/2 scale-50 items-center justify-center rounded-full bg-blue opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100 xl:flex">
+              <svg class="size-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 17 17 7M9 7h8v8" />
+              </svg>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Beim Hover über die Liste dimmen alle Zeilen außer der aktiven */
+  @media (hover: hover) {
+    .expertise-liste:hover .expertise-zeile {
+      opacity: 0.35;
+    }
+    .expertise-liste:hover .expertise-zeile:hover {
+      opacity: 1;
+    }
+  }
+</style>
