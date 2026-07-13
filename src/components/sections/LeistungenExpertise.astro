@@ -94,21 +94,12 @@ const leistungen: Leistung[] = [
       }
     </ul>
   </div>
-
-  {/* Maus-folgender Pfeil-Kreis über den Zeilen (nur Geräte mit Hover) */}
-  <div
-    class="expertise-cursor pointer-events-none fixed top-0 left-0 z-50 hidden size-16 items-center justify-center rounded-full bg-blue md:flex"
-    data-expertise-cursor
-    aria-hidden="true"
-  >
-    <svg class="size-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M7 17 17 7M9 7h8v8"></path>
-    </svg>
-  </div>
 </section>
 
 <style>
-  /* Beim Hover über die Liste dimmen alle Zeilen außer der aktiven */
+  /* Beim Hover über die Liste dimmen alle Zeilen außer der aktiven
+     (Bild-Einblendung bleibt; kein eigener Cursor, da noch nicht
+     verlinkt — soll nicht klickbar wirken) */
   @media (hover: hover) {
     .expertise-liste:hover .expertise-zeile {
       opacity: 0.35;
@@ -116,34 +107,5 @@ const leistungen: Leistung[] = [
     .expertise-liste:hover .expertise-zeile:hover {
       opacity: 1;
     }
-    [data-expertise-zeile] {
-      cursor: none;
-    }
-  }
-  .expertise-cursor {
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 200ms ease;
-    will-change: transform;
-  }
-  .expertise-cursor.ist-aktiv {
-    transform: translate(-50%, -50%) scale(1);
   }
 </style>
-
-<script>
-  // Blauer Pfeil-Kreis folgt der Maus über den Leistungs-Zeilen
-  // (nur Geräte mit Hover), analog zum Projekt-Grid.
-  const liste = document.querySelector('[data-expertise]');
-  const cursor = document.querySelector<HTMLElement>('[data-expertise-cursor]');
-  if (liste && cursor && window.matchMedia('(hover: hover)').matches) {
-    liste.addEventListener('mousemove', (e) => {
-      const { clientX, clientY } = e as MouseEvent;
-      cursor.style.left = `${clientX}px`;
-      cursor.style.top = `${clientY}px`;
-    });
-    liste.querySelectorAll('[data-expertise-zeile]').forEach((zeile) => {
-      zeile.addEventListener('mouseenter', () => cursor.classList.add('ist-aktiv'));
-      zeile.addEventListener('mouseleave', () => cursor.classList.remove('ist-aktiv'));
-    });
-  }
-</script>

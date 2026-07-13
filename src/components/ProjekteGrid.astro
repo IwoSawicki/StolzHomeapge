@@ -20,16 +20,23 @@ const { projekte, class: extra = '' } = Astro.props;
 <div class:list={['grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-20', extra]} data-shape-grid>
   {
     projekte.map((projekt) => {
-      /* Karten ohne Unterseite (noch kein Background) sind nicht verlinkt */
-      const Karte = projekt.details ? 'a' : 'div';
+      /* Nur fertig befüllte Projekte sind verlinkt; die übrigen bekommen
+         eine „Bald mehr"-Kachel (leicht ausgegraut, nicht klickbar). */
+      const verlinkt = Boolean(projekt.bereit && projekt.details);
+      const Karte = verlinkt ? 'a' : 'div';
       return (
       <Karte
-        href={projekt.details ? `/projekte/${projekt.slug}` : undefined}
+        href={verlinkt ? `/projekte/${projekt.slug}` : undefined}
         class="group block"
-        {...(projekt.details ? { 'data-shape-karte': true } : {})}
+        {...(verlinkt ? { 'data-shape-karte': true } : {})}
       >
         <div class="relative aspect-[4/3] overflow-hidden rounded-24">
-          <div class="h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.015]">
+          <div
+            class:list={[
+              'h-full w-full',
+              verlinkt ? 'transition-transform duration-500 ease-out group-hover:scale-[1.015]' : 'opacity-55',
+            ]}
+          >
             {projekt.art === 'website' ? (
               <BrowserMockup domain={projekt.domain} bild={projekt.bild} alt={`Website-Projekt ${projekt.name}`} mockup />
             ) : (
@@ -47,6 +54,13 @@ const { projekte, class: extra = '' } = Astro.props;
               ))}
             </div>
           </div>
+
+          {/* „Bald mehr"-Badge für noch nicht befüllte Projekte */}
+          {!verlinkt && (
+            <span class="absolute bottom-4 left-4 rounded-full bg-dark/85 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
+              Bald mehr
+            </span>
+          )}
         </div>
 
         <div class="mt-4">

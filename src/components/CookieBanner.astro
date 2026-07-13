@@ -1,0 +1,90 @@
+---
+// Einfaches Consent-Banner für Google Analytics.
+// GA wird NICHT automatisch geladen — erst nach „Akzeptieren".
+// Die Wahl wird in localStorage gespeichert; das Banner erscheint dann
+// nicht mehr. Über den Footer-Link „Cookie-Einstellungen" (data-cookie-
+// reset) kann die Wahl neu getroffen werden.
+const GA_ID = 'G-ZK7F06197Z';
+---
+
+<div
+  class="pointer-events-none fixed inset-x-0 bottom-0 z-[90] hidden p-4 md:inset-x-auto md:right-6 md:bottom-6 md:p-0"
+  data-cookie-banner
+  aria-live="polite"
+>
+  <div class="pointer-events-auto mx-auto max-w-[440px] rounded-20 border border-border bg-white p-6 shadow-stack-strong">
+    <p class="text-base font-semibold tracking-[-0.01em] text-dark">Cookies & Analyse</p>
+    <p class="mt-2 text-sm leading-[1.5] text-dark/70">
+      Wir nutzen Google Analytics, um unsere Website zu verbessern. Sie entscheiden selbst, ob wir das
+      dürfen. Details finden Sie in der
+      <a href="/datenschutz" class="underline hover:text-dark">Datenschutzerklärung</a>.
+    </p>
+    <div class="mt-5 flex flex-col gap-2.5 sm:flex-row">
+      <button
+        type="button"
+        data-cookie-accept
+        class="flex-1 cursor-pointer rounded-full bg-blue px-5 py-2.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue-bright"
+      >
+        Akzeptieren
+      </button>
+      <button
+        type="button"
+        data-cookie-decline
+        class="flex-1 cursor-pointer rounded-full border border-border bg-white px-5 py-2.5 text-sm font-medium text-dark transition-colors duration-200 hover:bg-bg-soft"
+      >
+        Ablehnen
+      </button>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ GA_ID }}>
+  const KEY = 'stolz-consent';
+  const banner = document.querySelector('[data-cookie-banner]');
+
+  function ladeGA() {
+    if (window.__gaGeladen) return;
+    window.__gaGeladen = true;
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    // IP-Anonymisierung für den Datenschutz
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function zeige() {
+    banner?.classList.remove('hidden');
+  }
+  function verstecke() {
+    banner?.classList.add('hidden');
+  }
+
+  const wahl = localStorage.getItem(KEY);
+  if (wahl === 'accepted') ladeGA();
+  else if (wahl !== 'declined') zeige();
+
+  document.querySelector('[data-cookie-accept]')?.addEventListener('click', () => {
+    localStorage.setItem(KEY, 'accepted');
+    ladeGA();
+    verstecke();
+  });
+  document.querySelector('[data-cookie-decline]')?.addEventListener('click', () => {
+    localStorage.setItem(KEY, 'declined');
+    verstecke();
+  });
+
+  // Footer-Link „Cookie-Einstellungen" öffnet das Banner erneut
+  document.querySelectorAll('[data-cookie-reset]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      zeige();
+    });
+  });
+</script>

@@ -72,6 +72,8 @@ export interface Projekt {
   /** Meta-Zeile der Karte, z. B. „Kundengewinnung & Recruiting" */
   ziel?: string;
   kategorien: string[];
+  /** true = Unterseite fertig befüllt (verlinkt); sonst „Bald mehr" im Grid */
+  bereit?: boolean;
   details?: ProjektDetails;
 }
 
@@ -79,6 +81,7 @@ export const projekte: Projekt[] = [
   // ——— Startseiten-Projekte (Reihenfolge = Vorgabe Iwo) ———
   {
     slug: 'dmk-bau',
+    bereit: true,
     name: 'DMK Bau',
     art: 'video',
     bild: dmkPreview2,
@@ -111,6 +114,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 'hepa-baut',
+    bereit: true,
     name: 'HEPA Baut',
     art: 'website',
     domain: 'hepabaut.de',
@@ -143,6 +147,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 'jhoch2-wasserschaden',
+    bereit: true,
     name: 'Jhoch2 Wasserschaden',
     art: 'website',
     domain: 'jhoch2-wasserschaden.de',
@@ -175,6 +180,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 'saan-wasserstrahl',
+    bereit: true,
     name: 'SAAN Wasserstrahl',
     art: 'video',
     bild: drehSaan1,

@@ -17,9 +17,9 @@ import Button from '../../components/Button.astro';
 import { projekte } from '../../data/projekte';
 
 export function getStaticPaths() {
-  // Unterseiten nur für Projekte mit hinterlegten Details
+  // Unterseiten nur für fertig befüllte Projekte
   return projekte
-    .filter((projekt) => projekt.details)
+    .filter((projekt) => projekt.bereit && projekt.details)
     .map((projekt) => ({ params: { slug: projekt.slug }, props: { projekt } }));
 }
 
@@ -28,6 +28,9 @@ const details = projekt.details!;
 const istWebsite = projekt.art === 'website';
 // Dreh-Kacheln: echte Dreh-Bilder, sonst Still als Platzhalter (3 Kacheln)
 const drehKacheln = istWebsite ? [] : (details.drehbilder ?? [projekt.bild, projekt.bild, projekt.bild]);
+// „XX"-Platzhalter herausfiltern, bis echte Werte hinterlegt sind
+const keyfacts = details.keyfacts.filter((f) => !f.wert.includes('XX'));
+const ergebnisse = details.ergebnisse.filter((e) => !e.wert.includes('XX'));
 ---
 
 <BaseLayout
@@ -60,17 +63,19 @@ const drehKacheln = istWebsite ? [] : (details.drehbilder ?? [projekt.bild, proj
           {details.einleitung}
         </p>
 
-        <!-- Keyfacts -->
-        <dl class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-border pt-8 md:grid-cols-4">
-          {
-            details.keyfacts.map((fakt) => (
-              <div>
-                <dt class="text-xs font-semibold tracking-[0.14em] text-gray uppercase">{fakt.label}</dt>
-                <dd class="mt-1.5 text-base font-semibold text-dark">{fakt.wert}</dd>
-              </div>
-            ))
-          }
-        </dl>
+        <!-- Keyfacts (XX-Platzhalter herausgefiltert) -->
+        {
+          keyfacts.length > 0 && (
+            <dl class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-border pt-8 md:grid-cols-4">
+              {keyfacts.map((fakt) => (
+                <div>
+                  <dt class="text-xs font-semibold tracking-[0.14em] text-gray uppercase">{fakt.label}</dt>
+                  <dd class="mt-1.5 text-base font-semibold text-dark">{fakt.wert}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
       </div>
     </section>
 
@@ -190,25 +195,29 @@ const drehKacheln = istWebsite ? [] : (details.drehbilder ?? [projekt.bild, proj
       )
     }
 
-    <!-- 5. Ergebnisse + CTA -->
+    <!-- 5. Ergebnisse (nur wenn echte Werte da sind) + CTA -->
     <section class="px-5 pt-16 pb-20 md:px-10 md:pt-24 md:pb-28">
       <div class="mx-auto max-w-[1200px]">
-        <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Ergebnis</p>
-        <h2 class="mt-3 text-3xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-4xl">
-          Das kam dabei raus
-        </h2>
-        <dl class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {
-            details.ergebnisse.map((ergebnis) => (
-              <div class="rounded-24 border border-border bg-white p-7">
-                <dd class="text-40 font-semibold tracking-[-0.03em] text-dark">{ergebnis.wert}</dd>
-                <dt class="mt-1 text-base font-medium text-dark/60">{ergebnis.label}</dt>
-              </div>
-            ))
-          }
-        </dl>
+        {
+          ergebnisse.length > 0 && (
+            <div class="mb-14">
+              <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Ergebnis</p>
+              <h2 class="mt-3 text-3xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-4xl">
+                Das kam dabei raus
+              </h2>
+              <dl class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+                {ergebnisse.map((ergebnis) => (
+                  <div class="rounded-24 border border-border bg-white p-7">
+                    <dd class="text-40 font-semibold tracking-[-0.03em] text-dark">{ergebnis.wert}</dd>
+                    <dt class="mt-1 text-base font-medium text-dark/60">{ergebnis.label}</dt>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )
+        }
 
-        <div class="mt-14 flex flex-col items-start gap-2.5 md:flex-row md:items-center">
+        <div class="flex flex-col items-start gap-2.5 md:flex-row md:items-center">
           <Button href="/kontakt" variant="blue" shadow="blue-glow">Ähnliches Projekt anfragen</Button>
           <Button href="/projekte" variant="light">Weitere Projekte ansehen</Button>
         </div>

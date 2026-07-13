@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ogImage from '../assets/og-image-stolz-marketing.png';
+import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
   /** Seitentitel; Original nutzt auf allen Seiten denselben Titel */
@@ -68,19 +69,10 @@ const jsonLd = {
     <link rel="preload" href="/fonts/inter-600-normal.woff2" as="font" type="font/woff2" crossorigin />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-
-    <!-- Google Analytics (wie Original, Freigabe Iwo – Frage G1) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZK7F06197Z"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-ZK7F06197Z');
-    </script>
   </head>
   <body>
     <slot />
+    <!-- Google Analytics wird erst nach Zustimmung im Banner geladen -->
+    <CookieBanner />
   </body>
 </html>
