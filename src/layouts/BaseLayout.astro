@@ -7,11 +7,14 @@ interface Props {
   /** Seitentitel; Original nutzt auf allen Seiten denselben Titel */
   title?: string;
   description?: string;
+  /** interne Seiten (Vorschau/Archiv) nicht indexieren */
+  noindex?: boolean;
 }
 
 const {
   title = 'STOLZ Marketing | Mehr Kunden & Mitarbeiter für lokale Betriebe',
   description = 'STOLZ Marketing bringt lokalen Betrieben mehr qualifizierte Anfragen und passende Bewerbungen — Website, Google, Social Media und Recruiting aus einer Hand. Verständlich und messbar.',
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -50,7 +53,7 @@ const jsonLd = {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="robots" content="max-image-preview:large" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'max-image-preview:large'} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />

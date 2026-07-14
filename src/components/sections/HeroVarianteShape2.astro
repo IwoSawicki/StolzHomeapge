@@ -40,7 +40,16 @@ import showreel from '../../assets/startseite/Stolz-Showreel.mp4';
     {/* Großes Hochkant-Video rechts: Showreel als stummer Endlos-Loop */}
     <div class="relative mx-auto mt-10 w-full max-w-[440px] shrink-0 xl:mx-0 xl:mt-0 xl:w-[720px] xl:max-w-none">
       <div class="aspect-[9/16] max-h-[80vh] w-full overflow-hidden rounded-[32px] bg-linear-160 from-video-dark-1 to-video-dark-2 xl:aspect-auto xl:h-[80vh]">
-        <video class="h-full w-full object-cover" src={showreel} autoplay muted loop playsinline aria-label="Showreel von STOLZ Marketing (stumm)"></video>
+        <video
+          class="h-full w-full object-cover"
+          src={showreel}
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          data-hero-video
+          aria-label="Showreel von STOLZ Marketing (stumm)"></video>
       </div>
 
       <button
@@ -150,4 +159,18 @@ import showreel from '../../assets/startseite/Stolz-Showreel.mp4';
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) schliesseModal();
   });
+
+  // Autoplay-Anstoß fürs Hero-Video: mobile Browser (v. a. iOS im
+  // Stromsparmodus) starten Videos trotz autoplay/muted nicht immer.
+  // Deshalb per JS anspielen und beim ersten Touch/Scroll erneut versuchen.
+  const heroVideo = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  if (heroVideo) {
+    const anspielen = () => {
+      if (heroVideo.paused) heroVideo.play().catch(() => {});
+    };
+    anspielen();
+    ['touchstart', 'scroll', 'click'].forEach((ev) =>
+      window.addEventListener(ev, anspielen, { once: true, passive: true }),
+    );
+  }
 </script>

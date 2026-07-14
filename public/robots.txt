@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
-# internes Design-Archiv
+# interne Seiten: Design-Archiv + Design-Vorschau
 Disallow: /archiv
+Disallow: /vorschau-projekthero
 
 Sitemap: https://stolz-marketing.de/sitemap-index.xml
