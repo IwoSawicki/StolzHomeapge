@@ -46,8 +46,55 @@ const links = [
   </div>
 </header>
 
-<!-- Mobile: schwebende Glas-Pille unten (dauerhaft klein, Safe-Area) -->
-<div class="fixed inset-x-0 bottom-0 z-50 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom))] xl:hidden" data-mnav>
+<!-- Mobile: statischer Balken oben (Logo + Menü), scrollt mit weg -->
+<div class="relative bg-white xl:hidden" data-topbar>
+  <div class="flex items-center justify-between px-5 py-3.5">
+    <Logo />
+    <button
+      type="button"
+      class="relative block size-11 shrink-0 rounded-full"
+      aria-label="Menü öffnen"
+      aria-expanded="false"
+      aria-controls="top-menu"
+      data-toptoggle
+    >
+      <span class="absolute top-[15.5px] left-3 h-0.5 w-5 rounded-full bg-dark transition-transform duration-200" data-topline-top></span>
+      <span class="absolute top-[26.5px] left-3 h-0.5 w-5 rounded-full bg-dark transition-transform duration-200" data-topline-bottom></span>
+    </button>
+  </div>
+
+  <!-- Dropdown nach unten -->
+  <nav
+    id="top-menu"
+    data-topmenu
+    class="absolute inset-x-0 top-full z-50 flex origin-top flex-col gap-1 border-b border-border bg-white px-5 pt-2 pb-6 shadow-card"
+    aria-label="Mobilnavigation oben"
+  >
+    {
+      links.map((link) => (
+        <a
+          href={link.href}
+          class="flex items-center gap-2 border-b border-border py-3.5 text-2xl font-semibold tracking-[-0.02em] text-dark last:border-b-0"
+          data-topmlink
+        >
+          {link.label}
+          {link.badge && (
+            <span class="rounded-full bg-blue px-1.5 py-0.5 text-xs leading-none font-bold text-white tabular-nums">
+              {link.badge}
+            </span>
+          )}
+        </a>
+      ))
+    }
+    <Button href="/kontakt" variant="blue" class="mt-4 w-full">Kontakt</Button>
+  </nav>
+</div>
+
+<!-- Mobile: schwebende Glas-Pille unten (erscheint beim Scrollen) -->
+<div
+  class="pill-versteckt fixed inset-x-0 bottom-0 z-50 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom))] xl:hidden"
+  data-mnav
+>
   <div data-mpill class="mpill mx-auto flex w-full flex-col overflow-hidden rounded-[24px]">
     <!-- Links (klappen nach oben auf — stehen im DOM ÜBER der Zeile) -->
     <nav id="mobile-menu" data-mlinks class="mlinks" aria-label="Mobilnavigation">
@@ -102,6 +149,40 @@ const links = [
 <div data-mbackdrop class="fixed inset-0 z-40 hidden bg-dark/20 backdrop-blur-sm xl:hidden"></div>
 
 <style>
+  /* Bottom-Pille erscheint erst, wenn der obere Balken aus dem Blick ist */
+  [data-mnav] {
+    transition:
+      opacity 0.3s ease,
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-mnav].pill-versteckt {
+    opacity: 0;
+    transform: translateY(130%);
+    pointer-events: none;
+  }
+
+  /* Top-Dropdown Auf-/Zuklappen */
+  [data-topmenu] {
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.2s ease,
+      transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-topmenu].ist-offen {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-mnav],
+    [data-topmenu] {
+      transition: none;
+    }
+  }
+
   /* Schwebende Glas-Pille (dauerhaft transparent mit Blur) */
   .mpill {
     background: rgba(255, 255, 255, 0.8);
@@ -181,5 +262,44 @@ const links = [
     backdrop.addEventListener('click', () => setzeOffen(false));
     menuLinks.forEach((a) => a.addEventListener('click', () => setzeOffen(false)));
     anwenden();
+  }
+
+  // Oberer Balken: eigenes Dropdown; blendet die Bottom-Pille aus, solange
+  // er sichtbar ist. Verlässt er den Viewport, taucht die Pille auf.
+  const mnav = document.querySelector<HTMLElement>('[data-mnav]');
+  const topbar = document.querySelector<HTMLElement>('[data-topbar]');
+  const topToggle = document.querySelector<HTMLElement>('[data-toptoggle]');
+  const topMenu = document.querySelector<HTMLElement>('[data-topmenu]');
+  const topLineTop = document.querySelector<HTMLElement>('[data-topline-top]');
+  const topLineBottom = document.querySelector<HTMLElement>('[data-topline-bottom]');
+  const topLinks = document.querySelectorAll('[data-topmlink]');
+
+  if (topbar && topToggle && topMenu && topLineTop && topLineBottom) {
+    let topOffen = false;
+    const setzeTop = (v: boolean) => {
+      topOffen = v;
+      topMenu.classList.toggle('ist-offen', v);
+      topToggle.setAttribute('aria-expanded', String(v));
+      topToggle.setAttribute('aria-label', v ? 'Menü schließen' : 'Menü öffnen');
+      topLineTop.style.transform = v ? 'translateY(5.5px) rotate(45deg)' : '';
+      topLineBottom.style.transform = v ? 'translateY(-5.5px) rotate(-45deg)' : '';
+    };
+    topToggle.addEventListener('click', () => setzeTop(!topOffen));
+    topLinks.forEach((a) => a.addEventListener('click', () => setzeTop(false)));
+
+    // Bottom-Pille zeigen, sobald der obere Balken aus dem Blick scrollt
+    if (mnav && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          mnav.classList.toggle('pill-versteckt', entry.isIntersecting);
+          if (entry.isIntersecting) return; // oben: Top-Dropdown behält Regie
+          setzeTop(false); // nach unten gescrollt: Top-Dropdown schließen
+        },
+        { rootMargin: '-4px 0px 0px 0px' },
+      );
+      io.observe(topbar);
+    } else if (mnav) {
+      mnav.classList.remove('pill-versteckt');
+    }
   }
 </script>
