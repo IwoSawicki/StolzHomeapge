@@ -83,6 +83,10 @@ export interface ProjektDetails {
   leistungsseiten?: Leistungsseite[];
   /** visuelle Städte-/SEO-Struktur (ersetzt die einfache sitemap-Anzeige) */
   stadtStruktur?: StadtStruktur;
+  /** Recruiting: Vorqualifizierung der Bewerber (z. B. Meta Lead-Formular) */
+  qualifizierung?: { titel: string; text: string; kriterien: string[] };
+  /** optionales Kundenzitat */
+  zitat?: { text: string; autor: string };
   /** nur Videos: Bilder vom Dreh */
   drehbilder?: ImageMetadata[];
   /** nur Videos: echte Hochkant-Clips (9:16), autoplay/muted/loop */
@@ -255,29 +259,39 @@ export const projekte: Projekt[] = [
     name: 'SAAN Wasserstrahl',
     art: 'video',
     bild: drehSaan1,
-    beschreibung: 'Mehr qualifizierte Mitarbeiter-Anfragen für Wasserstrahlschneidarbeiten.',
+    beschreibung: 'Zehn neue Mitarbeiter in wenigen Wochen — trotz massivem Personalmangel.',
     ziel: 'Recruiting',
-    kategorien: ['Social Media Ads'],
+    kategorien: ['Social Media Ads', 'Recruiting'],
     details: {
       keyfacts: [
         { label: 'Branche', wert: 'Wasserstrahlschneiden' },
-        { label: 'Leistung', wert: 'Social Media Ads' },
-        { label: 'Plattformen', wert: 'Instagram · Facebook' },
-        { label: 'Zeitraum', wert: 'laufend' },
+        { label: 'Ziel', wert: 'Recruiting' },
+        { label: 'Kanal', wert: 'Meta Lead Ads' },
+        { label: 'Ergebnis', wert: '10 Einstellungen' },
       ],
       einleitung:
-        'SAAN suchte Verstärkung fürs Team — in einem Nischenhandwerk, das kaum jemand kennt. Die Kampagne zeigt den Beruf ehrlich und macht neugierig: Wer sich bewirbt, weiß schon, worauf er sich freut.',
+        'SAAN suchte dringend Verstärkung für körperlich anspruchsvolle Arbeit — mitten im größten Personalmangel. Über eine Recruiting-Kampagne mit vorqualifizierten Bewerbern konnten wir in nur wenigen Wochen gleich zehn Stellen besetzen. Das Ergebnis hat selbst den Chef überrascht.',
       leistungen: [
-        { titel: 'Konzept & Skript', text: 'Der Betrieb und das Team im Mittelpunkt — nahbar statt Hochglanz.' },
-        { titel: 'Dreh vor Ort', text: 'Echte Einblicke in Halle, Maschinen und Alltag.' },
-        { titel: 'Schnitt & Formate', text: 'Kurze Clips für Story und Feed, auf die Zielgruppe zugeschnitten.' },
-        { titel: 'Laufende Optimierung', text: 'Creatives und Zielgruppen werden monatlich nachgeschärft.' },
+        { titel: 'Recruiting-Videos vor Ort', text: 'Echte Einblicke in Halle, Maschinen und Team — nahbar statt Hochglanz.' },
+        { titel: 'Meta Lead-Kampagne', text: 'Gezielt in der Region ausgespielt, mit Vorqualifizierung direkt im Formular.' },
+        { titel: 'Leads direkt in Trello', text: 'Jeder Bewerber sichtbar im Board — SAAN behielt den vollen Überblick und konnte selbst nachfassen.' },
+        { titel: 'Schnell live, schnell besetzt', text: 'In wenigen Wochen live — erste Bewerber schon nach einer Woche zum Probearbeiten eingeladen.' },
       ],
+      qualifizierung: {
+        titel: 'Vorqualifiziert statt Bewerber-Flut',
+        text: 'Statt vieler unpassender Bewerbungen haben wir über ein Meta Lead-Formular direkt vorqualifiziert: Nur wer die wichtigsten Kriterien erfüllte, landete im Bewerber-Pool. Alle Leads liefen automatisch in ein Trello-Board — SAAN sah jederzeit, wo jeder Bewerber im Prozess steht, und konnte sofort weiterarbeiten.',
+        kriterien: [
+          'Gültiger Autoführerschein',
+          'Gutes Deutsch',
+          'Bereitschaft für körperlich anspruchsvolle Arbeit',
+          'Vollzeit-Verfügbarkeit',
+        ],
+      },
       drehbilder: [drehSaan1, drehSaan2, drehSaan3],
       ergebnisse: [
-        { wert: 'XX', label: 'Bewerbungen' },
-        { wert: 'XX.XXX', label: 'erreichte Personen' },
-        { wert: 'XX €', label: 'Kosten pro Bewerbung' },
+        { wert: '10', label: 'besetzte Stellen' },
+        { wert: '< 1 Woche', label: 'bis zu den ersten Probearbeiten' },
+        { wert: 'wenige Wochen', label: 'bis zur Vollbesetzung' },
       ],
     },
   },
