@@ -271,7 +271,7 @@ export const projekte: Projekt[] = [
   {
     slug: 'saan-wasserstrahl',
     bereit: true,
-    name: 'SAAN Wasserstrahl',
+    name: 'SAAN Wasserstrahltechnik',
     art: 'video',
     bild: drehSaan1,
     beschreibung: 'Zehn neue Mitarbeiter in wenigen Wochen — trotz massivem Personalmangel.',

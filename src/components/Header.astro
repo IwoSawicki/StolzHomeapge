@@ -46,18 +46,24 @@ const links = [
   </div>
 </header>
 
-<!-- Mobile: schwebende Glas-Pille unten -->
-<div class="fixed inset-x-0 bottom-0 z-50 px-3 pb-3 xl:hidden" data-mnav>
-  <div data-mpill class="mpill mx-auto flex w-full flex-col overflow-hidden rounded-[22px]">
+<!-- Mobile: schwebende Glas-Pille unten (dauerhaft klein, Safe-Area) -->
+<div class="fixed inset-x-0 bottom-0 z-50 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom))] xl:hidden" data-mnav>
+  <div data-mpill class="mpill mx-auto flex w-full flex-col overflow-hidden rounded-[24px]">
     <!-- Links (klappen nach oben auf — stehen im DOM ÜBER der Zeile) -->
     <nav id="mobile-menu" data-mlinks class="mlinks" aria-label="Mobilnavigation">
-      <div class="px-4 pt-4">
+      <div class="px-5 pt-5 pb-4">
+        <p class="mb-1 flex items-center gap-2 text-sm font-medium text-gray" data-stagger style="--i:0">
+          <span class="size-1.5 rounded-full bg-blue" aria-hidden="true"></span>
+          Schön, dass Sie hier sind 👋
+        </p>
         {
-          links.map((link) => (
+          links.map((link, i) => (
             <a
               href={link.href}
-              class="flex items-center gap-2 border-b border-border py-3 text-3xl font-semibold tracking-[-0.02em] text-dark"
+              class="flex items-center gap-2 border-b border-border py-3 text-3xl font-semibold tracking-[-0.02em] text-dark last:border-b-0"
               data-mlink
+              data-stagger
+              style={`--i:${i + 1}`}
             >
               {link.label}
               {link.badge && (
@@ -68,12 +74,14 @@ const links = [
             </a>
           ))
         }
-        <Button href="/kontakt" variant="blue" class="mt-5 mb-2 w-full">Kontakt</Button>
+        <div data-stagger style={`--i:${links.length + 1}`} class="mt-6">
+          <Button href="/kontakt" variant="blue" class="w-full">Kontakt</Button>
+        </div>
       </div>
     </nav>
 
-    <!-- Untere Zeile: Logo links, Hamburger rechts -->
-    <div class="flex items-center justify-between gap-4 py-2 pr-2 pl-4">
+    <!-- Untere Zeile: Logo links, Hamburger rechts (immer sichtbar) -->
+    <div class="flex items-center justify-between gap-4 py-2.5 pr-2 pl-5">
       <Logo />
       <button
         type="button"
@@ -96,31 +104,46 @@ const links = [
 <style>
   /* Schwebende Glas-Pille (dauerhaft transparent mit Blur) */
   .mpill {
-    background: rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--color-border);
     box-shadow: var(--shadow-card);
-    transition: max-width 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: max-width 320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .mpill.is-open {
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(255, 255, 255, 0.95);
   }
 
   /* Links auf-/zuklappen (nach oben, Höhe via max-height) */
   .mlinks {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 340ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: max-height 360ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .mpill.is-open .mlinks {
-    max-height: 70vh;
+    max-height: 78vh;
     overflow-y: auto;
+  }
+
+  /* Gestaffeltes Hochsliden der Einträge (subtiler „premium" Touch) */
+  .mlinks [data-stagger] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mpill.is-open .mlinks [data-stagger] {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(var(--i) * 45ms);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .mpill,
-    .mlinks {
+    .mlinks,
+    .mlinks [data-stagger] {
       transition: none;
     }
   }
@@ -138,9 +161,8 @@ const links = [
     let offen = false;
 
     const anwenden = () => {
-      const gescrollt = window.scrollY > 8;
-      // offen am breitesten, beim Scrollen etwas kleiner, oben Standard
-      pill.style.maxWidth = offen ? '440px' : gescrollt ? '300px' : '380px';
+      // dauerhaft kompakt; nur beim Öffnen etwas breiter
+      pill.style.maxWidth = offen ? '460px' : '360px';
       pill.classList.toggle('is-open', offen);
       lineTop.style.transform = offen ? 'translateY(5.5px) rotate(45deg)' : '';
       lineBottom.style.transform = offen ? 'translateY(-5.5px) rotate(-45deg)' : '';
@@ -158,7 +180,6 @@ const links = [
     toggle.addEventListener('click', () => setzeOffen(!offen));
     backdrop.addEventListener('click', () => setzeOffen(false));
     menuLinks.forEach((a) => a.addEventListener('click', () => setzeOffen(false)));
-    window.addEventListener('scroll', anwenden, { passive: true });
     anwenden();
   }
 </script>
