@@ -31,6 +31,10 @@ import drehRaumkonzept from '../assets/projekte/video-dreh-raum-konzept.jpg';
 import drehAlpha1 from '../assets/projekte/video-dreh-alpha-gruppe-1.jpg';
 import drehLaserWolf from '../assets/projekte/video-dreh-laser-wolf.jpg';
 import drehWio from '../assets/projekte/content-dreh-wio.jpg';
+import senPreview from '../assets/projekte/sen/sen-preview.jpg';
+import senContent1 from '../assets/projekte/sen/sen-content-1.jpg';
+import senVideo1 from '../assets/projekte/sen/sen-clip-1.mov';
+import senVideo2 from '../assets/projekte/sen/sen-clip-2.mov';
 import dmkVideo1 from '../assets/projekte/dmkbau/DMK-SM-01-5Handwerker_1.mp4';
 import dmkVideo2 from '../assets/projekte/dmkbau/DMK-SM-03-BadScheissHandwerker_1.mp4';
 import dmkVideo3 from '../assets/projekte/dmkbau/DMK-SM-04-5Sterne100Bewertungen_1.mp4';
@@ -487,6 +491,39 @@ export const projekte: Projekt[] = [
     bild: drehWio,
     beschreibung: 'Foto- und Video-Content für die Gastronomie.',
     kategorien: ['Video-Content'],
+  },
+  {
+    slug: 'sen',
+    bereit: true,
+    name: 'SEN',
+    art: 'video',
+    bereiche: ['gastronomie'],
+    bild: senPreview,
+    beschreibung: 'Monatliche Content-Betreuung für fünf asiatische Restaurants.',
+    kategorien: ['Foto & Video', 'Social Media'],
+    details: {
+      keyfacts: [
+        { label: 'Branche', wert: 'Gastronomie' },
+        { label: 'Umfang', wert: '5 Restaurants' },
+        { label: 'Leistung', wert: 'Foto & Video · Social Media' },
+        { label: 'Betreuung', wert: 'monatlich' },
+      ],
+      einleitung:
+        'SEN ist eine Kette aus fünf asiatischen Restaurants — jedes mit eigenem Konzept. Wir haben die komplette Content-Betreuung übernommen: **jeden Monat drei Locations** im Wechsel gefilmt und fotografiert, dazu Redaktionsplan und laufende Betreuung für jeden Standort.',
+      leistungen: [
+        { titel: 'Monatliche Content-Produktion', text: 'Drei Locations pro Monat in Rotation — Foto und Video direkt vor Ort.' },
+        { titel: 'Konzept pro Restaurant', text: 'Jeder Standort mit eigener Bildsprache und eigenem Redaktionsplan.' },
+        { titel: 'Post-Schedule & Betreuung', text: 'Feste Veröffentlichungspläne und laufende Betreuung aller Kanäle.' },
+        { titel: 'Alles aus einer Hand', text: 'Von der Planung über den Dreh bis zum fertigen Post — ein Ansprechpartner für fünf Standorte.' },
+      ],
+      videos: [senVideo1, senVideo2],
+      drehbilder: [senPreview, senContent1],
+      ergebnisse: [
+        { wert: '5', label: 'betreute Restaurants' },
+        { wert: '3', label: 'Locations pro Monat' },
+        { wert: 'monatlich', label: 'Foto- & Video-Content' },
+      ],
+    },
   },
 ];
 
