@@ -34,6 +34,10 @@ import drehWio from '../assets/projekte/content-dreh-wio.jpg';
 import dmkVideo1 from '../assets/projekte/dmkbau/DMK-SM-01-5Handwerker_1.mp4';
 import dmkVideo2 from '../assets/projekte/dmkbau/DMK-SM-03-BadScheissHandwerker_1.mp4';
 import dmkVideo3 from '../assets/projekte/dmkbau/DMK-SM-04-5Sterne100Bewertungen_1.mp4';
+import saanVideo1 from '../assets/projekte/saan/SAAN-RecruitingAD-01.mp4';
+import saanVideo2 from '../assets/projekte/saan/SAAN-RecruitingAD-02.mp4';
+import saanVideo3 from '../assets/projekte/saan/SAAN-RecruitingAD-03.mp4';
+import websiteZehner from '../assets/projekte/zehner-website.png';
 
 export interface Keyfact {
   label: string;
@@ -299,6 +303,7 @@ export const projekte: Projekt[] = [
         ],
       },
       drehbilder: [drehSaan1, drehSaan2, drehSaan3],
+      videos: [saanVideo1, saanVideo2, saanVideo3],
       ergebnisse: [
         { wert: '10', label: 'besetzte Stellen' },
         { wert: '< 1 Woche', label: 'bis zu den ersten Probearbeiten' },
@@ -375,6 +380,7 @@ export const projekte: Projekt[] = [
     name: 'Zehner Immobilien',
     art: 'website',
     domain: 'zehner-immobilien.de',
+    bild: websiteZehner,
     beschreibung: 'Neue Website mit klarer Positionierung für mehr Verkäufer-Anfragen.',
     ziel: 'Kundengewinnung',
     kategorien: ['Webseite', 'SEO'],
