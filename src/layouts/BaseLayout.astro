@@ -74,5 +74,29 @@ const jsonLd = {
     <slot />
     <!-- Google Analytics wird erst nach Zustimmung im Banner geladen -->
     <CookieBanner />
+
+    <script>
+      // Scroll-Reveal: blendet [data-reveal]-Elemente ein, sobald sie in
+      // den Viewport scrollen. Respektiert reduzierte Bewegung.
+      const revealEls = document.querySelectorAll('[data-reveal]');
+      if (revealEls.length) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          revealEls.forEach((el) => el.classList.add('ist-sichtbar'));
+        } else {
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('ist-sichtbar');
+                  io.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
+          );
+          revealEls.forEach((el) => io.observe(el));
+        }
+      }
+    </script>
   </body>
 </html>

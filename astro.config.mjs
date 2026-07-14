@@ -12,7 +12,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       // internes Design-Archiv nicht in die Sitemap aufnehmen
-      filter: (page) => !page.includes('/archiv'),
+      filter: (page) => !page.includes('/archiv') && !page.includes('/korbaktion'),
     }),
   ],
   vite: {

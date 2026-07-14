@@ -1,0 +1,61 @@
+---
+// PROZESS-VARIANTE A – „Sticky Split" (Shape-Stil):
+// Linke Spalte bleibt beim Scrollen stehen (Eyebrow, Headline, Intro,
+// CTA), rechts scrollen die 3 Schritte nacheinander ein (Scroll-Reveal
+// mit Stagger). Große Typo, viel Weißraum, blauer Akzent.
+import { Image } from 'astro:assets';
+import Button from '../Button.astro';
+import workshop from '../../assets/prozess-workshop-strategie.png';
+import umsetzung from '../../assets/prozess-umsetzung.jpg';
+import skalierung from '../../assets/prozess-skalierung-optimierung.png';
+
+const steps = [
+  { titel: 'Workshop & Strategie', text: 'In einem kompakten Workshop lernen wir Ihr Unternehmen, Ihre Zielgruppe und Ihren Markt kennen. Daraus entsteht eine klare Strategie für Kampagnen, Landingpages und die nächsten sinnvollen Schritte.', bild: workshop, alt: 'Strategie-Workshop bei einem lokalen Betrieb' },
+  { titel: 'Umsetzung', text: 'Wir setzen die Kampagnen, Landingpages und Inhalte um, die für Ihr Ziel relevant sind. Sie bekommen regelmäßige Updates und behalten jederzeit den Überblick.', bild: umsetzung, alt: 'Content-Produktion vor Ort' },
+  { titel: 'Skalierung & Optimierung', text: 'Nach dem Start optimieren wir laufend: Anzeigen, Zielgruppen, Landingpages und Budgetverteilung. So wird Ihr Marketing mit jedem Monat planbarer.', bild: skalierung, alt: 'Auswertung laufender Kampagnen am Bildschirm' },
+];
+---
+
+<section class="px-5 py-16 md:px-10 md:py-24">
+  <p class="mb-10 text-center text-xs font-medium tracking-wide text-gray uppercase">
+    Prozess-Variante A · Sticky Split (zur Auswahl)
+  </p>
+
+  <div class="mx-auto max-w-[1200px] xl:grid xl:grid-cols-[400px_1fr] xl:gap-20">
+    <!-- Linke Spalte: bleibt stehen -->
+    <div class="xl:sticky xl:top-28 xl:self-start" data-reveal>
+      <p class="flex items-center gap-2.5 text-sm font-medium text-dark">
+        <span class="size-1.5 rounded-full bg-blue" aria-hidden="true"></span>
+        Prozess
+      </p>
+      <h2 class="mt-4 max-w-[420px] text-4xl font-semibold text-balance leading-[1.06] tracking-[-0.03em] text-dark md:text-5xl">
+        Unser Prozess zum Erfolg
+      </h2>
+      <p class="mt-5 max-w-[380px] text-lg font-medium leading-[1.5] text-dark/60">
+        Von der ersten Analyse bis zur laufenden Optimierung: ein klarer Fahrplan, bei dem Sie jederzeit
+        wissen, was passiert und warum.
+      </p>
+      <div class="mt-8">
+        <Button href="/kontakt" variant="blue" shadow="blue-glow">Kostenlose Analyse</Button>
+      </div>
+    </div>
+
+    <!-- Rechte Spalte: Schritte scrollen ein -->
+    <div class="mt-14 flex flex-col gap-16 xl:mt-0 xl:gap-24">
+      {
+        steps.map((step, i) => (
+          <div data-reveal style={`--reveal-delay:${i * 80}ms`}>
+            <span class="flex size-11 items-center justify-center rounded-full bg-blue/10 text-lg font-semibold text-blue tabular-nums">
+              0{i + 1}
+            </span>
+            <div class="mt-6 aspect-[16/10] overflow-hidden rounded-24">
+              <Image src={step.bild} alt={step.alt} class="h-full w-full object-cover" widths={[480, 800]} sizes="(min-width:1200px) 700px, 100vw" />
+            </div>
+            <h3 class="mt-6 text-2xl font-semibold tracking-[-0.02em] text-dark md:text-3xl">{step.titel}</h3>
+            <p class="mt-3 max-w-[560px] text-lg font-medium leading-[1.5] text-dark/60">{step.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

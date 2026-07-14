@@ -1,0 +1,24 @@
+---
+// /korbaktion – Ziel des QR-Codes auf dem Flyer.
+// Leitet vorerst direkt auf die Startseite weiter (eigene Landingpage
+// folgt später). Die UTM-Parameter machen die Scans in Google Analytics
+// als Kampagne „korbaktion" sichtbar. Nicht indexieren.
+const ziel = '/?utm_source=flyer&utm_medium=qr&utm_campaign=korbaktion';
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0; url=${ziel}`} />
+    <link rel="canonical" href="https://stolz-marketing.de/" />
+    <title>Weiterleitung … | STOLZ Marketing</title>
+    <script is:inline define:vars={{ ziel }}>
+      window.location.replace(ziel);
+    </script>
+  </head>
+  <body style="font-family: system-ui, sans-serif; padding: 2rem; color: #0a0a0a;">
+    <p>Sie werden weitergeleitet … <a href={ziel}>Zur Startseite</a></p>
+  </body>
+</html>
