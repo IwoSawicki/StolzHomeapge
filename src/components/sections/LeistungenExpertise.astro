@@ -11,6 +11,7 @@
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import Button from '../Button.astro';
+import SectionLabel from '../SectionLabel.astro';
 import websiteHepa from '../../assets/projekte/website-hepabaut.png';
 import websiteJhoch2 from '../../assets/projekte/website-jhoch2-wasserschaden.png';
 import websiteBadenBatterie from '../../assets/projekte/website-badenbatterie.png';
@@ -38,10 +39,9 @@ const leistungen: Leistung[] = [
   <div class="mx-auto max-w-[1200px]">
     <!-- Kopf: Eyebrow / Headline / Kurztext + CTA -->
     <div class="grid grid-cols-1 gap-8 xl:grid-cols-[220px_1fr_320px] xl:gap-10">
-      <p class="flex h-fit items-center gap-2.5 text-sm font-medium text-white">
-        <span class="size-1.5 rounded-full bg-white" aria-hidden="true"></span>
-        Unsere Leistungen
-      </p>
+      <div class="h-fit">
+        <SectionLabel text="Unsere Leistungen" theme="dark" />
+      </div>
       <h2 class="max-w-[560px] text-3xl font-semibold text-balance leading-[1.12] tracking-[-0.02em] text-white md:text-4xl xl:mx-auto xl:text-center">
         Womit wir Ihren Betrieb nach vorne bringen
       </h2>

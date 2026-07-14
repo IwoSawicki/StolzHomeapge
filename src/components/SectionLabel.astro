@@ -4,11 +4,15 @@
 // Icon-Kreis 14×14 blau mit 7×7-Icon, Text Inter 600 13px (→12px, dok.).
 interface Props {
   text: string;
+  /** dark = für dunkle Sektionen (helle Pille, weißer Text) */
+  theme?: 'light' | 'dark';
 }
-const { text } = Astro.props;
+const { text, theme = 'light' } = Astro.props;
+const box = theme === 'dark' ? 'bg-white/12' : 'bg-blue-bright/8';
+const txt = theme === 'dark' ? 'text-white' : 'text-dark';
 ---
 
-<div class="inline-flex items-center gap-[7px] rounded-full bg-blue-bright/8 py-1 pr-[9px] pl-[7px]">
+<div class:list={['inline-flex items-center gap-[7px] rounded-full py-1 pr-[9px] pl-[7px]', box]}>
   <span class="flex size-3.5 items-center justify-center rounded-full bg-blue text-white">
     <slot>
       <!-- Standard-Icon: Plus (Original: zwei weiße Balken im blauen Kreis) -->
@@ -17,5 +21,5 @@ const { text } = Astro.props;
       </svg>
     </slot>
   </span>
-  <p class="text-xs font-semibold tracking-[-0.01em] text-dark">{text}</p>
+  <p class:list={['text-xs font-semibold tracking-[-0.01em]', txt]}>{text}</p>
 </div>

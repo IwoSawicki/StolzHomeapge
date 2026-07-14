@@ -4,6 +4,7 @@
 // Leistungsliste (aus der Hero hierher verschoben). Ziel des
 // „Über uns"-Buttons der Hero (id="ueber-uns").
 // TEXTE = VORSCHLAG — von Iwo prüfen/anpassen.
+import SectionLabel from '../SectionLabel.astro';
 const leistungen = [
   'Webseiten & SEO',
   'Google Ads',
@@ -16,10 +17,7 @@ const leistungen = [
 
 <section id="ueber-uns" class="scroll-mt-24 px-3 py-8 md:px-6 md:py-10 xl:px-10">
   <div class="mx-auto max-w-[1240px] rounded-[32px] bg-bg-blue-light px-6 py-12 md:px-12 md:py-16 xl:px-16 xl:py-20">
-    <p class="flex items-center gap-2.5 text-base font-medium text-slate">
-      <span class="size-1.5 rounded-full bg-blue" aria-hidden="true"></span>
-      Wer wir sind
-    </p>
+    <SectionLabel text="Wer wir sind" />
 
     <p class="mt-6 max-w-[920px] text-3xl font-semibold text-balance leading-[1.15] tracking-[-0.03em] text-slate md:text-4xl xl:text-[44px] xl:leading-[1.12]">
       STOLZ Marketing macht lokale Betriebe sichtbar — bei den richtigen{' '}

@@ -6,6 +6,7 @@
 // Hinweis: STOLZ Marketing ist Einzelunternehmen (Iwo Sawicki). Eric ist
 // Partner im Team — bewusst NICHT als „Gründer/Mitgründer" bezeichnet.
 import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
 import iwoBild from '../../assets/about/Iwo-StolzMarketing.jpg';
 import ericBild from '../../assets/about/Eric-StolzMarketing.png';
 
@@ -35,14 +36,11 @@ const personen = [
 
 <section id="team" class="scroll-mt-24 px-5 py-14 md:px-10 md:py-20">
   <div class="mx-auto max-w-[900px]">
-    <div class="mx-auto max-w-[520px] text-center" data-reveal>
-      <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Das Team</p>
-      <h2 class="mt-3 text-3xl font-semibold text-balance leading-[1.1] tracking-[-0.03em] text-dark md:text-4xl">
+    <div class="mx-auto max-w-[560px]" data-reveal>
+      <SectionHeading label="Das Team">
         Die Köpfe hinter STOLZ
-      </h2>
-      <p class="mt-3 text-base font-medium leading-[1.5] text-dark/60">
-        Zwei feste Ansprechpartner, die Ihr Projekt persönlich begleiten.
-      </p>
+        <Fragment slot="description">Zwei feste Ansprechpartner, die Ihr Projekt persönlich begleiten.</Fragment>
+      </SectionHeading>
     </div>
 
     <div class="mt-10 grid gap-5 sm:grid-cols-2 md:mt-12">
