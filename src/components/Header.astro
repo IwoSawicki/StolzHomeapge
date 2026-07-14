@@ -9,9 +9,10 @@
 // nachgeladen) → dokumentierte Näherung: weißes Overlay mit Linkliste.
 import Logo from './Logo.astro';
 import Button from './Button.astro';
+import { projekte } from '../data/projekte';
 
 const links = [
-  { label: 'Projekte', href: '/projekte' },
+  { label: 'Projekte', href: '/projekte', badge: projekte.length },
   { label: 'Leistungen', href: '/#leistungen' },
   { label: 'Prozess', href: '/#prozess' },
   { label: 'Ergebnis', href: '/#ergebnis' },
@@ -19,7 +20,7 @@ const links = [
 ];
 ---
 
-<header class="sticky -top-px z-10 bg-white">
+<header class="sticky -top-px z-50 bg-white">
   <div class="mx-auto flex h-16 items-center justify-between pr-3 pl-5 xl:h-auto xl:max-w-[1280px] xl:px-10 xl:py-2.5">
     <Logo />
 
@@ -31,7 +32,14 @@ const links = [
             href={link.href}
             class="flex h-[30px] items-center rounded-[11px] px-3 text-base font-medium tracking-[-0.02em] text-dark transition-colors duration-200 hover:text-blue"
           >
-            {link.label}
+            <span class="relative">
+              {link.label}
+              {link.badge && (
+                <span class="absolute -top-2 -right-4 rounded-full bg-blue px-1 py-px text-[10px] leading-none font-bold text-white tabular-nums">
+                  {link.badge}
+                </span>
+              )}
+            </span>
           </a>
         ))
       }
@@ -55,15 +63,20 @@ const links = [
   </div>
 
   <!-- Mobil-Menü (Overlay) -->
-  <div id="mobile-menu" class="fixed inset-x-0 top-16 bottom-0 z-10 hidden flex-col gap-2 bg-white px-5 pt-6 pb-10 xl:hidden">
+  <div id="mobile-menu" class="fixed inset-x-0 top-16 bottom-0 z-40 hidden flex-col gap-2 bg-white px-5 pt-6 pb-10 xl:hidden">
     {
       links.map((link) => (
         <a
           href={link.href}
-          class="border-b border-border py-4 text-2xl font-medium tracking-[-0.02em] text-dark"
+          class="flex items-center gap-2 border-b border-border py-4 text-2xl font-medium tracking-[-0.02em] text-dark"
           data-menu-link
         >
           {link.label}
+          {link.badge && (
+            <span class="rounded-full bg-blue px-1.5 py-0.5 text-xs leading-none font-bold text-white tabular-nums">
+              {link.badge}
+            </span>
+          )}
         </a>
       ))
     }
