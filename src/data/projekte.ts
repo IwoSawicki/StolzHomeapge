@@ -103,10 +103,15 @@ export interface ProjektDetails {
   ergebnisse: Ergebnis[];
 }
 
+export type Bereich = 'kundengewinnung' | 'recruiting' | 'gastronomie';
+
 export interface Projekt {
   slug: string;
   name: string;
   art: 'website' | 'video';
+  /** Filter-Bereiche auf /projekte. Fehlt es, wird aus `ziel` abgeleitet
+   *  (Kundengewinnung/Recruiting). Gastro-Projekte explizit taggen. */
+  bereiche?: Bereich[];
   /** nur bei art=website */
   domain?: string;
   /** Kachel-Bild (Website-Screenshot bzw. Video-Still/Dreh-Foto) */
@@ -478,6 +483,7 @@ export const projekte: Projekt[] = [
     slug: 'wio',
     name: 'WIO',
     art: 'video',
+    bereiche: ['gastronomie'],
     bild: drehWio,
     beschreibung: 'Foto- und Video-Content für die Gastronomie.',
     kategorien: ['Video-Content'],
@@ -486,3 +492,27 @@ export const projekte: Projekt[] = [
 
 /** die 4 Projekte der Startseiten-Sektion (Reihenfolge = Vorgabe Iwo) */
 export const startseitenProjekte = projekte.slice(0, 4);
+
+/** Filter-Bereiche eines Projekts: explizit gesetzt, sonst aus `ziel`.
+ *  DMK hat ziel „Kundengewinnung & Recruiting" -> erscheint bei beiden.
+ *  Gastro-Projekte (WIO, SEN) sind explizit nur gastronomie. */
+export function bereicheVon(p: Projekt): Bereich[] {
+  if (p.bereiche && p.bereiche.length) return p.bereiche;
+  const b: Bereich[] = [];
+  if (p.ziel?.includes('Kundengewinnung')) b.push('kundengewinnung');
+  if (p.ziel?.includes('Recruiting')) b.push('recruiting');
+  return b;
+}
+
+/** Filter-Definition für /projekte (mit Zählern) */
+export const projektBereiche: { key: Bereich | 'alle'; label: string }[] = [
+  { key: 'alle', label: 'Alle' },
+  { key: 'kundengewinnung', label: 'Kundengewinnung' },
+  { key: 'recruiting', label: 'Recruiting' },
+  { key: 'gastronomie', label: 'Gastronomie' },
+];
+
+export function bereichAnzahl(key: Bereich | 'alle'): number {
+  if (key === 'alle') return projekte.length;
+  return projekte.filter((p) => bereicheVon(p).includes(key)).length;
+}

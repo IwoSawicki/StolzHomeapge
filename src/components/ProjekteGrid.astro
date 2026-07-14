@@ -8,6 +8,7 @@
 import BrowserMockup from './BrowserMockup.astro';
 import VideoTile from './VideoTile.astro';
 import type { Projekt } from '../data/projekte';
+import { bereicheVon } from '../data/projekte';
 
 interface Props {
   projekte: Projekt[];
@@ -28,6 +29,7 @@ const { projekte, class: extra = '' } = Astro.props;
       <Karte
         href={verlinkt ? `/projekte/${projekt.slug}` : undefined}
         class="group block"
+        data-bereiche={bereicheVon(projekt).join(' ')}
         {...(verlinkt ? { 'data-shape-karte': true } : {})}
       >
         <div class="relative aspect-[4/3] overflow-hidden rounded-24">

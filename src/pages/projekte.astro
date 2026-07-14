@@ -6,11 +6,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ProjekteGrid from '../components/ProjekteGrid.astro';
+import SectionLabel from '../components/SectionLabel.astro';
 import Button from '../components/Button.astro';
-import { projekte } from '../data/projekte';
+import { projekte, projektBereiche, bereichAnzahl } from '../data/projekte';
 
 // alle Projekte in der Reihenfolge aus src/data/projekte.ts
 const reihenfolge = projekte;
+// Filter nur zeigen, wenn ein Bereich tatsächlich Projekte hat
+const filter = projektBereiche.filter((f) => bereichAnzahl(f.key) > 0);
 ---
 
 <BaseLayout
@@ -22,17 +25,34 @@ const reihenfolge = projekte;
     <section class="px-5 pt-14 pb-12 md:px-10 md:pt-24 md:pb-25">
       <div class="mx-auto max-w-[1200px]">
         <div class="max-w-[640px]">
-          <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Projekte</p>
-          <h1 class="mt-3 text-4xl font-semibold text-balance leading-[1.08] tracking-[-0.03em] text-dark md:text-5xl">
+          <SectionLabel text="Projekte" />
+          <h1 class="mt-2 text-4xl font-bold text-balance leading-[1.05] tracking-[-0.06em] text-dark md:text-40 xl:text-5xl">
             Arbeiten, die Anfragen bringen.
           </h1>
-          <p class="mt-4 max-w-[520px] text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-dark">
+          <p class="mt-3 max-w-[520px] text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-dark">
             Websites, Kampagnen und Recruiting-Content für lokale Betriebe – transparent, messbar und auf
             Ergebnisse gebaut.
           </p>
         </div>
 
-        <div class="mt-16">
+        <!-- Filter nach Bereich (Zähler wie bei Shape) -->
+        <div class="mt-10 flex flex-wrap gap-2" data-projekt-filter>
+          {
+            filter.map((f, i) => (
+              <button
+                type="button"
+                data-filter={f.key}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+                class="inline-flex items-center gap-1.5 rounded-full border border-border bg-bg-soft px-4 py-2 text-sm font-semibold text-dark transition-colors duration-200 hover:border-border-gray aria-pressed:border-dark aria-pressed:bg-dark aria-pressed:text-white"
+              >
+                {f.label}
+                <span class="text-xs tabular-nums opacity-50">{bereichAnzahl(f.key)}</span>
+              </button>
+            ))
+          }
+        </div>
+
+        <div class="mt-10">
           <ProjekteGrid projekte={reihenfolge} />
         </div>
 
@@ -45,3 +65,24 @@ const reihenfolge = projekte;
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  // Bereichs-Filter: blendet Karten per data-bereiche ein/aus (kein Reload).
+  const bar = document.querySelector<HTMLElement>('[data-projekt-filter]');
+  const karten = document.querySelectorAll<HTMLElement>('[data-shape-grid] [data-bereiche]');
+  if (bar) {
+    bar.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]');
+      if (!btn) return;
+      const aktiv = btn.dataset.filter!;
+      bar.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b === btn)),
+      );
+      karten.forEach((k) => {
+        const bereiche = (k.dataset.bereiche || '').split(' ');
+        const zeigen = aktiv === 'alle' || bereiche.includes(aktiv);
+        k.style.display = zeigen ? '' : 'none';
+      });
+    });
+  }
+</script>
