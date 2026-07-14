@@ -1,0 +1,70 @@
+---
+// Visuelle SEO-Sitemap: Startseite → 3 Leistungen → Städte-Landingpages.
+// Zeigt anschaulich, wie aus 3 Leistungen hunderte lokale Seiten werden.
+import type { StadtStruktur } from '../data/projekte';
+interface Props {
+  struktur: StadtStruktur;
+}
+const { struktur } = Astro.props;
+const { zentrum, radiusKm, leistungen, staedte, weitere, keywords } = struktur;
+---
+
+<div class="rounded-24 border border-border bg-bg-soft p-6 md:p-10">
+  <!-- Wurzel: Startseite -->
+  <div class="flex flex-col items-center">
+    <span class="rounded-14 bg-dark px-6 py-3 text-base font-semibold text-white">Startseite</span>
+    <div class="h-7 w-px bg-border-gray"></div>
+  </div>
+
+  <!-- Äste: 3 Leistungen -->
+  <div class="relative">
+    <!-- horizontale Verbindungslinie (nur Desktop, spannt über die 3 Spaltenmitten) -->
+    <div class="absolute top-0 right-[16.666%] left-[16.666%] hidden h-px bg-border-gray md:block"></div>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
+      {
+        leistungen.map((leistung) => (
+          <div class="flex flex-col items-center">
+            <div class="hidden h-7 w-px bg-border-gray md:block"></div>
+            <span class="rounded-14 border border-blue bg-blue px-5 py-2.5 text-base font-semibold text-white">
+              {leistung}
+            </span>
+            <div class="h-6 w-px bg-border-gray"></div>
+
+            <!-- Städte-Seiten -->
+            <div class="flex w-full flex-col items-center gap-2">
+              {staedte.map((stadt) => (
+                <span class="w-full max-w-[220px] rounded-10 border border-border bg-white px-4 py-2 text-center text-sm font-medium text-dark">
+                  {leistung} {stadt}
+                </span>
+              ))}
+              <span class="mt-1 rounded-full bg-blue/10 px-4 py-1.5 text-sm font-semibold text-blue">
+                + {weitere} weitere Städte
+              </span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Erklärung + Beispiel-Keywords -->
+  <div class="mt-10 border-t border-border pt-8">
+    <p class="mx-auto max-w-[640px] text-center text-base font-medium leading-[1.55] text-dark/70">
+      Aus 3 Leistungen werden so <strong class="font-semibold text-dark">hunderte lokale Seiten</strong>: Sucht
+      jemand z. B. „Renovierung {zentrum}", taucht genau die passende Landingpage auf — im gesamten{' '}
+      {radiusKm}-km-Umkreis um {zentrum}.
+    </p>
+
+    <p class="mt-8 text-center text-xs font-semibold tracking-[0.14em] text-gray uppercase">
+      Beispiel-Keywords je Städte-Seite
+    </p>
+    <div class="mt-4 flex flex-wrap justify-center gap-2">
+      {
+        keywords.map((kw) => (
+          <span class="rounded-full border border-border bg-white px-4 py-1.5 text-sm font-medium text-dark/70">{kw}</span>
+        ))
+      }
+    </div>
+  </div>
+</div>

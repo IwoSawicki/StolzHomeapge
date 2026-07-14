@@ -47,12 +47,42 @@ export interface Ergebnis {
   label: string;
 }
 
+/** eine der Leistungs-Landingpages (z. B. Sanierung), optional mit Screenshot */
+export interface Leistungsseite {
+  name: string;
+  beschreibung: string;
+  punkte: string[];
+  bild?: ImageMetadata;
+  /** hervorgehobenes Modul, z. B. Erste-Hilfe bei Wasserschäden */
+  highlight?: { titel: string; schritte: string[] };
+}
+
+/** visuelle Sitemap für lokales SEO: Startseite → Leistungen → Städte */
+export interface StadtStruktur {
+  zentrum: string;
+  radiusKm: number;
+  leistungen: string[];
+  staedte: string[];
+  /** ungefähre Zahl weiterer Städte-Seiten pro Leistung */
+  weitere: number;
+  /** Beispiel-Keywords einer Städte-Landingpage */
+  keywords: string[];
+}
+
 export interface ProjektDetails {
   keyfacts: Keyfact[];
   einleitung: string;
   leistungen: Leistungspunkt[];
-  /** nur Websites: Seitenstruktur */
+  /** nur Websites: Seitenstruktur (einfache Pills) */
   sitemap?: string[];
+  /** optionaler Direktlink zur Live-Seite (sonst aus domain abgeleitet) */
+  liveUrl?: string;
+  /** Feature-Checkliste „Was die Seite kann" */
+  webFeatures?: string[];
+  /** ausführliche Vorstellung der einzelnen Leistungsseiten */
+  leistungsseiten?: Leistungsseite[];
+  /** visuelle Städte-/SEO-Struktur (ersetzt die einfache sitemap-Anzeige) */
+  stadtStruktur?: StadtStruktur;
   /** nur Videos: Bilder vom Dreh */
   drehbilder?: ImageMetadata[];
   /** nur Videos: echte Hochkant-Clips (9:16), autoplay/muted/loop */
@@ -126,17 +156,58 @@ export const projekte: Projekt[] = [
       keyfacts: [
         { label: 'Branche', wert: 'Bau & Sanierung' },
         { label: 'Leistungen', wert: 'Webseite · SEO' },
-        { label: 'Zeitraum', wert: 'XX Wochen' },
+        { label: 'Umfang', wert: 'über 450 Seiten' },
         { label: 'Status', wert: 'Live' },
       ],
       einleitung:
-        'HEPA Baut wollte weg von Empfehlungs-Zufall hin zu planbaren Projektanfragen. Der neue Auftritt zeigt Leistungen und Referenzen klar — und wird bei lokalen Suchen gefunden.',
+        'HEPA Baut aus Weinheim saniert, renoviert und beseitigt Wasserschäden. Wir haben einen kompletten Website-Relaunch gebaut, der die drei Leistungen klar trennt — und über hunderte lokale Landingpages dafür sorgt, dass HEPA in jeder Stadt im Umkreis gefunden wird.',
       leistungen: [
-        { titel: 'Relaunch von Grund auf', text: 'Neue Struktur, neues Design, klare Leistungsseiten.' },
-        { titel: 'Referenzen, die verkaufen', text: 'Projekte mit Bildern und Fakten statt Floskeln.' },
-        { titel: 'SEO-Grundlagen', text: 'Saubere Technik und lokale Suchbegriffe für Sanierung & Renovierung.' },
-        { titel: 'Messbarkeit', text: 'Jede Anfrage nachvollziehbar — monatliche Auswertung inklusive.' },
+        { titel: 'Drei klare Leistungswelten', text: 'Sanierung, Renovierung und Wasserschäden — jede mit eigener Startseite und eigenem Aufbau.' },
+        { titel: 'Lokales SEO in großem Stil', text: 'Pro Leistung rund 150 Städte-Landingpages im 30-km-Umkreis um Weinheim, jede auf ihre Stadt optimiert.' },
+        { titel: 'Auf die Anfrage optimiert', text: 'Klick-to-Call, Rückruf-Formular und Kontaktformular ganz oben — genau da, wo es zählt.' },
+        { titel: 'Vertrauen sichtbar gemacht', text: 'Vorher-Nachher-Bilder, Referenzprojekte, Kundenzitate und ein FAQ-Bereich.' },
       ],
+      liveUrl: 'https://hepabaut.de',
+      webFeatures: [
+        'Cleanes, klares Design',
+        'Vorher-Nachher-Bilder',
+        'Referenzprojekte',
+        'FAQ-Bereich',
+        'CTAs mit Kundenzitaten',
+        '„Jetzt Rückruf erhalten"-Formular',
+        'Kontaktformular ganz oben (Renovierung & Wasserschäden)',
+        'Telefonnummer überall verlinkt (Klick-to-Call)',
+        'Erste-Hilfe-Modul bei Wasserschäden',
+      ],
+      leistungsseiten: [
+        {
+          name: 'Sanierung',
+          beschreibung: 'Die Sanierungs-Welt bündelt alle Leistungen rund um Altbau, Bad und Wohnung — mit Referenzen und klarem Weg zur Anfrage.',
+          punkte: ['Eigene Startseite für den Bereich', 'Leistungen mit Vorher-Nachher-Belegen', 'FAQ und Kundenzitate', 'rund 150 Städte-Landingpages'],
+        },
+        {
+          name: 'Renovierung',
+          beschreibung: 'Bei der Renovierung steht das Kontaktformular ganz oben — die Anfrage ist so leicht wie möglich gemacht.',
+          punkte: ['Kontaktformular direkt im ersten Bildschirm', 'Leistungsübersicht mit Beispielen', 'Klick-to-Call in jeder Sektion', 'rund 150 Städte-Landingpages'],
+        },
+        {
+          name: 'Wasserschäden',
+          beschreibung: 'Im Notfall zählt jede Minute: Die Wasserschaden-Welt führt Betroffene sofort zur Hilfe — inklusive Erste-Hilfe-Modul.',
+          punkte: ['Kontaktformular ganz oben', 'Soforthilfe-Hinweise', 'Ablauf & Versicherung erklärt', 'rund 150 Städte-Landingpages'],
+          highlight: {
+            titel: 'Erste Hilfe bei Wasserschaden — das ist jetzt zu tun',
+            schritte: ['Wasserzufuhr stoppen', 'Strom abstellen', 'Schaden dokumentieren', 'Kontakt zu uns aufnehmen'],
+          },
+        },
+      ],
+      stadtStruktur: {
+        zentrum: 'Weinheim',
+        radiusKm: 30,
+        leistungen: ['Sanierung', 'Renovierung', 'Wasserschäden'],
+        staedte: ['Weinheim', 'Bensheim', 'Heidelberg', 'Mannheim'],
+        weitere: 146,
+        keywords: ['Handwerker aus Bensheim', 'Altbausanierung Bensheim', 'Badsanierung Bensheim', 'Wohnungssanierung Bensheim'],
+      },
       sitemap: ['Startseite', 'Sanierung', 'Renovierung', 'Wasserschäden', 'Über uns', 'Kontakt'],
       ergebnisse: [
         { wert: 'XX', label: 'Projektanfragen pro Monat' },
