@@ -5,12 +5,16 @@
 // FOTOS: sobald vorhanden `bild` setzen, sonst Initialen-Platzhalter.
 // Hinweis: STOLZ Marketing ist Einzelunternehmen (Iwo Sawicki). Eric ist
 // Partner im Team — bewusst NICHT als „Gründer/Mitgründer" bezeichnet.
+import { Image } from 'astro:assets';
+import iwoBild from '../../assets/about/Iwo-StolzMarketing.jpg';
+import ericBild from '../../assets/about/Eric-StolzMarketing.png';
+
 const personen = [
   {
     name: 'Iwo Sawicki',
     rolle: 'Marketing & Projektleitung',
     initialen: 'IS',
-    bild: null,
+    bild: iwoBild,
     text: 'Verantwortlich für Technik und Umsetzung — sorgt dafür, dass aus Ideen fertige Projekte mit rotem Faden werden.',
     email: 'iwo@stolz-marketing.de',
     tel: '0178 4444 156',
@@ -20,7 +24,7 @@ const personen = [
     name: 'Eric',
     rolle: 'Strategie & Beratung',
     initialen: 'E',
-    bild: null,
+    bild: ericBild,
     text: 'Denkt in Zielgruppen, baut Kampagnen und verbindet Marketing mit Psychologie — für Botschaften, die wirklich ankommen.',
     email: 'eric@stolz-marketing.de',
     tel: '+49 15678 339051',
@@ -52,7 +56,7 @@ const personen = [
             <div class="size-20 shrink-0 overflow-hidden rounded-20 bg-bg-blue-light sm:size-auto sm:w-full">
               <div class="aspect-square w-full">
                 {person.bild ? (
-                  <img src={person.bild} alt={`Portrait von ${person.name}`} class="h-full w-full object-cover" />
+                  <Image src={person.bild} alt={`Portrait von ${person.name}`} class="h-full w-full object-cover object-top" widths={[160, 320, 520]} sizes="(min-width:640px) 420px, 80px" />
                 ) : (
                   <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue via-blue-bright to-slate">
                     <span class="font-display text-3xl font-extrabold text-white/90 sm:text-5xl">{person.initialen}</span>
