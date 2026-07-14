@@ -1,0 +1,97 @@
+---
+// TEAM-VARIANTE A – „Gründer mit Text" (editorial, Shape-Stil):
+// Zwei große, abwechselnde Zeilen (Portrait + Text). Zeigt Iwo & Eric als
+// Ansprechpartner mit kurzem Wer-wir-sind / Was-wir-machen-Text.
+// FOTOS: sobald vorhanden in src/assets/team/ ablegen und `bild` setzen –
+// solange kein Bild da ist, wird ein Initialen-Platzhalter gerendert.
+// TEXTE = VORSCHLAG, von Iwo prüfen/anpassen.
+const gruender = [
+  {
+    name: 'Iwo Sawicki',
+    rolle: 'Gründer & Strategie',
+    initialen: 'IS',
+    bild: null,
+    email: 'iwo@stolz-marketing.de',
+    texte: [
+      'Ich habe STOLZ Marketing gegründet, weil lokale Betriebe kein Agentur-Blabla brauchen, sondern jemanden, der ihr Handwerk versteht und Marketing in echte Anfragen übersetzt.',
+      'Von der Website über Google bis zu Social Media — ich bin Ihr fester Ansprechpartner und sorge dafür, dass am Ende messbar mehr Kunden und Bewerber ankommen.',
+    ],
+  },
+  {
+    name: 'Eric',
+    rolle: 'Gründer & Kundenbetreuung',
+    initialen: 'E',
+    bild: null,
+    email: 'eric@stolz-marketing.de',
+    texte: [
+      'Ich kümmere mich darum, dass aus Strategie sichtbare Ergebnisse werden — von der Umsetzung der Kampagnen bis zur laufenden Betreuung unserer Kunden.',
+      'Sie erreichen mich direkt, ohne Umwege über Callcenter oder wechselnde Ansprechpartner. Ein Gesicht, das Ihr Projekt von Anfang bis Ende begleitet.',
+    ],
+  },
+];
+---
+
+<section id="team" class="scroll-mt-24 px-5 py-16 md:px-10 md:py-24">
+  <p class="mb-10 text-center text-xs font-medium tracking-wide text-gray uppercase">
+    Team-Variante A · Gründer mit Text (zur Auswahl)
+  </p>
+
+  <div class="mx-auto max-w-[1100px]">
+    <div class="max-w-[640px]" data-reveal>
+      <p class="flex items-center gap-2.5 text-sm font-medium text-dark">
+        <span class="size-1.5 rounded-full bg-blue" aria-hidden="true"></span>
+        Das Team
+      </p>
+      <h2 class="mt-4 text-4xl font-semibold text-balance leading-[1.06] tracking-[-0.03em] text-dark md:text-5xl">
+        Die Menschen hinter STOLZ
+      </h2>
+      <p class="mt-5 text-lg font-medium leading-[1.5] text-dark/60">
+        Kein anonymes Agentur-Team, sondern feste Ansprechpartner, die Ihr Projekt persönlich begleiten.
+      </p>
+    </div>
+
+    <div class="mt-16 flex flex-col gap-16 md:mt-20 md:gap-24">
+      {
+        gruender.map((person, i) => (
+          <div
+            class={`grid items-center gap-8 md:grid-cols-2 md:gap-14 ${i % 2 === 1 ? 'md:[&>figure]:order-2' : ''}`}
+            data-reveal
+          >
+            <figure class="relative overflow-hidden rounded-30 bg-bg-blue-light shadow-card">
+              <div class="aspect-[4/5] w-full">
+                {person.bild ? (
+                  <img src={person.bild} alt={`Portrait von ${person.name}`} class="h-full w-full object-cover" />
+                ) : (
+                  <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue via-blue-bright to-slate">
+                    <span class="font-display text-7xl font-extrabold text-white/90">{person.initialen}</span>
+                  </div>
+                )}
+              </div>
+            </figure>
+
+            <div>
+              <span class="inline-flex rounded-full bg-blue/10 px-3.5 py-1.5 text-sm font-semibold text-blue">
+                {person.rolle}
+              </span>
+              <h3 class="mt-4 text-3xl font-semibold tracking-[-0.02em] text-dark md:text-4xl">{person.name}</h3>
+              <div class="mt-4 flex flex-col gap-4 text-lg font-medium leading-[1.55] text-dark/65">
+                {person.texte.map((t) => (
+                  <p>{t}</p>
+                ))}
+              </div>
+              <a
+                href={`mailto:${person.email}`}
+                class="mt-6 inline-flex items-center gap-2 text-base font-semibold text-blue transition-colors hover:text-blue-bright"
+              >
+                {person.email}
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
