@@ -16,6 +16,9 @@ import stech from '../assets/projekt-s-tech-fahrzeugbau.png';
 import saanStill from '../assets/projekt-saan-wasserstrahl.png';
 import raumkonzeptStill from '../assets/projekt-raum-konzept.png';
 import websiteHepa from '../assets/projekte/website-hepabaut.png';
+import hepaSanierung from '../assets/projekte/hepa/hepa-sanierung.png';
+import hepaRenovierung from '../assets/projekte/hepa/hepa-renovierung.png';
+import hepaWasserschaden from '../assets/projekte/hepa/hepa-wasserschaden.png';
 import websiteJhoch2 from '../assets/projekte/website-jhoch2-wasserschaden.png';
 import websiteBadenBatterie from '../assets/projekte/website-badenbatterie.png';
 import websitePannach from '../assets/projekte/website-pannach-messtechnik.png';
@@ -53,6 +56,8 @@ export interface Leistungsseite {
   beschreibung: string;
   punkte: string[];
   bild?: ImageMetadata;
+  /** Live-URL dieser Leistungsseite (für Browser-Label + Verlinkung) */
+  url?: string;
   /** hervorgehobenes Modul, z. B. Erste-Hilfe bei Wasserschäden */
   highlight?: { titel: string; schritte: string[] };
 }
@@ -186,16 +191,22 @@ export const projekte: Projekt[] = [
       leistungsseiten: [
         {
           name: 'Sanierung',
+          url: 'https://www.hepabaut.de/sanierung',
+          bild: hepaSanierung,
           beschreibung: 'Die Sanierungs-Welt bündelt alle Leistungen rund um Altbau, Bad und Wohnung — mit Referenzen und klarem Weg zur Anfrage.',
           punkte: ['Eigene Startseite für den Bereich', 'Leistungen mit Vorher-Nachher-Belegen', 'FAQ und Kundenzitate', 'rund 150 Städte-Landingpages'],
         },
         {
           name: 'Renovierung',
+          url: 'https://www.hepabaut.de/renovierung',
+          bild: hepaRenovierung,
           beschreibung: 'Bei der Renovierung steht das Kontaktformular ganz oben — die Anfrage ist so leicht wie möglich gemacht.',
           punkte: ['Kontaktformular direkt im ersten Bildschirm', 'Leistungsübersicht mit Beispielen', 'Klick-to-Call in jeder Sektion', 'rund 150 Städte-Landingpages'],
         },
         {
           name: 'Wasserschäden',
+          url: 'https://www.hepabaut.de/wasserschaden',
+          bild: hepaWasserschaden,
           beschreibung: 'Im Notfall zählt jede Minute: Die Wasserschaden-Welt führt Betroffene sofort zur Hilfe — inklusive Erste-Hilfe-Modul.',
           punkte: ['Kontaktformular ganz oben', 'Soforthilfe-Hinweise', 'Ablauf & Versicherung erklärt', 'rund 150 Städte-Landingpages'],
           highlight: {
