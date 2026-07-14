@@ -139,7 +139,7 @@ export const projekte: Projekt[] = [
         { label: 'Zeitraum', wert: 'laufend' },
       ],
       einleitung:
-        'DMK Bau wollte beides: neue Aufträge und neue Leute. Wir haben eine Kampagnen-Strecke aufgebaut, die Bauherren überzeugt und gleichzeitig zeigt, warum sich eine Bewerbung bei DMK lohnt.',
+        'DMK Bau wollte beides: **neue Aufträge** und **neue Leute**. Wir haben eine Kampagnen-Strecke aufgebaut, die Bauherren überzeugt und gleichzeitig zeigt, warum sich eine Bewerbung bei DMK lohnt.',
       leistungen: [
         { titel: 'Kampagnen-Konzept', text: 'Getrennte Botschaften für Auftraggeber und Bewerber — ein gemeinsamer Auftritt.' },
         { titel: 'Dreh vor Ort', text: 'Baustellen, Team und Ergebnisse authentisch eingefangen.' },
@@ -173,7 +173,7 @@ export const projekte: Projekt[] = [
         { label: 'Status', wert: 'Live' },
       ],
       einleitung:
-        'HEPA Baut aus Weinheim saniert, renoviert und beseitigt Wasserschäden. Wir haben einen kompletten Website-Relaunch gebaut, der die drei Leistungen klar trennt — und über hunderte lokale Landingpages dafür sorgt, dass HEPA in jeder Stadt im Umkreis gefunden wird.',
+        'HEPA Baut aus Weinheim saniert, renoviert und beseitigt Wasserschäden. Wir haben einen kompletten Website-Relaunch gebaut, der die drei Leistungen klar trennt — und über **hunderte lokale Landingpages** dafür sorgt, dass HEPA **in jeder Stadt im Umkreis** gefunden wird.',
       leistungen: [
         { titel: 'Drei klare Leistungswelten', text: 'Sanierung, Renovierung und Wasserschäden — jede mit eigener Startseite und eigenem Aufbau.' },
         { titel: 'Lokales SEO in großem Stil', text: 'Pro Leistung rund 150 Städte-Landingpages im 30-km-Umkreis um Weinheim, jede auf ihre Stadt optimiert.' },
@@ -253,7 +253,7 @@ export const projekte: Projekt[] = [
         { label: 'Status', wert: 'Live' },
       ],
       einleitung:
-        'Bei einem Wasserschaden zählt Geschwindigkeit — auch auf der Website. Der Auftritt von Jhoch2 führt Betroffene in wenigen Klicks zur Notfall-Anfrage, und Google Ads fängt die dringenden Suchen ab.',
+        'Bei einem Wasserschaden zählt Geschwindigkeit — auch auf der Website. Der Auftritt von Jhoch2 führt Betroffene **in wenigen Klicks zur Notfall-Anfrage**, und Google Ads fängt die dringenden Suchen ab.',
       leistungen: [
         { titel: 'Notfall-Strecke', text: 'Telefonnummer und Anfrage immer einen Daumen entfernt — auch mobil.' },
         { titel: 'Vertrauen in Sekunden', text: 'Ablauf, Referenzen und Versicherungs-Infos klar erklärt.' },
@@ -285,7 +285,7 @@ export const projekte: Projekt[] = [
         { label: 'Ergebnis', wert: '10 Einstellungen' },
       ],
       einleitung:
-        'SAAN suchte dringend Verstärkung für körperlich anspruchsvolle Arbeit — mitten im größten Personalmangel. Über eine Recruiting-Kampagne mit vorqualifizierten Bewerbern konnten wir in nur wenigen Wochen gleich zehn Stellen besetzen. Das Ergebnis hat selbst den Chef überrascht.',
+        'SAAN suchte dringend Verstärkung für körperlich anspruchsvolle Arbeit — mitten im größten Personalmangel. Über eine Recruiting-Kampagne mit vorqualifizierten Bewerbern konnten wir in nur **wenigen Wochen** gleich **zehn Stellen besetzen**. Das Ergebnis hat selbst den Chef überrascht.',
       leistungen: [
         { titel: 'Recruiting-Videos vor Ort', text: 'Echte Einblicke in Halle, Maschinen und Team — nahbar statt Hochglanz.' },
         { titel: 'Meta Lead-Kampagne', text: 'Gezielt in der Region ausgespielt, mit Vorqualifizierung direkt im Formular.' },

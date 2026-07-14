@@ -35,6 +35,9 @@ const keyfacts = details.keyfacts.filter((f) => !f.wert.includes('XX'));
 const ergebnisse = details.ergebnisse.filter((e) => !e.wert.includes('XX'));
 // Live-Link für den mitscrollenden Button (explizit oder aus domain)
 const liveUrl = details.liveUrl ?? (projekt.domain ? `https://${projekt.domain}` : null);
+// Hervorhebung: **Wort** in der Einleitung wird blau (eine Auszeichnung,
+// bewusst nicht gemischt — passt zum Über-uns-Statement der Startseite)
+const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class="text-blue">$1</span>');
 ---
 
 <BaseLayout
@@ -63,9 +66,10 @@ const liveUrl = details.liveUrl ?? (projekt.domain ? `https://${projekt.domain}`
         <h1 class="mt-4 max-w-[720px] text-4xl font-semibold text-balance leading-[1.05] tracking-[-0.03em] text-dark md:text-5xl">
           {projekt.name}
         </h1>
-        <p class="mt-5 max-w-[640px] text-lg font-medium leading-[1.5] tracking-[-0.01em] text-dark">
-          {details.einleitung}
-        </p>
+        <p
+          class="mt-5 max-w-[640px] text-lg font-medium leading-[1.5] tracking-[-0.01em] text-dark"
+          set:html={hebeHervor(details.einleitung)}
+        />
 
         <!-- Keyfacts (XX-Platzhalter herausgefiltert) -->
         {

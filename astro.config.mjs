@@ -11,9 +11,8 @@ export default defineConfig({
   devToolbar: { enabled: false },
   integrations: [
     sitemap({
-      // interne Seiten (Archiv, QR-Redirect, Design-Vorschau) nicht in die Sitemap
-      filter: (page) =>
-        !page.includes('/archiv') && !page.includes('/korbaktion') && !page.includes('/vorschau'),
+      // internes Design-Archiv nicht in die Sitemap aufnehmen
+      filter: (page) => !page.includes('/archiv') && !page.includes('/korbaktion'),
     }),
   ],
   vite: {
