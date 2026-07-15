@@ -20,6 +20,12 @@ const {
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage.src, Astro.site);
 
+// Staging-Build (env PUBLIC_STAGING=true in der Dev-Dokploy-App):
+// gesamte Seite auf noindex, damit dev.stolz-marketing.de NICHT bei
+// Google landet (Duplicate Content).
+const istStaging = import.meta.env.PUBLIC_STAGING === 'true';
+const nichtIndexieren = noindex || istStaging;
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
@@ -56,7 +62,7 @@ const jsonLd = {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'max-image-preview:large'} />
+    <meta name="robots" content={nichtIndexieren ? 'noindex, nofollow' : 'max-image-preview:large'} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
