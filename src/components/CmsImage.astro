@@ -1,0 +1,56 @@
+---
+// Bild aus der Directus-Media-Bibliothek (DAM).
+// `id` = Datei-ID aus Directus (in der Media-Bibliothek bei jeder Datei
+// sichtbar/kopierbar). Directus liefert das Bild on-the-fly optimiert als
+// WebP in der gewünschten Größe — kein GitHub-Upload, keine lokale Datei.
+//
+// Voraussetzung: In Directus muss die Rolle „Public" Lese-Rechte auf
+// „Files" (directus_files) haben, sonst laden die Bilder nicht öffentlich.
+//
+// CMS-Basis-URL: per Env `PUBLIC_CMS_URL` überschreibbar, sonst Default.
+const CMS = import.meta.env.PUBLIC_CMS_URL ?? 'https://cms.stolz-marketing.de';
+
+interface Props {
+  /** Directus File-ID (UUID) */
+  id: string;
+  alt: string;
+  /** Breiten fürs srcset (Directus skaliert on-the-fly) */
+  widths?: number[];
+  sizes?: string;
+  /** feste Anzeigemaße gegen Layout-Shift (optional) */
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  fit?: 'cover' | 'contain' | 'inside' | 'outside';
+  quality?: number;
+  class?: string;
+}
+const {
+  id,
+  alt,
+  widths = [480, 800, 1200, 1600],
+  sizes = '100vw',
+  width,
+  height,
+  loading = 'lazy',
+  fit = 'cover',
+  quality = 80,
+  class: cls = '',
+} = Astro.props;
+
+const url = (w: number) =>
+  `${CMS}/assets/${id}?width=${w}&quality=${quality}&format=webp&fit=${fit}`;
+const srcset = widths.map((w) => `${url(w)} ${w}w`).join(', ');
+---
+
+<img
+  src={url(widths[widths.length - 1])}
+  srcset={srcset}
+  sizes={sizes}
+  alt={alt}
+  width={width}
+  height={height}
+  loading={loading}
+  decoding="async"
+  class={cls}
+/>
