@@ -247,14 +247,58 @@ const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class
       )
     }
 
-    <!-- 3b. Die Leistungswelten im Detail (nur wenn hinterlegt) -->
+    <!-- 3b. Seitenstruktur — visuelle SEO-Sitemap bevorzugt -->
+    {
+      istWebsite && details.stadtStruktur ? (
+        <section class="px-5 pt-16 md:px-10 md:pt-24">
+          <div class="mx-auto max-w-[1200px]">
+            <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Struktur & lokales SEO</p>
+            <h2 class="mt-3 max-w-[720px] text-3xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-4xl">
+              Eine Seite für jede Stadt
+            </h2>
+            <p class="mt-4 max-w-[620px] text-lg font-medium leading-[1.5] text-dark/60">
+              Damit HEPA nicht nur in Weinheim, sondern in jeder Stadt der Region gefunden wird, haben wir die
+              Struktur konsequent lokal gedacht.
+            </p>
+            <div class="mt-10">
+              <SeoStadtSitemap struktur={details.stadtStruktur} />
+            </div>
+          </div>
+        </section>
+      ) : istWebsite && details.sitemap ? (
+        <section class="px-5 pt-16 md:px-10 md:pt-24">
+          <div class="mx-auto max-w-[1200px]">
+            <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Struktur</p>
+            <h2 class="mt-3 text-3xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-4xl">
+              Die neue Seitenstruktur
+            </h2>
+            <div class="mt-8 flex flex-wrap gap-3">
+              {details.sitemap.map((seite, i) => (
+                <span class:list={[
+                  'rounded-14 border px-5 py-3.5 text-base font-semibold tracking-[-0.01em]',
+                  i === 0 ? 'border-blue bg-blue text-white' : 'border-border bg-white text-dark',
+                ]}>
+                  {seite}
+                </span>
+              ))}
+            </div>
+            <p class="mt-4 max-w-[560px] text-base font-medium leading-[1.5] text-dark/60">
+              Jede Seite hat eine Aufgabe — vom ersten Eindruck bis zur Anfrage. Keine Sackgassen, keine
+              Platzhalter-Seiten.
+            </p>
+          </div>
+        </section>
+      ) : null
+    }
+
+    <!-- 3c. Die Leistungen im Detail (nur wenn hinterlegt) -->
     {
       details.leistungsseiten && (
         <section class="px-5 pt-16 md:px-10 md:pt-24">
           <div class="mx-auto max-w-[1200px]">
-            <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Leistungswelten</p>
+            <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Leistungen</p>
             <h2 class="mt-3 max-w-[720px] text-3xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-4xl">
-              Drei Welten, ein Auftritt
+              Drei Leistungen, ein Auftritt
             </h2>
             <p class="mt-4 max-w-[620px] text-lg font-medium leading-[1.5] text-dark/60">
               Jede Leistung hat ihre eigene Startseite mit passendem Aufbau — und darunter jeweils rund 150
@@ -334,49 +378,6 @@ const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class
       )
     }
 
-    <!-- 4. nur Websites: Seitenstruktur — visuelle SEO-Sitemap bevorzugt -->
-    {
-      istWebsite && details.stadtStruktur ? (
-        <section class="px-5 pt-16 md:px-10 md:pt-24">
-          <div class="mx-auto max-w-[1200px]">
-            <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Struktur & lokales SEO</p>
-            <h2 class="mt-3 max-w-[720px] text-3xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-4xl">
-              Eine Seite für jede Stadt
-            </h2>
-            <p class="mt-4 max-w-[620px] text-lg font-medium leading-[1.5] text-dark/60">
-              Damit HEPA nicht nur in Weinheim, sondern in jeder Stadt der Region gefunden wird, haben wir die
-              Struktur konsequent lokal gedacht.
-            </p>
-            <div class="mt-10">
-              <SeoStadtSitemap struktur={details.stadtStruktur} />
-            </div>
-          </div>
-        </section>
-      ) : istWebsite && details.sitemap ? (
-        <section class="px-5 pt-16 md:px-10 md:pt-24">
-          <div class="mx-auto max-w-[1200px]">
-            <p class="text-xs font-semibold tracking-[0.18em] text-gray uppercase">Struktur</p>
-            <h2 class="mt-3 text-3xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-4xl">
-              Die neue Seitenstruktur
-            </h2>
-            <div class="mt-8 flex flex-wrap gap-3">
-              {details.sitemap.map((seite, i) => (
-                <span class:list={[
-                  'rounded-14 border px-5 py-3.5 text-base font-semibold tracking-[-0.01em]',
-                  i === 0 ? 'border-blue bg-blue text-white' : 'border-border bg-white text-dark',
-                ]}>
-                  {seite}
-                </span>
-              ))}
-            </div>
-            <p class="mt-4 max-w-[560px] text-base font-medium leading-[1.5] text-dark/60">
-              Jede Seite hat eine Aufgabe — vom ersten Eindruck bis zur Anfrage. Keine Sackgassen, keine
-              Platzhalter-Seiten.
-            </p>
-          </div>
-        </section>
-      ) : null
-    }
 
     <!-- 4b. Kundenzitat (nur wenn hinterlegt) -->
     {
