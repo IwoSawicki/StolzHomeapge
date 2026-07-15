@@ -116,7 +116,7 @@
   --color-white: #ffffff;
   --color-dark: #0a0a0a; /* fasst #0A0A0A, #0F0F0F, #141414 zusammen */
   --color-slate: #0f172a;
-  --color-blue: #0571ff;
+  --color-blue: #0568f0; /* leicht abgedunkelt ggü. Original #0571ff: Weiß-auf-Blau erreicht so WCAG-Kontrast 4.5:1 (Buttons, Badge). Optisch nahezu identisch. */
   --color-blue-bright: #0099ff; /* fasst #0099FF, #0084FF zusammen */
   --color-blue-soft: #6f8eff;
   --color-lime: #ccfc7e; /* fasst #CCFC7E, #C2FA69 zusammen */

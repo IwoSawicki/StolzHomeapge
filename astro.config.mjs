@@ -9,6 +9,8 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'never',
   devToolbar: { enabled: false },
+  // CSS inline ins HTML (spart den render-blockenden Stylesheet-Request → LCP/FCP)
+  build: { inlineStylesheets: 'always' },
   integrations: [
     sitemap({
       // internes Design-Archiv nicht in die Sitemap aufnehmen
