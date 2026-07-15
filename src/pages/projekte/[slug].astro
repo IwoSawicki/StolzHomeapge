@@ -98,7 +98,13 @@ const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class
           ) : details.videos ? (
             <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
               {details.videos.map((video) => (
-                <div class="aspect-[9/16] overflow-hidden rounded-24 bg-dark">
+                <button
+                  type="button"
+                  class="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-24 bg-dark"
+                  data-video-open
+                  data-video-src={video}
+                  aria-label={`Clip für ${projekt.name} mit Ton abspielen`}
+                >
                   <video
                     class="h-full w-full object-cover"
                     src={video}
@@ -107,9 +113,16 @@ const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class
                     loop
                     playsinline
                     preload="metadata"
-                    aria-label={`Social-Media-Clip für ${projekt.name} (stumm)`}
+                    tabindex="-1"
+                    aria-hidden="true"
                   />
-                </div>
+                  <span class="absolute inset-0 bg-dark/0 transition-colors duration-200 group-hover:bg-dark/20"></span>
+                  <span class="absolute bottom-3 left-3 flex size-11 items-center justify-center rounded-full bg-white/90 text-dark shadow-card-soft backdrop-blur-sm transition-transform duration-200 group-hover:scale-105">
+                    <svg class="ml-0.5 size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </span>
+                </button>
               ))}
             </div>
           ) : (
@@ -431,7 +444,80 @@ const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class
         </a>
       )
     }
+
+    <!-- Video-Lightbox: großes Popup mit Blur + Ton (wie Hero-Showreel) -->
+    {
+      details.videos && (
+        <div
+          class="fixed inset-0 z-[100] hidden items-center justify-center bg-dark/70 p-5 backdrop-blur-lg md:p-10"
+          data-video-modal
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Video von ${projekt.name} in groß`}
+        >
+          <button
+            type="button"
+            data-video-close
+            class="absolute top-5 right-5 flex size-11 cursor-pointer items-center justify-center rounded-full bg-white text-dark transition-transform duration-200 hover:scale-105"
+            aria-label="Video schließen"
+          >
+            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
+          </button>
+          <video
+            class="max-h-[85vh] w-auto max-w-full rounded-24 shadow-stack-strong"
+            controls
+            playsinline
+            preload="none"
+            data-video-el
+          />
+        </div>
+      )
+    }
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  // Klick auf eine Video-Kachel öffnet sie groß im Blur-Popup mit Ton.
+  const modal = document.querySelector<HTMLElement>('[data-video-modal]');
+  const el = document.querySelector<HTMLVideoElement>('[data-video-el]');
+  const closeBtn = document.querySelector<HTMLElement>('[data-video-close]');
+  const openers = document.querySelectorAll<HTMLElement>('[data-video-open]');
+
+  if (modal && el && closeBtn) {
+    const oeffne = (src: string) => {
+      el.src = src;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      el.currentTime = 0;
+      el.muted = false;
+      el.volume = 1;
+      void el.play();
+    };
+    const schliesse = () => {
+      el.pause();
+      el.removeAttribute('src');
+      el.load();
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    };
+    openers.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const src = btn.getAttribute('data-video-src');
+        if (src) oeffne(src);
+      }),
+    );
+    closeBtn.addEventListener('click', schliesse);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) schliesse();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('flex')) schliesse();
+    });
+  }
+</script>
 
