@@ -35,6 +35,9 @@ const keyfacts = details.keyfacts.filter((f) => !f.wert.includes('XX'));
 const ergebnisse = details.ergebnisse.filter((e) => !e.wert.includes('XX'));
 // Live-Link für den mitscrollenden Button (explizit oder aus domain)
 const liveUrl = details.liveUrl ?? (projekt.domain ? `https://${projekt.domain}` : null);
+// Meta-Description: Einleitung ohne **Marker, auf ~160 Zeichen (Wortgrenze) gekürzt
+const rohDesc = details.einleitung.replace(/\*\*/g, '');
+const metaDescription = rohDesc.length > 160 ? `${rohDesc.slice(0, 157).replace(/\s+\S*$/, '')}…` : rohDesc;
 // Hervorhebung: **Wort** in der Einleitung wird blau (eine Auszeichnung,
 // bewusst nicht gemischt — passt zum Über-uns-Statement der Startseite)
 const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class="text-blue">$1</span>');
@@ -42,7 +45,7 @@ const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class
 
 <BaseLayout
   title={`${projekt.name} | Projekte | STOLZ Marketing`}
-  description={projekt.beschreibung}
+  description={metaDescription}
 >
   <Header />
   <main>
