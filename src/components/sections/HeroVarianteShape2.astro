@@ -20,6 +20,9 @@ import posterBild from '../../assets/startseite/hero-videopreview.png';
 const poster = await getImage({ src: posterBild, format: 'webp', width: 900, quality: 70 });
 ---
 
+<!-- Poster früh + priorisiert laden (LCP-Element der Startseite) -->
+<link rel="preload" as="image" href={poster.src} type="image/webp" fetchpriority="high" />
+
 <section class="px-5 pt-6 pb-10 md:px-10 md:pt-8 md:pb-14">
   <div class="mx-auto max-w-[1200px] xl:flex xl:items-center">
     {/* Text-Panel: überlappt am Desktop ins Video, mit Außenrundungen */}
@@ -50,6 +53,7 @@ const poster = await getImage({ src: posterBild, format: 'webp', width: 900, qua
           class="h-full w-full object-cover"
           src={showreel}
           poster={poster.src}
+          fetchpriority="high"
           autoplay
           muted
           loop
