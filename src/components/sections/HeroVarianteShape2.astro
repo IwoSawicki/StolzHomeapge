@@ -17,7 +17,7 @@ import posterBild from '../../assets/startseite/hero-videopreview.png';
 
 // Poster (erstes Frame): wird als optimiertes WebP ausgeliefert und sofort
 // gezeigt, während das Video lädt → kein schwarzes Flackern, besseres LCP.
-const poster = await getImage({ src: posterBild, format: 'webp', width: 900, quality: 70 });
+const poster = await getImage({ src: posterBild, format: 'webp', width: 720, quality: 62 });
 ---
 
 <!-- Poster früh + priorisiert laden (LCP-Element der Startseite) -->
