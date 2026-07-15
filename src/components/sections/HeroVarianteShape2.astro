@@ -10,8 +10,14 @@
 // stumm und endlos (object-cover).
 // Klick auf „Einblick in unsere Arbeit" öffnet das Showreel groß im
 // Overlay (Seite dahinter geblurrt) und spielt es mit Ton von vorn.
+import { getImage } from 'astro:assets';
 import Button from '../Button.astro';
-import showreel from '../../assets/startseite/Stolz-Showreel.mp4';
+import showreel from '../../assets/startseite/stolz-showreel-v2.mp4';
+import posterBild from '../../assets/startseite/hero-videopreview.png';
+
+// Poster (erstes Frame): wird als optimiertes WebP ausgeliefert und sofort
+// gezeigt, während das Video lädt → kein schwarzes Flackern, besseres LCP.
+const poster = await getImage({ src: posterBild, format: 'webp', width: 900, quality: 70 });
 ---
 
 <section class="px-5 pt-6 pb-10 md:px-10 md:pt-8 md:pb-14">
@@ -43,6 +49,7 @@ import showreel from '../../assets/startseite/Stolz-Showreel.mp4';
         <video
           class="h-full w-full object-cover"
           src={showreel}
+          poster={poster.src}
           autoplay
           muted
           loop
