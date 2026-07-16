@@ -44,6 +44,9 @@ const GA_ID = 'G-ZK7F06197Z';
 
   function ladeGA() {
     if (window.__gaGeladen) return;
+    // nur auf der Produktionsdomain tracken (nicht Staging/Dev/localhost)
+    const h = location.hostname;
+    if (h !== 'stolz-marketing.de' && h !== 'www.stolz-marketing.de') return;
     window.__gaGeladen = true;
     const s = document.createElement('script');
     s.async = true;

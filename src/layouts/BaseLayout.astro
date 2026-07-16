@@ -83,8 +83,29 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-    <!-- Umami: cookielos, kein Consent nötig (siehe docs/DESIGN-SYSTEM.md / Datenschutz) -->
-    <script defer src="https://analytics.stolz-marketing.de/script.js" data-website-id="46f1a591-c35f-43ce-b9ad-f0e08a8a2504"></script>
+    <!-- Nicht-Produktions-Hosts (Staging/Dev): sofort noindex setzen,
+         damit z. B. dev.stolz-marketing.de nie bei Google landet. Läuft
+         hostnamenbasiert → unabhängig von Build-Env, immer korrekt. -->
+    <script is:inline>
+      (function () {
+        var h = location.hostname;
+        window.__istProd__ = h === 'stolz-marketing.de' || h === 'www.stolz-marketing.de';
+        if (!window.__istProd__) {
+          var m = document.createElement('meta');
+          m.name = 'robots';
+          m.content = 'noindex, nofollow';
+          document.head.appendChild(m);
+        }
+      })();
+    </script>
+
+    <!-- Umami: cookielos, kein Consent nötig. data-domains sorgt dafür,
+         dass NUR auf der Produktionsdomain gezählt wird (nicht auf Staging). -->
+    <script
+      defer
+      src="https://analytics.stolz-marketing.de/script.js"
+      data-website-id="46f1a591-c35f-43ce-b9ad-f0e08a8a2504"
+      data-domains="stolz-marketing.de,www.stolz-marketing.de"></script>
   </head>
   <body>
     <slot />
