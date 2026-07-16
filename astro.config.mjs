@@ -21,7 +21,12 @@ export default defineConfig({
     plugins: [tailwindcss()],
     preview: {
       // astro preview läuft hinter dem Dokploy-Proxy: eigene Domains erlauben
-      allowedHosts: ['dev.stolz-ki.de', 'stolz-marketing.de', 'www.stolz-marketing.de'],
+      allowedHosts: [
+        'dev.stolz-ki.de',
+        'dev.stolz-marketing.de',
+        'stolz-marketing.de',
+        'www.stolz-marketing.de',
+      ],
     },
   },
 });
