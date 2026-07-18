@@ -11,6 +11,10 @@ export default defineConfig({
   devToolbar: { enabled: false },
   // CSS inline ins HTML (spart den render-blockenden Stylesheet-Request → LCP/FCP)
   build: { inlineStylesheets: 'always' },
+  // Bild-Optimierungs-Cache in node_modules/.cache legen: Dokploy/Nixpacks
+  // mountet genau diesen Pfad als Build-Cache → optimierte Bilder werden
+  // zwischen Deploys wiederverwendet statt jedes Mal neu berechnet.
+  cacheDir: './node_modules/.cache/astro',
   integrations: [
     sitemap({
       // interne Seiten (Archiv, QR-Redirect, Kunden-Angebote) nicht in die Sitemap
