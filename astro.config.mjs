@@ -13,8 +13,9 @@ export default defineConfig({
   build: { inlineStylesheets: 'always' },
   integrations: [
     sitemap({
-      // internes Design-Archiv nicht in die Sitemap aufnehmen
-      filter: (page) => !page.includes('/archiv') && !page.includes('/korbaktion'),
+      // interne Seiten (Archiv, QR-Redirect, Kunden-Angebote) nicht in die Sitemap
+      filter: (page) =>
+        !page.includes('/archiv') && !page.includes('/korbaktion') && !page.includes('/website-betreuung'),
     }),
   ],
   vite: {
