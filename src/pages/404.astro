@@ -1,0 +1,44 @@
+---
+// 404-Seite: wird von astro preview (und den meisten Static-Hosts)
+// automatisch für unbekannte Pfade ausgeliefert (dist/404.html).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout title="Seite nicht gefunden | STOLZ Marketing" noindex>
+  <Header />
+  <main>
+    <section class="flex min-h-[62vh] flex-col items-center justify-center px-5 py-20 text-center md:py-28">
+      <!-- 404 mit Sparkle im STOLZ-Stil -->
+      <div class="relative">
+        <p class="font-display text-85 leading-none font-extrabold tracking-[-0.05em] text-dark" aria-hidden="true">
+          404
+        </p>
+        <svg
+          class="absolute -right-[26px] -bottom-[14px] h-[30px] w-[45px]"
+          viewBox="0 0 32.514 21.435"
+          overflow="visible"
+          aria-hidden="true"
+        >
+          <path
+            d="M 19.003 8.874 C 17.234 9.041 15.465 9.208 13.696 9.373 C 9.804 9.738 3.903 10.29 0 10.657 C 0.042 10.736 0.086 10.754 0.131 10.758 C 4.053 11.127 9.052 11.603 12.976 11.958 C 15.099 12.156 17.181 12.349 19.264 12.546 C 20.07 12.623 20.17 12.713 20.344 13.503 C 20.727 15.248 21.106 16.994 21.489 18.74 C 21.681 19.618 21.877 20.496 22.084 21.435 C 22.12 21.297 22.143 21.228 22.155 21.157 C 22.582 18.685 23.029 16.216 23.421 13.738 C 23.528 13.056 23.808 12.645 24.49 12.527 C 24.581 12.511 24.669 12.479 24.76 12.458 C 26.662 12.027 28.565 11.596 30.467 11.164 C 31.15 11.009 31.832 10.85 32.514 10.693 C 32.437 10.615 32.363 10.598 32.288 10.585 C 29.908 10.154 27.528 9.722 25.147 9.294 C 24.146 9.114 23.946 8.929 23.74 7.94 C 23.274 5.702 22.811 3.464 22.345 1.226 C 22.26 0.817 22.168 0.409 22.08 0 C 21.983 0.186 21.945 0.365 21.909 0.545 C 21.445 2.904 20.984 5.265 20.516 7.623 C 20.31 8.663 20.236 8.723 19.176 8.855 C 19.119 8.863 19.061 8.869 19.003 8.874 Z"
+            fill="var(--color-blue)"></path>
+        </svg>
+      </div>
+
+      <h1 class="mt-6 text-2xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-3xl">
+        Diese Seite gibt es nicht — oder nicht mehr.
+      </h1>
+      <p class="mt-3 max-w-[420px] text-base font-medium leading-[1.5] text-dark/60">
+        Kein Problem: Auf der Startseite finden Sie alles Wichtige über uns und unsere Projekte.
+      </p>
+
+      <div class="mt-9">
+        <Button href="/" variant="blue" shadow="blue-glow">Zurück zur Startseite</Button>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
