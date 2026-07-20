@@ -20,6 +20,9 @@ import MarqueeCta from '../../components/sections/MarqueeCta.astro';
 import { projekte } from '../../data/projekte';
 import teamBild from '../../assets/stolz-marketing-team.png';
 import iwoBild from '../../assets/about/Iwo-StolzMarketing.jpg';
+import ericBild from '../../assets/about/Eric-StolzMarketing.png';
+import saanBild from '../../assets/projekte/video-dreh-saan-wasserstrahl-1.jpg';
+import raumBild from '../../assets/projekte/video-dreh-raum-konzept.jpg';
 
 const websiteProjekte = projekte.filter((p) => p.art === 'website').slice(0, 4);
 
@@ -42,6 +45,28 @@ const matrix = [
   { titel: 'Meta-Daten & Suchbegriffe', text: 'Passende Titel, Beschreibungen und Suchbegriffe auf Basis echter Recherche — eine der ersten Aufgaben guter Sichtbarkeit.' },
   { titel: 'Hosting & Betreuung', text: 'Nach dem Launch lassen wir Sie nicht allein: Hosting, Backups und Änderungen zum festen Monatspreis.' },
   { titel: 'Web-Agentur Rhein-Main', text: 'Aus Reichelsheim — für lokale Betriebe im gesamten Rhein-Main-Gebiet und darüber hinaus.' },
+];
+
+const technologien = [
+  'Google Search Console',
+  'Google Analytics 4',
+  'Google Business Profil',
+  'PageSpeed Insights',
+  'Astro',
+  'Tailwind CSS',
+];
+
+const kunden = [
+  'DMK Bau',
+  'HEPA Baut',
+  'SAAN',
+  'Jhoch2',
+  'Zehner Immobilien',
+  'NKN PV Elektrik',
+  'Baden Batterie',
+  'Pannach',
+  'Laser-Wolf',
+  'SEN',
 ];
 
 const faq = [
@@ -291,76 +316,199 @@ const faq = [
       </div>
     </section>
 
-    <!-- 7. Zwei Einstiegswege -->
+    <!-- 7. Ergebnis-Highlight auf großem Bild (Shape: Testimonial-Video).
+         HINWEIS: Sobald ein echtes Kundenzitat mit Freigabe vorliegt,
+         Text + Zuschreibung hier austauschen. -->
     <section class="px-5 pt-16 md:px-10 md:pt-24">
-      <div class="mx-auto grid max-w-[1240px] grid-cols-1 gap-6 md:grid-cols-2">
-        <div class="flex flex-col items-start rounded-[28px] bg-bg-blue-light p-8 md:p-10" data-reveal>
-          <h2 class="text-2xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-3xl">
-            Sie brauchen eine neue Website?
-          </h2>
-          <p class="mt-3 mb-8 text-base font-medium leading-[1.55] text-dark/60">
-            Ob erster Auftritt oder kompletter Neustart: Wir bauen Ihre Seite von Grund auf — Konzept,
-            Design, Texte, Technik. Sie bekommen einen Festpreis und einen klaren Fahrplan.
-          </p>
-          <div class="mt-auto">
-            <Button href="/kontakt" variant="blue" shadow="blue-glow">Kostenlose Analyse</Button>
+      <div class="relative mx-auto max-w-[1240px]" data-reveal>
+        <div class="hero-notch absolute top-0 left-0 z-10 max-w-[640px] rounded-br-[24px] bg-white pr-4 pb-4 md:pr-5 md:pb-5">
+          <div class="rounded-[20px] bg-white p-5 md:p-7">
+            <svg class="size-8 text-blue" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M9.5 7C6.5 7 4 9.5 4 12.5V19h7v-7H7.5c0-1.4 1.1-2.5 2.5-2.5V7zm9 0c-3 0-5.5 2.5-5.5 5.5V19h7v-7h-3.5c0-1.4 1.1-2.5 2.5-2.5V7z" />
+            </svg>
+            <p class="mt-3 text-2xl font-semibold text-balance leading-[1.2] tracking-[-0.02em] text-dark md:text-3xl">
+              Zehn Stellen besetzt — in nur wenigen Wochen.
+            </p>
+            <p class="mt-4 text-sm font-medium text-dark/60">
+              SAAN Wasserstrahltechnik · Recruiting-Kampagne
+            </p>
+          </div>
+        </div>
+        <div class="aspect-[16/11] overflow-hidden rounded-[28px] md:aspect-[16/8]">
+          <Image
+            src={saanBild}
+            alt="Dreharbeiten bei SAAN Wasserstrahltechnik"
+            class="h-full w-full object-cover"
+            widths={[640, 1024, 1600]}
+            sizes="(min-width:1200px) 1240px, 100vw"
+          />
+        </div>
+        <a
+          href="/projekte/saan-wasserstrahl"
+          class="absolute right-4 bottom-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-dark shadow-card-soft transition-transform duration-200 hover:scale-[1.03] md:right-6 md:bottom-6 md:text-base"
+        >
+          Projekt ansehen
+          <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17 17 7M8 7h9v9" />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 8. Technologien -->
+    <section class="px-5 pt-20 md:px-10 md:pt-28">
+      <div class="mx-auto max-w-[1240px]">
+        <h2 class="max-w-[640px] text-3xl font-semibold text-balance leading-[1.12] tracking-[-0.03em] text-dark md:text-40" data-reveal>
+          Wir arbeiten mit modernen Technologien für die Leistung Ihrer Website.
+        </h2>
+        <div class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6" data-reveal>
+          {
+            technologien.map((tech) => (
+              <div class="flex h-24 items-center justify-center rounded-20 bg-bg-soft px-4 text-center text-sm font-semibold text-dark/80">
+                {tech}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Zwei Einstiegswege als versetzte Bild/Text-Reihen -->
+    <section class="px-5 pt-20 md:px-10 md:pt-28">
+      <div class="mx-auto flex max-w-[1240px] flex-col gap-20 md:gap-28">
+        <div class="grid grid-cols-1 items-center gap-8 xl:grid-cols-2 xl:gap-20">
+          <div class="overflow-hidden rounded-[28px]" data-reveal>
+            <Image
+              src={ericBild}
+              alt="Eric von STOLZ Marketing"
+              class="aspect-[4/3.4] h-full w-full object-cover object-top"
+              widths={[520, 900]}
+              sizes="(min-width:1200px) 600px, 100vw"
+            />
+          </div>
+          <div data-reveal style="--reveal-delay:80ms">
+            <h2 class="max-w-[440px] text-3xl font-semibold text-balance leading-[1.1] tracking-[-0.03em] text-dark md:text-4xl">
+              Sie brauchen eine neue Website?
+            </h2>
+            <p class="mt-4 max-w-[520px] text-base font-medium leading-[1.6] text-dark/70 md:text-lg">
+              Ob erster Auftritt oder kompletter Neustart: Wir bauen Ihre Seite von Grund auf — Konzept,
+              Design, Texte, Technik. Sie bekommen einen Festpreis und einen klaren Fahrplan, und wir
+              beraten Sie ehrlich, was sich für Ihren Betrieb wirklich lohnt.
+            </p>
+            <div class="mt-7">
+              <Button href="/kontakt" variant="blue" shadow="blue-glow">Kostenlose Analyse</Button>
+            </div>
           </div>
         </div>
 
-        <div class="flex flex-col items-start rounded-[28px] border border-border bg-white p-8 shadow-card-soft md:p-10" data-reveal style="--reveal-delay:80ms">
-          <h2 class="text-2xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-3xl">
-            Ihre Seite bringt keine Anfragen?
-          </h2>
-          <p class="mt-3 mb-8 text-base font-medium leading-[1.55] text-dark/60">
-            Sie haben schon eine Website, aber es passiert nichts? Wir schauen ehrlich drauf: Was gut ist,
-            bleibt. Was bremst, wird verbessert — von der Ladezeit bis zur Sichtbarkeit bei Google.
-          </p>
-          <div class="mt-auto">
-            <Button href="/kontakt" variant="light">Website prüfen lassen</Button>
+        <div class="grid grid-cols-1 items-center gap-8 xl:grid-cols-2 xl:gap-20">
+          <div class="order-2 xl:order-1" data-reveal>
+            <h2 class="max-w-[440px] text-3xl font-semibold text-balance leading-[1.1] tracking-[-0.03em] text-dark md:text-4xl">
+              Ihre bestehende Seite bringt keine Anfragen?
+            </h2>
+            <p class="mt-4 max-w-[520px] text-base font-medium leading-[1.6] text-dark/70 md:text-lg">
+              Wir schauen ehrlich drauf: Was gut ist, bleibt. Was bremst, wird verbessert — von der
+              Ladezeit über die Struktur bis zur Sichtbarkeit bei Google. Sie bekommen eine klare
+              Einschätzung und einen Plan, der zu Ihrem Budget passt.
+            </p>
+            <div class="mt-7">
+              <Button href="/kontakt" variant="light">Website prüfen lassen</Button>
+            </div>
+          </div>
+          <div class="order-1 overflow-hidden rounded-[28px] xl:order-2" data-reveal style="--reveal-delay:80ms">
+            <Image
+              src={raumBild}
+              alt="STOLZ Marketing bei der Arbeit vor Ort"
+              class="aspect-[4/3.4] h-full w-full object-cover"
+              widths={[520, 900]}
+              sizes="(min-width:1200px) 600px, 100vw"
+            />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 8. FAQ (gleiches Muster wie Kontakt-Seite) -->
-    <section class="px-4.5 py-16 md:px-10 md:py-24">
-      <h2 class="text-center text-40 font-semibold text-balance tracking-[-0.03em] text-navy">
-        Die Antworten auf Ihre Fragen
-      </h2>
-      <div class="mx-auto mt-4 grid max-w-[1170px] grid-cols-1 gap-x-20 md:grid-cols-2" data-faq>
-        {
-          [faq.slice(0, 3), faq.slice(3)].map((spalte, s) => (
-            <div>
-              {spalte.map((item, i) => (
-                <div class:list={['border-b-2', i % 2 === 0 ? 'border-blue' : 'border-gray']}>
-                  <button
-                    type="button"
-                    class="flex w-full cursor-pointer items-center justify-between gap-4 py-[30px] text-left"
-                    aria-expanded="false"
-                    aria-controls={`faq-antwort-${s}-${i}`}
-                  >
-                    <span class="text-xl font-semibold leading-[1.3] tracking-[-0.03em] text-navy">{item.frage}</span>
+    <!-- 10. Dunkle Kunden-Sektion (Shape: "Shameful Plug") -->
+    <section class="px-3 pt-20 md:px-6 md:pt-28 xl:px-10">
+      <div class="mx-auto max-w-[1400px] rounded-[32px] bg-dark px-5 py-14 md:px-10 md:py-20" data-reveal>
+        <div class="mx-auto flex max-w-[720px] flex-col items-center text-center">
+          <p class="flex items-center gap-2.5 text-sm font-medium text-white/80">
+            <span class="size-1.5 rounded-full bg-lime" aria-hidden="true"></span>
+            Kleiner Angeber-Moment
+          </p>
+          <h2 class="mt-4 text-3xl font-semibold text-balance leading-[1.1] tracking-[-0.03em] text-white md:text-40">
+            Wir arbeiten mit Betrieben aus der ganzen Region — vom Handwerk bis zur Gastronomie.
+          </h2>
+          <a
+            href="/kontakt"
+            class="mt-7 inline-flex items-center gap-2 rounded-full bg-lime px-6 py-3 text-base font-semibold text-dark transition-transform duration-200 hover:scale-[1.03]"
+          >
+            Werden Sie einer davon
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7M8 7h9v9" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
+          {
+            kunden.map((kunde) => (
+              <div class="flex h-24 items-center justify-center rounded-20 bg-white px-4 text-center">
+                <span class="font-display text-lg font-extrabold tracking-[-0.03em] text-dark">{kunde}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. FAQ im Pill-Stil (Fragen als Zeilen mit Kreis-Pfeil) -->
+    <section class="px-5 py-20 md:px-10 md:py-28">
+      <div class="mx-auto grid max-w-[1240px] grid-cols-1 gap-10 xl:grid-cols-[380px_1fr] xl:gap-20">
+        <div data-reveal>
+          <h2 class="text-3xl font-semibold text-balance leading-[1.1] tracking-[-0.03em] text-dark md:text-40">
+            Die Antworten auf Ihre Fragen.
+          </h2>
+          <div class="mt-6">
+            <Button href="/kontakt" variant="blue" shadow="blue-glow">Kontakt aufnehmen</Button>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3" data-faq>
+          {
+            faq.map((item, i) => (
+              <div class="rounded-[22px] bg-bg-soft px-6" data-reveal style={`--reveal-delay:${i * 40}ms`}>
+                <button
+                  type="button"
+                  class="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left"
+                  aria-expanded="false"
+                  aria-controls={`faq-antwort-${i}`}
+                >
+                  <span class="text-base font-semibold leading-[1.3] tracking-[-0.01em] text-dark md:text-lg">
+                    {item.frage}
+                  </span>
+                  <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-dark text-white">
                     <svg
-                      class="size-3 shrink-0 rotate-90 text-gray transition-transform duration-200"
-                      viewBox="0 0 8 12"
+                      class="size-4 transition-transform duration-200"
+                      viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="2"
+                      stroke-width="2.2"
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       aria-hidden="true"
                     >
-                      <path d="m 1.5 1.5 5 4.5 -5 4.5" />
+                      <path d="M7 17 17 7M8 7h9v9" />
                     </svg>
-                  </button>
-                  <div id={`faq-antwort-${s}-${i}`} class="hidden pb-[30px]" role="region">
-                    <p class="text-base font-medium leading-[1.5] text-dark/60">{item.antwort}</p>
-                  </div>
+                  </span>
+                </button>
+                <div id={`faq-antwort-${i}`} class="hidden pb-6" role="region">
+                  <p class="max-w-[640px] text-base font-medium leading-[1.55] text-dark/60">{item.antwort}</p>
                 </div>
-              ))}
-            </div>
-          ))
-        }
+              </div>
+            ))
+          }
+        </div>
       </div>
     </section>
 
@@ -409,15 +557,14 @@ const faq = [
 </style>
 
 <script>
-  // FAQ-Akkordeon (identisch zur Kontakt-Seite)
+  // FAQ-Akkordeon: Antwort auf-/zuklappen, Kreis-Pfeil dreht von ↗ zu ↘.
   document.querySelectorAll('[data-faq] button').forEach((btn) => {
     btn.addEventListener('click', () => {
       const offen = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', String(!offen));
       const antwort = document.getElementById(btn.getAttribute('aria-controls')!)!;
       antwort.classList.toggle('hidden', offen);
-      btn.querySelector('svg')!.classList.toggle('rotate-90', offen);
-      btn.querySelector('svg')!.classList.toggle('-rotate-90', !offen);
+      btn.querySelector('svg')!.classList.toggle('rotate-90', !offen);
     });
   });
 </script>
