@@ -42,6 +42,7 @@ import saanVideo1 from '../assets/projekte/saan/SAAN-RecruitingAD-01.mp4';
 import saanVideo2 from '../assets/projekte/saan/SAAN-RecruitingAD-02.mp4';
 import saanVideo3 from '../assets/projekte/saan/SAAN-RecruitingAD-03.mp4';
 import websiteZehner from '../assets/projekte/zehner-website.png';
+import websiteNkn from '../assets/projekte/nkn-pv-website.png';
 
 export interface Keyfact {
   label: string;
@@ -421,6 +422,7 @@ export const projekte: Projekt[] = [
     name: 'NKN PV Elektrik',
     art: 'website',
     domain: 'nkn-pv-elektrik.de',
+    bild: websiteNkn,
     beschreibung: 'Neuer Auftritt für Photovoltaik & Elektrotechnik mit lokaler Sichtbarkeit.',
     ziel: 'Kundengewinnung',
     kategorien: ['Webseite', 'SEO'],
