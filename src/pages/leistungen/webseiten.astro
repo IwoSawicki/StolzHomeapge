@@ -1,56 +1,47 @@
 ---
-// /leistungen/webseiten — erste Leistungs-Unterseite (Entwurf).
-// Aufbau inspiriert von madebyshape.co.uk (SEO-Service-Seite), übersetzt
-// in die STOLZ-Positionierung: Intro → Statement → Leistungs-Karten →
-// zwei Einstiegswege → FAQ → Website-Projekte → Kontakt-Marquee.
-// Noch NICHT in Navigation/Leistungs-Sektion verlinkt (Entwurf auf dev).
+// /leistungen/webseiten — Leistungs-Unterseite, Layout eng am Vorbild
+// madebyshape.co.uk (SEO-Seite) nachgebaut, in STOLZ-CI:
+// 1. Hero: Eyebrow, H1 links / Intro rechts, großes Bild mit Notch-Button
+// 2. Riesen-Statement + Leistungs-Checkliste rechts
+// 3. Zahlen-Zeile (statt Shape-Awards: echte STOLZ-Zahlen)
+// 4. Bild/Text-Split „aus allen Blickwinkeln"
+// 5. Kontakt-Marquee (mittig wie bei Shape)
+// 6. Dunkle 3×3-Leistungsmatrix (Lime-Akzente wie KI-Section)
+// 7. Zwei Einstiegswege · 8. FAQ · 9. Website-Projekte
+// Noch nicht in Navigation verlinkt (Entwurf auf dev).
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import SectionLabel from '../../components/SectionLabel.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import Button from '../../components/Button.astro';
 import ProjekteGrid from '../../components/ProjekteGrid.astro';
 import MarqueeCta from '../../components/sections/MarqueeCta.astro';
 import { projekte } from '../../data/projekte';
+import teamBild from '../../assets/stolz-marketing-team.png';
+import iwoBild from '../../assets/about/Iwo-StolzMarketing.jpg';
 
 const websiteProjekte = projekte.filter((p) => p.art === 'website').slice(0, 4);
 
-const schnellPunkte = ['Webdesign', 'Entwicklung', 'Lokales SEO', 'Landingpages', 'Texte & Inhalte', '+ mehr'];
+const faehigkeiten = ['Webdesign', 'Entwicklung', 'Lokales SEO', 'Landingpages', 'Texte & Inhalte', '+ mehr'];
 
-const leistungen = [
-  {
-    titel: 'Webdesign',
-    text: 'Klar, modern und zu Ihrem Betrieb passend — kein Baukasten-Look, sondern ein Auftritt, der Vertrauen schafft.',
-  },
-  {
-    titel: 'Technische Umsetzung',
-    text: 'Schnell, sicher und wartbar gebaut. Ihre Seite lädt in Sekundenbruchteilen — auf jedem Gerät.',
-  },
-  {
-    titel: 'Lokales SEO',
-    text: 'Damit Sie gefunden werden, wo Ihre Kunden suchen: in Ihrer Stadt und im Umkreis. Auf Wunsch mit eigenen Städte-Landingpages.',
-  },
-  {
-    titel: 'Ladezeit & Performance',
-    text: 'Google liebt schnelle Seiten — Ihre Besucher auch. Wir optimieren Bilder, Code und Server-Setup.',
-  },
-  {
-    titel: 'Landingpages für Kampagnen',
-    text: 'Google Ads oder Social Media geplant? Wir bauen Landingpages, die aus Klicks Anfragen machen.',
-  },
-  {
-    titel: 'Texte & Inhalte',
-    text: 'Verständliche Texte, die Ihre Leistung auf den Punkt bringen — ohne Fachchinesisch und Floskeln.',
-  },
-  {
-    titel: 'Impressum & Datenschutz',
-    text: 'Die rechtlichen Basics von Anfang an sauber: Impressum, Datenschutzerklärung und Cookie-Hinweis.',
-  },
-  {
-    titel: 'Hosting & Betreuung',
-    text: 'Nach dem Launch lassen wir Sie nicht allein: Hosting, Backups und Änderungen zum festen Monatspreis.',
-  },
+const zahlen = [
+  { wert: '14', label: 'umgesetzte Projekte' },
+  { wert: '450+', label: 'gebaute Unterseiten' },
+  { wert: '10', label: 'besetzte Stellen' },
+  { wert: '5', label: 'betreute Restaurants' },
+];
+
+const matrix = [
+  { titel: 'Webdesign', text: 'Klar, modern und zu Ihrem Betrieb passend — kein Baukasten-Look, sondern ein Auftritt, der Vertrauen schafft.' },
+  { titel: 'Technische Umsetzung', text: 'Schnell, sicher und wartbar gebaut. Ihre Seite lädt in Sekundenbruchteilen — auf jedem Gerät.' },
+  { titel: 'Lokales SEO', text: 'Damit Sie gefunden werden, wo Ihre Kunden suchen: in Ihrer Stadt und im Umkreis. Auf Wunsch mit eigenen Städte-Landingpages.' },
+  { titel: 'Landingpages für Kampagnen', text: 'Google Ads oder Social Media geplant? Wir bauen Landingpages, die aus Klicks Anfragen machen.' },
+  { titel: 'Texte & Inhalte', text: 'Ohne relevante Inhalte gibt es für Besucher keinen Grund zu bleiben — und für Google keinen Grund, Sie zu ranken. Wir bringen Ihre Leistung verständlich auf den Punkt.' },
+  { titel: 'Ladezeit & Performance', text: 'Eine schnelle Seite ist entscheidend für die Sichtbarkeit. Wir optimieren Code, Bilder und Server-Setup.' },
+  { titel: 'Meta-Daten & Suchbegriffe', text: 'Passende Titel, Beschreibungen und Suchbegriffe auf Basis echter Recherche — eine der ersten Aufgaben guter Sichtbarkeit.' },
+  { titel: 'Hosting & Betreuung', text: 'Nach dem Launch lassen wir Sie nicht allein: Hosting, Backups und Änderungen zum festen Monatspreis.' },
+  { titel: 'Web-Agentur Rhein-Main', text: 'Aus Reichelsheim — für lokale Betriebe im gesamten Rhein-Main-Gebiet und darüber hinaus.' },
 ];
 
 const faq = [
@@ -93,88 +84,206 @@ const faq = [
 >
   <Header />
   <main>
-    <!-- 1. Kopf -->
-    <section class="px-5 pt-14 md:px-10 md:pt-20">
-      <div class="mx-auto max-w-[1200px]">
-        <div class="max-w-[720px]" data-reveal>
-          <SectionLabel text="Leistung · Webseiten & SEO" />
-          <h1 class="mt-2 text-4xl font-bold text-balance leading-[1.05] tracking-[-0.06em] text-dark md:text-40 xl:text-5xl">
-            Webseiten, die Anfragen bringen.
+    <!-- 1. Hero: Eyebrow, H1 links / Intro rechts, großes Bild mit Notch-Button -->
+    <section class="px-5 pt-12 md:px-10 md:pt-16">
+      <div class="mx-auto max-w-[1240px]">
+        <p class="flex items-center gap-2.5 text-sm font-medium text-dark" data-reveal>
+          <span class="size-1.5 rounded-full bg-blue" aria-hidden="true"></span>
+          Webseiten & SEO
+        </p>
+
+        <div class="mt-4 grid grid-cols-1 gap-8 xl:grid-cols-[1fr_520px] xl:gap-16">
+          <h1
+            class="max-w-[620px] text-4xl font-bold text-balance leading-[1.04] tracking-[-0.05em] text-dark md:text-52 xl:text-[64px] xl:leading-[1.02]"
+            data-reveal
+          >
+            Sie suchen eine Web-Agentur im Rhein-Main-Gebiet?
           </h1>
-          <p class="mt-5 text-lg font-medium leading-[1.55] text-dark/70">
-            Ihre Website ist Ihr wichtigstes Werkzeug, um neue Kunden zu gewinnen — egal ob Sie
-            Dienstleistungen oder Produkte anbieten. Wir bauen Webseiten für lokale Betriebe, die bei
-            Google gefunden werden und aus Besuchern Anfragen machen.
-          </p>
-          <p class="mt-4 text-lg font-medium leading-[1.55] text-dark/70">
-            Keine Website ist wie die andere: Wir schauen uns Ihren Betrieb, Ihre Kunden und Ihre Region
-            an und entwickeln einen Auftritt, der zu Ihren Zielen passt — verständlich erklärt und ehrlich
-            beraten.
-          </p>
-          <div class="mt-8 flex flex-col items-start gap-2.5 sm:flex-row sm:items-center">
-            <Button href="/kontakt" variant="blue" shadow="blue-glow">Kostenlose Analyse</Button>
-            <Button href="#projekte" variant="light">Beispiele ansehen</Button>
+          <div class="flex flex-col gap-4 self-center" data-reveal style="--reveal-delay:80ms">
+            <p class="text-base font-medium leading-[1.6] text-dark/75 md:text-lg">
+              Ihre Website ist Ihr wichtigstes Werkzeug, um neue Kunden zu gewinnen — egal ob Sie
+              Dienstleistungen oder Produkte anbieten. Wir bauen Webseiten für lokale Betriebe, die bei
+              Google gefunden werden und aus Besuchern Anfragen machen.
+            </p>
+            <p class="text-base font-medium leading-[1.6] text-dark/75 md:text-lg">
+              Keine Website ist wie die andere: Wir schauen uns jedes Projekt einzeln an und entwickeln
+              einen Auftritt, der zu Ihren Zielen passt — ehrlich beraten und verständlich erklärt.
+            </p>
           </div>
         </div>
 
-        <!-- Schnell-Überblick -->
-        <div class="mt-10 flex flex-wrap gap-2" data-reveal>
-          {
-            schnellPunkte.map((punkt) => (
-              <span class="rounded-full border border-border bg-bg-soft px-4 py-2 text-sm font-semibold text-dark">
-                {punkt}
+        <!-- Großes Bild, Button sitzt in ausgeschnittener Ecke oben links -->
+        <div class="relative mt-10 md:mt-14" data-reveal>
+          <div class="hero-notch absolute top-0 left-0 z-10 rounded-br-[20px] bg-white pr-2.5 pb-2.5">
+            <a
+              href="#mehr"
+              class="inline-flex items-center gap-2 rounded-full bg-dark px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-black md:text-base"
+            >
+              Mehr erfahren
+              <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 7l10 10M17 7v10H7" />
+              </svg>
+            </a>
+          </div>
+          <div class="aspect-[16/10] overflow-hidden rounded-[28px] md:aspect-[16/8]">
+            <Image
+              src={teamBild}
+              alt="Das Team von STOLZ Marketing bei der Arbeit"
+              class="h-full w-full object-cover"
+              widths={[640, 1024, 1600]}
+              sizes="(min-width:1200px) 1240px, 100vw"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Riesen-Statement + Leistungs-Checkliste rechts -->
+    <section id="mehr" class="scroll-mt-24 px-5 py-20 md:px-10 md:py-28">
+      <div class="mx-auto grid max-w-[1240px] grid-cols-1 gap-12 xl:grid-cols-[1fr_320px] xl:gap-20">
+        <div data-reveal>
+          <p class="flex items-center gap-2.5 text-sm font-medium text-dark">
+            <span class="size-1.5 rounded-full bg-blue" aria-hidden="true"></span>
+            Webseiten
+          </p>
+          <p class="mt-5 max-w-[760px] text-3xl font-semibold text-balance leading-[1.12] tracking-[-0.03em] text-dark md:text-40 xl:text-[46px] xl:leading-[1.1]">
+            Wie wichtig ist es für Ihren Betrieb, bei Google gefunden zu werden? Mehr Besucher zu
+            bekommen? <span class="text-blue">Mehr Anfragen?</span>
+          </p>
+          <div class="mt-8">
+            <Button href="/#ueber-uns" variant="blue" shadow="blue-glow">Über STOLZ</Button>
+          </div>
+        </div>
+
+        <div class="self-center" data-reveal style="--reveal-delay:80ms">
+          <p class="text-sm font-medium text-dark/50">Unsere Website-Leistungen</p>
+          <ul class="mt-5 flex flex-col gap-4">
+            {
+              faehigkeiten.map((punkt) => (
+                <li class="flex items-center gap-3 text-base font-semibold tracking-[-0.01em] text-dark">
+                  <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-dark text-white">
+                    <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="m5 13 4 4L19 7" />
+                    </svg>
+                  </span>
+                  {punkt}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3. Zahlen-Zeile (statt Shape-Awards: echte STOLZ-Zahlen) -->
+      <div class="mx-auto mt-20 grid max-w-[1100px] grid-cols-2 gap-10 md:mt-28 md:grid-cols-4" data-reveal>
+        {
+          zahlen.map((z) => (
+            <div class="text-center">
+              <p class="text-40 font-semibold tracking-[-0.03em] text-dark tabular-nums">{z.wert}</p>
+              <p class="mt-1 text-sm font-medium text-dark/50">{z.label}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 4. Bild/Text-Split „aus allen Blickwinkeln" -->
+    <section class="px-5 pb-8 md:px-10 md:pb-12">
+      <div class="mx-auto grid max-w-[1240px] grid-cols-1 items-center gap-10 xl:grid-cols-2 xl:gap-20">
+        <div class="overflow-hidden rounded-[28px]" data-reveal>
+          <Image
+            src={iwoBild}
+            alt="Iwo Sawicki von STOLZ Marketing"
+            class="aspect-[4/4.4] h-full w-full object-cover object-top"
+            widths={[520, 900]}
+            sizes="(min-width:1200px) 600px, 100vw"
+          />
+        </div>
+
+        <div data-reveal style="--reveal-delay:80ms">
+          <p class="flex items-center gap-2.5 text-sm font-medium text-dark">
+            <span class="size-1.5 rounded-full bg-blue" aria-hidden="true"></span>
+            Ehrlich gesagt
+          </p>
+          <h2 class="mt-4 max-w-[560px] text-3xl font-semibold text-balance leading-[1.1] tracking-[-0.03em] text-dark md:text-4xl">
+            Eine Agentur, die Websites aus allen Blickwinkeln versteht.
+          </h2>
+          <p class="mt-5 max-w-[560px] text-base font-medium leading-[1.6] text-dark/70 md:text-lg">
+            Design, Technik, Texte und Sichtbarkeit gehören bei uns zusammen. Weil wir auch Google Ads,
+            Social Media und Recruiting-Kampagnen betreuen, wissen wir genau, was eine Website können
+            muss, damit aus Besuchern Anfragen werden — und setzen es technisch sauber um. Entwicklung,
+            Inhalte und Marketing arbeiten Hand in Hand, immer mit Blick auf Ihre Ziele.
+          </p>
+          <ul class="mt-6 flex flex-col gap-3">
+            <li class="flex items-center gap-3 text-base font-semibold text-dark">
+              <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-blue text-white">
+                <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m5 13 4 4L19 7" />
+                </svg>
               </span>
-            ))
-          }
+              Ein fester Ansprechpartner für alles
+            </li>
+            <li class="flex items-center gap-3 text-base font-semibold text-dark">
+              <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-blue text-white">
+                <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m5 13 4 4L19 7" />
+                </svg>
+              </span>
+              Ergebnisse, die Sie schwarz auf weiß sehen
+            </li>
+          </ul>
+          <div class="mt-8">
+            <Button href="/kontakt" variant="blue" shadow="blue-glow">Jetzt Kontakt aufnehmen</Button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. Statement: warum Websites von einer Marketing-Agentur -->
-    <section class="px-3 pt-14 md:px-6 md:pt-20 xl:px-10">
-      <div class="mx-auto max-w-[1240px] rounded-[32px] bg-bg-blue-light px-6 py-12 md:px-12 md:py-16 xl:px-16" data-reveal>
-        <SectionLabel text="Warum wir" />
-        <p class="mt-6 max-w-[880px] text-3xl font-semibold text-balance leading-[1.15] tracking-[-0.03em] text-slate md:text-4xl">
-          Eine Website ist bei uns kein Design-Projekt — sie ist Ihr
-          <span class="text-blue">fleißigster Mitarbeiter</span>.
-        </p>
-        <p class="mt-6 max-w-[640px] text-lg font-medium leading-[1.55] text-slate/70">
-          Wir bauen Websites als Marketing-Agentur, nicht als Designstudio: Weil wir auch Google Ads,
-          Social Media und Recruiting-Kampagnen betreuen, wissen wir genau, was eine Seite können muss,
-          damit aus Besuchern Anfragen werden. Design, Technik, Texte und Sichtbarkeit kommen aus einer
-          Hand — abgestimmt auf Ihr Ziel.
-        </p>
-      </div>
-    </section>
+    <!-- 5. Kontakt-Marquee (mittig wie bei Shape) -->
+    <MarqueeCta />
 
-    <!-- 3. Leistungs-Karten -->
-    <section class="px-5 pt-16 md:px-10 md:pt-24">
-      <div class="mx-auto max-w-[1200px]">
-        <div class="mx-auto max-w-[640px]" data-reveal>
-          <SectionHeading label="Was drinsteckt">
-            Womit wir Ihnen helfen können
-            <Fragment slot="description">
-              Alles, was eine Website braucht, um gefunden zu werden und zu überzeugen — Sie entscheiden,
-              wie viel davon Sie brauchen.
-            </Fragment>
-          </SectionHeading>
+    <!-- 6. Dunkle 3×3-Leistungsmatrix -->
+    <section class="bg-dark px-5 py-16 md:px-10 md:py-24">
+      <div class="mx-auto max-w-[1240px]">
+        <div class="grid grid-cols-1 gap-8 xl:grid-cols-[1fr_auto] xl:items-end" data-reveal>
+          <div>
+            <p class="flex items-center gap-2.5 text-sm font-medium text-white/80">
+              <span class="size-1.5 rounded-full bg-lime" aria-hidden="true"></span>
+              Womit wir Ihnen helfen
+            </p>
+            <h2 class="mt-4 max-w-[640px] text-3xl font-semibold text-balance leading-[1.1] tracking-[-0.03em] text-white md:text-40">
+              Ein Team, das Ihre Website bei Google nach vorne bringt
+            </h2>
+          </div>
+          <a
+            href="/kontakt"
+            class="inline-flex h-fit w-fit items-center gap-2 rounded-full bg-lime px-6 py-3 text-base font-semibold text-dark transition-transform duration-200 hover:scale-[1.03]"
+          >
+            Jetzt anfragen
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7M8 7h9v9" />
+            </svg>
+          </a>
         </div>
 
-        <div class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <div class="mt-12 grid grid-cols-1 gap-x-12 md:grid-cols-2 xl:grid-cols-3">
           {
-            leistungen.map((leistung, i) => (
+            matrix.map((eintrag, i) => (
               <div
-                class="rounded-24 border border-border bg-white p-6 shadow-card-soft"
+                class="border-t border-white/10 py-8"
                 data-reveal
-                style={`--reveal-delay:${(i % 4) * 60}ms`}
+                style={`--reveal-delay:${(i % 3) * 60}ms`}
               >
-                <span class="flex size-9 items-center justify-center rounded-full bg-blue/10 text-blue">
-                  <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="m5 13 4 4L19 7" />
-                  </svg>
-                </span>
-                <h3 class="mt-4 text-lg font-semibold tracking-[-0.01em] text-dark">{leistung.titel}</h3>
-                <p class="mt-2 text-15 font-medium leading-[1.5] text-dark/60">{leistung.text}</p>
+                <div class="flex items-center gap-3.5">
+                  <span class="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-lime text-dark">
+                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="m5 13 4 4L19 7" />
+                    </svg>
+                  </span>
+                  <h3 class="text-xl font-semibold tracking-[-0.01em] text-white">{eintrag.titel}</h3>
+                </div>
+                <p class="mt-4 text-15 font-medium leading-[1.6] text-white/60">{eintrag.text}</p>
               </div>
             ))
           }
@@ -182,19 +291,19 @@ const faq = [
       </div>
     </section>
 
-    <!-- 4. Zwei Einstiegswege -->
+    <!-- 7. Zwei Einstiegswege -->
     <section class="px-5 pt-16 md:px-10 md:pt-24">
-      <div class="mx-auto grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2">
-        <div class="flex flex-col items-start rounded-[28px] bg-dark p-8 md:p-10" data-reveal>
-          <h2 class="text-2xl font-semibold text-balance tracking-[-0.02em] text-white md:text-3xl">
+      <div class="mx-auto grid max-w-[1240px] grid-cols-1 gap-6 md:grid-cols-2">
+        <div class="flex flex-col items-start rounded-[28px] bg-bg-blue-light p-8 md:p-10" data-reveal>
+          <h2 class="text-2xl font-semibold text-balance tracking-[-0.02em] text-dark md:text-3xl">
             Sie brauchen eine neue Website?
           </h2>
-          <p class="mt-3 mb-8 text-base font-medium leading-[1.55] text-white/70">
+          <p class="mt-3 mb-8 text-base font-medium leading-[1.55] text-dark/60">
             Ob erster Auftritt oder kompletter Neustart: Wir bauen Ihre Seite von Grund auf — Konzept,
             Design, Texte, Technik. Sie bekommen einen Festpreis und einen klaren Fahrplan.
           </p>
           <div class="mt-auto">
-            <Button href="/kontakt" variant="white">Kostenlose Analyse</Button>
+            <Button href="/kontakt" variant="blue" shadow="blue-glow">Kostenlose Analyse</Button>
           </div>
         </div>
 
@@ -207,13 +316,13 @@ const faq = [
             bleibt. Was bremst, wird verbessert — von der Ladezeit bis zur Sichtbarkeit bei Google.
           </p>
           <div class="mt-auto">
-            <Button href="/kontakt" variant="blue" shadow="blue-glow">Website prüfen lassen</Button>
+            <Button href="/kontakt" variant="light">Website prüfen lassen</Button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5. FAQ (gleiches Muster wie Kontakt-Seite) -->
+    <!-- 8. FAQ (gleiches Muster wie Kontakt-Seite) -->
     <section class="px-4.5 py-16 md:px-10 md:py-24">
       <h2 class="text-center text-40 font-semibold text-balance tracking-[-0.03em] text-navy">
         Die Antworten auf Ihre Fragen
@@ -255,9 +364,9 @@ const faq = [
       </div>
     </section>
 
-    <!-- 6. Website-Projekte -->
-    <section id="projekte" class="scroll-mt-24 px-5 pb-16 md:px-10 md:pb-24">
-      <div class="mx-auto max-w-[1200px]">
+    <!-- 9. Website-Projekte -->
+    <section id="projekte" class="scroll-mt-24 px-5 pb-20 md:px-10 md:pb-28">
+      <div class="mx-auto max-w-[1240px]">
         <div class="mx-auto max-w-[640px]" data-reveal>
           <SectionHeading label="Projekte">
             Unsere liebsten Website-Projekte
@@ -274,11 +383,30 @@ const faq = [
         </div>
       </div>
     </section>
-
-    <MarqueeCta />
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  /* Notch oben links am Hero-Bild: Button sitzt in ausgeschnittener Ecke,
+     Negativ-Rundungen in Seiten-Weiß (Technik wie Projekt-Grid/Pakete). */
+  .hero-notch::before,
+  .hero-notch::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 100% 100%, transparent 20px, var(--color-white) 20px);
+  }
+  .hero-notch::before {
+    top: 0;
+    right: -20px;
+  }
+  .hero-notch::after {
+    top: 100%;
+    left: 0;
+  }
+</style>
 
 <script>
   // FAQ-Akkordeon (identisch zur Kontakt-Seite)
