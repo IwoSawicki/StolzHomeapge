@@ -126,10 +126,13 @@ export interface Projekt {
   kategorien: string[];
   /** true = Unterseite fertig befüllt (verlinkt); sonst „Bald mehr" im Grid */
   bereit?: boolean;
+  /** true = Projekt wird nirgends angezeigt (Daten bleiben erhalten).
+   *  Zum Wieder-Einblenden einfach den Flag entfernen. */
+  versteckt?: boolean;
   details?: ProjektDetails;
 }
 
-export const projekte: Projekt[] = [
+const alleProjekte: Projekt[] = [
   // ——— Startseiten-Projekte (Reihenfolge = Vorgabe Iwo) ———
   {
     slug: 'dmk-bau',
@@ -279,6 +282,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 'saan-wasserstrahl',
+    versteckt: true,
     bereit: true,
     name: 'SAAN Wasserstrahltechnik',
     art: 'video',
@@ -322,6 +326,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 's-tech-fahrzeugbau',
+    versteckt: true,
     name: 'S-Tech Fahrzeugbau',
     art: 'video',
     bild: stech,
@@ -353,6 +358,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 'raum-konzept',
+    versteckt: true,
     name: 'raum.Konzept',
     art: 'video',
     bild: drehRaumkonzept,
@@ -452,6 +458,7 @@ export const projekte: Projekt[] = [
   //     erste Vorschläge, noch KEINE Unterseiten) ———
   {
     slug: 'baden-batterie',
+    versteckt: true,
     name: 'Baden Batterie',
     art: 'website',
     domain: 'badenbatterie.de',
@@ -461,6 +468,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 'pannach-messtechnik',
+    versteckt: true,
     name: 'Pannach Messtechnik',
     art: 'website',
     bild: websitePannach,
@@ -477,6 +485,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 'laser-wolf',
+    versteckt: true,
     name: 'Laser-Wolf',
     art: 'video',
     bild: drehLaserWolf,
@@ -485,6 +494,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 'wio',
+    versteckt: true,
     name: 'WIO',
     art: 'video',
     bereiche: ['gastronomie'],
@@ -494,6 +504,7 @@ export const projekte: Projekt[] = [
   },
   {
     slug: 'sen',
+    versteckt: true,
     bereit: true,
     name: 'SEN',
     art: 'video',
@@ -526,6 +537,10 @@ export const projekte: Projekt[] = [
     },
   },
 ];
+
+/** öffentlich sichtbare Projekte — versteckte bleiben in den Daten,
+ *  tauchen aber nirgends auf (Grids, Filter, Unterseiten, Sitemap, Zähler) */
+export const projekte: Projekt[] = alleProjekte.filter((p) => !p.versteckt);
 
 /** die 4 Projekte der Startseiten-Sektion (Reihenfolge = Vorgabe Iwo) */
 export const startseitenProjekte = projekte.slice(0, 4);
