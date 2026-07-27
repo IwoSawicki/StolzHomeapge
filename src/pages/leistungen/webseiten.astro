@@ -344,7 +344,7 @@ const faq = [
           />
         </div>
         <a
-          href="/projekte/saan-wasserstrahl"
+          href={projekte.some((p) => p.slug === 'saan-wasserstrahl') ? '/projekte/saan-wasserstrahl' : '/projekte'}
           class="absolute right-4 bottom-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-dark shadow-card-soft transition-transform duration-200 hover:scale-[1.03] md:right-6 md:bottom-6 md:text-base"
         >
           Projekt ansehen
