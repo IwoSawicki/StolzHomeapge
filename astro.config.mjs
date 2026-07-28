@@ -19,7 +19,10 @@ export default defineConfig({
     sitemap({
       // interne Seiten (Archiv, QR-Redirect, Kunden-Angebote) nicht in die Sitemap
       filter: (page) =>
-        !page.includes('/archiv') && !page.includes('/korbaktion') && !page.includes('/website-betreuung'),
+        !page.includes('/archiv') &&
+        !page.includes('/korbaktion') &&
+        !page.includes('/website-betreuung') &&
+        !page.includes('/vorschau'),
     }),
   ],
   vite: {

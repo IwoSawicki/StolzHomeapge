@@ -1,0 +1,22 @@
+---
+// Leistungs-Unterseite „Mitarbeitergewinnung" — Inhalte kommen aus
+// src/data/leistungen.ts (dort auch die Werkzeuge & Zahlen pflegen).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import MarqueeCta from '../../components/sections/MarqueeCta.astro';
+import LeistungsSaeulenSeite from '../../components/LeistungsSaeulenSeite.astro';
+import { saeulen } from '../../data/leistungen';
+
+const saeule = saeulen.find((s) => s.slug === 'mitarbeitergewinnung')!;
+---
+
+<BaseLayout
+  title="Mitarbeitergewinnung für Handwerksbetriebe | STOLZ Marketing"
+  description="Passende Bewerbungen statt leerer Stellenanzeigen: Recruiting-Kampagnen auf Social Media mit Vorqualifizierung, Karriere-Landingpages und echtem Video vom Team."
+>
+  <Header />
+  <LeistungsSaeulenSeite saeule={saeule} bereich="recruiting" />
+  <MarqueeCta />
+  <Footer />
+</BaseLayout>
