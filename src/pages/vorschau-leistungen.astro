@@ -1,20 +1,14 @@
 ---
-// Interne Vorschau: die drei Design-Varianten der neuen Zwei-Säulen-
+// Interne Vorschau: Design-Varianten der neuen Zwei-Säulen-
 // Leistungssektion untereinander zum Vergleichen. Nicht verlinkt,
-// noindex, nicht in der Sitemap. Nach der Entscheidung kann diese
-// Seite gelöscht werden (die Varianten liegen als Komponenten vor).
+// noindex, nicht in der Sitemap. Runde 1 (A/B/C) wurde verworfen —
+// die Komponenten liegen weiter unter components/sections/.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import LeistungenZweiA from '../components/sections/LeistungenZweiA.astro';
-import LeistungenZweiB from '../components/sections/LeistungenZweiB.astro';
-import LeistungenZweiC from '../components/sections/LeistungenZweiC.astro';
-
-const varianten = [
-  { key: 'a', titel: 'Variante A — Zwei Karten (dunkel/hell)' },
-  { key: 'b', titel: 'Variante B — Riesige Zeilen (wie bisher, nur zwei)' },
-  { key: 'c', titel: 'Variante C — Bild-Panels mit Verlauf' },
-];
+import LeistungenZweiD from '../components/sections/LeistungenZweiD.astro';
+import LeistungenZweiE from '../components/sections/LeistungenZweiE.astro';
+import LeistungenZweiF from '../components/sections/LeistungenZweiF.astro';
 ---
 
 <BaseLayout title="Vorschau: Leistungs-Sektion | STOLZ Marketing" noindex>
@@ -22,21 +16,27 @@ const varianten = [
   <main>
     <section class="px-5 pt-12 pb-4 text-center md:pt-16">
       <h1 class="text-3xl font-bold tracking-[-0.04em] text-dark md:text-4xl">
-        Leistungs-Sektion: 3 Varianten
+        Leistungs-Sektion: Runde 2 — Varianten D, E, F
       </h1>
       <p class="mt-2 text-base font-medium text-dark/60">
-        Interne Vorschau — beide Kacheln verlinken jeweils auf die neue Unterseite.
+        Interne Vorschau — Kacheln/Links führen jeweils auf die neue Unterseite.
       </p>
     </section>
 
-    <div class="mt-8 bg-blue px-5 py-3 text-center text-sm font-bold text-white">{varianten[0].titel}</div>
-    <LeistungenZweiA id="variante-a" />
+    <div class="mt-8 bg-blue px-5 py-3 text-center text-sm font-bold text-white">
+      Variante D — Split-Reihen (Bild + Check-Liste, gespiegelt)
+    </div>
+    <LeistungenZweiD id="variante-d" />
 
-    <div class="bg-blue px-5 py-3 text-center text-sm font-bold text-white">{varianten[1].titel}</div>
-    <LeistungenZweiB id="variante-b" />
+    <div class="bg-blue px-5 py-3 text-center text-sm font-bold text-white">
+      Variante E — Dunkle Notch-Karten (Negativ-Rundung + Lime-Pfeil)
+    </div>
+    <LeistungenZweiE id="variante-e" />
 
-    <div class="bg-blue px-5 py-3 text-center text-sm font-bold text-white">{varianten[2].titel}</div>
-    <LeistungenZweiC id="variante-c" />
+    <div class="bg-blue px-5 py-3 text-center text-sm font-bold text-white">
+      Variante F — Typografisch (ohne Bilder, Werkzeuge als Liste)
+    </div>
+    <LeistungenZweiF id="variante-f" />
   </main>
   <Footer />
 </BaseLayout>
