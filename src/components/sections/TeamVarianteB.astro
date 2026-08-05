@@ -1,97 +1,78 @@
 ---
-// TEAM-SEKTION – „Die Köpfe hinter STOLZ" (kompakt, clean):
-// Zwei ruhige Karten mit Portrait, Rolle, kurzem Text und Kontakt.
+// TEAM-SEKTION – „Ihr Ansprechpartner" (kompakt, clean):
+// Eine ruhige Karte mit Portrait, Rolle, kurzem Text und Kontakt.
 // Steht ganz unten auf der Startseite (nach Ergebnis).
-// FOTOS: sobald vorhanden `bild` setzen, sonst Initialen-Platzhalter.
-// Hinweis: STOLZ Marketing ist Einzelunternehmen (Iwo Sawicki). Eric ist
-// Partner im Team — bewusst NICHT als „Gründer/Mitgründer" bezeichnet.
+// Hinweis: STOLZ Marketing ist Einzelunternehmen (Iwo Sawicki) — hier
+// steht bewusst nur Iwo; Spezialisten kommen projektweise dazu.
 import { Image } from 'astro:assets';
 import SectionHeading from '../SectionHeading.astro';
 import iwoBild from '../../assets/about/Iwo-StolzMarketing.jpg';
-import ericBild from '../../assets/about/Eric-StolzMarketing.png';
 
-const personen = [
-  {
-    name: 'Iwo Sawicki',
-    rolle: 'Marketing & Projektleitung',
-    initialen: 'IS',
-    bild: iwoBild,
-    text: 'Spezialist für die Umsetzung: Webseitenbau und Foto-/Video-Produktion — sorgt dafür, dass alles fertig wird und zusammenpasst.',
-    email: 'iwo@stolz-marketing.de',
-    tel: '0178 4444 156',
-    telLink: '+491784444156',
-  },
-  {
-    name: 'Eric',
-    rolle: 'Strategie & Beratung',
-    initialen: 'E',
-    bild: ericBild,
-    text: 'Profi für bezahlte Kampagnen: plant die Strategie, baut Anzeigen auf und trifft mit gutem Zielgruppengespür den richtigen Ton.',
-    email: 'eric@stolz-marketing.de',
-    tel: '015678 339051',
-    telLink: '+4915678339051',
-  },
-];
+const person = {
+  name: 'Iwo Sawicki',
+  rolle: 'Marketing & Projektleitung',
+  bild: iwoBild,
+  text: 'Spezialist für die Umsetzung: Webseitenbau und Foto-/Video-Produktion — sorgt dafür, dass alles fertig wird und zusammenpasst. Für Kampagnen, Schnitt oder Grafik hole ich feste Spezialisten dazu.',
+  email: 'iwo@stolz-marketing.de',
+  tel: '0178 4444 156',
+  telLink: '+491784444156',
+};
 ---
 
 <section id="team" class="scroll-mt-24 px-5 py-14 md:px-10 md:py-20">
-  <div class="mx-auto max-w-[900px]">
+  <div class="mx-auto max-w-[820px]">
     <div class="mx-auto max-w-[560px]" data-reveal>
-      <SectionHeading label="Das Team">
-        Die Köpfe hinter STOLZ
-        <Fragment slot="description">Zwei feste Ansprechpartner, die Ihr Projekt persönlich begleiten.</Fragment>
+      <SectionHeading label="Ihr Ansprechpartner">
+        Wer hinter STOLZ steckt
+        <Fragment slot="description">
+          Kein Callcenter, kein wechselnder Kundenberater — Sie sprechen direkt mit mir.
+        </Fragment>
       </SectionHeading>
     </div>
 
-    <div class="mt-10 grid gap-5 sm:grid-cols-2 md:mt-12">
-      {
-        personen.map((person, i) => (
-          <div
-            class="flex gap-4 rounded-24 border border-border bg-white p-4 shadow-card-soft sm:flex-col sm:gap-0 sm:p-5"
-            data-reveal
-            style={`--reveal-delay:${i * 90}ms`}
-          >
-            <div class="size-20 shrink-0 overflow-hidden rounded-20 bg-bg-blue-light sm:size-auto sm:w-full">
-              <div class="aspect-square w-full">
-                {person.bild ? (
-                  <Image src={person.bild} alt={`Portrait von ${person.name}`} class="h-full w-full object-cover object-top" widths={[160, 320, 520]} sizes="(min-width:640px) 420px, 80px" />
-                ) : (
-                  <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue via-blue-bright to-slate">
-                    <span class="font-display text-3xl font-extrabold text-white/90 sm:text-5xl">{person.initialen}</span>
-                  </div>
-                )}
-              </div>
-            </div>
+    <!-- Eine Person: Portrait links, Inhalt rechts (mobil gestapelt) -->
+    <div
+      class="mt-10 flex flex-col gap-5 rounded-24 border border-border bg-white p-4 shadow-card-soft md:mt-12 md:flex-row md:items-center md:gap-7 md:p-5"
+      data-reveal
+    >
+      <div class="w-full shrink-0 overflow-hidden rounded-20 bg-bg-blue-light md:w-[280px]">
+        <div class="aspect-square w-full">
+          <Image
+            src={person.bild}
+            alt={`Portrait von ${person.name}`}
+            class="h-full w-full object-cover object-top"
+            widths={[320, 560, 720]}
+            sizes="(min-width:810px) 280px, 100vw"
+          />
+        </div>
+      </div>
 
-            <div class="min-w-0 sm:mt-4">
-              <h3 class="text-lg font-semibold tracking-[-0.02em] text-dark sm:text-xl">{person.name}</h3>
-              <p class="text-sm font-semibold text-blue">{person.rolle}</p>
-              <p class="mt-2 text-sm font-medium leading-[1.5] text-dark/60">{person.text}</p>
-              <div class="mt-4 flex flex-col gap-2">
-                <a
-                  href={`mailto:${person.email}`}
-                  class="inline-flex items-center gap-2 text-base font-semibold text-blue transition-colors hover:text-blue-bright"
-                >
-                  <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="3" y="5" width="18" height="14" rx="2" />
-                    <path d="m3 7 9 6 9-6" />
-                  </svg>
-                  {person.email}
-                </a>
-                <a
-                  href={`tel:${person.telLink}`}
-                  class="inline-flex items-center gap-2 text-base font-semibold text-blue transition-colors hover:text-blue-bright"
-                >
-                  <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.5-1.2a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z" />
-                  </svg>
-                  {person.tel}
-                </a>
-              </div>
-            </div>
-          </div>
-        ))
-      }
+      <div class="min-w-0 md:py-2">
+        <h3 class="text-xl font-semibold tracking-[-0.02em] text-dark md:text-2xl">{person.name}</h3>
+        <p class="text-sm font-semibold text-blue md:text-base">{person.rolle}</p>
+        <p class="mt-3 text-sm font-medium leading-[1.5] text-dark/60 md:text-base">{person.text}</p>
+        <div class="mt-5 flex flex-col gap-2">
+          <a
+            href={`mailto:${person.email}`}
+            class="inline-flex items-center gap-2 text-base font-semibold text-blue transition-colors hover:text-blue-bright"
+          >
+            <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="m3 7 9 6 9-6" />
+            </svg>
+            {person.email}
+          </a>
+          <a
+            href={`tel:${person.telLink}`}
+            class="inline-flex items-center gap-2 text-base font-semibold text-blue transition-colors hover:text-blue-bright"
+          >
+            <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.5-1.2a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z" />
+            </svg>
+            {person.tel}
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
