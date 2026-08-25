@@ -74,6 +74,34 @@ const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class
           set:html={hebeHervor(details.einleitung)}
         />
 
+        <!-- Direktlink zur Website des Kunden (sichtbar im Fließtext) -->
+        {
+          liveUrl && (
+            <p class="mt-5">
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener"
+                class="group inline-flex items-center gap-2 text-base font-semibold text-blue transition-colors duration-200 hover:text-blue-bright"
+              >
+                {liveUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                <svg
+                  class="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17 17 7M8 7h9v9" />
+                </svg>
+              </a>
+            </p>
+          )
+        }
+
         <!-- Keyfacts (XX-Platzhalter herausgefiltert) -->
         {
           keyfacts.length > 0 && (
@@ -139,6 +167,7 @@ const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class
           )
         }
         {
+          import.meta.env.DEV &&
           ((istWebsite && !projekt.bild) || (!istWebsite && !details.drehbilder && !details.videos)) && (
             <p class="mt-3 text-sm font-medium text-gray">
               {istWebsite ? 'Platzhalter — echter Website-Screenshot folgt.' : 'Platzhalter — echte Bilder vom Dreh folgen.'}
