@@ -2,6 +2,9 @@
 // Browser-Rahmen für Website-Projekte. Zeigt die Domain in der Adressleiste;
 // ohne Screenshot ein gestalteter Platzhalter (unter gleichem Namen
 // austauschbar).
+// Der Screenshot läuft immer über die volle Breite und wird nur unten
+// angeschnitten (wie ein echtes Browserfenster) — NICHT seitlich
+// beschneiden, sonst fehlen Logo und Navigation am Rand.
 // mockup=true: Portfolio-Look — Browser-Fenster mit Schatten schwebt auf
 // einer Markenfarben-Fläche und ist unten angeschnitten.
 import type { ImageMetadata } from 'astro';
@@ -45,7 +48,7 @@ const wortmarke = domain.replace(/^www\./, '').split('.')[0];
 {
   mockup ? (
     <div class={`flex h-full w-full flex-col justify-end bg-linear-to-br from-bg-blue to-bg-blue-light px-[9%] pt-[9%] ${extra}`}>
-      <div class="flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-t-[12px] bg-white shadow-stack-strong ring-1 ring-dark/5">
+      <div class="flex max-h-full w-full flex-col overflow-hidden rounded-t-[12px] bg-white shadow-stack-strong ring-1 ring-dark/5">
         <div class="flex shrink-0 items-center gap-1.5 border-b border-border bg-bg-soft px-3 py-2">
           <span class="size-2 rounded-full bg-border-gray" />
           <span class="size-2 rounded-full bg-border-gray" />
@@ -60,11 +63,11 @@ const wortmarke = domain.replace(/^www\./, '').split('.')[0];
             </span>
           )}
         </div>
-        <div class="relative min-h-0 flex-1 overflow-hidden bg-white">
+        <div class="relative min-h-0 overflow-hidden bg-white">
           {bild ? (
-            <Image src={bild} alt={alt} class="absolute inset-0 h-full w-full object-cover object-top" widths={widths} sizes={sizes} quality={qualitaet} loading={vorrang ? 'eager' : 'lazy'} {...(vorrang ? { fetchpriority: 'high' } : {})} />
+            <Image src={bild} alt={alt} class="block h-auto w-full" widths={widths} sizes={sizes} quality={qualitaet} loading={vorrang ? 'eager' : 'lazy'} {...(vorrang ? { fetchpriority: 'high' } : {})} />
           ) : (
-            <div class="absolute inset-0 flex items-center justify-center bg-linear-to-br from-bg-blue to-bg-blue-light">
+            <div class="flex aspect-[16/10] items-center justify-center bg-linear-to-br from-bg-blue to-bg-blue-light">
               <span class="font-display text-2xl font-extrabold tracking-[-0.04em] text-slate/20 select-none md:text-3xl">
                 {wortmarke}
               </span>
@@ -91,11 +94,11 @@ const wortmarke = domain.replace(/^www\./, '').split('.')[0];
           {domain}
         </span>
       </div>
-      <div class="relative flex-1 overflow-hidden bg-linear-to-br from-bg-blue to-bg-blue-light">
+      <div class="relative min-h-0 overflow-hidden bg-linear-to-br from-bg-blue to-bg-blue-light">
         {bild ? (
-          <Image src={bild} alt={alt} class="absolute inset-0 h-full w-full object-cover object-top" widths={widths} sizes={sizes} quality={qualitaet} loading={vorrang ? 'eager' : 'lazy'} {...(vorrang ? { fetchpriority: 'high' } : {})} />
+          <Image src={bild} alt={alt} class="block h-auto w-full" widths={widths} sizes={sizes} quality={qualitaet} loading={vorrang ? 'eager' : 'lazy'} {...(vorrang ? { fetchpriority: 'high' } : {})} />
         ) : (
-          <div class="absolute inset-0 flex items-center justify-center">
+          <div class="flex aspect-[16/10] items-center justify-center">
             <span class="font-display text-3xl font-extrabold tracking-[-0.04em] text-slate/20 select-none md:text-4xl">
               {wortmarke}
             </span>
