@@ -16,9 +16,26 @@ interface Props {
   chrome?: boolean;
   /** Portfolio-Mockup: Fenster mit Schatten auf Farbfläche */
   mockup?: boolean;
+  /** Breiten der generierten Varianten (Default: Raster mit 2 Spalten) */
+  widths?: number[];
+  /** sizes-Attribut — muss zur echten Anzeigebreite passen, sonst lädt
+   *  der Browser eine zu kleine (unscharfe) oder zu große Datei */
+  sizes?: string;
+  /** true = Bild sofort laden (nur für das erste Bild über der Falz) */
+  vorrang?: boolean;
   class?: string;
 }
-const { domain = '', bild, alt = `Website ${domain}`, chrome = true, mockup = false, class: extra = '' } = Astro.props;
+const {
+  domain = '',
+  bild,
+  alt = `Website ${domain}`,
+  chrome = true,
+  mockup = false,
+  widths = [480, 768, 1024],
+  sizes = '(min-width: 810px) 50vw, 100vw',
+  vorrang = false,
+  class: extra = '',
+} = Astro.props;
 const wortmarke = domain.replace(/^www\./, '').split('.')[0];
 ---
 
@@ -42,7 +59,7 @@ const wortmarke = domain.replace(/^www\./, '').split('.')[0];
         </div>
         <div class="relative min-h-0 flex-1 overflow-hidden bg-white">
           {bild ? (
-            <Image src={bild} alt={alt} class="absolute inset-0 h-full w-full object-cover object-top" widths={[480, 768, 1024]} sizes="(min-width: 810px) 50vw, 100vw" />
+            <Image src={bild} alt={alt} class="absolute inset-0 h-full w-full object-cover object-top" widths={widths} sizes={sizes} loading={vorrang ? 'eager' : 'lazy'} {...(vorrang ? { fetchpriority: 'high' } : {})} />
           ) : (
             <div class="absolute inset-0 flex items-center justify-center bg-linear-to-br from-bg-blue to-bg-blue-light">
               <span class="font-display text-2xl font-extrabold tracking-[-0.04em] text-slate/20 select-none md:text-3xl">
@@ -73,7 +90,7 @@ const wortmarke = domain.replace(/^www\./, '').split('.')[0];
       </div>
       <div class="relative flex-1 overflow-hidden bg-linear-to-br from-bg-blue to-bg-blue-light">
         {bild ? (
-          <Image src={bild} alt={alt} class="absolute inset-0 h-full w-full object-cover object-top" widths={[480, 768, 1024]} sizes="(min-width: 810px) 50vw, 100vw" />
+          <Image src={bild} alt={alt} class="absolute inset-0 h-full w-full object-cover object-top" widths={widths} sizes={sizes} loading={vorrang ? 'eager' : 'lazy'} {...(vorrang ? { fetchpriority: 'high' } : {})} />
         ) : (
           <div class="absolute inset-0 flex items-center justify-center">
             <span class="font-display text-3xl font-extrabold tracking-[-0.04em] text-slate/20 select-none md:text-4xl">

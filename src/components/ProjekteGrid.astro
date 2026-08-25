@@ -12,15 +12,21 @@ import { bereicheVon } from '../data/projekte';
 
 interface Props {
   projekte: Projekt[];
+  /** Wie viele Kacheln sofort laden (nur wenn das Raster über der Falz
+   *  steht, z. B. auf /projekte — auf der Startseite 0 lassen). */
+  vorrangAnzahl?: number;
   /** Spalten am Desktop (Startseite 2, /projekte 2) */
   class?: string;
 }
-const { projekte, class: extra = '' } = Astro.props;
+const { projekte, vorrangAnzahl = 0, class: extra = '' } = Astro.props;
+// Raster ist zweispaltig ab 810px, Inhalt max. 1200px breit
+const kachelSizes = '(min-width:1200px) 570px, (min-width:810px) 50vw, 100vw';
+const kachelWidths = [480, 760, 1140];
 ---
 
 <div class:list={['grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-20', extra]} data-shape-grid>
   {
-    projekte.map((projekt) => {
+    projekte.map((projekt, i) => {
       /* Nur fertig befüllte Projekte sind verlinkt; die übrigen bekommen
          eine „Bald mehr"-Kachel (leicht ausgegraut, nicht klickbar). */
       const verlinkt = Boolean(projekt.bereit && projekt.details);
@@ -40,9 +46,23 @@ const { projekte, class: extra = '' } = Astro.props;
             ]}
           >
             {projekt.art === 'website' ? (
-              <BrowserMockup domain={projekt.domain} bild={projekt.bild} alt={`Website-Projekt ${projekt.name}`} mockup />
+              <BrowserMockup
+                domain={projekt.domain}
+                bild={projekt.bild}
+                alt={`Website-Projekt ${projekt.name}`}
+                mockup
+                widths={kachelWidths}
+                sizes={kachelSizes}
+                vorrang={i < vorrangAnzahl}
+              />
             ) : (
-              <VideoTile bild={projekt.bild} alt={`Video-Projekt ${projekt.name}`} />
+              <VideoTile
+                bild={projekt.bild}
+                alt={`Video-Projekt ${projekt.name}`}
+                widths={kachelWidths}
+                sizes={kachelSizes}
+                vorrang={i < vorrangAnzahl}
+              />
             )}
           </div>
 

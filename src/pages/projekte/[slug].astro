@@ -124,7 +124,14 @@ const hebeHervor = (text: string) => text.replace(/\*\*(.+?)\*\*/g, '<span class
         {
           istWebsite ? (
             <div class="aspect-[16/10] overflow-hidden rounded-24 md:aspect-[16/9]">
-              <BrowserMockup domain={projekt.domain} bild={projekt.bild} alt={`Website von ${projekt.name}`} />
+              <BrowserMockup
+              domain={projekt.domain}
+              bild={projekt.bild}
+              alt={`Website von ${projekt.name}`}
+              widths={[768, 1200, 1600]}
+              sizes="(min-width:1200px) 1200px, 100vw"
+              vorrang
+            />
             </div>
           ) : details.videos ? (
             <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
