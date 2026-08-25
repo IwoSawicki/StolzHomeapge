@@ -42,6 +42,10 @@ import saanVideo1 from '../assets/projekte/saan/SAAN-RecruitingAD-01.mp4';
 import saanVideo2 from '../assets/projekte/saan/SAAN-RecruitingAD-02.mp4';
 import saanVideo3 from '../assets/projekte/saan/SAAN-RecruitingAD-03.mp4';
 import websiteZehner from '../assets/projekte/zehner-website.png';
+import pulseStartseite from '../assets/projekte/pulsevending/pulse-vending-startseite.png';
+import pulseKonfigurator from '../assets/projekte/pulsevending/pulse-vending-konfigurator.png';
+import pulseShop from '../assets/projekte/pulsevending/pulse-vending-shop.png';
+import pulseStandortanalyse from '../assets/projekte/pulsevending/pulse-vending-standortanalyse.png';
 
 export interface Keyfact {
   label: string;
@@ -96,6 +100,10 @@ export interface ProjektDetails {
   leistungsseiten?: Leistungsseite[];
   /** visuelle Städte-/SEO-Struktur (ersetzt die einfache sitemap-Anzeige) */
   stadtStruktur?: StadtStruktur;
+  /** zusätzliche Screenshots mit Bildunterschrift (Zielseiten, Module …) */
+  galerie?: { bild: ImageMetadata; titel: string; text: string }[];
+  /** Überschrift über der Galerie (Default: „Wohin die Kampagnen führen") */
+  galerieTitel?: string;
   /** Recruiting: Vorqualifizierung der Bewerber (z. B. Meta Lead-Formular) */
   qualifizierung?: { titel: string; text: string; kriterien: string[] };
   /** optionales Kundenzitat */
@@ -428,6 +436,7 @@ const alleProjekte: Projekt[] = [
     name: 'Pulse Vending',
     art: 'website',
     domain: 'pulse-vending.de',
+    bild: pulseStartseite,
     beschreibung: 'Performance Marketing für den bundesweiten Verkauf von Snackautomaten.',
     ziel: 'Kundengewinnung',
     kategorien: ['Google Ads', 'Instagram Ads'],
@@ -456,6 +465,24 @@ const alleProjekte: Projekt[] = [
         {
           titel: 'Enge Abstimmung',
           text: 'Kurze Wege, klares Reporting: Das Pulse-Team weiß jederzeit, was läuft und was es bringt.',
+        },
+      ],
+      galerieTitel: 'Wohin die Kampagnen führen',
+      galerie: [
+        {
+          bild: pulseKonfigurator,
+          titel: 'Produktseite mit Konfigurator',
+          text: 'Wer nach einem konkreten Automaten sucht, landet direkt beim Konfigurator — inklusive Gesamtpreis und Monatsrate.',
+        },
+        {
+          bild: pulseShop,
+          titel: 'Shop-Übersicht',
+          text: 'Breitere Suchanfragen führen auf die Übersicht: Automaten, Komponenten und Zubehör auf einen Blick.',
+        },
+        {
+          bild: pulseStandortanalyse,
+          titel: 'Kostenlose Standortanalyse',
+          text: 'Für alle, die noch am Anfang stehen: ein niedrigschwelliges Formular statt sofortigem Kaufdruck.',
         },
       ],
       zitat: {
