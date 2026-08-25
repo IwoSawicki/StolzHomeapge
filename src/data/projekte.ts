@@ -423,6 +423,51 @@ const alleProjekte: Projekt[] = [
     },
   },
   {
+    slug: 'pulse-vending',
+    bereit: true,
+    name: 'Pulse Vending',
+    art: 'website',
+    domain: 'pulse-vending.de',
+    beschreibung: 'Performance Marketing für den bundesweiten Verkauf von Snackautomaten.',
+    ziel: 'Kundengewinnung',
+    kategorien: ['Google Ads', 'Instagram Ads'],
+    details: {
+      keyfacts: [
+        { label: 'Branche', wert: 'Vending / Automatenwirtschaft (B2B)' },
+        { label: 'Leistung', wert: 'Performance Marketing' },
+        { label: 'Plattformen', wert: 'Google Ads · Instagram' },
+        { label: 'Zeitraum', wert: 'laufend' },
+      ],
+      einleitung:
+        'Pulse Vending verkauft Snackautomaten an Gewerbekunden in ganz Deutschland — und will **skalieren**. Wir steuern das **Performance Marketing**: Google-Kampagnen, die kaufbereite Betreiber auf den Shop bringen, und Instagram Ads, die die Marke ins Feed der nächsten Kundengeneration holen.',
+      leistungen: [
+        {
+          titel: 'Google Ads',
+          text: 'Suchkampagnen auf kaufbereite Gewerbekunden — von „Snackautomat kaufen" bis zur Finanzierungsanfrage, laufend gesteuert.',
+        },
+        {
+          titel: 'Conversion-Optimierung',
+          text: 'Budgets und Keywords folgen dem, was messbar Anfragen bringt — nicht dem Bauchgefühl.',
+        },
+        {
+          titel: 'Instagram Ads',
+          text: 'Kreation und Kampagnenaufbau für die Social-Strecke — aktuell in Umsetzung.',
+        },
+        {
+          titel: 'Enge Abstimmung',
+          text: 'Kurze Wege, klares Reporting: Das Pulse-Team weiß jederzeit, was läuft und was es bringt.',
+        },
+      ],
+      zitat: {
+        text: 'Wir sind mit der Zusammenarbeit sehr zufrieden und empfehlen STOLZ jedem weiter, der wachsen will.',
+        autor: 'Henri Olbrich, Geschäftsführer, Pulse Vending (UPdrinks GmbH)',
+      },
+      // Bewusst KEINE Zahlen: Der Kunde möchte Budgets, ROAS und Leadzahlen
+      // vor einer Veröffentlichung abstimmen.
+      ergebnisse: [],
+    },
+  },
+  {
     slug: 'nkn-pv-elektrik',
     name: 'NKN PV Elektrik',
     art: 'website',
