@@ -46,6 +46,8 @@ import pulseStartseite from '../assets/projekte/pulsevending/pulse-vending-start
 import pulseKonfigurator from '../assets/projekte/pulsevending/pulse-vending-konfigurator.png';
 import pulseShop from '../assets/projekte/pulsevending/pulse-vending-shop.png';
 import pulseStandortanalyse from '../assets/projekte/pulsevending/pulse-vending-standortanalyse.png';
+import websiteWeinmacher from '../assets/projekte/weinmacher/weinmacher-startseite.png';
+import websiteMemoria from '../assets/projekte/memoria/memoria-startseite.png';
 
 export interface Keyfact {
   label: string;
@@ -554,6 +556,26 @@ const alleProjekte: Projekt[] = [
     bild: drehAlpha1,
     beschreibung: 'Video-Content direkt von der Baustelle.',
     kategorien: ['Video-Content'],
+  },
+  {
+    slug: 'weinmacher-muehltal',
+    name: 'Nieder-Ramstädter Weinmacher',
+    art: 'website',
+    domain: 'weinmacher-muehltal.de',
+    bild: websiteWeinmacher,
+    beschreibung: 'Neuer Auftritt für den Wein aus dem Frankensteiner Land — Weine, Events und Verleih an einem Ort.',
+    ziel: 'Kundengewinnung',
+    kategorien: ['Webseite'],
+  },
+  {
+    slug: 'tierbestattung-memoria',
+    name: 'Tierbestattung Memoria',
+    art: 'website',
+    domain: 'tierbestattung-memoria.de',
+    bild: websiteMemoria,
+    beschreibung: 'Website für einen würdevollen Abschied — Leistungen, Preise und Urnen ruhig und klar aufbereitet.',
+    ziel: 'Kundengewinnung',
+    kategorien: ['Webseite'],
   },
   {
     slug: 'laser-wolf',

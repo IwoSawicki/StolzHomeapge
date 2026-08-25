@@ -12,6 +12,8 @@ interface Props {
   widths?: number[];
   /** sizes muss zur echten Anzeigebreite passen (sonst unscharf oder zu groß) */
   sizes?: string;
+  /** WebP-Qualität; Fotos vertragen weniger als UI-Screenshots */
+  qualitaet?: number;
   /** true = sofort laden (nur für Kacheln über der Falz) */
   vorrang?: boolean;
   class?: string;
@@ -20,6 +22,7 @@ const {
   bild,
   alt = 'Video-Beispiel',
   widths = [380, 576, 760],
+  qualitaet = 70,
   sizes = '(min-width: 810px) 33vw, 100vw',
   vorrang = false,
   class: extra = '',
@@ -29,7 +32,7 @@ const {
 <div class={`relative h-full w-full overflow-hidden bg-linear-160 from-video-dark-1 to-video-dark-2 ${extra}`}>
   {
     bild && (
-      <Image src={bild} alt={alt} class="absolute inset-0 h-full w-full object-cover" widths={widths} sizes={sizes} loading={vorrang ? 'eager' : 'lazy'} {...(vorrang ? { fetchpriority: 'high' } : {})} />
+      <Image src={bild} alt={alt} class="absolute inset-0 h-full w-full object-cover" widths={widths} sizes={sizes} quality={qualitaet} loading={vorrang ? 'eager' : 'lazy'} {...(vorrang ? { fetchpriority: 'high' } : {})} />
     )
   }
 </div>
