@@ -810,6 +810,15 @@ export const alleProjekte: Projekt[] = [
     beschreibung: 'Website für Scalingspot.',
     kategorien: ['Webseite'],
   },
+  {
+    slug: 'wundprofis',
+    versteckt: true,
+    name: 'Wundprofis',
+    art: 'website',
+    domain: 'wundprofis.de',
+    beschreibung: 'Website für die Wundprofis — als Freelancer für 100Marketing umgesetzt.',
+    kategorien: ['Webseite'],
+  },
 ];
 
 /** öffentlich sichtbare Projekte — versteckte bleiben in den Daten,
