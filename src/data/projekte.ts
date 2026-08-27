@@ -142,7 +142,9 @@ export interface Projekt {
   details?: ProjektDetails;
 }
 
-const alleProjekte: Projekt[] = [
+/** ALLE Projekte inklusive der ausgeblendeten — nur für die interne
+ *  Übersicht /alle-projekte. Öffentlich wird `projekte` verwendet. */
+export const alleProjekte: Projekt[] = [
   // ——— Startseiten-Projekte (Reihenfolge = Vorgabe Iwo) ———
   {
     slug: 'jhoch2-wasserschaden',

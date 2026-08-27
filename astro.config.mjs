@@ -22,7 +22,8 @@ export default defineConfig({
         !page.includes('/archiv') &&
         !page.includes('/korbaktion') &&
         !page.includes('/website-betreuung') &&
-        !page.includes('/vorschau'),
+        !page.includes('/vorschau') &&
+        !page.includes('/alle-projekte'),
     }),
   ],
   vite: {
