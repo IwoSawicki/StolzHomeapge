@@ -27,12 +27,12 @@ const ablauf = [
   {
     nr: '1',
     titel: 'Website einreichen',
-    text: 'Sie schicken uns Ihre Homepage und nennen kurz Ihr Ziel: mehr Anfragen, mehr Bewerbungen oder bessere Sichtbarkeit.',
+    text: 'Sie schicken mir Ihre Homepage und nennen kurz Ihr Ziel: mehr Anfragen oder bessere Sichtbarkeit.',
   },
   {
     nr: '2',
     titel: 'Analyse erhalten',
-    text: 'Wir prüfen Auftritt, Google-Sichtbarkeit und mögliche Kampagnenchancen mit klarem Blick auf Umsatz und Qualität.',
+    text: 'Ich prüfe Auftritt, Google-Sichtbarkeit und mögliche Kampagnenchancen mit klarem Blick auf Umsatz und Qualität.',
   },
   {
     nr: '3',
@@ -51,31 +51,31 @@ const faq = [
   {
     frage: 'Für wen ist STOLZ Marketing geeignet?',
     antwort:
-      'Für lokale Betriebe, die planbar mehr qualifizierte Anfragen oder passende Bewerbungen gewinnen möchten.',
+      'Für Handwerks- und Baubetriebe, die für Privatkunden arbeiten und planbar mehr qualifizierte Anfragen gewinnen möchten.',
   },
   {
     frage: 'Muss ich bereits Werbung schalten?',
     antwort:
-      'Nein. Wir prüfen bestehende Kampagnen genauso wie ungenutztes Potenzial auf Ihrer Website und bei Google.',
+      'Nein. Ich prüfe bestehende Kampagnen genauso wie ungenutztes Potenzial auf Ihrer Website und bei Google.',
   },
   {
-    frage: 'Arbeiten Sie nur im Rhein-Main-Gebiet?',
+    frage: 'Arbeiten Sie nur in der Rhein-Neckar-Region?',
     antwort:
-      'Unser Fokus liegt auf lokalen Betrieben aus dem Rhein-Main-Gebiet. Projekte in ganz Deutschland sind ebenfalls möglich.',
+      'Mein Fokus liegt auf Handwerks- und Baubetrieben aus der Rhein-Neckar-Region. Projekte in ganz Deutschland sind ebenfalls möglich.',
   },
   {
     frage: 'Was brauche ich für den Start?',
     antwort:
-      'Eine bestehende Website ist hilfreich, aber nicht zwingend. Wichtig ist ein klares Ziel: mehr Kundenanfragen, mehr Bewerbungen oder bessere Sichtbarkeit.',
+      'Eine bestehende Website ist hilfreich, aber nicht zwingend. Wichtig ist ein klares Ziel: mehr Kundenanfragen oder bessere Sichtbarkeit.',
   },
   {
     frage: 'Wie schnell bekomme ich eine Rückmeldung?',
-    antwort: 'In der Regel melden wir uns innerhalb von 24 bis 48 Stunden persönlich zurück.',
+    antwort: 'In der Regel melde ich mich innerhalb von 24 bis 48 Stunden persönlich zurück.',
   },
   {
     frage: 'Was passiert nach der Anfrage?',
     antwort:
-      'Wir prüfen Ihre Website, Sichtbarkeit und mögliche Kampagnenansätze und besprechen dann die sinnvollsten nächsten Schritte.',
+      'Ich prüfe Ihre Website, Sichtbarkeit und mögliche Kampagnenansätze und bespreche dann die sinnvollsten nächsten Schritte.',
   },
   {
     frage: 'Bin ich danach zu einer Zusammenarbeit verpflichtet?',
@@ -87,7 +87,7 @@ const faq = [
 
 <BaseLayout
   title="Kontakt | STOLZ Marketing"
-  description="Kostenlose Erstberatung für lokale Betriebe: Schreiben Sie STOLZ Marketing für mehr Anfragen und passende Bewerbungen — verständlich erklärt, messbar gemacht, ein Ansprechpartner."
+  description="Kostenlose Analyse für Handwerks- und Baubetriebe: Schreiben Sie STOLZ Marketing für mehr qualifizierte Anfragen — verständlich erklärt, monatlich messbar, ein Ansprechpartner."
 >
   <Header />
   <main>
@@ -100,8 +100,8 @@ const faq = [
             Kostenlose Potenzial-Analyse anfragen
           </h1>
           <p class="mt-4 text-lg font-medium leading-[1.4] tracking-[-0.01em] text-dark">
-            Wir prüfen Ihre Website, Ihre Sichtbarkeit und Ihre aktuellen Chancen für mehr Anfragen oder
-            Bewerbungen. Verständlich, unverbindlich und mit konkreten nächsten Schritten.
+            Ich prüfe Ihre Website, Ihre Sichtbarkeit und Ihre aktuellen Chancen für mehr Anfragen.
+            Verständlich, unverbindlich und mit konkreten nächsten Schritten.
           </p>
           <hr class="mt-10 border-border" />
           <ul class="mt-10 flex flex-col gap-5">
@@ -180,7 +180,7 @@ const faq = [
       <div class="flex flex-col items-center text-center">
         <SectionLabel text="Ablauf" />
         <h2 class="mt-2 max-w-[800px] text-3xl font-bold text-balance leading-[1.1] tracking-[-0.05em] text-dark">
-          Von der ersten Einschätzung bis zur Umsetzung: ein klarer Prozess für mehr Anfragen und Bewerbungen.
+          Von der ersten Einschätzung bis zur Umsetzung: ein klarer Prozess für mehr Anfragen.
         </h2>
       </div>
 
@@ -297,7 +297,7 @@ const faq = [
       const json = await res.json();
       if (json.success) {
         form.reset();
-        zeigeStatus('Danke! Ihre Anfrage ist angekommen — wir melden uns zeitnah.', '#15803d');
+        zeigeStatus('Danke! Ihre Anfrage ist angekommen — ich melde mich zeitnah.', '#15803d');
       } else {
         zeigeStatus(
           'Da ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie an iwo@stolz-marketing.de.',

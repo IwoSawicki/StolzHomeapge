@@ -8,7 +8,7 @@
 //
 // Video: STOLZ-Showreel (Hochformat 9:16, mit Ton) — läuft in der Kachel
 // stumm und endlos (object-cover).
-// Klick auf „Einblick in unsere Arbeit" öffnet das Showreel groß im
+// Klick auf „Einblick in meine Arbeit" öffnet das Showreel groß im
 // Overlay (Seite dahinter geblurrt) und spielt es mit Ton von vorn.
 import { getImage } from 'astro:assets';
 import Button from '../Button.astro';
@@ -32,17 +32,15 @@ const poster = await getImage({ src: posterBild, format: 'webp', width: 720, qua
         Hey, wir sind Stolz Marketing <span class="animate-waving">👋</span>
       </p>
       <h1 class="mt-4 max-w-[600px] text-40 font-semibold text-balance leading-[1.04] tracking-[-0.04em] text-dark md:text-52">
-        <span class="block text-gray">Unsere Expertise:</span>
-        Volle Auftragsbücher &amp; passende Bewerber
+        Ihre Kunden suchen bereits. Ich sorge dafür, dass sie Sie finden.
       </h1>
       <p class="mt-5 max-w-[470px] text-lg font-medium text-balance leading-[1.45] tracking-[-0.01em] text-dark">
-        Marketing für lokale Betriebe — mit <strong>einem</strong> Ansprechpartner für alles.
-        Verständlich erklärt, messbar gemacht.
+        Websites, Google Ads und SEO für Handwerksbetriebe, die für Privatkunden arbeiten.{' '}
+        <strong>Ein</strong> Ansprechpartner, verständlich erklärt, monatlich messbar.
       </p>
       <div class="mt-8 flex flex-col items-start gap-2.5 md:flex-row md:items-center">
-        <Button href="/projekte" variant="blue" shadow="blue-glow">Projekte ansehen</Button>
-        {/* Ziel folgt, sobald die Über-uns-Sektion existiert */}
-        <Button href="#ueber-uns" variant="light">Über uns</Button>
+        <Button href="/kontakt" variant="blue" shadow="blue-glow">Kostenlose Analyse anfragen</Button>
+        <Button href="/projekte" variant="light">Projekte ansehen</Button>
       </div>
     </div>
 
@@ -74,7 +72,7 @@ const poster = await getImage({ src: posterBild, format: 'webp', width: 720, qua
           </svg>
         </span>
         <span class="text-sm leading-tight font-semibold text-dark">
-          Einblick in unsere Arbeit
+          Einblick in meine Arbeit
           <span class="block text-xs font-medium text-gray">STOLZ Marketing</span>
         </span>
       </button>

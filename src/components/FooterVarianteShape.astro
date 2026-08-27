@@ -5,11 +5,10 @@
 // Riesen-Wortmarke, Legal-Zeile. Ersetzt den normalen Footer NICHT —
 // zweite Variante zum Vergleich (aktuell auf /leistungen/webseiten).
 // Kein Bewertungs-Badge, solange keine echten Google-Reviews vorliegen.
-import { projekte } from '../data/projekte';
 
 const navigation = [
   { label: 'Startseite', href: '/' },
-  { label: 'Projekte', href: '/projekte', badge: projekte.length },
+  { label: 'Projekte', href: '/projekte' },
   { label: 'Leistungen', href: '/#leistungen' },
   { label: 'Prozess', href: '/#prozess' },
   { label: 'Ergebnis', href: '/#ergebnis' },
@@ -126,11 +125,6 @@ const rechtliches = [
                 <li>
                   <a href={link.href} class="inline-flex items-center gap-1.5 text-base font-medium text-white transition-opacity duration-200 hover:opacity-70">
                     {link.label}
-                    {link.badge && (
-                      <span class="rounded-full bg-lime px-1.5 py-px text-[10px] leading-none font-bold text-dark tabular-nums">
-                        {link.badge}
-                      </span>
-                    )}
                   </a>
                 </li>
               ))
@@ -192,7 +186,7 @@ const rechtliches = [
           <span class="font-display text-lg font-extrabold tracking-[-0.05em] text-white">STOLZ</span>
           © Stolz Marketing 2026
         </p>
-        <p>Webdesign & Marketing aus Reichelsheim — für lokale Betriebe im Rhein-Main-Gebiet</p>
+        <p>Webdesign & Marketing aus Reichelsheim — für Handwerks- und Baubetriebe in der Rhein-Neckar-Region</p>
       </div>
     </div>
   </div>

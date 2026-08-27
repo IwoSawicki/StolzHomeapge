@@ -9,10 +9,9 @@
 //   Links auf, dahinter wird die Seite geblurrt.
 import Logo from './Logo.astro';
 import Button from './Button.astro';
-import { projekte } from '../data/projekte';
 
 const links = [
-  { label: 'Projekte', href: '/projekte', badge: projekte.length },
+  { label: 'Projekte', href: '/projekte' },
   { label: 'Leistungen', href: '/#leistungen' },
   { label: 'Prozess', href: '/#prozess' },
   { label: 'Ergebnis', href: '/#ergebnis' },
@@ -33,11 +32,6 @@ const links = [
           >
             <span class="relative">
               {link.label}
-              {link.badge && (
-                <span class="absolute -top-2 -right-4 rounded-full bg-blue px-1 py-px text-[10px] leading-none font-bold text-white tabular-nums">
-                  {link.badge}
-                </span>
-              )}
             </span>
           </a>
         ))
@@ -82,11 +76,6 @@ const links = [
               data-mlink
             >
               {link.label}
-              {link.badge && (
-                <span class="rounded-full bg-blue px-1.5 py-0.5 text-xs leading-none font-bold text-white tabular-nums">
-                  {link.badge}
-                </span>
-              )}
             </a>
           ))
         }
