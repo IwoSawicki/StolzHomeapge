@@ -678,10 +678,10 @@ export const alleProjekte: Projekt[] = [
   {
     slug: 'bruzzlstubb',
     versteckt: true,
-    name: 'Bruzzlstubb',
+    name: 'Bruzzlstubb Reichelsheim',
     art: 'website',
-    beschreibung: 'Website für die Bruzzlstubb.',
-    kategorien: ['Webseite'],
+    beschreibung: 'Website und Bilder für die Bruzzlstubb in Reichelsheim.',
+    kategorien: ['Webseite', 'Foto'],
   },
   {
     slug: 'cafe-pape',
@@ -693,7 +693,6 @@ export const alleProjekte: Projekt[] = [
   },
   {
     slug: 'cdu-muehltal',
-    versteckt: true,
     name: 'CDU Mühltal',
     art: 'website',
     beschreibung: 'Website für die CDU Mühltal.',
@@ -770,6 +769,46 @@ export const alleProjekte: Projekt[] = [
     art: 'video',
     beschreibung: 'Social-Media-Videos für die Tempel Fightschool.',
     kategorien: ['Social Media'],
+  },
+  {
+    slug: 'blitz-immobilien',
+    versteckt: true,
+    name: 'Blitz Immobilien',
+    art: 'website',
+    beschreibung: 'Google-Ads-Kampagnen für Blitz Immobilien.',
+    kategorien: ['Google Ads'],
+  },
+  {
+    slug: 'fdp-baden-wuerttemberg',
+    versteckt: true,
+    name: 'FDP Baden-Württemberg',
+    art: 'video',
+    beschreibung: 'Videoproduktion für die FDP Baden-Württemberg.',
+    kategorien: ['Video-Content'],
+  },
+  {
+    slug: 'botech',
+    versteckt: true,
+    name: 'Botech GmbH',
+    art: 'website',
+    beschreibung: 'Laufende Betreuung der Website der Botech GmbH.',
+    kategorien: ['Webseite', 'Betreuung'],
+  },
+  {
+    slug: 'kessler-schauglaeser',
+    versteckt: true,
+    name: 'Kessler Schaugläser',
+    art: 'website',
+    beschreibung: 'Website für Kessler Schaugläser.',
+    kategorien: ['Webseite'],
+  },
+  {
+    slug: 'scalingspot',
+    versteckt: true,
+    name: 'Scalingspot',
+    art: 'website',
+    beschreibung: 'Website für Scalingspot.',
+    kategorien: ['Webseite'],
   },
 ];
 
