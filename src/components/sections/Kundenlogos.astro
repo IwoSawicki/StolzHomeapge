@@ -1,29 +1,18 @@
 ---
-// KUNDEN-LOGOWAND: fünfspaltiges Raster am Ende der Startseite.
+// KUNDEN-LOGOWAND: fünfspaltiges Raster, bewusst ohne Überschrift —
+// die Wand steht für sich (Startseite und /projekte).
 // Zellen ohne hinterlegtes Logo zeigen den Kundennamen als Wortmarke —
 // Logos werden in src/data/kundenlogos.ts nach und nach ergänzt.
 // Logos laufen in Graustufen und werden beim Hover farbig, damit die
 // Wand ruhig bleibt und nicht mit der Seite konkurriert.
 import { Image } from 'astro:assets';
-import SectionHeading from '../SectionHeading.astro';
 import { kunden } from '../../data/kundenlogos';
 ---
 
 <section class="px-5 py-16 md:px-10 md:py-24">
   <div class="mx-auto max-w-[1200px]">
-    <SectionHeading label="Kunden" headingMaxWidth={760}>
-      <svg slot="icon" class="size-[7px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <circle cx="12" cy="12" r="10" />
-      </svg>
-      Betriebe, die mir schon vertraut haben
-      <Fragment slot="description">
-        Vom Handwerksbetrieb über den Bau bis zur Gastronomie — {kunden.length} Kunden aus der Region
-        und darüber hinaus.
-      </Fragment>
-    </SectionHeading>
-
     <ul
-      class="mt-12 grid grid-cols-2 gap-2 md:mt-16 md:grid-cols-3 md:gap-2.5 xl:grid-cols-5"
+      class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-2.5 xl:grid-cols-5"
       aria-label="Kunden von STOLZ Marketing"
     >
       {

@@ -6,28 +6,30 @@
 // TEXTE = VORSCHLAG — von Iwo prüfen/anpassen.
 import SectionLabel from '../SectionLabel.astro';
 const leistungen = [
-  { name: 'Webseiten & SEO', zusatz: 'inklusive eigener Foto- und Videoproduktion vor Ort' },
-  { name: 'Google Ads', zusatz: '' },
-  { name: 'KI-Ranking', zusatz: '' },
+  'Webseiten & SEO',
+  'Google Ads',
+  'KI-Ranking',
+  'Social Media Ads',
+  'Recruiting-Kampagnen',
+  'Foto- & Videoproduktion',
 ];
 ---
 
 <section id="ueber-uns" class="scroll-mt-24 px-3 py-8 md:px-6 md:py-10 xl:px-10">
   <div class="mx-auto max-w-[1240px] rounded-[32px] bg-bg-blue-light px-6 py-12 md:px-12 md:py-16 xl:px-16 xl:py-20">
-    <SectionLabel text="Wer ich bin" />
+    <SectionLabel text="Wer wir sind" />
 
     <p class="mt-6 max-w-[920px] text-3xl font-semibold text-balance leading-[1.15] tracking-[-0.03em] text-slate md:text-4xl xl:text-[44px] xl:leading-[1.12]">
-      STOLZ Marketing macht Handwerks- und Baubetriebe dort sichtbar, wo ihre{' '}
-      <span class="text-blue">Kunden</span> suchen.
+      STOLZ Marketing macht lokale Betriebe sichtbar — bei den richtigen{' '}
+      <span class="text-blue">Kunden</span> und den richtigen <span class="text-blue">Bewerbern</span>.
     </p>
 
     <div class="mt-12 grid grid-cols-1 gap-10 border-t border-slate/10 pt-10 xl:mt-14 xl:grid-cols-2 xl:gap-20 xl:pt-12">
       <div class="flex max-w-[480px] flex-col gap-5 text-lg font-medium leading-[1.55] text-slate/70">
         <p>
-          Gestartet als Website- und SEO-Agentur. Heute begleite ich Handwerks- und Baubetriebe, die
-          für Privatkunden arbeiten — von der Website über Google Ads bis zur
-          Suchmaschinenoptimierung.{' '}
-          <strong class="font-semibold text-slate">Ein Ansprechpartner statt drei Agenturen.</strong>
+          Gestartet als Website- und SEO-Agentur. Heute begleiten wir lokale Betriebe jeder Art von der
+          Website über Google bis zu Social Media und Recruiting —{' '}
+          <strong class="font-semibold text-slate">ein Ansprechpartner statt drei Agenturen.</strong>
         </p>
         <p>
           Ohne Agentur-Blabla, dafür mit Zahlen, die Sie verstehen: Sie sehen jeden Monat, was Ihre
@@ -35,21 +37,16 @@ const leistungen = [
         </p>
       </div>
 
-      <ul aria-label="Meine Leistungen">
+      <ul aria-label="Unsere Leistungen">
         {
           leistungen.map((leistung) => (
-            <li class="flex items-start gap-4 border-b border-slate/10 py-4 text-lg font-semibold tracking-[-0.01em] text-slate first:pt-0 last:border-b-0 last:pb-0">
-              <span class="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-blue text-white">
+            <li class="flex items-center gap-4 border-b border-slate/10 py-4 text-lg font-semibold tracking-[-0.01em] text-slate first:pt-0 last:border-b-0 last:pb-0">
+              <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-blue text-white">
                 <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M5 12h14M13 6l6 6-6 6" />
                 </svg>
               </span>
-              <span>
-                {leistung.name}
-                {leistung.zusatz && (
-                  <span class="mt-0.5 block text-base font-medium text-slate/60">{leistung.zusatz}</span>
-                )}
-              </span>
+              {leistung}
             </li>
           ))
         }

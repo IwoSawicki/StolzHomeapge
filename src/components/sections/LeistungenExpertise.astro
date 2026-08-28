@@ -15,6 +15,9 @@ import SectionLabel from '../SectionLabel.astro';
 import websiteHepa from '../../assets/projekte/website-hepabaut.png';
 import websiteJhoch2 from '../../assets/projekte/website-jhoch2-wasserschaden.png';
 import websiteBadenBatterie from '../../assets/projekte/website-badenbatterie.png';
+import drehDmk from '../../assets/projekte/video-dreh-dmk-bau.jpg';
+import drehSaan from '../../assets/projekte/video-dreh-saan-wasserstrahl-1.jpg';
+import drehWio from '../../assets/projekte/content-dreh-wio.jpg';
 
 interface Leistung {
   name: string;
@@ -26,6 +29,9 @@ const leistungen: Leistung[] = [
   { name: 'Webseiten & SEO', vorschau: websiteHepa },
   { name: 'Google Ads', vorschau: websiteJhoch2 },
   { name: 'KI-Ranking', vorschau: websiteBadenBatterie },
+  { name: 'Social Media Ads', kurz: 'Social Media', vorschau: drehDmk },
+  { name: 'Recruiting-Kampagnen', kurz: 'Recruiting', vorschau: drehSaan },
+  { name: 'Foto- & Videoproduktion', kurz: 'Foto & Video', vorschau: drehWio },
 ];
 ---
 
@@ -34,22 +40,22 @@ const leistungen: Leistung[] = [
     <!-- Kopf: Eyebrow / Headline / Kurztext + CTA -->
     <div class="grid grid-cols-1 gap-8 xl:grid-cols-[220px_1fr_320px] xl:gap-10">
       <div class="h-fit">
-        <SectionLabel text="Leistungen" theme="dark" />
+        <SectionLabel text="Unsere Leistungen" theme="dark" />
       </div>
       <h2 class="max-w-[560px] text-3xl font-semibold text-balance leading-[1.12] tracking-[-0.02em] text-white md:text-4xl xl:mx-auto xl:text-center">
-        Womit ich Ihren Betrieb nach vorne bringe
+        Womit wir Ihren Betrieb nach vorne bringen
       </h2>
       <div class="flex flex-col items-start gap-5">
         <p class="text-base font-medium leading-[1.5] text-white/70">
-          Alles zahlt auf ein Ziel ein: mehr qualifizierte Anfragen von Kunden, die wirklich kaufen
-          wollen.
+          Alles zahlt auf zwei Ziele ein: mehr Aufträge und passende Bewerber — Sie entscheiden, wo wir
+          ansetzen.
         </p>
-        <Button href="/kontakt" variant="white">Kostenlose Analyse anfragen</Button>
+        <Button href="/kontakt" variant="white">Kostenlose Beratung</Button>
       </div>
     </div>
 
     <!-- Leistungs-Zeilen -->
-    <ul class="expertise-liste mt-14 xl:mt-20" data-expertise aria-label="Leistungen im Überblick">
+    <ul class="expertise-liste mt-14 xl:mt-20" data-expertise aria-label="Unsere Leistungen im Überblick">
       {
         leistungen.map((leistung) => (
           <li

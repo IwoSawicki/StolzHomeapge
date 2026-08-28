@@ -4,9 +4,10 @@
 // Footer-Navigation zeigt auf die echten Sektions-Anker (Antwort Iwo, Frage C —
 // Original hatte tote Template-Links „Vorteile/Anwendung/Branchen/Preise").
 import FooterCta from './FooterCta.astro';
+import { alleProjekte } from '../data/projekte';
 
 const navigation = [
-  { label: 'Projekte', href: '/projekte' },
+  { label: 'Projekte', href: '/projekte', badge: alleProjekte.length },
   { label: 'Leistungen', href: '/#leistungen' },
   { label: 'Prozess', href: '/#prozess' },
   { label: 'Ergebnis', href: '/#ergebnis' },
@@ -32,7 +33,7 @@ const navigation = [
           </a>
           <p class="mt-5 text-lg font-medium leading-[1.45] text-white">
             <strong class="font-semibold">STOLZ Marketing</strong><br />
-            Für Handwerks- und Baubetriebe<br />in der Rhein-Neckar-Region
+            Für lokale Betriebe<br />im Rhein-Main-Gebiet
           </p>
           <p class="mt-8 flex items-center gap-2 text-base text-white">
             <span class="inline-block size-2 rounded-full bg-green-status" aria-hidden="true"></span>
@@ -50,6 +51,11 @@ const navigation = [
                   <li>
                     <a href={link.href} class="inline-flex items-center gap-1.5 text-base font-medium text-white transition-opacity duration-200 hover:opacity-70">
                       {link.label}
+                      {link.badge && (
+                        <span class="rounded-full bg-blue px-1.5 py-px text-[10px] leading-none font-bold text-white tabular-nums">
+                          {link.badge}
+                        </span>
+                      )}
                     </a>
                   </li>
                 ))
