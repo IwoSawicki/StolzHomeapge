@@ -1,0 +1,87 @@
+---
+// LEISTUNGEN-VARIANTE E „Notch-Karten": zwei dunkle Karten mit
+// Negativ-Rundung oben rechts (weißer Notch mit Lime-Pfeil, Technik wie
+// beim Shape-Footer/Projekt-Grid). Bild oben, Inhalt darunter, ganze
+// Karte verlinkt.
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import { saeulen } from '../../data/leistungen';
+
+interface Props {
+  /** Anker-ID — auf der Vorschau-Seite überschreiben (sonst doppelt) */
+  id?: string;
+}
+const { id = 'leistungen' } = Astro.props;
+---
+
+<section id={id} class="scroll-mt-24 px-5 py-16 md:px-10 md:py-24">
+  <div class="mx-auto max-w-[1200px]">
+    <SectionHeading label="Leistungen" headingMaxWidth={720}>
+      <svg slot="icon" class="size-[7px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+      </svg>
+      Zwei Dinge, die jeder Betrieb braucht.
+      <Fragment slot="description">
+        Kunden und Mitarbeiter. Alles, was wir tun, zahlt auf eines dieser beiden Ziele ein — die
+        Werkzeuge dahinter zeigen wir auf den Unterseiten.
+      </Fragment>
+    </SectionHeading>
+
+    <div class="mt-12 grid grid-cols-1 gap-5 md:mt-16 xl:grid-cols-2">
+      {
+        saeulen.map((s) => (
+          <a href={s.href} class="group relative flex flex-col rounded-[24px] bg-dark">
+            {/* Notch oben rechts mit Lime-Pfeil */}
+            <span class="lnotch absolute top-0 right-0 z-10 rounded-bl-[20px] bg-white pb-2 pl-2" aria-hidden="true">
+              <span class="flex size-12 items-center justify-center rounded-full bg-lime text-dark transition-transform duration-300 group-hover:rotate-45">
+                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17 17 7M8 7h9v9" />
+                </svg>
+              </span>
+            </span>
+
+            <span class="block overflow-hidden rounded-t-[24px]">
+              <Image
+                src={s.bild}
+                alt={`Beispiele aus unserer Arbeit: ${s.name}`}
+                widths={[600, 1200]}
+                sizes="(min-width:1200px) 570px, 100vw"
+                class={`aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] ${s.fokus === 'top' ? 'object-top' : 'object-center'}`}
+              />
+            </span>
+            <span class="flex flex-1 flex-col p-6 pb-7 md:p-8">
+              <span class="text-sm font-semibold text-lime tabular-nums">{s.nummer}</span>
+              <span class="mt-1.5 text-3xl font-bold tracking-[-0.04em] text-white md:text-4xl">{s.name}</span>
+              <span class="mt-2.5 max-w-[460px] text-base font-medium leading-[1.5] text-white/70">{s.kurz}</span>
+              <span class="mt-5 flex flex-wrap gap-1.5">
+                {s.pills.map((pill) => (
+                  <span class="rounded-full border border-white/20 px-3 py-1 text-sm font-medium text-white/90">{pill}</span>
+                ))}
+              </span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Negativ-Rundungen am weißen Notch (Kurven links daneben + darunter) */
+  .lnotch::before,
+  .lnotch::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 0 100%, transparent 20px, var(--color-white) 20px);
+  }
+  .lnotch::before {
+    top: 0;
+    left: -20px;
+  }
+  .lnotch::after {
+    top: 100%;
+    right: 0;
+  }
+</style>

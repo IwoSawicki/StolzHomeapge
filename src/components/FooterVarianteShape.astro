@@ -1,0 +1,244 @@
+---
+// FOOTER-VARIANTE „Shape": schwebender dunkler Container mit
+// Negativ-Rundungs-Notches — oben rechts „Nach oben"-Link, oben links
+// Social-Rail (Lime-Kreise). Innen: CTA-Kopf, Link-Spalten, Kontakt,
+// Riesen-Wortmarke, Legal-Zeile. Ersetzt den normalen Footer NICHT —
+// zweite Variante zum Vergleich (aktuell auf /leistungen/webseiten).
+// Kein Bewertungs-Badge, solange keine echten Google-Reviews vorliegen.
+import { alleProjekte } from '../data/projekte';
+
+const navigation = [
+  { label: 'Startseite', href: '/' },
+  { label: 'Projekte', href: '/projekte', badge: alleProjekte.length },
+  { label: 'Leistungen', href: '/#leistungen' },
+  { label: 'Prozess', href: '/#prozess' },
+  { label: 'Ergebnis', href: '/#ergebnis' },
+  { label: 'Über uns', href: '/#ueber-uns' },
+];
+
+const rechtliches = [
+  { label: 'Kontakt', href: '/kontakt' },
+  { label: 'Impressum', href: '/impressum' },
+  { label: 'Datenschutz', href: '/datenschutz' },
+];
+---
+
+<footer class="bg-white px-2.5 pt-16 pb-2.5 md:px-5 md:pt-24 md:pb-5">
+  <div class="relative rounded-[32px] bg-dark">
+    <!-- Notch oben rechts: zurück nach oben -->
+    <div class="fnotch-r absolute top-0 right-0 z-10 rounded-bl-[20px] bg-white pb-2.5 pl-2.5">
+      <button
+        type="button"
+        data-nach-oben
+        class="flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-dark transition-colors duration-200 hover:text-blue"
+      >
+        <span class="hidden md:inline">Zu weit gescrollt? Hier geht's nach oben</span>
+        <span class="md:hidden">Nach oben</span>
+        <span aria-hidden="true">👆</span>
+      </button>
+    </div>
+
+    <!-- Notch oben links: Social-Rail (nur Desktop) -->
+    <div class="fnotch-l absolute top-0 left-0 z-10 hidden rounded-br-[20px] bg-white pr-2.5 pb-2.5 xl:block">
+      <div class="flex flex-col gap-2">
+        <a
+          href="https://www.instagram.com/stolz.marketing/"
+          target="_blank"
+          rel="noopener"
+          aria-label="STOLZ Marketing auf Instagram"
+          class="flex size-10 items-center justify-center rounded-full bg-lime text-dark transition-transform duration-200 hover:scale-105"
+        >
+          <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+            <circle cx="12" cy="12" r="4.5" />
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+          </svg>
+        </a>
+        <a
+          href="mailto:iwo@stolz-marketing.de"
+          aria-label="E-Mail an STOLZ Marketing"
+          class="flex size-10 items-center justify-center rounded-full bg-lime text-dark transition-transform duration-200 hover:scale-105"
+        >
+          <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="m3 7 9 6 9-6" />
+          </svg>
+        </a>
+        <a
+          href="tel:+491784444156"
+          aria-label="STOLZ Marketing anrufen"
+          class="flex size-10 items-center justify-center rounded-full bg-lime text-dark transition-transform duration-200 hover:scale-105"
+        >
+          <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.5-1.2a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobil mehr Bottom-Padding, damit die fixe Bottom-Nav-Pille die
+         Adress-/Legal-Zeilen nicht überdeckt. -->
+    <div class="px-6 pt-20 pb-28 md:px-12 md:pt-24 md:pb-10 xl:px-16">
+      <div class="grid grid-cols-1 gap-12 xl:grid-cols-[1fr_auto_auto_auto] xl:gap-16">
+        <!-- CTA-Kopf -->
+        <div class="max-w-[340px]">
+          <!-- Social-Kreise mobil (Rail-Notch nur Desktop) -->
+          <div class="mb-6 flex gap-2 xl:hidden">
+            <a href="https://www.instagram.com/stolz.marketing/" target="_blank" rel="noopener" aria-label="Instagram" class="flex size-10 items-center justify-center rounded-full bg-lime text-dark">
+              <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+                <circle cx="12" cy="12" r="4.5" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="mailto:iwo@stolz-marketing.de" aria-label="E-Mail" class="flex size-10 items-center justify-center rounded-full bg-lime text-dark">
+              <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg>
+            </a>
+          </div>
+
+          <p class="text-3xl font-semibold text-balance leading-[1.1] tracking-[-0.03em] text-white md:text-4xl">
+            Gefällt Ihnen, was Sie sehen?
+          </p>
+          <a
+            href="/kontakt"
+            class="mt-6 inline-flex items-center gap-2 rounded-full bg-lime px-6 py-3 text-base font-semibold text-dark transition-transform duration-200 hover:scale-[1.03]"
+          >
+            Projekt starten
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7M8 7h9v9" />
+            </svg>
+          </a>
+          <p class="mt-7 flex items-center gap-2 text-base text-white">
+            <span class="inline-block size-2 rounded-full bg-green-status" aria-hidden="true"></span>
+            Alle Systeme live
+          </p>
+        </div>
+
+        <!-- Navigation -->
+        <nav aria-label="Footer-Navigation">
+          <p class="text-sm font-medium text-white/50">Entdecken</p>
+          <ul class="mt-5 flex flex-col gap-2.5">
+            {
+              navigation.map((link) => (
+                <li>
+                  <a href={link.href} class="inline-flex items-center gap-1.5 text-base font-medium text-white transition-opacity duration-200 hover:opacity-70">
+                    {link.label}
+                    {link.badge && (
+                      <span class="rounded-full bg-lime px-1.5 py-px text-[10px] leading-none font-bold text-dark tabular-nums">
+                        {link.badge}
+                      </span>
+                    )}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <!-- Rechtliches -->
+        <nav aria-label="Rechtliches">
+          <p class="text-sm font-medium text-white/50">Rechtliches</p>
+          <ul class="mt-5 flex flex-col gap-2.5">
+            {
+              rechtliches.map((link) => (
+                <li>
+                  <a href={link.href} class="text-base font-medium text-white transition-opacity duration-200 hover:opacity-70">
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <button type="button" data-cookie-reset class="cursor-pointer text-left text-base font-medium text-white transition-opacity duration-200 hover:opacity-70">
+                Cookie-Einstellungen
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Kontakt -->
+        <div class="max-w-[260px]">
+          <p class="text-sm font-medium text-white/50">Kontakt</p>
+          <ul class="mt-5 flex flex-col gap-2.5 text-base font-medium text-white">
+            <li>
+              <a href="tel:+491784444156" class="transition-opacity duration-200 hover:opacity-70">0178 4444 156</a>
+            </li>
+            <li>
+              <a href="mailto:iwo@stolz-marketing.de" class="transition-opacity duration-200 hover:opacity-70">iwo@stolz-marketing.de</a>
+            </li>
+            <li class="mt-3 leading-[1.6] text-white/80">
+              STOLZ Marketing<br />
+              Heidelbergerstraße 15D<br />
+              64385 Reichelsheim
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Riesen-Wortmarke -->
+      <p
+        class="mt-14 text-[calc((100vw-80px)*0.135)] leading-[1.05] font-bold tracking-[-0.06em] whitespace-nowrap text-white md:text-[calc((100vw-160px)*0.135)]"
+        aria-hidden="true"
+      >
+        Stolz Marketing
+      </p>
+
+      <!-- Legal-Zeile -->
+      <div class="mt-6 flex flex-col gap-3 border-t border-white/15 pt-5 text-sm font-medium text-white/70 md:flex-row md:items-center md:justify-between">
+        <p class="flex items-center gap-3">
+          <span class="font-display text-lg font-extrabold tracking-[-0.05em] text-white">STOLZ</span>
+          © Stolz Marketing 2026
+        </p>
+        <p>Webdesign & Marketing aus Reichelsheim — für lokale Betriebe im Rhein-Main-Gebiet</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Negativ-Rundungen an den weißen Notches (Technik wie Projekt-Grid).
+     Rechts (Block oben rechts): Kurven links daneben + darunter. */
+  .fnotch-r::before,
+  .fnotch-r::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 0 100%, transparent 20px, var(--color-white) 20px);
+  }
+  .fnotch-r::before {
+    top: 0;
+    left: -20px;
+  }
+  .fnotch-r::after {
+    top: 100%;
+    right: 0;
+  }
+  /* Links (Block oben links): Kurven rechts daneben + darunter. */
+  .fnotch-l::before,
+  .fnotch-l::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 100% 100%, transparent 20px, var(--color-white) 20px);
+  }
+  .fnotch-l::before {
+    top: 0;
+    right: -20px;
+  }
+  .fnotch-l::after {
+    top: 100%;
+    left: 0;
+  }
+</style>
+
+<script>
+  // Sanft nach ganz oben scrollen
+  document.querySelectorAll('[data-nach-oben]').forEach((btn) =>
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' })),
+  );
+</script>

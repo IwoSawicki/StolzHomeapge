@@ -1,0 +1,63 @@
+---
+// LEISTUNGEN-VARIANTE F „Typografisch": dunkle Sektion ganz ohne Bilder.
+// Zwei Spalten mit Riesen-Nummer, Headline, Kurztext und den Werkzeugen
+// als Check-Liste (volle Namen), darunter unterstrichener Text-Link.
+// Auf Desktop trennt eine feine Linie die Spalten.
+import { saeulen } from '../../data/leistungen';
+import SectionLabel from '../SectionLabel.astro';
+
+interface Props {
+  /** Anker-ID — auf der Vorschau-Seite überschreiben (sonst doppelt) */
+  id?: string;
+}
+const { id = 'leistungen' } = Astro.props;
+---
+
+<section id={id} class="scroll-mt-24 bg-dark px-5 py-16 md:px-10 md:py-24 xl:py-28">
+  <div class="mx-auto max-w-[1200px]">
+    <div class="flex flex-col items-center text-center">
+      <SectionLabel text="Leistungen" theme="dark" />
+      <h2 class="mt-2 max-w-[680px] text-4xl font-bold text-balance leading-[1.05] tracking-[-0.06em] text-white md:text-40 xl:text-5xl">
+        Zwei Dinge, die jeder Betrieb braucht.
+      </h2>
+      <p class="mt-2 max-w-[620px] text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-white/70">
+        Kunden und Mitarbeiter. Alles, was wir tun, zahlt auf eines dieser beiden Ziele ein.
+      </p>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 gap-12 xl:mt-20 xl:grid-cols-2 xl:gap-0">
+      {
+        saeulen.map((s, i) => (
+          <div class={`flex flex-col items-start ${i === 1 ? 'border-t border-white/12 pt-12 xl:border-t-0 xl:border-l xl:pt-0 xl:pl-16' : 'xl:pr-16'}`}>
+            <p class="font-display text-6xl font-extrabold tracking-[-0.04em] text-lime/90 md:text-7xl" aria-hidden="true">
+              {s.nummer}
+            </p>
+            <h3 class="mt-4 text-3xl font-bold tracking-[-0.04em] text-white md:text-4xl">{s.name}</h3>
+            <p class="mt-3 max-w-[460px] text-base font-medium leading-[1.5] text-white/70 md:text-lg">{s.kurz}</p>
+            <ul class="mt-7 flex w-full flex-col" aria-label={`Werkzeuge für ${s.name}`}>
+              {s.werkzeuge.map((w) => (
+                <li class="flex items-center gap-3 border-t border-white/10 py-3 text-base font-medium text-white last:border-b md:text-lg">
+                  <span class="flex size-5.5 shrink-0 items-center justify-center rounded-full bg-lime" aria-hidden="true">
+                    <svg class="size-3 text-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m5 13 4 4L19 7" />
+                    </svg>
+                  </span>
+                  {w.name}
+                </li>
+              ))}
+            </ul>
+            <a
+              href={s.href}
+              class="group mt-8 inline-flex items-center gap-2 text-lg font-semibold text-white underline decoration-white/40 decoration-2 underline-offset-8 transition-colors duration-200 hover:decoration-lime"
+            >
+              Mehr zur {s.name}
+              <svg class="size-4.5 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14m-6-6 6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

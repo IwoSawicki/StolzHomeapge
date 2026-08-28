@@ -1,0 +1,94 @@
+---
+// LEISTUNGEN-VARIANTE B „Riesige Zeilen": dunkle Sektion im Stil der
+// bisherigen Expertise-Liste, aber nur zwei verlinkte Zeilen. Beim Hover
+// wächst links das Vorschaubild auf (Desktop), die übrige Zeile dimmt.
+// Unter jedem Namen eine Zeile mit den Werkzeug-Begriffen.
+import { Image } from 'astro:assets';
+import Button from '../Button.astro';
+import SectionLabel from '../SectionLabel.astro';
+import { saeulen } from '../../data/leistungen';
+
+interface Props {
+  /** Anker-ID — auf der Vorschau-Seite überschreiben (sonst doppelt) */
+  id?: string;
+}
+const { id = 'leistungen' } = Astro.props;
+---
+
+<section id={id} class="scroll-mt-24 bg-dark px-5 py-16 md:px-10 md:py-24 xl:py-28">
+  <div class="mx-auto max-w-[1200px]">
+    <div class="grid grid-cols-1 gap-8 xl:grid-cols-[220px_1fr_320px] xl:gap-10">
+      <div class="h-fit">
+        <SectionLabel text="Leistungen" theme="dark" />
+      </div>
+      <h2 class="max-w-[560px] text-3xl font-semibold text-balance leading-[1.12] tracking-[-0.02em] text-white md:text-4xl xl:mx-auto xl:text-center">
+        Zwei Dinge, die jeder Betrieb braucht.
+      </h2>
+      <div class="flex flex-col items-start gap-5">
+        <p class="text-base font-medium leading-[1.5] text-white/70">
+          Kunden und Mitarbeiter — alles, was wir tun, zahlt auf eines dieser beiden Ziele ein.
+        </p>
+        <Button href="/kontakt" variant="white">Kostenlose Beratung</Button>
+      </div>
+    </div>
+
+    <ul class="saeulen-liste mt-14 xl:mt-20" aria-label="Unsere zwei Leistungen">
+      {
+        saeulen.map((s) => (
+          <li class="saeulen-zeile group border-t border-white/12 transition-opacity duration-300 last:border-b">
+            <a href={s.href} class="flex flex-col gap-3 py-7 md:py-8 xl:py-10">
+              <div class="flex items-center">
+                {/* Mobil/Tablet: kleines Bild dauerhaft links */}
+                <span class="mr-4 block shrink-0 xl:hidden">
+                  <Image
+                    src={s.bild}
+                    alt=""
+                    widths={[120]}
+                    sizes="56px"
+                    class={`size-14 rounded-10 object-cover ${s.fokus === 'top' ? 'object-top' : 'object-center'}`}
+                  />
+                </span>
+                {/* Desktop: Vorschaubild wächst beim Hover von Breite 0 auf */}
+                <span class="hidden overflow-hidden transition-[width] duration-500 ease-out xl:block xl:w-0 xl:group-hover:w-[240px]">
+                  <Image
+                    src={s.bild}
+                    alt=""
+                    widths={[440]}
+                    sizes="220px"
+                    class={`mr-5 h-[132px] w-[220px] rounded-14 object-cover ${s.fokus === 'top' ? 'object-top' : 'object-center'}`}
+                  />
+                </span>
+                <span class="flex-1 text-3xl font-semibold tracking-[-0.03em] text-white md:text-5xl xl:text-7xl">
+                  {s.name}
+                </span>
+                <span
+                  class="ml-4 flex size-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 group-hover:rotate-45 group-hover:bg-lime group-hover:text-dark md:size-13"
+                  aria-hidden="true"
+                >
+                  <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg>
+                </span>
+              </div>
+              <p class="max-w-[640px] text-sm font-medium text-white/50 md:text-base">
+                {s.pills.join(' · ')}
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Hover über die Liste: alle Zeilen dimmen außer der aktiven */
+  @media (hover: hover) {
+    .saeulen-liste:hover .saeulen-zeile {
+      opacity: 0.35;
+    }
+    .saeulen-liste:hover .saeulen-zeile:hover {
+      opacity: 1;
+    }
+  }
+</style>

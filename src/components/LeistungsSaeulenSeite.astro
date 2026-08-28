@@ -1,0 +1,158 @@
+---
+// Gemeinsame Vorlage der beiden Leistungs-Unterseiten
+// (/leistungen/kundengewinnung und /leistungen/mitarbeitergewinnung).
+// Aufbau: Hero (H1 + Intro + Bild) → Werkzeuge & Techniken →
+// echte Zahlen → passende Projekte → Verweis auf die andere Säule.
+// Die einzelnen Leistungen (Google Ads, Social Media, SEO, …) leben
+// hier — auf der Startseite stehen nur noch die zwei Säulen.
+import { Image } from 'astro:assets';
+import SectionLabel from './SectionLabel.astro';
+import Button from './Button.astro';
+import ProjekteGrid from './ProjekteGrid.astro';
+import { saeulen, type Saeule } from '../data/leistungen';
+import { projekte, bereicheVon, type Bereich } from '../data/projekte';
+
+interface Props {
+  saeule: Saeule;
+  /** Filter für die Projekt-Beispiele unten */
+  bereich: Bereich;
+}
+const { saeule, bereich } = Astro.props;
+
+const andere = saeulen.find((s) => s.slug !== saeule.slug)!;
+const passendeProjekte = projekte.filter((p) => bereicheVon(p).includes(bereich)).slice(0, 4);
+---
+
+<main>
+  <!-- Hero -->
+  <section class="px-5 pt-12 pb-4 md:px-10 md:pt-20">
+    <div class="mx-auto max-w-[1200px]">
+      <p class="flex items-center gap-2 text-sm font-semibold text-dark">
+        <span class="inline-block size-[7px] rounded-full bg-blue" aria-hidden="true"></span>
+        Leistung {saeule.nummer} — {saeule.name}
+      </p>
+      <div class="mt-4 grid grid-cols-1 gap-8 xl:grid-cols-[1.2fr_1fr] xl:gap-16">
+        <h1 class="text-4xl font-bold text-balance leading-[1.05] tracking-[-0.05em] text-dark md:text-5xl xl:text-6xl">
+          {saeule.claim}
+        </h1>
+        <div class="flex flex-col gap-4 text-lg font-medium leading-[1.5] text-dark/80 xl:pt-2">
+          {saeule.intro.map((absatz) => <p>{absatz}</p>)}
+        </div>
+      </div>
+      <div class="mt-10 overflow-hidden rounded-[24px] md:mt-14">
+        <Image
+          src={saeule.bild}
+          alt={`Beispiele aus unserer Arbeit: ${saeule.name}`}
+          widths={[800, 1400, 2000]}
+          sizes="(min-width:1200px) 1200px, 100vw"
+          class={`aspect-[16/9] w-full object-cover md:aspect-[16/7] ${saeule.fokus === 'top' ? 'object-top' : 'object-center'}`}
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Werkzeuge & Techniken -->
+  <section class="px-5 py-14 md:px-10 md:py-20">
+    <div class="mx-auto max-w-[1200px]">
+      <div class="max-w-[640px]">
+        <SectionLabel text="Werkzeuge & Techniken" />
+        <h2 class="mt-2 text-3xl font-bold text-balance leading-[1.1] tracking-[-0.04em] text-dark md:text-4xl">
+          Womit wir das erreichen.
+        </h2>
+        <p class="mt-3 text-lg font-medium leading-[1.4] text-dark/70">
+          Kein Baukasten, kein Bauchladen — wir setzen genau die Werkzeuge ein, die auf Ihr Ziel
+          einzahlen. Das sind die wichtigsten:
+        </p>
+      </div>
+      <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
+        {
+          saeule.werkzeuge.map((w, i) => (
+            <article class="flex flex-col rounded-[22px] bg-bg-soft p-6 md:p-7">
+              <span class="flex size-9 items-center justify-center rounded-[10px] bg-dark text-sm font-bold text-lime tabular-nums" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="mt-4 text-xl font-semibold tracking-[-0.02em] text-dark">{w.name}</h3>
+              <p class="mt-2 text-base font-medium leading-[1.5] text-dark/70">{w.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Echte Zahlen -->
+  <section class="px-5 pb-14 md:px-10 md:pb-20">
+    <div class="mx-auto max-w-[1200px] rounded-[24px] bg-dark px-7 py-10 md:px-12 md:py-12">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+        {
+          saeule.zahlen.map((z) => (
+            <div>
+              <p class="text-4xl font-bold tracking-[-0.04em] text-lime md:text-5xl">{z.wert}</p>
+              <p class="mt-1.5 text-base font-medium text-white/80">{z.label}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Passende Projekte -->
+  {
+    passendeProjekte.length > 0 && (
+      <section class="px-5 py-6 md:px-10 md:py-10">
+        <div class="mx-auto max-w-[1200px]">
+          <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div class="max-w-[560px]">
+              <SectionLabel text="Projekte" />
+              <h2 class="mt-2 text-3xl font-bold text-balance leading-[1.1] tracking-[-0.04em] text-dark md:text-4xl">
+                So sieht das in echt aus.
+              </h2>
+            </div>
+            <Button href="/projekte" variant="light">Alle Projekte ansehen</Button>
+          </div>
+          <div class="mt-10">
+            <ProjekteGrid projekte={passendeProjekte} />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- CTA + Verweis auf die andere Säule -->
+  <section class="px-5 py-14 md:px-10 md:py-20">
+    <div class="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 xl:grid-cols-[1.4fr_1fr]">
+      <div class="flex flex-col items-start rounded-[24px] bg-blue-light p-7 md:p-10">
+        <h2 class="max-w-[520px] text-3xl font-bold text-balance leading-[1.1] tracking-[-0.04em] text-dark md:text-4xl">
+          Lassen Sie uns über Ihren Betrieb sprechen.
+        </h2>
+        <p class="mt-3 max-w-[480px] text-lg font-medium leading-[1.4] text-dark/70">
+          Kostenlos und unverbindlich: Wir schauen gemeinsam, wo bei Ihnen das größte Potenzial
+          liegt — und sagen ehrlich, wenn wir nicht der Richtige sind.
+        </p>
+        <div class="mt-7 flex flex-col gap-2.5 md:flex-row">
+          <Button href="/kontakt" variant="blue" shadow="blue-glow">Jetzt Potenzial checken lassen</Button>
+          <Button href="tel:+491784444156" variant="light">Direkt anrufen – 0178 4444 156</Button>
+        </div>
+      </div>
+      <a
+        href={andere.href}
+        class="group relative flex flex-col justify-between overflow-hidden rounded-[24px] bg-dark p-7 md:p-10"
+      >
+        <div>
+          <p class="text-sm font-semibold text-lime">Auch interessant</p>
+          <p class="mt-2 text-2xl font-bold tracking-[-0.03em] text-white md:text-3xl">{andere.name}</p>
+          <p class="mt-2 max-w-[380px] text-base font-medium leading-[1.5] text-white/70">{andere.kurz}</p>
+        </div>
+        <span
+          class="mt-8 flex size-11 items-center justify-center rounded-full bg-lime text-dark transition-transform duration-300 group-hover:rotate-45"
+          aria-hidden="true"
+        >
+          <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17 17 7M8 7h9v9" />
+          </svg>
+        </span>
+      </a>
+    </div>
+  </section>
+</main>

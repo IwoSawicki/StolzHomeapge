@@ -1,0 +1,68 @@
+---
+// LEISTUNGEN-VARIANTE D „Split-Reihen": jede Säule als volle Breite —
+// großes Bild auf der einen, Inhalt auf der anderen Seite (zweite Reihe
+// gespiegelt). Werkzeuge als Check-Liste statt Pills, klarer Button
+// zur Unterseite. Ruhig, aufgeräumt, viel Weißraum.
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import { saeulen } from '../../data/leistungen';
+
+interface Props {
+  /** Anker-ID — auf der Vorschau-Seite überschreiben (sonst doppelt) */
+  id?: string;
+}
+const { id = 'leistungen' } = Astro.props;
+---
+
+<section id={id} class="scroll-mt-24 px-5 py-16 md:px-10 md:py-24">
+  <div class="mx-auto max-w-[1200px]">
+    <SectionHeading label="Leistungen" headingMaxWidth={720}>
+      <svg slot="icon" class="size-[7px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+      </svg>
+      Zwei Dinge, die jeder Betrieb braucht.
+      <Fragment slot="description">
+        Kunden und Mitarbeiter. Alles, was wir tun, zahlt auf eines dieser beiden Ziele ein.
+      </Fragment>
+    </SectionHeading>
+
+    <div class="mt-12 flex flex-col gap-14 md:mt-16 xl:gap-20">
+      {
+        saeulen.map((s, i) => (
+          <div class="grid grid-cols-1 items-center gap-8 xl:grid-cols-2 xl:gap-16">
+            <div class={`overflow-hidden rounded-[24px] ${i % 2 === 1 ? 'xl:order-2' : ''}`}>
+              <Image
+                src={s.bild}
+                alt={`Beispiele aus unserer Arbeit: ${s.name}`}
+                widths={[600, 1200]}
+                sizes="(min-width:1200px) 570px, 100vw"
+                class={`aspect-[4/3] w-full object-cover ${s.fokus === 'top' ? 'object-top' : 'object-center'}`}
+              />
+            </div>
+            <div class={i % 2 === 1 ? 'xl:order-1' : ''}>
+              <p class="text-sm font-semibold text-blue tabular-nums">{s.nummer}</p>
+              <h3 class="mt-2 text-3xl font-bold tracking-[-0.04em] text-dark md:text-4xl">{s.name}</h3>
+              <p class="mt-3 max-w-[480px] text-lg font-medium leading-[1.5] text-dark/70">{s.kurz}</p>
+              <ul class="mt-6 grid grid-cols-1 gap-x-6 gap-y-2.5 md:grid-cols-2" aria-label={`Werkzeuge für ${s.name}`}>
+                {s.pills.map((pill) => (
+                  <li class="flex items-center gap-2.5 text-base font-medium text-dark">
+                    <span class="flex size-5 shrink-0 items-center justify-center rounded-full bg-dark" aria-hidden="true">
+                      <svg class="size-2.5 text-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m5 13 4 4L19 7" />
+                      </svg>
+                    </span>
+                    {pill}
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-8">
+                <Button href={s.href} variant="dark">Mehr zur {s.name}</Button>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

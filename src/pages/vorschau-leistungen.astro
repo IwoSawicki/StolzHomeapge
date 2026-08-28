@@ -1,0 +1,48 @@
+---
+// Interne Vorschau: Design-Varianten der neuen Zwei-Säulen-
+// Leistungssektion untereinander zum Vergleichen. Nicht verlinkt,
+// noindex, nicht in der Sitemap. Runde 1 (A/B/C) wurde verworfen —
+// die Komponenten liegen weiter unter components/sections/.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LeistungenZweiD from '../components/sections/LeistungenZweiD.astro';
+import LeistungenZweiE from '../components/sections/LeistungenZweiE.astro';
+import LeistungenZweiF from '../components/sections/LeistungenZweiF.astro';
+import LeistungenZweiG from '../components/sections/LeistungenZweiG.astro';
+---
+
+<BaseLayout title="Vorschau: Leistungs-Sektion | STOLZ Marketing" noindex>
+  <Header />
+  <main>
+    <section class="px-5 pt-12 pb-4 text-center md:pt-16">
+      <h1 class="text-3xl font-bold tracking-[-0.04em] text-dark md:text-4xl">
+        Leistungs-Sektion: Runde 2 — Varianten D, E, F
+      </h1>
+      <p class="mt-2 text-base font-medium text-dark/60">
+        Interne Vorschau — Kacheln/Links führen jeweils auf die neue Unterseite.
+      </p>
+    </section>
+
+    <div class="mt-8 bg-blue px-5 py-3 text-center text-sm font-bold text-white">
+      Variante D — Split-Reihen (Bild + Check-Liste, gespiegelt)
+    </div>
+    <LeistungenZweiD id="variante-d" />
+
+    <div class="bg-blue px-5 py-3 text-center text-sm font-bold text-white">
+      Variante E — Dunkle Notch-Karten (Negativ-Rundung + Lime-Pfeil)
+    </div>
+    <LeistungenZweiE id="variante-e" />
+
+    <div class="bg-blue px-5 py-3 text-center text-sm font-bold text-white">
+      Variante F — Typografisch (ohne Bilder, Werkzeuge als Liste)
+    </div>
+    <LeistungenZweiF id="variante-f" />
+
+    <div class="bg-blue px-5 py-3 text-center text-sm font-bold text-white">
+      Variante G — Bento wie damals (alte „Warum wir?"-Sektion, zwei Karten)
+    </div>
+    <LeistungenZweiG id="variante-g" />
+  </main>
+  <Footer />
+</BaseLayout>

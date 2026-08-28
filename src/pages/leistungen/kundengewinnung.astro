@@ -1,0 +1,22 @@
+---
+// Leistungs-Unterseite „Kundengewinnung" — Inhalte kommen aus
+// src/data/leistungen.ts (dort auch die Werkzeuge & Zahlen pflegen).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import MarqueeCta from '../../components/sections/MarqueeCta.astro';
+import LeistungsSaeulenSeite from '../../components/LeistungsSaeulenSeite.astro';
+import { saeulen } from '../../data/leistungen';
+
+const saeule = saeulen.find((s) => s.slug === 'kundengewinnung')!;
+---
+
+<BaseLayout
+  title="Kundengewinnung für Handwerksbetriebe | STOLZ Marketing"
+  description="Mehr qualifizierte Anfragen für Ihren Betrieb: Website, Google Ads, lokales SEO, Social Media und Video — als ein System, das messbar Anfragen bringt."
+>
+  <Header />
+  <LeistungsSaeulenSeite saeule={saeule} bereich="kundengewinnung" />
+  <MarqueeCta />
+  <Footer />
+</BaseLayout>

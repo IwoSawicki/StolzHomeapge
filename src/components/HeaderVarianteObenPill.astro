@@ -9,10 +9,10 @@
 //   Links auf, dahinter wird die Seite geblurrt.
 import Logo from './Logo.astro';
 import Button from './Button.astro';
-import { projekte } from '../data/projekte';
+import { alleProjekte } from '../data/projekte';
 
 const links = [
-  { label: 'Projekte', href: '/projekte', badge: projekte.length },
+  { label: 'Projekte', href: '/projekte', badge: alleProjekte.length },
   { label: 'Leistungen', href: '/#leistungen' },
   { label: 'Prozess', href: '/#prozess' },
   { label: 'Ergebnis', href: '/#ergebnis' },
