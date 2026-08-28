@@ -8,6 +8,7 @@ import Footer from '../components/Footer.astro';
 import ProjekteGrid from '../components/ProjekteGrid.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import Button from '../components/Button.astro';
+import Kundenlogos from '../components/sections/Kundenlogos.astro';
 import { projekte, projektBereiche, bereichAnzahl } from '../data/projekte';
 
 // alle Projekte in der Reihenfolge aus src/data/projekte.ts
@@ -62,6 +63,9 @@ const filter = projektBereiche.filter((f) => bereichAnzahl(f.key) > 0);
         </div>
       </div>
     </section>
+
+    {/* Kunden-Logowand unter den Projekten (ohne Überschrift, steht für sich) */}
+    <Kundenlogos />
   </main>
   <Footer />
 </BaseLayout>

@@ -29,7 +29,8 @@ const kachelWidths = [480, 760, 1140];
     projekte.map((projekt, i) => {
       /* Nur fertig befüllte Projekte sind verlinkt; die übrigen bekommen
          eine „Bald mehr"-Kachel (leicht ausgegraut, nicht klickbar). */
-      const verlinkt = Boolean(projekt.bereit && projekt.details);
+      /* Ausgeblendete Projekte haben keine gebaute Unterseite — nie verlinken. */
+      const verlinkt = Boolean(projekt.bereit && projekt.details && !projekt.versteckt);
       const Karte = verlinkt ? 'a' : 'div';
       return (
       <Karte
@@ -54,6 +55,7 @@ const kachelWidths = [480, 760, 1140];
                 widths={kachelWidths}
                 sizes={kachelSizes}
                 vorrang={i < vorrangAnzahl}
+                platzhalterText={projekt.name}
               />
             ) : (
               <VideoTile
@@ -62,6 +64,7 @@ const kachelWidths = [480, 760, 1140];
                 widths={kachelWidths}
                 sizes={kachelSizes}
                 vorrang={i < vorrangAnzahl}
+                platzhalterText={projekt.name}
               />
             )}
           </div>

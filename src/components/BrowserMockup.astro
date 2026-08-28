@@ -24,6 +24,8 @@ interface Props {
   /** sizes-Attribut — muss zur echten Anzeigebreite passen, sonst lädt
    *  der Browser eine zu kleine (unscharfe) oder zu große Datei */
   sizes?: string;
+  /** Beschriftung der Platzhalter-Fläche, wenn kein Screenshot da ist */
+  platzhalterText?: string;
   /** WebP-Qualität; Fotos vertragen weniger als UI-Screenshots */
   qualitaet?: number;
   /** true = Bild sofort laden (nur für das erste Bild über der Falz) */
@@ -38,11 +40,12 @@ const {
   mockup = false,
   widths = [480, 768, 1024],
   qualitaet = 70,
+  platzhalterText,
   sizes = '(min-width: 810px) 50vw, 100vw',
   vorrang = false,
   class: extra = '',
 } = Astro.props;
-const wortmarke = domain.replace(/^www\./, '').split('.')[0];
+const wortmarke = platzhalterText ?? domain.replace(/^www\./, '').split('.')[0];
 ---
 
 {

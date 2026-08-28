@@ -1,0 +1,153 @@
+---
+// INTERNE ÜBERSICHT — /alle-projekte
+// Zeigt ALLE Projekte inklusive der ausgeblendeten. Gedacht als
+// Referenzmappe für Iwo (Termine beim Kunden, eigener Überblick).
+// noindex + aus der Sitemap ausgeschlossen, nirgends verlinkt.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProjekteGrid from '../components/ProjekteGrid.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import { alleProjekte } from '../data/projekte';
+
+const sichtbar = alleProjekte.filter((p) => !p.versteckt);
+const ausgeblendet = alleProjekte.filter((p) => p.versteckt);
+
+const gruppen = [
+  {
+    titel: 'Auf der Website sichtbar',
+    text: 'Diese Projekte stehen öffentlich unter /projekte.',
+    projekte: sichtbar,
+  },
+  {
+    titel: 'Nicht auf der Website',
+    text: 'Ausgeblendet, aber vollständig gespeichert — jederzeit wieder einblendbar.',
+    projekte: ausgeblendet,
+  },
+];
+---
+
+<BaseLayout title="Alle Projekte (intern) | STOLZ Marketing" noindex>
+  <Header />
+  <main>
+    <section class="px-5 pt-14 pb-10 md:px-10 md:pt-24">
+      <div class="mx-auto max-w-[1200px]">
+        <div class="max-w-[680px]">
+          <SectionLabel text="Interne Übersicht" />
+          <h1 class="mt-2 text-4xl font-bold text-balance leading-[1.05] tracking-[-0.06em] text-dark md:text-40 xl:text-5xl">
+            Alle Projekte auf einen Blick
+          </h1>
+          <p class="mt-3 max-w-[560px] text-lg font-medium text-balance leading-[1.4] tracking-[-0.01em] text-dark">
+            Vollständige Referenzmappe — auch die Projekte, die aktuell nicht öffentlich auf der
+            Website stehen. Diese Seite ist nicht verlinkt und für Google gesperrt.
+          </p>
+        </div>
+
+        <!-- Zahlen auf einen Blick -->
+        <dl class="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-8 md:grid-cols-4">
+          <div>
+            <dt class="text-xs font-semibold tracking-[0.14em] text-gray uppercase">Projekte gesamt</dt>
+            <dd class="mt-1.5 text-3xl font-bold tracking-[-0.03em] text-dark tabular-nums">{alleProjekte.length}</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-semibold tracking-[0.14em] text-gray uppercase">Öffentlich</dt>
+            <dd class="mt-1.5 text-3xl font-bold tracking-[-0.03em] text-dark tabular-nums">{sichtbar.length}</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-semibold tracking-[0.14em] text-gray uppercase">Websites</dt>
+            <dd class="mt-1.5 text-3xl font-bold tracking-[-0.03em] text-dark tabular-nums">
+              {alleProjekte.filter((p) => p.art === 'website').length}
+            </dd>
+          </div>
+          <div>
+            <dt class="text-xs font-semibold tracking-[0.14em] text-gray uppercase">Foto &amp; Video</dt>
+            <dd class="mt-1.5 text-3xl font-bold tracking-[-0.03em] text-dark tabular-nums">
+              {alleProjekte.filter((p) => p.art === 'video').length}
+            </dd>
+          </div>
+        </dl>
+
+        {
+          gruppen.map((gruppe) => (
+            <div class="mt-16 md:mt-20">
+              <div class="flex flex-col gap-1 border-b border-border pb-5">
+                <h2 class="text-2xl font-bold tracking-[-0.03em] text-dark md:text-3xl">
+                  {gruppe.titel}
+                  <span class="ml-2 align-middle text-lg font-semibold text-gray tabular-nums">
+                    {gruppe.projekte.length}
+                  </span>
+                </h2>
+                <p class="text-base font-medium text-dark/60">{gruppe.text}</p>
+              </div>
+              <div class="mt-10">
+                <ProjekteGrid projekte={gruppe.projekte} />
+              </div>
+            </div>
+          ))
+        }
+
+        <!-- Kompakte Liste zum schnellen Durchgehen -->
+        <div class="mt-20 md:mt-24">
+          <h2 class="text-2xl font-bold tracking-[-0.03em] text-dark md:text-3xl">Liste zum Durchgehen</h2>
+          <div class="mt-6 overflow-x-auto">
+            <table class="w-full min-w-[640px] border-collapse text-left">
+              <thead>
+                <tr class="border-b border-border">
+                  <th class="py-3 pr-4 text-xs font-semibold tracking-[0.14em] text-gray uppercase">Projekt</th>
+                  <th class="py-3 pr-4 text-xs font-semibold tracking-[0.14em] text-gray uppercase">Leistungen</th>
+                  <th class="py-3 pr-4 text-xs font-semibold tracking-[0.14em] text-gray uppercase">Website</th>
+                  <th class="py-3 text-xs font-semibold tracking-[0.14em] text-gray uppercase">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  alleProjekte.map((projekt) => (
+                    <tr class="border-b border-border last:border-b-0">
+                      <td class="py-3.5 pr-4 text-base font-semibold text-dark">{projekt.name}</td>
+                      <td class="py-3.5 pr-4 text-base font-medium text-dark/60">
+                        {projekt.kategorien.join(' · ')}
+                      </td>
+                      <td class="py-3.5 pr-4 text-base font-medium">
+                        {projekt.domain ? (
+                          <a
+                            href={`https://${projekt.domain}`}
+                            target="_blank"
+                            rel="noopener"
+                            class="text-blue transition-colors hover:text-blue-bright"
+                          >
+                            {projekt.domain}
+                          </a>
+                        ) : (
+                          <span class="text-dark/40">—</span>
+                        )}
+                      </td>
+                      <td class="py-3.5 text-base font-medium">
+                        {projekt.versteckt ? (
+                          <span class="rounded-full bg-bg-soft px-3 py-1 text-sm font-semibold text-gray">
+                            nicht öffentlich
+                          </span>
+                        ) : projekt.bereit && projekt.details ? (
+                          <a
+                            href={`/projekte/${projekt.slug}`}
+                            class="rounded-full bg-blue/10 px-3 py-1 text-sm font-semibold text-blue transition-colors hover:bg-blue/20"
+                          >
+                            Projektseite
+                          </a>
+                        ) : (
+                          <span class="rounded-full bg-bg-soft px-3 py-1 text-sm font-semibold text-dark/60">
+                            Bald mehr
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
