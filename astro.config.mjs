@@ -18,7 +18,12 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     preview: {
-      allowedHosts: ['stolz-marketing.de', 'www.stolz-marketing.de', 'dev.stolz-marketing.de'],
+      allowedHosts: [
+        'stolz-marketing.de',
+        'www.stolz-marketing.de',
+        'dev.stolz-marketing.de',
+        'redesign.stolz-marketing.de',
+      ],
     },
   },
 });
