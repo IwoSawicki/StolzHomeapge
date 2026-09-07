@@ -1,0 +1,220 @@
+---
+/* Kopfbereich der Vorlage. Er besteht aus drei Teilen:
+   1. statische Navigation im Seitenkopf (scrollt mit weg)
+   2. Sticky-Leiste, die ab 500px Scrolltiefe von oben einfährt
+   3. Vollbild-Burger-Menü unter 1040px
+
+   Die Vorlage steuert Sichtbarkeit über JS-Inline-Styles; hier übernehmen
+   das Media Queries (Breakpoint „nav" = 1040px), JS bleibt auf das
+   Nötige beschränkt: Scroll-Schwelle und Menü-Umschalter. */
+import Logo from './Logo.astro';
+import Button from './Button.astro';
+import PfeilIcon from './icons/Papierflieger.astro';
+import { hauptnavigation, erstgespraech } from '../data/navigation';
+
+interface Props {
+  /** dunkel = Grün (Startseite), hell = Weiß (Projekte-Seite) */
+  variante?: 'dunkel' | 'hell';
+}
+const { variante = 'dunkel' } = Astro.props;
+
+const istHell = variante === 'hell';
+
+const navLink = istHell
+  ? 'text-ink hover:bg-paper-hover'
+  : 'text-cream hover:bg-forest-card';
+---
+
+{/* --- Sticky-Leiste: ab 500px Scrolltiefe ------------------------------- */}
+<nav
+  id="sticky-nav"
+  data-sticky-nav
+  aria-label="Hauptnavigation"
+  class:list={[
+    'fixed inset-x-0 top-0 z-50 flex flex-wrap items-center gap-x-24 gap-y-12',
+    'px-page-x py-12 backdrop-blur-[14px] backdrop-saturate-[1.6]',
+    'pointer-events-none -translate-y-[104%] opacity-0 will-change-transform',
+    'transition-[transform,opacity] duration-[380ms] ease-sticky',
+    'data-[stuck]:pointer-events-auto data-[stuck]:translate-y-0 data-[stuck]:opacity-100',
+    istHell
+      ? 'border-b border-line bg-paper/82'
+      : 'border-b border-lime/12 bg-forest/72',
+  ]}
+>
+  <a href="/" class="inline-flex items-center no-underline" aria-label="Zur Startseite">
+    <Logo variante={istHell ? 'dunkel' : 'hell'} hoehe={24} />
+  </a>
+
+  <div class="ml-auto hidden flex-wrap items-center gap-8 nav:flex">
+    {
+      hauptnavigation.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'rounded-8 px-12 py-8 text-14 font-medium no-underline transition-colors',
+            istHell ? 'text-ink hover:bg-paper-hover' : 'text-cream hover:bg-lime/10',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+
+  <Button href={erstgespraech.href} variante="lime-klein" class="hidden nav:inline-flex">
+    <PfeilIcon />
+    {erstgespraech.label}
+  </Button>
+
+  <button
+    type="button"
+    data-menu-open
+    aria-label="Menü öffnen"
+    aria-expanded="false"
+    aria-controls="burger-menue"
+    class="ml-auto flex h-42 w-42 flex-none cursor-pointer flex-col items-center justify-center gap-5 rounded-10 border border-lime/28 bg-lime/8 p-0 nav:hidden"
+  >
+    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
+    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
+    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
+  </button>
+</nav>
+
+{/* --- Statische Navigation im Seitenkopf -------------------------------- */}
+<nav
+  aria-label="Hauptnavigation"
+  class="relative z-2 flex flex-wrap items-center gap-x-28 gap-y-14 px-page-x py-18"
+>
+  <a href="/" class="inline-flex items-center no-underline" aria-label="Zur Startseite">
+    <Logo variante={istHell ? 'dunkel' : 'hell'} hoehe={26} />
+  </a>
+
+  <div class="ml-auto hidden flex-wrap items-center gap-8 nav:flex">
+    {
+      hauptnavigation.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'rounded-8 px-12 py-8 text-14 font-medium no-underline transition-colors',
+            navLink,
+          ]}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+
+  {/* Im Seitenkopf ist der CTA etwas höher und leuchtet stärker */}
+  <a
+    href={erstgespraech.href}
+    class="hidden h-44 items-center gap-10 rounded-8 bg-lime px-18 text-15 font-medium text-forest-deep no-underline shadow-glow-strong transition-colors duration-200 hover:bg-lime-hover nav:inline-flex"
+  >
+    <PfeilIcon />
+    {erstgespraech.label}
+  </a>
+
+  <button
+    type="button"
+    data-menu-open
+    aria-label="Menü öffnen"
+    aria-expanded="false"
+    aria-controls="burger-menue"
+    class="ml-auto flex h-42 w-42 flex-none cursor-pointer flex-col items-center justify-center gap-5 rounded-10 border border-lime/28 bg-lime/8 p-0 nav:hidden"
+  >
+    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
+    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
+    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
+  </button>
+</nav>
+
+{/* --- Burger-Menü ------------------------------------------------------- */}
+<div
+  id="burger-menue"
+  data-menu
+  class="fixed inset-0 z-60 hidden flex-col bg-forest px-page-x pt-14 pb-32 data-[open]:flex"
+>
+  <div class="flex items-center justify-between gap-16">
+    <a href="/" class="inline-flex items-center no-underline" aria-label="Zur Startseite">
+      <Logo variante="hell" hoehe={24} />
+    </a>
+    <button
+      type="button"
+      data-menu-close
+      aria-label="Menü schließen"
+      class="flex h-42 w-42 flex-none cursor-pointer items-center justify-center rounded-10 border border-lime/28 bg-lime/8 p-0 text-22 leading-none text-lime"
+    >
+      ×
+    </button>
+  </div>
+
+  <div class="mt-28 flex flex-col gap-4">
+    {
+      hauptnavigation.map((link) => (
+        <a
+          href={link.href}
+          data-menu-link
+          class="border-b border-edge-soft py-14 text-22 font-medium text-cream no-underline"
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+
+  <a
+    href={erstgespraech.href}
+    data-menu-link
+    class="mt-28 inline-flex h-50 items-center justify-center gap-10 rounded-10 bg-lime px-20 text-16 font-medium text-forest-deep no-underline shadow-glow"
+  >
+    <PfeilIcon />
+    {erstgespraech.label}
+  </a>
+</div>
+
+<script>
+  // Sticky-Leiste ab 500px Scrolltiefe einblenden
+  const stickyNav = document.querySelector<HTMLElement>('[data-sticky-nav]');
+  if (stickyNav) {
+    const pruefen = () => {
+      const y = document.scrollingElement?.scrollTop ?? window.scrollY ?? 0;
+      stickyNav.toggleAttribute('data-stuck', y > 500);
+    };
+    window.addEventListener('scroll', pruefen, { passive: true });
+    pruefen();
+  }
+
+  // Burger-Menü
+  const menue = document.querySelector<HTMLElement>('[data-menu]');
+  const oeffner = document.querySelectorAll<HTMLButtonElement>('[data-menu-open]');
+  const schliesser = document.querySelectorAll<HTMLElement>(
+    '[data-menu-close], [data-menu-link]',
+  );
+
+  if (menue) {
+    menue.inert = true;
+    const setzen = (offen: boolean) => {
+      menue.toggleAttribute('data-open', offen);
+      menue.inert = !offen;
+      // Vorlage: Seite hinter dem Overlay nicht mitscrollen lassen
+      document.body.style.overflow = offen ? 'hidden' : '';
+      oeffner.forEach((b) => b.setAttribute('aria-expanded', String(offen)));
+      if (offen) menue.querySelector<HTMLElement>('[data-menu-close]')?.focus();
+    };
+
+    oeffner.forEach((b) => b.addEventListener('click', () => setzen(true)));
+    schliesser.forEach((b) => b.addEventListener('click', () => setzen(false)));
+
+    // Mit Escape schließen, und wenn das Fenster über den Breakpoint wächst
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menue.hasAttribute('data-open')) setzen(false);
+    });
+    window.addEventListener(
+      'resize',
+      () => {
+        if (window.innerWidth >= 1040 && menue.hasAttribute('data-open')) setzen(false);
+      },
+      { passive: true },
+    );
+  }
+</script>

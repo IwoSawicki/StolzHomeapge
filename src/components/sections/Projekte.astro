@@ -1,0 +1,142 @@
+---
+/* Dunkles Projekte-Band: Kopf, Beweisfall „Umzüge Bergstraße", Raster mit
+   vier Projektkarten, Hinweiszeile zu den Kampagnenzahlen.
+   Vorlage: design/STARTSEITE.dc.html, data-screen-label="Projekte (dunkles Band)" */
+import { Image } from 'astro:assets';
+import Eyebrow from '../Eyebrow.astro';
+import Button from '../Button.astro';
+import BrowserRahmen from '../BrowserRahmen.astro';
+import { projekte } from '../../data/startseite';
+
+const screenshots = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/projekte/*.png',
+  { eager: true },
+);
+const bild = (datei: string) =>
+  screenshots[`../../assets/projekte/${datei}`]!.default;
+---
+
+<div
+  id="projekte"
+  class="flex flex-col items-center gap-64 bg-forest px-20 py-section-y"
+>
+  <header
+    class="flex w-[min(1160px,100%)] flex-col items-center gap-16 text-center"
+  >
+    <Eyebrow variante="dunkel">Projekte</Eyebrow>
+    <h2
+      class="m-0 text-h2 leading-h2-dark font-bold tracking-heading text-paper"
+    >
+      Unsere letzten <span
+        class="font-display font-semibold tracking-none italic">Projekte</span
+      >
+    </h2>
+  </header>
+
+  {/* --- Beweisfall ---------------------------------------------------- */}
+  <section class="flex w-[min(1160px,100%)] flex-col gap-16">
+    <div
+      class="flex flex-wrap items-center gap-40 rounded-16 border border-edge bg-forest-card p-48"
+    >
+      <div class="flex min-w-280 flex-1 basis-380 flex-col items-start gap-20">
+        <span class="text-13 font-medium tracking-eyebrow uppercase text-mint">
+          Umzüge Bergstraße · Umzüge und Entrümpelung
+        </span>
+        <h3
+          class="m-0 text-h3-proof leading-proof font-bold text-cream"
+        >
+          Von null auf&nbsp;<br /><span
+            class="marker font-display font-semibold italic">20&nbsp;Anfragen pro Monat</span
+          >
+        </h3>
+        <p class="m-0 max-w-520 text-17 leading-body text-mint">
+          Umzüge Bergstraße ist unser eigener Betrieb. Wir haben ihn mit denselben
+          Mitteln aufgebaut, mit denen wir für unsere Kunden arbeiten — Name, Logo,
+          Webseite, Google-Profil. Die ersten Anfragen kamen über bezahlte Werbung.
+        </p>
+        <Button href="/projekte" variante="dunkel">Zum Projekt</Button>
+      </div>
+
+      <div class="relative min-w-280 flex-1 basis-380">
+        <span
+          class="absolute right-14 bottom-14 z-2 rounded-full bg-lime px-12 py-5 text-12 font-bold tracking-badge text-forest-deep shadow-badge"
+        >
+          Eigener Betrieb
+        </span>
+        <BrowserRahmen domain="umzuege-bergstrasse.de" radius="r12">
+          <Image
+            src={bild('umzuege-bergstrasse-startseite.png')}
+            alt="Startseite von Umzüge Bergstraße"
+            widths={[600, 900, 1200]}
+            sizes="(min-width: 1200px) 540px, (min-width: 720px) 45vw, 90vw"
+            loading="lazy"
+            decoding="async"
+            class="block h-auto w-full"
+          />
+        </BrowserRahmen>
+      </div>
+    </div>
+  </section>
+
+  {/* --- Projektkarten -------------------------------------------------- */}
+  <section class="flex w-[min(1160px,100%)] flex-col gap-16">
+    <div
+      class="grid max-w-content grid-cols-[repeat(auto-fit,minmax(min(480px,100%),1fr))] gap-24"
+    >
+      {
+        projekte.map((projekt) => (
+          <article class="flex flex-col overflow-hidden rounded-16 border border-edge bg-forest-card">
+            <div class="px-16 pt-16">
+              <BrowserRahmen domain={projekt.domain}>
+                {projekt.screenshot ? (
+                  <Image
+                    src={bild(projekt.screenshot)}
+                    alt={projekt.screenshotAlt!}
+                    widths={[560, 840, 1140]}
+                    sizes="(min-width: 1200px) 540px, (min-width: 720px) 45vw, 90vw"
+                    loading="lazy"
+                    decoding="async"
+                    class="block h-auto w-full"
+                  />
+                ) : (
+                  /* Screenshot liegt noch nicht vor – Platzhalter wie in der Vorlage */
+                  <div
+                    class="flex aspect-[16/10] items-center justify-center"
+                    style="background: repeating-linear-gradient(45deg, var(--color-forest-card-alt) 0 14px, var(--color-forest) 14px 28px)"
+                  >
+                    <span class="font-mono text-13 text-mint">
+                      SCREENSHOT · DMK Bau
+                    </span>
+                  </div>
+                )}
+              </BrowserRahmen>
+            </div>
+
+            <div class="box-content flex flex-1 flex-col items-start gap-12 px-32 pt-28 pb-32">
+              <span class="text-13 font-medium tracking-eyebrow uppercase text-mint">
+                {projekt.eyebrow}
+              </span>
+              <h3 class="m-0 text-22 leading-card-wide font-bold text-cream">
+                {projekt.titel}
+              </h3>
+              <p class="m-0 text-17 leading-body text-mint">{projekt.text}</p>
+              <a
+                href={projekt.href}
+                class="mt-auto pt-8 text-17 font-medium text-cream underline decoration-1 underline-offset-4 transition-colors hover:text-lime"
+              >
+                Projekt ansehen →
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <p
+    class="m-0 -mt-32 w-[min(1160px,100%)] text-center text-15 leading-body text-mint-note"
+  >
+    Konkrete Kampagnenzahlen teilen wir aus Datenschutzgründen nicht auf der Homepage
+    — im persönlichen Gespräch gehen wir gerne auf die Ergebnisse ein.
+  </p>
+</div>

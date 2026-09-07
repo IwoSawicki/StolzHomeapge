@@ -1,0 +1,8 @@
+---
+/* Papierflieger im „Kostenloses Erstgespräch"-Button */
+interface Props { groesse?: number }
+const { groesse = 16 } = Astro.props;
+---
+<svg width={groesse} height={groesse} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d="M2 21l21-9L2 3l3 8 12 1-12 1z"></path>
+</svg>

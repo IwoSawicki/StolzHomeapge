@@ -1,0 +1,81 @@
+---
+/* Hero der Startseite: dunkles Band mit statischer Navigation, Eyebrow,
+   H1, Lead, zwei Sekundärbuttons mit Lichtschimmer und der 16:9-Videofläche,
+   die per negativem margin-bottom in die nächste Sektion hineinragt.
+   Vorlage: design/STARTSEITE.dc.html, "Hero zentriert" */
+import Header from '../Header.astro';
+import Eyebrow from '../Eyebrow.astro';
+---
+
+<div class="bg-forest">
+  <Header />
+  <div class="border-b border-edge-soft"></div>
+
+  <section
+    class="flex flex-col items-center gap-28 px-20 pt-hero-top text-center"
+  >
+    <Eyebrow variante="lime">Stolz Marketing</Eyebrow>
+
+    <h1
+      class="m-0 max-w-900 text-h1 leading-hero font-bold tracking-heading text-paper"
+    >
+      <span class="font-display font-semibold tracking-none italic"
+        >Volle Auftragsbücher</span
+      > &amp; passende Bewerber
+    </h1>
+
+    <p class="m-0 max-w-680 text-19 leading-body text-mint">
+      Für Handwerksbetriebe, die ihre Wunschprojekte gewinnen, offene Stellen besetzen
+      und ihren Betrieb online so zeigen wollen, wie er wirklich ist.
+    </p>
+
+    {/* Beide Buttons liegen nebeneinander und brechen erst unter 390px um */}
+    <div
+      class="flex w-full max-w-560 flex-wrap justify-center gap-10 hero:flex-nowrap"
+    >
+      <a
+        href="/kunden-gewinnen"
+        class="relative box-content inline-flex min-h-46 basis-full items-center justify-center overflow-hidden rounded-8 border border-lime-edge bg-lime/7 px-12 py-8 text-center text-14 leading-card font-medium text-cream no-underline transition-colors duration-200 hover:border-lime-edge-hover hover:bg-lime/14 hero:flex-1 hero:basis-0 btn:min-h-52 btn:px-18 btn:py-0 btn:text-16"
+      >
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-y-0 left-0 w-[45%] animate-sheen"
+          style="background: linear-gradient(100deg, rgb(228 245 63 / 0) 0%, rgb(228 245 63 / 0.22) 50%, rgb(228 245 63 / 0) 100%)"
+        ></span>
+        Neue Aufträge gewinnen
+      </a>
+      <a
+        href="/mitarbeiter-gewinnen"
+        class="relative box-content inline-flex min-h-46 basis-full items-center justify-center overflow-hidden rounded-8 border border-lime-edge bg-lime/7 px-12 py-8 text-center text-14 leading-card font-medium text-cream no-underline transition-colors duration-200 hover:border-lime-edge-hover hover:bg-lime/14 hero:flex-1 hero:basis-0 btn:min-h-52 btn:px-18 btn:py-0 btn:text-16"
+      >
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-y-0 left-0 w-[45%] animate-sheen"
+          style="background: linear-gradient(100deg, rgb(228 245 63 / 0) 0%, rgb(228 245 63 / 0.22) 50%, rgb(228 245 63 / 0) 100%)"
+        ></span>
+        Neue Mitarbeiter einstellen
+      </a>
+    </div>
+
+    {/*
+      Videofläche. Das Video fehlt noch (design/README.md, Offene Punkte Nr. 1),
+      deshalb steht hier die Platzhalterfläche der Vorlage.
+    */}
+    <div
+      class="relative z-1 mt-32 mb-hero-overlap flex aspect-video w-[min(1160px,100%)] flex-col items-center justify-center gap-20 rounded-16 border border-edge box-border"
+      style="background: repeating-linear-gradient(45deg, var(--color-forest-card) 0 14px, var(--color-forest-card-alt) 14px 28px)"
+    >
+      <div
+        class="flex h-88 w-88 items-center justify-center rounded-full bg-lime shadow-glow-play"
+      >
+        <div
+          class="ml-6 h-0 w-0 border-y-14 border-l-22 border-y-transparent border-l-forest-deep"
+        >
+        </div>
+      </div>
+      <span class="max-w-360 text-center font-mono text-13 leading-body text-mint">
+        PLATZHALTER · VIDEO<br />Iwo stellt den Betrieb vor, 60–90 Sekunden
+      </span>
+    </div>
+  </section>
+</div>

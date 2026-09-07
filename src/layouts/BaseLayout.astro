@@ -1,13 +1,50 @@
 ---
-// Basis-Layout: <head>, Meta, Fonts, Slot.
-// Wird beim Nachbau der Design-Vorlage ausgebaut.
+/* Basis-Layout: <head>, Meta, Schriften, JSON-LD.
+   Wird von jeder Seite verwendet. */
 import '../styles/global.css';
 
 interface Props {
-  title?: string;
-  description?: string;
+  title: string;
+  description: string;
+  /** Ohne Angabe wird der Pfad der aktuellen Seite verwendet */
+  canonical?: string;
+  /** Seiten, die nicht in den Index sollen (z. B. Danke-Seiten) */
+  noindex?: boolean;
 }
-const { title = 'STOLZ Marketing', description = '' } = Astro.props;
+
+const { title, description, canonical, noindex = false } = Astro.props;
+
+const canonicalUrl = new URL(canonical ?? Astro.url.pathname, Astro.site);
+
+/* Eckdaten aus CLAUDE.md (Impressum). Die Vorlage nennt im Kontaktbereich
+   „Gewerbegebiet Bensheim" — das ist der Arbeitsort, nicht die im Impressum
+   eingetragene Anschrift. Für strukturierte Daten zählt die Anschrift. */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': 'https://stolz-marketing.de/#organisation',
+  name: 'Stolz Marketing',
+  description:
+    'Marketing für Handwerksbetriebe und Dienstleister an der Bergstraße und in Südhessen.',
+  url: 'https://stolz-marketing.de',
+  telephone: '+49 178 4444156',
+  email: 'iwo@stolz-marketing.de',
+  founder: { '@type': 'Person', name: 'Iwo Sawicki' },
+  vatID: 'DE350093785',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Heidelbergerstraße 15D',
+    postalCode: '64385',
+    addressLocality: 'Reichelsheim',
+    addressRegion: 'Hessen',
+    addressCountry: 'DE',
+  },
+  areaServed: [
+    { '@type': 'Place', name: 'Bergstraße' },
+    { '@type': 'Place', name: 'Südhessen' },
+  ],
+  sameAs: ['https://www.instagram.com/stolz.marketing/'],
+};
 ---
 
 <!doctype html>
@@ -15,9 +52,44 @@ const { title = 'STOLZ Marketing', description = '' } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
     <title>{title}</title>
-    {description && <meta name="description" content={description} />}
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Stolz Marketing" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <meta name="theme-color" content="#0D2118" />
+
+    {/* Kritische Schnitte vorladen — beide Dateien sind Variable Fonts */}
+    <link
+      rel="preload"
+      href="/fonts/inter-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/playfair-display-italic-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <slot />

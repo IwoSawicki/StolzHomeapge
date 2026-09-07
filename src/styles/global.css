@@ -1,9 +1,500 @@
-/* Tailwind v4 + Design-Tokens.
-   Die Tokens kommen aus der Design-Vorlage (design/) und werden dort
-   EINMAL gepflegt — keine hartcodierten Farben oder px-Werte in
-   Komponenten. */
+/* ---------------------------------------------------------------------------
+   STOLZ Marketing – Design-Tokens
+   ---------------------------------------------------------------------------
+   Alle Werte stammen 1:1 aus der Design-Vorlage in design/ (Prototypen
+   *.dc.html, zusammengefasst in design/README.md). Hier werden sie EINMAL
+   gepflegt — in Komponenten stehen keine hartcodierten Hex- oder px-Werte.
+
+   Dokumentation: docs/DESIGN-SYSTEM.md
+   Bewusste Abweichungen: docs/ABWEICHUNGEN.md
+--------------------------------------------------------------------------- */
+
 @import 'tailwindcss';
 
+/* ===========================================================================
+   Schriften – selbst gehostet (DSGVO: keine Requests an Google)
+   Beide Dateien sind Variable Fonts, ein File deckt alle Schnitte ab.
+   =========================================================================== */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/playfair-display-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/playfair-display-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 @theme {
-  /* Platzhalter — wird aus der Design-Vorlage befüllt */
+  /* =========================================================================
+     FARBEN
+     Maximal zwei Flächenfarben pro Seite: paper (#FFFFFF) und forest (#0D2118).
+     Lime ist ausschließlich Akzent — CTA, Textmarker, Icon-Flächen —
+     niemals großflächiger Hintergrund.
+     ========================================================================= */
+
+  /* Tailwind-Standardpalette entfernen: es gilt nur die Vorlage */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* --- Dunkle Flächen ---------------------------------------------------- */
+  --color-forest: #0d2118; /* Primärfläche: Hero, dunkle Bänder */
+  --color-forest-deep: #0c1b10; /* Footer-/Kontaktgrund, Tinte auf Lime */
+  --color-forest-card: #143026; /* Karten auf dunkel */
+  --color-forest-card-alt: #0f281e; /* Browser-Chrome, Karten-Alternative */
+  --color-forest-well: #0b1712; /* Bildfläche hinter Screenshots */
+  --color-forest-review: #123122; /* Bewertungskarten */
+  --color-forest-tint: #17392a; /* Foto-Platzhalter Bewertungen */
+  --color-forest-tint-alt: #143224; /* Foto-Platzhalter Bewertungen, 2. Streifen */
+  --color-forest-panel: #1a3b2c; /* Panels auf dunkel (Unterseiten) */
+  --color-wordmark: #12281b; /* SVG-Wortmarke im Footer */
+
+  /* --- Rahmen auf dunkel -------------------------------------------------- */
+  --color-edge: #1e3b2e;
+  --color-edge-soft: #21382b;
+  --color-dot: #3a4e42; /* Browser-Punkte im Mockup */
+
+  /* --- Akzent ------------------------------------------------------------- */
+  --color-lime: #e4f53f;
+  --color-lime-hover: #d6e731; /* Hover Header-CTA, Rahmen Icon-Kacheln */
+  --color-lime-bright: #eefa6e; /* Hover große CTAs */
+  --color-lime-edge: #4d5c3b; /* Rahmen Sekundärbuttons auf dunkel */
+  --color-lime-edge-hover: #66774a;
+  --color-lime-link-hover: #48582a; /* Link-Hover auf hell */
+
+  /* --- Text auf hell ------------------------------------------------------ */
+  --color-ink: #141a15;
+  --color-ink-soft: #3f4a41;
+  --color-ink-muted: #5c665e;
+  --color-ink-faint: #7e8a80;
+  --color-ink-body: #4a4e49; /* Fließtext Über uns */
+  --color-ink-label: #5e625c; /* Rolle/Label Über uns */
+  --color-ink-quiet: #4a544b; /* Fließtext Unterseiten */
+  --color-ink-quieter: #6b756d; /* Sekundärtext Unterseiten */
+  --color-ink-placeholder: #8a8f89; /* Monospace-Platzhalter */
+
+  /* --- Text auf dunkel ---------------------------------------------------- */
+  --color-cream: #f3f6f1;
+  --color-mint: #9db3a6;
+  --color-mint-light: #c4d3c8;
+  --color-mint-link: #d8e2da; /* Footer-Links */
+  --color-mint-dim: #8a9a8d;
+  --color-mint-dimmer: #6f8377; /* Eyebrows/Copyright im Footer */
+  --color-mint-note: #7e9488; /* Hinweiszeile Kampagnenzahlen */
+  --color-mint-contact: #a9bbae; /* Kontaktdaten */
+  --color-mint-caption: #d3e0d6; /* Untertitel Branchen-Kacheln */
+  --color-mint-placeholder: #7e9184; /* Monospace-Platzhalter auf dunkel */
+
+  /* --- Helle Flächen ------------------------------------------------------ */
+  --color-paper: #ffffff;
+  --color-paper-warm: #f1f1ef; /* Karten „Warum es funktioniert“, Über uns */
+  --color-paper-grey: #f4f4f4; /* Leistungskarten */
+  --color-paper-hover: #f4f4f2; /* Nav-Hover auf hell */
+  --color-paper-soft: #f7f7f5; /* Flächen Unterseiten */
+  --color-paper-band: #ebebe7; /* Bänder Unterseiten */
+  --color-photo-bg: #e2e8df; /* Grund hinter Porträts */
+
+  /* --- Rahmen und Linien auf hell ----------------------------------------- */
+  --color-line: #e2e4dd;
+  --color-line-strong: #c6d0c5;
+  --color-rule: #d6ded4; /* Trennlinien Über uns / FAQ */
+  --color-rule-soft: #c9c9c4; /* Pill-Rahmen Über uns */
+  --color-rule-faint: #e7e9e3;
+
+  /* --- Illustrationen / Platzhalter --------------------------------------- */
+  --color-sketch: #8a968b;
+  --color-sketch-light: #a9b4a8;
+  --color-hatch-light: #e7ebe5;
+  --color-hatch-light-alt: #dfe4dc;
+  --color-hatch-grey: #ededeb;
+  --color-hatch-grey-alt: #e4e4e2;
+
+  /* --- Fremdmarken (unverändert lassen) ----------------------------------- */
+  --color-star: #fbbc04; /* Google-Sterne */
+  --color-star-alt: #f5b301;
+  --color-google-blue: #4285f4;
+  --color-google-green: #34a853;
+  --color-google-red: #ea4335;
+
+  /* --- Dunkle Buttons auf hell -------------------------------------------- */
+  --color-ink-btn-hover: #2a3a2c;
+
+  /* --- Deutschlandkarte ---------------------------------------------------- */
+  --color-karte-oben: #42603f; /* Verlauf der Landfläche, oben */
+  --color-karte-unten: #8fa85f; /* Verlauf der Landfläche, unten */
+  --color-karte-kante: #16281b;
+
+  /* =========================================================================
+     SCHRIFTEN
+     ========================================================================= */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* =========================================================================
+     SCHRIFTGRÖSSEN
+     Statische Stufen nach px benannt (text-17 = 17px) — so ist der Bezug zur
+     Vorlage beim Review sofort sichtbar. Zeilenhöhe wird bewusst NICHT
+     mitgeliefert: die Vorlage kombiniert dieselbe Größe mit verschiedenen
+     Zeilenhöhen (17px mit 1.6 und mit 1.65).
+     ========================================================================= */
+  --text-*: initial;
+
+  --text-9: 9px;
+  --text-11: 11px;
+  --text-12: 12px;
+  --text-13: 13px;
+  --text-14: 14px;
+  --text-15: 15px;
+  --text-16: 16px;
+  --text-17: 17px;
+  --text-18: 18px;
+  --text-19: 19px;
+  --text-20: 20px;
+  --text-21: 21px;
+  --text-22: 22px;
+  --text-23: 23px;
+  --text-26: 26px;
+  --text-28: 28px;
+
+  /* Fluide Überschriften – je Rolle, exakt wie in der Vorlage */
+  --text-h1: clamp(38px, 5vw, 60px); /* Hero Startseite */
+  --text-h1-sub: clamp(36px, 4.8vw, 60px); /* Hero Unterseiten */
+  --text-h2: clamp(30px, 3.4vw, 44px); /* Projekte, Bewertungen, Zusammenarbeit */
+  --text-h2-leistungen: clamp(30px, 3.6vw, 42px);
+  --text-h2-branchen: clamp(30px, 3.6vw, 44px);
+  --text-h2-system: clamp(34px, 4.4vw, 56px); /* „Warum Stolz funktioniert“ */
+  --text-h2-about: clamp(34px, 4vw, 52px); /* Über uns */
+  --text-h2-contact: clamp(38px, 4.8vw, 62px); /* „Hier finden Sie uns“ */
+  --text-h2-faq: clamp(32px, 3.8vw, 48px);
+  --text-h2-claim: clamp(38px, 6vw, 78px); /* Footer-Claim */
+  --text-h2-sub: clamp(30px, 3.6vw, 46px); /* Sektionen Unterseiten */
+  --text-h2-sub-lg: clamp(32px, 4vw, 50px);
+  --text-h3-proof: clamp(26px, 2.6vw, 34px); /* Beweisfall */
+
+  /* =========================================================================
+     ZEILENHÖHEN UND LAUFWEITEN
+     ========================================================================= */
+  --leading-*: initial;
+  --leading-claim: 0.98;
+  --leading-contact: 1.02;
+  --leading-tightest: 1.06;
+  --leading-system: 1.08;
+  --leading-hero: 1.05;
+  --leading-tile: 1.1;
+  --leading-h2: 1.12;
+  --leading-h2-dark: 1.15;
+  --leading-proof: 1.2;
+  --leading-card: 1.25;
+  --leading-card-wide: 1.3;
+  --leading-caption: 1.4;
+  --leading-tight-body: 1.5;
+  --leading-body: 1.6;
+  --leading-quote: 1.65;
+  --leading-prose: 1.7;
+
+  --tracking-*: initial;
+  --tracking-claim: -0.035em;
+  --tracking-contact: -0.03em;
+  --tracking-faq: -0.025em;
+  --tracking-system: -0.02em;
+  --tracking-heading: -0.015em;
+  --tracking-name: -0.01em;
+  --tracking-none: 0;
+  --tracking-badge: 0.04em;
+  --tracking-caps: 0.06em; /* Copyright, Marquee-Caption */
+  --tracking-mono: 0.1em; /* FAQ-Eyebrow */
+  --tracking-footer: 0.12em; /* Footer-Spaltenüberschriften */
+  --tracking-eyebrow: 0.14em; /* Pill-Eyebrows */
+  --tracking-eyebrow-wide: 0.16em; /* „UNSER TEAM“, Footer-Claim-Eyebrow */
+
+  /* =========================================================================
+     ABSTÄNDE
+     Basis auf 1px gesetzt: p-40 sind exakt 40px wie in der Vorlage.
+     ========================================================================= */
+  --spacing: 1px;
+
+  /* Vertikales Sektions-Padding */
+  --spacing-section-y: clamp(64px, 9vw, 96px);
+  --spacing-section-y-lg: clamp(64px, 9vw, 112px);
+  --spacing-section-y-xl: clamp(72px, 10vw, 120px);
+  --spacing-section-y-md: clamp(56px, 8vw, 96px);
+  --spacing-section-y-sm: clamp(56px, 8vw, 88px);
+  --spacing-section-y-branchen: clamp(64px, 9vw, 104px);
+  --spacing-section-y-contact: clamp(64px, 9vw, 100px);
+  --spacing-hero-top: clamp(56px, 9vw, 88px);
+
+  /* Horizontaler Seitenrand */
+  --spacing-page-x: clamp(20px, 5.5vw, 100px); /* Header, Footer */
+  --spacing-rail-x: clamp(20px, 5vw, 24px); /* Branchen-Slider */
+
+  /* Innenabstände größerer Blöcke */
+  --spacing-innen-block: clamp(28px, 5vw, 76px); /* Innenabstand Zusammenarbeit */
+  --spacing-panel: clamp(28px, 5vw, 56px); /* Über-uns-Panel */
+  --spacing-card-y: clamp(24px, 4vw, 32px);
+  --spacing-card-x: clamp(22px, 4vw, 28px);
+  --spacing-card-b: clamp(26px, 4vw, 34px);
+  --spacing-quote-y: clamp(24px, 4vw, 34px);
+  --spacing-quote-x: clamp(22px, 4vw, 32px);
+
+  /* Spaltenabstände */
+  --spacing-spalten-faq: clamp(36px, 5vw, 72px); /* Spaltenabstand FAQ */
+  --spacing-spalten-block: clamp(36px, 6vw, 96px); /* Spaltenabstand Zusammenarbeit */
+
+  /* Überlappung der Hero-Videofläche in die Folgesektion */
+  --spacing-hero-overlap: clamp(-326px, -28vw, -100px);
+
+  /* Höhen */
+  --spacing-map: clamp(420px, 62vw, 780px);
+  --spacing-portrait: clamp(360px, 52vw, 520px);
+
+  /* Contentbreiten */
+  --spacing-content: 1160px;
+  --spacing-content-wide: 1240px;
+
+  /* =========================================================================
+     RADIEN
+     ========================================================================= */
+  --radius-*: initial;
+  --radius-2: 2px;
+  --radius-3: 3px;
+  --radius-4: 4px;
+  --radius-5: 5px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-14: 14px;
+  --radius-16: 16px;
+  --radius-18: 18px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-full: 999px;
+
+  /* =========================================================================
+     SCHATTEN UND GLOW
+     ========================================================================= */
+  --shadow-*: initial;
+  --shadow-glow: 0 0 22px rgb(228 245 63 / 0.32), 0 2px 8px rgb(228 245 63 / 0.18);
+  --shadow-glow-strong: 0 0 20px rgb(228 245 63 / 0.45), 0 0 56px rgb(228 245 63 / 0.22);
+  --shadow-glow-play: 0 0 32px rgb(228 245 63 / 0.35); /* Play-Kreis Hero */
+  --shadow-card: 0 1px 2px rgb(13 33 24 / 0.08);
+  --shadow-card-light: 0 10px 28px rgb(20 26 21 / 0.05);
+  --shadow-badge: 0 2px 12px rgb(0 0 0 / 0.35);
+
+  /* =========================================================================
+     BREAKPOINTS
+     Die Vorlage skaliert intrinsisch über clamp()/min()/minmax(). Es gibt
+     genau drei echte Schwellen — mehr werden nicht angelegt.
+     ========================================================================= */
+  --breakpoint-*: initial;
+  --breakpoint-hero: 390px; /* Hero-Buttons nebeneinander statt untereinander */
+  --breakpoint-btn: 720px; /* Buttongrößen Desktop */
+  --breakpoint-nav: 1040px; /* Nav statt Burger-Menü */
+
+  /* =========================================================================
+     ÜBERGÄNGE UND ANIMATIONEN
+     ========================================================================= */
+  --ease-sticky: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-spin-orbit: spin-orbit 48s linear infinite;
+  --animate-spin-orbit-rev: spin-orbit-rev 48s linear infinite;
+  --animate-sheen: sheen 7.8s ease-in-out 0.6s infinite;
+  --animate-floaty: floaty 4s ease-in-out infinite;
+  --animate-pulse-line: pulse-line 1.8s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes spin-orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes spin-orbit-rev {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  @keyframes sheen {
+    0% {
+      transform: translateX(-130%) skewX(-12deg);
+    }
+    23%,
+    100% {
+      transform: translateX(260%) skewX(-12deg);
+    }
+  }
+  @keyframes floaty {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes pulse-line {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
+/* ===========================================================================
+   Basis
+   =========================================================================== */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    /* Tailwind setzt hier 1.5; die Vorlage hat keinen solchen Reset, dort
+       erbt alles ohne eigene Angabe „normal". Damit Pills, Buttons und
+       Namen dieselbe Höhe bekommen, gleichen wir das an — die konkreten
+       Zeilenhöhen stehen als leading-* an den Elementen selbst. */
+    line-height: normal;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Die Vorlage setzt beides global */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Ziel des Ankersprungs nicht unter den Sticky-Header rutschen lassen */
+  :target {
+    scroll-margin-top: 96px;
+  }
+
+  /* Sichtbarer Fokus – in der Vorlage nicht angelegt, für Tastaturbedienung
+     aber erforderlich (siehe docs/ABWEICHUNGEN.md). */
+  :focus-visible {
+    outline: 2px solid var(--color-lime);
+    outline-offset: 2px;
+    border-radius: var(--radius-4);
+  }
+}
+
+@layer utilities {
+  /* Scrollbar des Branchen-Sliders ausblenden */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Weiche Kanten des Logo-Marquees */
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      black 64px,
+      black calc(100% - 64px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      black 64px,
+      black calc(100% - 64px),
+      transparent 100%
+    );
+  }
+
+  /* Flächige Hinterlegung ohne Innenabstand (Vorlage: „funktioniert",
+     „Ansprechpartner") */
+  .marker-flach {
+    background: var(--color-lime);
+    color: var(--color-forest-deep);
+  }
+
+  /* Mehrzeiliger Textmarker bricht sauber um */
+  .marker {
+    background: var(--color-lime);
+    color: var(--color-forest-deep);
+    padding: 0.04em 0.22em;
+    border-radius: var(--radius-4);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+}
+
+/* ===========================================================================
+   Bewegungsreduktion
+   Die Vorlage berücksichtigt prefers-reduced-motion noch nicht; laut
+   design/README.md („Offene Punkte“, Nr. 9) wird das beim Nachbau ergänzt.
+   Endlosanimationen werden angehalten, Übergänge auf ein Minimum gekürzt.
+   =========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

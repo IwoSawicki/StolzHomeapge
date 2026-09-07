@@ -1,0 +1,57 @@
+---
+/* Illustration „Neue Aufträge gewinnen": gestrichelter Ring, der sich in
+   48s einmal dreht, mit acht Personen-Icons und dem Betrieb in der Mitte.
+   Die Icons drehen mit gleicher Dauer gegen den Uhrzeigersinn und behalten
+   dadurch ihre Ausrichtung. Vorlage: design/STARTSEITE.dc.html */
+
+/* Positionen der acht Icons auf dem Ring, exakt wie in der Vorlage */
+const iconPositionen = [
+  'top-[-14px] left-1/2 -translate-x-1/2',
+  'bottom-[-14px] left-1/2 -translate-x-1/2',
+  'left-[-14px] top-1/2 -translate-y-1/2',
+  'right-[-14px] top-1/2 -translate-y-1/2',
+  'top-18 right-18',
+  'top-18 left-18',
+  'bottom-18 right-18',
+  'bottom-18 left-18',
+];
+---
+
+<div class="flex h-280 w-full items-center justify-center">
+  <div class="relative h-220 w-220" aria-hidden="true">
+    <div class="absolute inset-0 animate-spin-orbit">
+      {/* Ring */}
+      <div class="absolute inset-0 rounded-full border-[1.5px] border-dashed border-sketch"></div>
+
+      {/* Betrieb in der Mitte */}
+      <div
+        class="absolute top-1/2 left-1/2 box-content flex h-84 w-84 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[1.5px] border-ink bg-paper"
+      >
+        <div class="flex animate-spin-orbit-rev flex-col items-center gap-3">
+          <div
+            class="h-10 w-26 rounded-t-3 border-[1.5px] border-ink bg-lime box-border"
+          >
+          </div>
+          <div class="-mt-3 h-14 w-20 rounded-b-2 border-[1.5px] border-ink box-border"></div>
+        </div>
+      </div>
+
+      {/* Acht Kunden auf dem Ring */}
+      {
+        iconPositionen.map((position) => (
+          <div
+            class:list={[
+              'absolute flex h-32 w-32 items-center justify-center rounded-full bg-lime',
+              position,
+            ]}
+          >
+            <div class="flex animate-spin-orbit-rev flex-col items-center gap-1">
+              <div class="h-7 w-7 rounded-full border-[1.5px] border-ink box-border" />
+              <div class="h-6 w-13 rounded-t-6 border-[1.5px] border-b-0 border-ink box-border" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

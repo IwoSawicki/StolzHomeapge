@@ -1,0 +1,60 @@
+---
+/* Illustration „Neue Mitarbeiter einstellen": Bewerbungsliste links, drei
+   pulsierende Verbindungslinien in der Mitte, schwebende Bewerberkarte rechts.
+   Vorlage: design/STARTSEITE.dc.html */
+
+/* Breiten der Textbalken je Listeneintrag, exakt wie in der Vorlage */
+const eintraege = [
+  { gefuellt: true, oben: 'w-[80%]', unten: 'w-[55%]' },
+  { gefuellt: true, oben: 'w-[70%]', unten: 'w-[50%]' },
+  { gefuellt: false, oben: 'w-[85%]', unten: 'w-[45%]' },
+];
+---
+
+<div class="flex h-280 w-full items-center justify-center gap-20" aria-hidden="true">
+  {/* Liste eingegangener Bewerbungen */}
+  <div
+    class="box-content flex w-150 flex-col gap-14 rounded-12 border-[1.5px] border-ink bg-paper px-16 py-18"
+  >
+    {
+      eintraege.map((eintrag) => (
+        <div class="flex items-center gap-10">
+          <div
+            class:list={[
+              'flex h-26 w-26 flex-shrink-0 flex-col items-center justify-center gap-1 rounded-full box-border',
+              eintrag.gefuellt ? 'bg-lime' : 'border-[1.5px] border-ink bg-paper',
+            ]}
+          >
+            <div class="h-6 w-6 rounded-full border-[1.5px] border-ink box-border" />
+            <div class="h-5 w-11 rounded-t-5 border-[1.5px] border-b-0 border-ink box-border" />
+          </div>
+          <div class="flex flex-1 flex-col gap-4">
+            <div class:list={['h-5 rounded-3 bg-ink', eintrag.oben]} />
+            <div class:list={['h-5 rounded-3 bg-line-strong', eintrag.unten]} />
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  {/* Verbindungslinien, versetzt pulsierend */}
+  <div class="flex flex-col items-center gap-8">
+    <div class="h-2 w-28 animate-pulse-line bg-sketch"></div>
+    <div class="h-2 w-40 animate-pulse-line bg-ink [animation-delay:0.3s]"></div>
+    <div class="h-2 w-28 animate-pulse-line bg-sketch [animation-delay:0.6s]"></div>
+  </div>
+
+  {/* Schwebende Bewerberkarte */}
+  <div
+    class="box-content flex h-120 w-96 animate-floaty flex-col items-center justify-center gap-8 rounded-12 border-[1.5px] border-ink bg-paper"
+  >
+    <div class="relative h-22 w-34 rounded-4 border-[1.5px] border-ink bg-lime box-border">
+      <div
+        class="absolute -top-7 left-8 h-6 w-14 rounded-t-4 border-[1.5px] border-b-0 border-ink bg-paper box-border"
+      >
+      </div>
+    </div>
+    <div class="h-5 w-48 rounded-3 bg-ink"></div>
+    <div class="h-5 w-34 rounded-3 bg-line-strong"></div>
+  </div>
+</div>

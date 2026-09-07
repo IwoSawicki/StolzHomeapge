@@ -1,0 +1,67 @@
+---
+/* „Unsere Leistungen": zwei Karten mit CSS-Illustration, Überschrift,
+   Absatz und Sekundärbutton.
+   Vorlage: design/STARTSEITE.dc.html, data-screen-label="Leistungen" */
+import Eyebrow from '../Eyebrow.astro';
+import Button from '../Button.astro';
+import Orbit from '../illustrationen/Orbit.astro';
+import Bewerbungsliste from '../illustrationen/Bewerbungsliste.astro';
+---
+
+<section id="leistungen" class="bg-paper py-section-y">
+  <div
+    class="mx-auto flex max-w-content box-content flex-col items-center gap-24 px-24"
+  >
+    <Eyebrow variante="hell">Unsere Leistungen</Eyebrow>
+
+    <h2
+      class="m-0 text-center text-h2-leistungen leading-h2 font-bold tracking-name"
+    >
+      Zeigen Sie online, <span class="marker font-display font-semibold italic"
+        >wofür Ihr Betrieb steht</span
+      >.<br />Für Kunden und für Fachkräfte.
+    </h2>
+
+    <p class="m-0 max-w-640 text-center text-19 leading-body text-ink-muted">
+      Wir machen die Qualität Ihrer Arbeit dort sichtbar, wo die richtigen Kunden und
+      Ihre künftigen Mitarbeiter suchen. So stellen wir Ihren Betrieb zukunftssicher
+      auf.
+    </p>
+
+    <div
+      class="mt-32 grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-24"
+    >
+      <div
+        class="flex flex-col items-center gap-20 rounded-16 bg-paper-grey p-40 text-center"
+      >
+        <Orbit />
+        <h3 class="mt-12 mb-0 text-26 leading-card font-bold">
+          Neue Aufträge gewinnen
+        </h3>
+        <p class="m-0 text-17 leading-body text-ink-muted">
+          Werden Sie in Ihrer Region der Betrieb, den Kunden zuerst finden — und zwar
+          für die Projekte, die Sie gerne machen.
+        </p>
+        <Button href="/kunden-gewinnen" variante="hell" class="mt-auto">
+          Zum Platzhirsch-System
+        </Button>
+      </div>
+
+      <div
+        class="flex flex-col items-center gap-20 rounded-16 bg-paper-grey p-40 text-center"
+      >
+        <Bewerbungsliste />
+        <h3 class="mt-12 mb-0 text-26 leading-card font-bold">
+          Neue Mitarbeiter einstellen
+        </h3>
+        <p class="m-0 text-17 leading-body text-ink-muted">
+          Bekommen Sie Bewerbungen von Fachkräften, die zu Ihrem Betrieb passen — auch
+          von denen, die gerade nicht suchen.
+        </p>
+        <Button href="/mitarbeiter-gewinnen" variante="hell" class="mt-auto">
+          Zum Meistermagnet-System
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>

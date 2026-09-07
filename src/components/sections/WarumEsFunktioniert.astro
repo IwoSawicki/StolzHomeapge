@@ -1,0 +1,124 @@
+---
+/* „Unser System": drei helle Karten mit gelben Icon-Kacheln.
+   Vorlage: design/STARTSEITE.dc.html,
+   data-screen-label="Warum es funktioniert (hell, Karten)" */
+import Eyebrow from '../Eyebrow.astro';
+
+const karten = [
+  {
+    titel: 'Raus aus der Vergleichbarkeit',
+    text: 'Ihr Kunde holt zwei, drei Angebote ein und entscheidet nach dem Preis — solange er keinen Unterschied sieht. Bevor wir etwas bauen, legen wir deshalb fest, was Ihr Betrieb besser kann als die anderen im Ort und welche Aufträge Sie eigentlich wollen. Wer das zeigen kann, wird nicht mehr nur über den Preis verglichen.',
+    merksatz: 'Erst wissen, wofür Sie stehen.',
+    merksatzFarbe: '',
+  },
+  {
+    titel: 'Ein Bad verkauft sich anders als eine Heizung.',
+    text: 'Wonach Ihr Kunde entscheidet, ist von Gewerk zu Gewerk verschieden. Beim Bad sind es Vorher-Nachher-Bilder, ein Festpreis und die Zusage, dass der Termin hält. Bei der Heizung die Förderung und was sie im Jahr spart. Wir arbeiten nur mit Handwerksbetrieben — deshalb müssen wir das nicht bei jedem Projekt neu herausfinden.',
+    merksatz: 'Wir kennen Ihr Gewerk.',
+    // Die Vorlage färbt nur diesen Merksatz grau – siehe docs/ABWEICHUNGEN.md
+    merksatzFarbe: 'text-ink-muted',
+  },
+  {
+    titel: 'Omnipräsenz',
+    text: 'Ihr Kunde sucht nicht nur bei Google. Er schaut auf die Karte, liest Bewertungen und fragt inzwischen auch ChatGPT. Wir sorgen dafür, dass Sie an allen vier Stellen auftauchen — in Ihrem Umkreis, nicht in ganz Deutschland.',
+    merksatz: 'Da sein, wo gesucht wird.',
+    merksatzFarbe: '',
+  },
+];
+---
+
+<section class="bg-paper px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col items-center gap-40">
+    <Eyebrow variante="hell">Unser System</Eyebrow>
+
+    <h2
+      class="m-0 max-w-860 text-center text-h2-system leading-system font-bold tracking-system text-ink"
+    >
+      Warum Stolz&nbsp;<span class="marker-flach font-display italic">funktioniert</span>,<br
+      />während andere scheitern.
+    </h2>
+
+    <p class="m-0 max-w-680 text-center text-18 leading-body text-ink-muted">
+      Wir haben das Rad nicht neu erfunden, aber wir haben es für das Handwerk
+      perfektioniert. Unser System gibt Ihnen die Kontrolle zurück:
+    </p>
+
+    <div
+      class="mt-32 grid w-full grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-stretch gap-20"
+    >
+      {
+        karten.map((karte, i) => (
+          <div class="flex flex-col items-start gap-18 rounded-20 border border-line bg-paper-warm px-card-x pt-card-y pb-card-b text-left shadow-card-light">
+            <div class="box-content flex h-48 w-48 flex-none items-center justify-center rounded-12 border border-lime-hover bg-lime">
+              {i === 0 && (
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  class="text-forest-deep"
+                >
+                  <rect x="2.5" y="8" width="5" height="11" rx="1.2" opacity="0.45" />
+                  <rect x="16.5" y="8" width="5" height="11" rx="1.2" opacity="0.45" />
+                  <rect x="9.5" y="3.5" width="5" height="15.5" rx="1.2" />
+                  <path d="M12 0.8v1.6" />
+                </svg>
+              )}
+              {i === 1 && (
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  class="text-forest-deep"
+                >
+                  <circle cx="12" cy="9" r="6" />
+                  <path d="M9.4 9.1l1.8 1.8 3.4-3.6" />
+                  <path d="M8.4 14.4L7 22l5-2.4L17 22l-1.4-7.6" opacity="0.5" />
+                </svg>
+              )}
+              {i === 2 && (
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  class="text-forest-deep"
+                >
+                  <circle cx="12" cy="12" r="2.4" />
+                  <path d="M7.8 16.2a6 6 0 0 1 0-8.4" opacity="0.7" />
+                  <path d="M16.2 7.8a6 6 0 0 1 0 8.4" opacity="0.7" />
+                  <path d="M4.9 19.1a10 10 0 0 1 0-14.2" opacity="0.35" />
+                  <path d="M19.1 4.9a10 10 0 0 1 0 14.2" opacity="0.35" />
+                </svg>
+              )}
+            </div>
+
+            <h3 class="m-0 text-22 leading-card font-bold tracking-heading text-ink">
+              {karte.titel}
+            </h3>
+            <p class="m-0 text-16 leading-body text-ink-soft">{karte.text}</p>
+            <p class:list={['mt-6 mb-0 text-16 leading-tight-body italic', karte.merksatzFarbe]}>
+              {karte.merksatz}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

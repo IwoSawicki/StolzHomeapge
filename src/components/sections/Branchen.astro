@@ -1,0 +1,149 @@
+---
+/* Branchen-Slider: horizontale Rail mit Scroll-Snap, Pfeilbuttons scrollen
+   um Kartenbreite + 20px Gap. Die 11 Bilder fehlen noch
+   (design/README.md, Offene Punkte Nr. 2) — bis dahin die Platzhalterfläche.
+   Vorlage: design/STARTSEITE.dc.html, data-screen-label="Branchen (Slider)" */
+import Eyebrow from '../Eyebrow.astro';
+import { branchen } from '../../data/startseite';
+---
+
+<section class="bg-paper py-section-y-branchen">
+  <div class="mx-auto flex max-w-content box-content flex-col gap-32 px-rail-x">
+    <header class="flex flex-wrap items-end justify-between gap-24">
+      <div class="flex max-w-720 flex-col items-start gap-18">
+        <Eyebrow variante="hell">Branchen</Eyebrow>
+        <h2
+          class="m-0 text-h2-branchen leading-h2 font-bold tracking-heading text-ink"
+        >
+          Wir kennen <span class="font-display font-medium italic">Ihr Gewerk</span>
+        </h2>
+        <p class="m-0 max-w-620 text-18 leading-quote text-ink-muted">
+          Jedes Handwerk hat eigene Kunden, eigene Angebotslogik und eigene Bewerber.
+          Wählen Sie Ihre Branche und sehen Sie, wie wir dort arbeiten.
+        </p>
+      </div>
+
+      <div class="flex gap-10">
+        <button
+          type="button"
+          data-branchen-prev
+          aria-label="Vorherige Branchen anzeigen"
+          aria-controls="branchen-rail"
+          class="flex h-48 w-48 cursor-pointer items-center justify-center rounded-full border border-line-strong bg-paper text-ink transition-colors hover:bg-paper-warm"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button
+          type="button"
+          data-branchen-next
+          aria-label="Weitere Branchen anzeigen"
+          aria-controls="branchen-rail"
+          class="flex h-48 w-48 cursor-pointer items-center justify-center rounded-full border border-ink bg-ink text-paper transition-colors hover:bg-forest"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <div
+    id="branchen-rail"
+    class="no-scrollbar mt-32 flex snap-x snap-mandatory gap-20 overflow-x-auto scroll-smooth px-rail-x pt-4 pb-8"
+  >
+    {
+      branchen.map((branche) => (
+        <a
+          href={branche.href}
+          class="relative block aspect-[3/4] w-[min(330px,78vw)] flex-none snap-start overflow-hidden rounded-18 bg-forest no-underline shadow-card"
+        >
+          {/* Bildfläche – Foto folgt */}
+          <div
+            class="absolute inset-0 flex items-center justify-center"
+            style="background: repeating-linear-gradient(45deg, var(--color-forest-card) 0 14px, var(--color-forest-card-alt) 14px 28px)"
+          >
+            <span class="font-mono text-11 text-mint-placeholder">
+              {branche.platzhalter}
+            </span>
+          </div>
+
+          {/* Verlauf über dem Bild */}
+          <div
+            class="pointer-events-none absolute inset-0"
+            style="background: linear-gradient(180deg, rgb(9 24 17 / 0.62) 0%, rgb(9 24 17 / 0.12) 42%, rgb(9 24 17 / 0.72) 100%)"
+          />
+
+          <div class="pointer-events-none absolute inset-0 flex flex-col justify-between p-26">
+            <div class="flex flex-col gap-4">
+              <span class="text-28 leading-tile font-bold tracking-heading text-paper">
+                {branche.name}
+              </span>
+              <span class="text-15 leading-caption text-mint-caption">{branche.sub}</span>
+            </div>
+            <div class="flex items-center justify-between gap-12">
+              <span class="text-16 font-medium text-paper">Branche ansehen</span>
+              <span class="flex h-40 w-40 flex-none items-center justify-center rounded-full bg-lime text-forest-deep">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17 17 7" />
+                  <path d="M8 7h9v9" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      ))
+    }
+    {/* Endanschlag, damit die letzte Karte nicht am Rand klebt */}
+    <div class="w-4 flex-none" aria-hidden="true"></div>
+  </div>
+</section>
+
+<script>
+  // Pfeilbuttons scrollen um genau eine Kartenbreite plus Gap (20px)
+  const rail = document.getElementById('branchen-rail');
+  const zurueck = document.querySelector<HTMLButtonElement>('[data-branchen-prev]');
+  const weiter = document.querySelector<HTMLButtonElement>('[data-branchen-next]');
+
+  if (rail) {
+    const schritt = (richtung: -1 | 1) => {
+      const karte = rail.querySelector('a');
+      const breite = karte ? karte.getBoundingClientRect().width + 20 : 340;
+      rail.scrollBy({ left: richtung * breite, behavior: 'smooth' });
+    };
+    zurueck?.addEventListener('click', () => schritt(-1));
+    weiter?.addEventListener('click', () => schritt(1));
+  }
+</script>

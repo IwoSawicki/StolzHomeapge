@@ -1,15 +1,41 @@
 ---
-// Platzhalter — hier entsteht der 1:1-Nachbau der Design-Vorlage.
+/* Startseite – Aneinanderreihung der Sektionen in der Reihenfolge der
+   Vorlage (design/README.md, „Screens / Views" → 1. Startseite). */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import LogoMarquee from '../components/sections/LogoMarquee.astro';
+import Leistungen from '../components/sections/Leistungen.astro';
+import Projekte from '../components/sections/Projekte.astro';
+import Branchen from '../components/sections/Branchen.astro';
+import WarumEsFunktioniert from '../components/sections/WarumEsFunktioniert.astro';
+import UeberUns from '../components/sections/UeberUns.astro';
+import Bewertungen from '../components/sections/Bewertungen.astro';
+import Standort from '../components/sections/Standort.astro';
+import Faq from '../components/sections/Faq.astro';
+import Zusammenarbeit from '../components/sections/Zusammenarbeit.astro';
+import Footer from '../components/Footer.astro';
+
+/* Title und Description sind aus der H1 und dem Lead der Vorlage gebildet —
+   die Vorlage macht selbst keine Meta-Angaben. Freigabe steht aus,
+   siehe docs/ABWEICHUNGEN.md. */
 ---
 
-<BaseLayout title="STOLZ Marketing">
-  <main style="font-family: system-ui, sans-serif; padding: 4rem 1.5rem; max-width: 40rem; margin: 0 auto;">
-    <h1 style="font-size: 1.5rem; margin: 0 0 0.75rem;">Neuaufbau</h1>
-    <p style="margin: 0; color: #555; line-height: 1.6;">
-      Branch <code>redesign</code> — leer geräumt und bereit für den Nachbau der
-      Design-Vorlage. Die HTML-Dateien aus Claude Design kommen nach
-      <code>design/</code>.
-    </p>
+<BaseLayout
+  title="Stolz Marketing | Volle Auftragsbücher & passende Bewerber"
+  description="Marketing für Handwerksbetriebe an der Bergstraße und in Südhessen: Wunschprojekte gewinnen, offene Stellen besetzen und den Betrieb online so zeigen, wie er wirklich ist."
+>
+  <Hero />
+  <main>
+    <LogoMarquee />
+    <Leistungen />
+    <Projekte />
+    <Branchen />
+    <WarumEsFunktioniert />
+    <UeberUns />
+    <Bewertungen />
+    <Standort />
+    <Faq />
+    <Zusammenarbeit />
   </main>
+  <Footer />
 </BaseLayout>

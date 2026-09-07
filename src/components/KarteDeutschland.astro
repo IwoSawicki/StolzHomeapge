@@ -1,0 +1,56 @@
+---
+/* Deutschlandkarte mit dem Standort an der Bergstraße.
+
+   Die Vorlage bindet dafür design/karte-deutschland.html per <iframe> ein und
+   lädt darin d3, topojson und die Geodaten von fremden CDNs. Für die
+   Produktion ist der Umriss einmalig mit derselben Projektion
+   (geoMercator, fitExtent [[30,30],[530,690]]) vorberechnet und hier fest
+   hinterlegt: kein iframe, kein JavaScript, keine Fremdrequests. */
+const marker = { x: 179.33, y: 497.15 };
+---
+
+<svg
+  viewBox="0 0 560 720"
+  preserveAspectRatio="xMidYMid meet"
+  width="100%"
+  height="100%"
+  role="img"
+  aria-label="Karte von Deutschland mit dem Standort von Stolz Marketing an der Bergstraße in Südhessen"
+  class="block h-full w-full"
+>
+  <defs>
+    <linearGradient id="karte-flaeche" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="[stop-color:var(--color-karte-oben)]"></stop>
+      <stop offset="1" class="[stop-color:var(--color-karte-unten)]"></stop>
+    </linearGradient>
+    <filter id="karte-schatten" x="-30%" y="-30%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000000" flood-opacity="0.45"
+      ></feDropShadow>
+    </filter>
+  </defs>
+
+  <path
+    d="M474.449,143.22L486.832,189.101L471.934,213.047L491.476,244.646L504.826,291.714L500.569,321.8L522.626,376.802L498.634,385.775L484.51,375.933L470.967,392.274L432.27,408.693L412.342,429.764L373.258,448.164L382.739,473.132L388.543,508.193L415.824,528.053L446.201,563.336L427.24,600.786L407.892,611.052L415.631,663.355L410.6,676.833L393.767,660.519L368.034,658.087L329.531,672.39L282.128,669.021L274.583,690L247.302,667.943L231.243,672.39L173.585,647.937L162.557,665.245L116.895,664.705L123.667,607.496L150.754,551.84L73.361,536.694L48.015,515.057L51.111,478.643L40.276,459.816L46.467,402.652L37.374,312.534L69.685,312.534L83.229,279.703L96.579,198.516L86.712,168.064L97.16,148.908L142.047,143.989L152.108,163.934L188.483,119.141L176.294,84.612L173.778,31.902L214.41,44.241L248.849,30L249.623,65.972L303.992,87.579L303.411,120.225L358.167,103.004L388.35,77.73L448.91,114.028Z"
+    fill="url(#karte-flaeche)"
+    class="stroke-karte-kante"
+    stroke-width="1.4"
+    filter="url(#karte-schatten)"></path>
+
+  {/* Standortmarke */}
+  <circle cx={marker.x} cy={marker.y} r="34" class="fill-lime" opacity="0.18"></circle>
+  <path
+    transform={`translate(${marker.x},${marker.y})`}
+    d="M0 17c0 0 -12.5 -9 -12.5 -18.3A12.5 12.5 0 0 1 12.5 -1.3C12.5 8 0 17 0 17z"
+    class="fill-lime stroke-forest-deep"
+    stroke-width="1.2"></path>
+  <circle cx={marker.x} cy={marker.y - 2} r="4.2" class="fill-forest-deep"></circle>
+
+  <g transform={`translate(${marker.x + 22},${marker.y - 6})`}>
+    <text x="0" y="0" font-size="26" font-weight="700" font-family="Inter, system-ui, sans-serif" class="fill-paper">
+      Stolz Marketing
+    </text>
+    <text x="0" y="26" font-size="20" font-family="Inter, system-ui, sans-serif" class="fill-lime">
+      Gewerbegebiet Bensheim
+    </text>
+  </g>
+</svg>

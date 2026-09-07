@@ -1,0 +1,262 @@
+# Abweichungen von der Design-Vorlage
+
+Alles, was im Nachbau bewusst anders ist als in `design/`. Nichts davon wurde
+still geändert. Punkte mit **[Rückfrage]** brauchen eine Entscheidung von Iwo.
+
+Stand: Startseite. Die Unterseiten sind noch nicht gebaut.
+
+---
+
+## 1. Die Prototypen widersprechen dem Handoff-Dokument
+
+`design/README.md` beschreibt den Hero mit der H1 „Wir bringen Ihren Betrieb
+online nach vorne". In `design/STARTSEITE.dc.html` steht
+„Volle Auftragsbücher & passende Bewerber".
+
+Auch bei den Größen weicht das README ab (H1 `clamp(36px, 4.8vw, 60px)` statt
+`clamp(38px, 5vw, 60px)`, H2 bis 44px statt 42px in den Leistungen).
+
+**Umgesetzt:** Der Prototyp gilt, weil er der gerenderte Entwurf ist und
+CLAUDE.md „Vorlage gewinnt" festlegt. Das README ist als Regelwerk verwendet
+worden (Farbrollen, Animationsdauern, Breakpoints), nicht als Wertetabelle.
+
+**[Rückfrage]** Falls die README-H1 die neuere Fassung ist, bitte kurz sagen —
+dann tausche ich Überschrift und Größen.
+
+---
+
+## 2. Vierte Team-Kachel „Name / Rolle" weggelassen
+
+Die Vorlage zeigt im Team-Raster vier Kacheln: Timon, Gintas, Moritz (Porträt
+fehlt) und eine vierte, komplett leere mit dem Text „PORTRÄT · Name",
+„Name", „Rolle".
+
+**Umgesetzt:** Drei Kacheln. Die vierte ist ein Layout-Platzhalter für eine
+künftige Person und würde auf einer Live-Seite wie ein Fehler aussehen.
+
+Das ist der einzige strukturelle Unterschied zur Vorlage und erklärt die
+gesamte verbleibende Höhendifferenz (Desktop +118px, Tablet −502px, weil das
+Raster dort von vier auf drei Spalten wechselt).
+
+**[Rückfrage]** Soll die vierte Kachel rein (dann kommt sie zurück), oder gibt
+es eine vierte Person mit Name und Rolle? Moritz' Porträt fehlt ebenfalls noch
+(`design/README.md`, Offene Punkte Nr. 8) — bis dahin steht dort die
+schraffierte Platzhalterfläche der Vorlage.
+
+---
+
+## 3. Einleitungsabsatz „Warum Stolz funktioniert" normalisiert
+
+In der Vorlage steht dort:
+
+```html
+<p style="font-size: 19px; color: #000000; …">
+  <span style="color: #00000080; font-family: Roboto, sans-serif;
+               font-size: 18px; white-space: pre-wrap">…</span>
+</p>
+```
+
+Roboto gehört nicht zum Schriftsystem (Inter, Playfair Display, Monospace),
+`#00000080` nicht zur Farbpalette, und `white-space: pre-wrap` erzwingt einen
+Zeilenumbruch mitten im Satz. Das sind Spuren von eingefügtem Text.
+
+**Umgesetzt:** Wie jeder andere Lead-Absatz der Seite — Inter, `text-18`,
+`leading-body`, `text-ink-muted`, `max-w-680`, zentriert. Der Wortlaut ist
+unverändert.
+
+---
+
+## 4. Zeilenumbrüche in Überschriften und Absätzen
+
+`design/README.md` nennt als Regel: „`text-wrap: balance` auf Überschriften,
+`text-wrap: pretty` auf Absätzen". Die Prototypen setzen das nur an einzelnen
+Elementen inline.
+
+**Umgesetzt:** Als globale Regel im Basis-Layer, also für alle `h1`/`h2`/`h3`
+und alle `p`.
+
+Folge: einzelne Überschriften brechen an anderer Stelle um als im Prototyp,
+zum Beispiel „Eine Webseite, die drei / Geschäfte sauber trennt" statt
+„… die drei Geschäfte sauber / trennt". Typografisch ist das Ergebnis besser
+und entspricht der ausgeschriebenen Regel.
+
+**[Rückfrage]** Falls die Umbrüche exakt wie im Prototyp sein sollen, nehme ich
+die globale Regel raus und setze sie nur dort, wo der Prototyp sie hat.
+
+---
+
+## 5. `#E3F53F` mit `#E4F53F` zusammengefasst
+
+Die Vorlage nutzt an fünf Stellen `#E3F53F` statt des sonst durchgängigen
+`#E4F53F` — ein Unterschied von einem Wert im Grünkanal, nicht wahrnehmbar.
+
+**Umgesetzt:** Ein einziges Token `--color-lime: #E4F53F`.
+
+---
+
+## 6. Deutschlandkarte ohne iframe und ohne CDN
+
+Die Vorlage bindet `design/karte-deutschland.html` per `<iframe>` ein. Diese
+Datei lädt zur Laufzeit d3 und topojson von unpkg und die Geodaten von jsDelivr
+und zeichnet die Karte im Browser.
+
+**Umgesetzt:** `src/components/KarteDeutschland.astro`. Der Umriss ist einmalig
+mit **derselben** Projektion vorberechnet (`geoMercator`,
+`fitExtent([[30,30],[530,690]])`, viewBox 560×720) und als Pfad fest im Bauteil
+hinterlegt. Markerposition, Verlauf, Schlagschatten und Beschriftung sind
+unverändert.
+
+Gründe: keine Requests an fremde Server (DSGVO), kein Laufzeit-JavaScript,
+kein iframe, und die Karte ist auch offline da. Die Farben liegen als Tokens
+(`karte-oben`, `karte-unten`, `karte-kante`).
+
+---
+
+## 7. Fehlende Projekt-Screenshots wiederbeschafft
+
+Die Vorlage verweist auf `design/uploads/pasted-1788262317870-0.png` und zwei
+weitere — der Ordner `design/uploads/` ist nicht mit ausgeliefert worden.
+
+Über die `alt`-Texte und die Seitenverhältnisse ließen sich alle drei im Branch
+`main` wiederfinden, in höherer Auflösung und identischem Zuschnitt:
+
+| Vorlage                        | verwendet                                        | Verhältnis   |
+| ------------------------------ | ------------------------------------------------ | ------------ |
+| „Startseite HePa Baut"         | `src/assets/projekte/hepa-baut-startseite.png`   | 1,657 ✓      |
+| „Startseite J Hoch 2"          | `src/assets/projekte/jhoch2-startseite.png`      | 1,659 ✓      |
+| „Startseite NKN und PV Elektrik" | `src/assets/projekte/nkn-pv-elektrik-startseite.png` | 1,660 ✓ |
+
+Der Screenshot für DMK Bau fehlt auch in der Vorlage — dort steht die
+Platzhalterfläche „SCREENSHOT · DMK Bau", die übernommen wurde.
+
+---
+
+## 8. `alt`-Texte ergänzt
+
+Die Vorlage hat bei den Porträts knappe `alt`-Texte („Timon", „Gintas"). Für
+Bildersuche und Screenreader sind sie ausgeschrieben:
+„Timon, Foto- und Videoproduktion bei Stolz Marketing".
+
+Die zweite, nur dekorative Hälfte des Logo-Marquees ist `aria-hidden` und trägt
+ein leeres `alt`.
+
+**[Rückfrage]** Die Formulierungen sind mein Vorschlag und sollten freigegeben
+werden.
+
+---
+
+## 9. Barrierefreiheit über die Vorlage hinaus
+
+Die Vorlage regelt das nicht; ergänzt wurden:
+
+- sichtbarer Tastaturfokus (`:focus-visible`, Lime-Outline)
+- `prefers-reduced-motion: reduce` schaltet Endlosanimationen ab
+- Burger-Menü: `aria-expanded`, `aria-controls`, `inert` im geschlossenen
+  Zustand, Fokus auf den Schließen-Button, Schließen per Escape und beim
+  Überschreiten von 1040px
+- FAQ: die Fragen sind Buttons in `h3`, mit `aria-expanded`, `aria-controls`
+  und `role="region"` auf der Antwort
+- Slider-Pfeile mit `aria-label` und `aria-controls`
+- Bewertungen als `<figure>`/`<blockquote>`/`<figcaption>`
+- die Schritte in „Zusammenarbeit" als `<ol>`
+- Footer-Spalten als `<nav>` mit `aria-label`; die Spaltenköpfe bleiben
+  `<span>`, damit sie nicht mit den Sektionsüberschriften konkurrieren
+- „UNSER TEAM" ist ein `<h2>` (in der Vorlage ein `<span>`), weil es das
+  Team-Raster tatsächlich überschreibt — optisch identisch
+
+---
+
+## 10. Meta-Angaben abgeleitet
+
+Die Vorlage macht keine Angaben zu `<title>`, Description oder OG-Tags. Aus
+H1 und Lead der Startseite gebildet:
+
+- **Title:** „Stolz Marketing | Volle Auftragsbücher & passende Bewerber"
+- **Description:** „Marketing für Handwerksbetriebe an der Bergstraße und in
+  Südhessen: Wunschprojekte gewinnen, offene Stellen besetzen und den Betrieb
+  online so zeigen, wie er wirklich ist."
+
+**[Rückfrage]** Bitte freigeben oder umformulieren. Ein OG-Bild fehlt noch
+(die Vorlage liefert keins) — solange es fehlt, greift beim Teilen kein
+Vorschaubild.
+
+---
+
+## 11. JSON-LD: Anschrift statt Arbeitsort
+
+Die Vorlage nennt im Kontaktbereich und im Footer „Gewerbegebiet Bensheim",
+das Copyright lautet „© 2026 Stolz Marketing · Bensheim". CLAUDE.md führt als
+Anschrift Heidelbergerstraße 15D, 64385 Reichelsheim.
+
+**Umgesetzt:** Sichtbar steht überall der Text der Vorlage. Im JSON-LD
+(`ProfessionalService`) steht die Anschrift aus CLAUDE.md, weil strukturierte
+Daten die eingetragene Adresse erwarten.
+
+**[Rückfrage]** Ist Bensheim ein zweiter Standort oder die neue Anschrift?
+Falls Reichelsheim gilt, müsste auch der sichtbare Text angepasst werden.
+
+---
+
+## 12. Social-Links
+
+Die Vorlage verlinkt die nackten Portal-Startseiten
+(`https://www.instagram.com/`, `.../linkedin.com/`, `.../youtube.com/`), hat
+dort also noch keine echten Profile hinterlegt.
+
+**Umgesetzt:** Instagram zeigt auf das aus CLAUDE.md bekannte Profil
+`https://www.instagram.com/stolz.marketing/`. LinkedIn und YouTube stehen
+unverändert auf der Portal-Startseite.
+
+**[Rückfrage]** Die richtigen URLs für LinkedIn und YouTube — oder die beiden
+Links entfernen, wenn es die Profile nicht gibt.
+
+---
+
+## 13. Grauer Merksatz in der mittleren Karte
+
+In „Warum es funktioniert" ist der kursive Merksatz der zweiten Karte
+`#5C665E`, bei Karte 1 und 3 hat er keine Farbangabe und erbt Tinte.
+
+**Umgesetzt:** Exakt wie die Vorlage, inklusive der Ungleichheit.
+
+**[Rückfrage]** Vermutlich ein Versehen im Entwurf. Sollen alle drei gleich
+aussehen — und wenn ja, grau oder schwarz?
+
+---
+
+## 14. Noch offen aus der Vorlage selbst
+
+Aus `design/README.md`, „Offene Punkte" — im Nachbau stehen dort die
+Platzhalterflächen der Vorlage:
+
+1. **Hero-Video** fehlt — 16:9-Fläche mit Play-Kreis und Beschriftung
+   „PLATZHALTER · VIDEO / Iwo stellt den Betrieb vor, 60–90 Sekunden"
+2. **Bilder der 11 Branchen-Kacheln** fehlen — schraffierte Flächen mit
+   „Bild SHK" usw.
+3. **Porträt Moritz** fehlt
+4. **Kundenfotos in den Bewertungen** fehlen — 48×48-Kachel mit „FOTO"
+5. **Screenshot DMK Bau** fehlt
+6. **FAQ-Texte sind Entwürfe** und laut Handoff nicht freigegeben — sie stehen
+   trotzdem schon drin, damit die Sektion vollständig ist
+7. **Verlinkte, aber nicht gebaute Seiten:** `/erstgespraech`, `/ueber-uns`,
+   `/kunden-gewinnen`, `/mitarbeiter-gewinnen`, `/projekte`,
+   `/branchen/*` (11 Seiten), `/vakanzkostenrechner`, `/website-check`,
+   `/sichtbarkeits-check`, `/impressum`, `/datenschutz`, `/agb`, `/cookies`.
+   Die Links stehen wie in der Vorlage und laufen aktuell ins Leere.
+8. **Rechtliches** (Impressum, Datenschutz, Cookie-Hinweis) fehlt komplett
+
+---
+
+## Was ausdrücklich *nicht* abweicht
+
+Gegen den gerenderten Prototyp gemessen (Desktop 1440, Tablet 1024, Mobil 390):
+
+- Schriftgrößen, Zeilenhöhen, Laufweiten, Schriftschnitte und Textfarben:
+  in allen geprüften Elementen identisch
+- Sektionspositionen: durchgehend innerhalb von 5px, abgesehen von Punkt 2
+- kein horizontaler Überlauf auf allen drei Breiten
+- Sticky-Header ab genau 500px, Burger unter 1040px, Buttongrößen unter 720px,
+  Hero-Buttons untereinander unter 390px
+- Branchen-Slider scrollt um exakt 350px (330px Karte + 20px Gap), gleiche
+  Snap-Ausgangsposition wie die Vorlage
+- FAQ öffnet den ersten Eintrag, immer genau einer offen, Zeichen wechselt +/−

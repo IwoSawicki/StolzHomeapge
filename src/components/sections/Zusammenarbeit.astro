@@ -1,0 +1,70 @@
+---
+/* „Zusammenarbeit": dunkler Block auf weißem Grund, links Text und CTA,
+   rechts die drei nummerierten Schritte.
+   Vorlage: design/STARTSEITE.dc.html, data-screen-label="Zusammenarbeit" */
+import Button from '../Button.astro';
+
+const schritte = [
+  {
+    titel: 'Erstgespräch anfragen',
+    text: 'Klicken Sie einfach auf den Button und tragen sich ein.',
+  },
+  {
+    titel: 'Termin auswählen',
+    text: 'Jede Woche halten wir uns ein begrenztes Kontigent an Terminen für Erstgespräche frei. Wählen Sie sich jetzt Ihren Termin!',
+  },
+  {
+    titel: 'Persönliches Erstgespräch wahrnehmen',
+    text: 'Im Erstgespräch klären wir Ihre Situation und entwickeln gemeinsam ein erstes Bild, auf Basis dessen wir später eine individuelle Strategie aufsetzen können.',
+  },
+];
+---
+
+<section class="bg-paper px-20 py-section-y-md">
+  <div
+    class="mx-auto box-content flex max-w-content-wide flex-wrap items-start gap-spalten-block rounded-24 bg-forest p-innen-block"
+  >
+    <div class="flex flex-1 basis-320 flex-col items-start gap-26">
+      <h2
+        class="m-0 text-h2 leading-h2 font-bold tracking-system text-paper"
+      >
+        So können Sie mit uns <span
+          class="font-display font-semibold italic">zusammenarbeiten</span
+        >
+      </h2>
+      <p class="m-0 text-18 leading-prose text-mint-light">
+        Wir verstehen zu gut, dass die Suche nach einem vertrauenswürdigen
+        Dienstleister mindestens genauso schwer ist, wie die Suche nach den passenden
+        Mitarbeitern.
+      </p>
+      <p class="m-0 text-18 leading-prose text-mint-light">
+        In einem kostenfreien Erstgespräch finden wir gemeinsam heraus, ob wir Ihre
+        Herausforderung annehmen können!
+      </p>
+      <Button href="/erstgespraech" variante="lime" class="mt-8">
+        Jetzt Erstgespräch vereinbaren<span class="text-18" aria-hidden="true">→</span>
+      </Button>
+    </div>
+
+    <ol class="m-0 flex flex-[1.15] basis-380 list-none flex-col gap-36 p-0 pt-6">
+      {
+        schritte.map((schritt, i) => (
+          <li class="grid grid-cols-[56px_minmax(0,1fr)] items-start gap-22">
+            <span
+              class="box-content flex h-56 w-56 items-center justify-center rounded-full border border-edge bg-forest-card text-20 font-bold text-lime"
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
+            <div class="flex flex-col gap-8">
+              <h3 class="m-0 text-21 leading-card font-bold tracking-heading text-paper">
+                {schritt.titel}
+              </h3>
+              <p class="m-0 text-16 leading-quote text-mint">{schritt.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

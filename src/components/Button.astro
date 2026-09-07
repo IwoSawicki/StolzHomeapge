@@ -1,0 +1,68 @@
+---
+/* Buttons der Vorlage. Die Größen sind an den Breakpoint 720px gekoppelt
+   (design/README.md, Abschnitt „Buttons"): darunter kleiner, darüber
+   die Desktop-Maße. */
+interface Props {
+  href: string;
+  /**
+   * lime        – großer gelber CTA (Zusammenarbeit, Footer, Bewertungen)
+   * lime-klein  – gelber Button in Kopfzeile und Burger-Menü
+   * dunkel      – Sekundärbutton auf dunklem Grund
+   * hell        – Sekundärbutton auf hellem Grund
+   * tinte       – schwarzer Button auf hellem Grund (FAQ)
+   */
+  variante: 'lime' | 'lime-klein' | 'dunkel' | 'hell' | 'tinte';
+  /** Lichtschimmer wie bei den beiden Hero-Buttons */
+  sheen?: boolean;
+  class?: string;
+  id?: string;
+}
+
+const { href, variante, sheen = false, class: klasse, id } = Astro.props;
+
+const basis =
+  'inline-flex items-center justify-center no-underline font-medium transition-colors duration-200';
+
+const varianten: Record<Props['variante'], string> = {
+  // Großer CTA: padding 13px 20px mobil, 18px 30px ab 720px
+  lime:
+    'gap-12 rounded-12 bg-lime text-forest-deep font-bold shadow-glow ' +
+    'px-20 py-13 text-14 btn:px-30 btn:py-18 btn:text-16 hover:bg-lime-bright',
+  // Header-CTA: feste Höhe, kein Umbruch
+  'lime-klein':
+    'gap-10 rounded-8 bg-lime text-forest-deep shadow-glow h-40 px-16 text-15 hover:bg-lime-hover',
+  // Sekundär auf dunkel
+  dunkel:
+    'box-content rounded-10 border border-lime-edge bg-lime/7 text-cream h-42 px-16 text-14 ' +
+    'btn:h-50 btn:px-24 btn:text-16 hover:bg-lime/14 hover:border-lime-edge-hover',
+  // Sekundär auf hell
+  hell:
+    'box-content rounded-10 border border-line-strong text-ink h-42 px-16 text-14 ' +
+    'btn:h-50 btn:px-24 btn:text-16 hover:bg-paper',
+  // Dunkler Button auf hellem Grund
+  tinte:
+    'gap-10 rounded-12 bg-ink text-paper font-bold px-24 py-14 text-16 hover:bg-ink-btn-hover',
+};
+---
+
+<a
+  href={href}
+  id={id}
+  class:list={[
+    basis,
+    varianten[variante],
+    sheen && 'relative overflow-hidden',
+    klasse,
+  ]}
+>
+  {
+    sheen && (
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-y-0 left-0 w-[45%] animate-sheen"
+        style="background: linear-gradient(100deg, rgb(228 245 63 / 0) 0%, rgb(228 245 63 / 0.22) 50%, rgb(228 245 63 / 0) 100%)"
+      />
+    )
+  }
+  <slot />
+</a>

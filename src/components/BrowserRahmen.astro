@@ -1,0 +1,35 @@
+---
+/* Browser-Mockup: drei Punkte, Adressleiste, darunter der Screenshot.
+   Vorlage: Beweisfall und Projektkarten im dunklen Band. */
+interface Props {
+  domain: string;
+  /** Radius des Rahmens – Beweisfall 12px, Karten 10px */
+  radius?: 'r10' | 'r12';
+  class?: string;
+}
+const { domain, radius = 'r10', class: klasse } = Astro.props;
+---
+
+<div
+  class:list={[
+    'overflow-hidden border border-edge-soft bg-forest-well',
+    radius === 'r12' ? 'rounded-12' : 'rounded-10',
+    klasse,
+  ]}
+>
+  <div
+    class="flex items-center gap-10 border-b border-edge-soft bg-forest-card-alt px-12 py-10"
+  >
+    <div class="flex gap-6" aria-hidden="true">
+      <div class="h-9 w-9 rounded-full bg-dot"></div>
+      <div class="h-9 w-9 rounded-full bg-dot"></div>
+      <div class="h-9 w-9 rounded-full bg-dot"></div>
+    </div>
+    <div
+      class="box-content flex h-22 min-w-0 flex-1 items-center overflow-hidden rounded-full bg-forest-card px-12 font-mono text-11 text-ellipsis whitespace-nowrap text-mint"
+    >
+      {domain}
+    </div>
+  </div>
+  <slot />
+</div>

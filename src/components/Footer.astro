@@ -1,0 +1,139 @@
+---
+/* Footer im Awwwards-Stil: CTA-Block, Spalten, gestreckte SVG-Wortmarke,
+   Trennlinie mit Copyright und Social-Links.
+   Vorlage: design/STARTSEITE.dc.html, data-screen-label="Footer" */
+import Logo from './Logo.astro';
+import Button from './Button.astro';
+import {
+  footerMenue,
+  footerTools,
+  footerBranchen,
+  footerRechtliches,
+  socialLinks,
+  kontakt,
+} from '../data/navigation';
+
+const linkKlasse = 'text-15 text-mint-link no-underline transition-colors hover:text-lime';
+const spaltenUeberschrift =
+  'font-mono text-12 tracking-footer uppercase text-mint-dimmer';
+
+const jahr = 2026;
+---
+
+<footer class="overflow-hidden bg-forest-deep px-page-x pt-section-y pb-40">
+  <div class="mx-auto flex max-w-content-wide flex-col gap-72">
+    {/* --- Claim + CTA -------------------------------------------------- */}
+    <div
+      class="flex flex-wrap items-end gap-x-40 gap-y-32 border-b border-edge pb-56"
+    >
+      <div class="flex flex-1 basis-420 flex-col gap-22">
+        <span class="text-13 tracking-eyebrow-wide uppercase text-mint-dimmer">
+          Bereit, wenn Sie es sind
+        </span>
+        <h2
+          class="m-0 max-w-760 text-h2-claim leading-claim font-bold tracking-claim text-paper"
+        >
+          Lassen Sie uns über Ihren Betrieb <span
+            class="font-display tracking-system italic">sprechen</span
+          >
+        </h2>
+      </div>
+      <Button href="/erstgespraech" variante="lime" class="gap-14 whitespace-nowrap">
+        Kostenloses Erstgespräch<span class="text-19">→</span>
+      </Button>
+    </div>
+
+    {/* --- Spalten ------------------------------------------------------- */}
+    <div class="flex flex-wrap gap-x-48 gap-y-40">
+      <div class="flex flex-[1.2] basis-260 flex-col items-start gap-26">
+        <Logo variante="hell" hoehe={26} />
+        <p class="m-0 max-w-300 text-15 leading-prose text-mint-dim">
+          Marketing für Handwerksbetriebe und Dienstleister an der Bergstraße und in
+          Südhessen.
+        </p>
+        <div class="flex flex-col gap-10">
+          <a
+            href={kontakt.telefonLink}
+            class="text-16 text-cream no-underline transition-colors hover:text-lime"
+            >{kontakt.telefonAnzeige}</a
+          >
+          <a
+            href={`mailto:${kontakt.email}`}
+            class="text-16 text-cream no-underline transition-colors hover:text-lime"
+            >{kontakt.email}</a
+          >
+          <span class="text-15 leading-body text-mint-dim">
+            {kontakt.ortZeile1}<br />{kontakt.ortZeile2}
+          </span>
+        </div>
+      </div>
+
+      <nav aria-label="Footer" class="flex flex-1 basis-190 flex-col gap-18">
+        <span class={spaltenUeberschrift}>Menü</span>
+        <div class="flex flex-col gap-12">
+          {footerMenue.map((l) => <a href={l.href} class={linkKlasse}>{l.label}</a>)}
+        </div>
+        <span class:list={[spaltenUeberschrift, 'mt-16']}>Tools</span>
+        <div class="flex flex-col gap-12">
+          {footerTools.map((l) => <a href={l.href} class={linkKlasse}>{l.label}</a>)}
+        </div>
+      </nav>
+
+      <nav aria-label="Branchen und Rechtliches" class="flex flex-[2] basis-340 flex-col gap-18">
+        <span class={spaltenUeberschrift}>Branchen</span>
+        <div
+          class="grid grid-cols-[repeat(auto-fit,minmax(min(170px,100%),1fr))] gap-x-32 gap-y-12"
+        >
+          {footerBranchen.map((l) => <a href={l.href} class={linkKlasse}>{l.label}</a>)}
+        </div>
+        <span class:list={[spaltenUeberschrift, 'mt-16']}>Rechtliches</span>
+        <div class="flex flex-wrap gap-x-32 gap-y-12">
+          {footerRechtliches.map((l) => <a href={l.href} class={linkKlasse}>{l.label}</a>)}
+        </div>
+      </nav>
+    </div>
+
+    {/* --- Gestreckte Wortmarke, sitzt auf der Trennlinie ----------------- */}
+    <div class="-mb-72 w-full" aria-hidden="true">
+      <svg
+        viewBox="0 0 1000 136"
+        width="100%"
+        class="block h-auto w-full overflow-visible text-wordmark"
+      >
+        <text
+          x="0"
+          y="104"
+          textLength="1000"
+          lengthAdjust="spacingAndGlyphs"
+          fill="currentColor"
+          font-family="Inter, system-ui, sans-serif"
+          font-size="128"
+          font-weight="700"
+          letter-spacing="-4">Stolz Marketing</text
+        >
+      </svg>
+    </div>
+
+    {/* --- Copyright ------------------------------------------------------ */}
+    <div
+      class="flex flex-wrap items-center justify-between gap-x-32 gap-y-16 border-t border-edge pt-28"
+    >
+      <span class="font-mono text-12 tracking-caps text-mint-dimmer">
+        © {jahr} Stolz Marketing · Bensheim
+      </span>
+      <div class="flex gap-20">
+        {
+          socialLinks.map((l) => (
+            <a
+              href={l.href}
+              rel="noopener"
+              class="font-mono text-12 tracking-caps uppercase text-mint-dim no-underline transition-colors hover:text-lime"
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</footer>

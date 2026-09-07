@@ -1,0 +1,118 @@
+---
+/* „Bewertungen": drei Google-Bewertungen auf dunklem Grund, darunter ein
+   gelber CTA. Die Kundenfotos fehlen noch — die Vorlage zeigt dort eine
+   schraffierte Platzhalterkachel.
+   Vorlage: design/STARTSEITE.dc.html, data-screen-label="Bewertungen" */
+import Eyebrow from '../Eyebrow.astro';
+import { bewertungen } from '../../data/startseite';
+---
+
+<section class="bg-forest px-20 pt-section-y-lg pb-section-y-xl">
+  <div class="mx-auto flex max-w-content flex-col items-center gap-56">
+    <div class="flex flex-col items-center gap-18 text-center">
+      <Eyebrow variante="dunkel">Bewertungen</Eyebrow>
+      <h2
+        class="m-0 text-h2 leading-h2-dark font-bold tracking-heading text-paper"
+      >
+        Was unsere Kunden <span class="font-display font-semibold italic">sagen</span>
+      </h2>
+    </div>
+
+    <div
+      class="grid w-full grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] items-stretch gap-24"
+    >
+      {
+        bewertungen.map((bewertung) => (
+          <figure class="m-0 flex flex-col gap-22 rounded-18 border border-edge bg-forest-review px-quote-x py-quote-y">
+            <div class="flex items-center gap-10">
+              <svg
+                width="110"
+                height="20"
+                viewBox="0 0 110 20"
+                fill="currentColor"
+                class="text-star"
+                role="img"
+                aria-label="5 von 5 Sternen"
+              >
+                <path d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z" />
+                <path
+                  transform="translate(22.5)"
+                  d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"
+                />
+                <path
+                  transform="translate(45)"
+                  d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"
+                />
+                <path
+                  transform="translate(67.5)"
+                  d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"
+                />
+                <path
+                  transform="translate(90)"
+                  d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"
+                />
+              </svg>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                class="flex-none"
+                role="img"
+                aria-label="Google"
+              >
+                <path
+                  class="text-google-blue"
+                  fill="currentColor"
+                  d="M23 12.2c0-.8-.1-1.6-.2-2.3H12v4.4h6.2c-.3 1.4-1.1 2.6-2.3 3.4v2.8h3.7C21.7 18.5 23 15.6 23 12.2z"
+                />
+                <path
+                  class="text-google-green"
+                  fill="currentColor"
+                  d="M12 23c3 0 5.5-1 7.3-2.7l-3.7-2.8c-1 .7-2.3 1.1-3.6 1.1-2.8 0-5.2-1.9-6.1-4.5H2.1v3C3.9 20.7 7.7 23 12 23z"
+                />
+                <path
+                  class="text-star"
+                  fill="currentColor"
+                  d="M5.9 14.1c-.2-.7-.4-1.4-.4-2.1s.1-1.5.4-2.1v-3H2.1C1.4 8.4 1 10.1 1 12s.4 3.6 1.1 5.1l3.8-3z"
+                />
+                <path
+                  class="text-google-red"
+                  fill="currentColor"
+                  d="M12 5.4c1.6 0 3 .5 4.1 1.6l3.2-3.2C17.5 2 15 1 12 1 7.7 1 3.9 3.3 2.1 6.9l3.8 3c.9-2.6 3.3-4.5 6.1-4.5z"
+                />
+              </svg>
+            </div>
+
+            <blockquote class="m-0 text-17 leading-quote whitespace-pre-line text-mint-light">
+              {bewertung.text}
+            </blockquote>
+
+            <figcaption class="mt-auto flex items-center gap-14">
+              {/* Kundenfoto liegt noch nicht vor */}
+              <div
+                class="flex h-48 w-48 flex-none items-center justify-center rounded-12"
+                style="background: repeating-linear-gradient(45deg, var(--color-forest-tint) 0 8px, var(--color-forest-tint-alt) 8px 16px)"
+                aria-hidden="true"
+              >
+                <span class="font-mono text-9 text-mint-placeholder">FOTO</span>
+              </div>
+              <div class="flex flex-col gap-2">
+                <span class="text-17 font-bold text-paper">{bewertung.name}</span>
+                {bewertung.betrieb && (
+                  <span class="text-15 text-mint">{bewertung.betrieb}</span>
+                )}
+              </div>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <a
+      href="#kontakt"
+      class="inline-flex items-center gap-12 rounded-12 bg-lime px-28 py-16 text-17 font-bold text-forest-deep no-underline transition-colors duration-200 hover:bg-lime-bright"
+    >
+      <span class="text-18" aria-hidden="true">→</span>Zusammenarbeit anfragen
+    </a>
+  </div>
+</section>

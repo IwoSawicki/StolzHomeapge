@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stolz-marketing.de/sitemap-index.xml
