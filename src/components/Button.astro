@@ -5,13 +5,15 @@
 interface Props {
   href: string;
   /**
-   * lime        – großer gelber CTA (Zusammenarbeit, Footer, Bewertungen)
+   * lime        – großer gelber CTA (Zusammenarbeit, Footer), Maße
+   *               wechseln am Breakpoint 720px
+   * lime-fest   – gelber CTA in fester Größe (Bewertungen)
    * lime-klein  – gelber Button in Kopfzeile und Burger-Menü
    * dunkel      – Sekundärbutton auf dunklem Grund
    * hell        – Sekundärbutton auf hellem Grund
    * tinte       – schwarzer Button auf hellem Grund (FAQ)
    */
-  variante: 'lime' | 'lime-klein' | 'dunkel' | 'hell' | 'tinte';
+  variante: 'lime' | 'lime-fest' | 'lime-klein' | 'dunkel' | 'hell' | 'tinte';
   /** Lichtschimmer wie bei den beiden Hero-Buttons */
   sheen?: boolean;
   class?: string;
@@ -21,23 +23,27 @@ interface Props {
 const { href, variante, sheen = false, class: klasse, id } = Astro.props;
 
 const basis =
-  'inline-flex items-center justify-center no-underline font-medium transition-colors duration-200';
+  'inline-flex items-center justify-center no-underline transition-colors duration-200';
 
 const varianten: Record<Props['variante'], string> = {
   // Großer CTA: padding 13px 20px mobil, 18px 30px ab 720px
   lime:
     'gap-12 rounded-12 bg-lime text-forest-deep font-bold shadow-glow ' +
     'px-20 py-13 text-14 btn:px-30 btn:py-18 btn:text-16 hover:bg-lime-bright',
+  // Fester CTA, wächst nicht am Breakpoint mit
+  'lime-fest':
+    'gap-12 rounded-12 bg-lime text-forest-deep font-bold shadow-glow ' +
+    'px-28 py-16 text-17 hover:bg-lime-bright',
   // Header-CTA: feste Höhe, kein Umbruch
   'lime-klein':
-    'gap-10 rounded-8 bg-lime text-forest-deep shadow-glow h-40 px-16 text-15 hover:bg-lime-hover',
+    'gap-10 rounded-8 bg-lime text-forest-deep font-medium shadow-glow h-40 px-16 text-15 hover:bg-lime-hover',
   // Sekundär auf dunkel
   dunkel:
-    'box-content rounded-10 border border-lime-edge bg-lime/7 text-cream h-42 px-16 text-14 ' +
+    'box-content rounded-10 border border-lime-edge bg-lime/7 text-cream font-medium h-42 px-16 text-14 ' +
     'btn:h-50 btn:px-24 btn:text-16 hover:bg-lime/14 hover:border-lime-edge-hover',
   // Sekundär auf hell
   hell:
-    'box-content rounded-10 border border-line-strong text-ink h-42 px-16 text-14 ' +
+    'box-content rounded-10 border border-line-strong text-ink font-medium h-42 px-16 text-14 ' +
     'btn:h-50 btn:px-24 btn:text-16 hover:bg-paper',
   // Dunkler Button auf hellem Grund
   tinte:

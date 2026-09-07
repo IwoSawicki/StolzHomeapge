@@ -163,7 +163,10 @@
   /* =========================================================================
      SCHRIFTEN
      ========================================================================= */
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Genau wie die Vorlage. Wichtig ist der generische Fallback: Zeichen,
+     die Inters Subset nicht enthält (etwa der Pfeil U+2192 in den CTAs),
+     kommen daraus — mit system-ui davor wäre der Pfeil 3px schmaler. */
+  --font-sans: 'Inter', sans-serif;
   --font-display: 'Playfair Display', Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
@@ -406,8 +409,6 @@
     background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Die Vorlage setzt beides global */

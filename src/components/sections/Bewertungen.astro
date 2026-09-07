@@ -4,6 +4,7 @@
    schraffierte Platzhalterkachel.
    Vorlage: design/STARTSEITE.dc.html, data-screen-label="Bewertungen" */
 import Eyebrow from '../Eyebrow.astro';
+import Button from '../Button.astro';
 import { bewertungen } from '../../data/startseite';
 ---
 
@@ -108,11 +109,8 @@ import { bewertungen } from '../../data/startseite';
       }
     </div>
 
-    <a
-      href="#kontakt"
-      class="inline-flex items-center gap-12 rounded-12 bg-lime px-28 py-16 text-17 font-bold text-forest-deep no-underline transition-colors duration-200 hover:bg-lime-bright"
-    >
+    <Button href="#kontakt" variante="lime-fest">
       <span class="text-18" aria-hidden="true">→</span>Zusammenarbeit anfragen
-    </a>
+    </Button>
   </div>
 </section>

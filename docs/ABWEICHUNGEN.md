@@ -224,7 +224,36 @@ aussehen — und wenn ja, grau oder schwarz?
 
 ---
 
-## 14. Noch offen aus der Vorlage selbst
+## 14. Glow am CTA „Zusammenarbeit anfragen" ergänzt
+
+Der gelbe CTA unter den Bewertungen ist in der Vorlage der einzige gelbe
+Button **ohne** `box-shadow` — auf der Startseite wie auf der Projekte-Seite.
+Alle übrigen (Header, Burger-Menü, Zusammenarbeit, Footer) haben den Glow.
+
+**Umgesetzt:** Auf Wunsch von Iwo bekommt er `shadow-glow` wie alle anderen.
+Maße, Farbe, Schriftgröße und Innenabstände bleiben unverändert.
+
+Da der Button auf der Projekte-Seite mit identischen Maßen wiederkommt, ist er
+als Variante `lime-fest` in `Button.astro` hinterlegt und nicht zweimal von
+Hand gebaut.
+
+---
+
+## 15. Schrift-Stack: generischer Fallback statt system-ui
+
+Ursprünglich stand `--font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI',
+sans-serif`. Die Vorlage nutzt schlicht `'Inter', sans-serif`.
+
+Das ist nicht kosmetisch: Der Pfeil `→` (U+2192) liegt **nicht** in Inters
+Latin-Subset und wird deshalb aus der nächsten Schrift im Stack geholt. Mit
+`system-ui` davor war der Pfeil in allen CTAs 15,09px statt 18px breit.
+
+**Umgesetzt:** Stack exakt wie die Vorlage. Damit stimmen alle Buttonmaße
+wieder auf den Pixel.
+
+---
+
+## 16. Noch offen aus der Vorlage selbst
 
 Aus `design/README.md`, „Offene Punkte" — im Nachbau stehen dort die
 Platzhalterflächen der Vorlage:
