@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Playfair+Display:ital,wght@1,500;1,600&amp;display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #FFFFFF; font-family: 'Inter', sans-serif; color: #141A15; }
+a { color: #141A15; } a:hover { color: #48582A; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin-rev { to { transform: rotate(-360deg); } }
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes pulse-line { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+</style>
+</helmet>
+
+<nav data-screen-label="Sticky Header" style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 12px clamp(20px, 5.5vw, 100px); display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; background: rgba(255, 255, 255, 0.82); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%); border-bottom: 1px solid #E2E4DD; transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease; will-change: transform; transform: {{ stickyTransform }}; opacity: {{ stickyOpacity }}; pointer-events: {{ stickyPointer }};">
+  <a href="/" style="display: inline-flex; align-items: center; text-decoration: none;"><img src="logo-stolz-dark.svg" alt="Stolz Marketing" style="height: 24px; width: auto; display: block;"></a>
+  <div style="display: {{ navLinksDisplay }}; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto;">
+    <a href="/projekte" style="font-size: 14px; font-weight: 500; color: #141A15; text-decoration: none; padding: 8px 12px; border-radius: 8px;" style-hover="background: #F1F1EF;">Projekte</a>
+    <a href="/kunden-gewinnen" style="font-size: 14px; font-weight: 500; color: #141A15; text-decoration: none; padding: 8px 12px; border-radius: 8px;" style-hover="background: #F1F1EF;">Kunden gewinnen</a>
+    <a href="/mitarbeiter-gewinnen" style="font-size: 14px; font-weight: 500; color: #141A15; text-decoration: none; padding: 8px 12px; border-radius: 8px;" style-hover="background: #F1F1EF;">Mitarbeiter gewinnen</a>
+  </div>
+  <a href="/erstgespraech" style="height: 40px; padding: 0 16px; border-radius: 8px; background: #E4F53F; box-shadow: 0 0 22px rgba(228, 245, 63, 0.32), 0 2px 8px rgba(228, 245, 63, 0.18); color: #0C1B10; font-size: 15px; font-weight: 500; text-decoration: none; display: {{ navCtaDisplay }}; align-items: center; gap: 10px;" style-hover="background: #D6E731; color: #0C1B10;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0C1B10" aria-hidden="true"><path d="M2 21l21-9L2 3l3 8 12 1-12 1z"></path></svg>Kostenloses Erstgespräch</a>
+  <button type="button" onClick="{{ toggleMenu }}" aria-label="Menü öffnen" style="display: {{ burgerDisplay }}; margin-left: auto; width: 42px; height: 42px; flex: none; border-radius: 10px; border: 1px solid #C6D0C5; background: #F4F4F2; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; padding: 0;">
+    <span style="width: 18px; height: 2px; border-radius: 2px; background: #141A15; display: block;"></span>
+    <span style="width: 18px; height: 2px; border-radius: 2px; background: #141A15; display: block;"></span>
+    <span style="width: 18px; height: 2px; border-radius: 2px; background: #141A15; display: block;"></span>
+  </button>
+</nav>
+
+<div style="position: fixed; inset: 0; z-index: 60; display: {{ menuDisplay }}; flex-direction: column; background: #0D2118; padding: 14px clamp(20px, 5.5vw, 100px) 32px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+    <a href="/" style="display: inline-flex; align-items: center; text-decoration: none;"><img src="logo-stolz.svg" alt="Stolz Marketing" style="height: 24px; width: auto; display: block;"></a>
+    <button type="button" onClick="{{ closeMenu }}" aria-label="Menü schließen" style="width: 42px; height: 42px; flex: none; border-radius: 10px; border: 1px solid rgba(228, 245, 63, 0.28); background: rgba(228, 245, 63, 0.08); color: #E4F53F; font-size: 22px; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">×</button>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 28px;">
+    <a href="/projekte" onClick="{{ closeMenu }}" style="font-size: 22px; font-weight: 500; color: #F3F6F1; text-decoration: none; padding: 14px 0; border-bottom: 1px solid #21382B;">Projekte</a>
+    <a href="/kunden-gewinnen" onClick="{{ closeMenu }}" style="font-size: 22px; font-weight: 500; color: #F3F6F1; text-decoration: none; padding: 14px 0; border-bottom: 1px solid #21382B;">Kunden gewinnen</a>
+    <a href="/mitarbeiter-gewinnen" onClick="{{ closeMenu }}" style="font-size: 22px; font-weight: 500; color: #F3F6F1; text-decoration: none; padding: 14px 0; border-bottom: 1px solid #21382B;">Mitarbeiter gewinnen</a>
+  </div>
+  <a href="/erstgespraech" onClick="{{ closeMenu }}" style="margin-top: 28px; height: 50px; padding: 0 20px; border-radius: 10px; background: #E4F53F; box-shadow: 0 0 22px rgba(228, 245, 63, 0.32), 0 2px 8px rgba(228, 245, 63, 0.18); color: #0C1B10; font-size: 16px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0C1B10" aria-hidden="true"><path d="M2 21l21-9L2 3l3 8 12 1-12 1z"></path></svg>Kostenloses Erstgespräch</a>
+</div>
+
+
+<div data-screen-label="Kopf" style="background: #FFFFFF;">
+  <nav style="position: relative; z-index: 2; padding: 18px clamp(20px, 5.5vw, 100px); display: flex; align-items: center; flex-wrap: wrap; gap: 14px 28px;">
+    <a href="/" style="display: inline-flex; align-items: center; text-decoration: none;"><img src="logo-stolz-dark.svg" alt="Stolz Marketing" style="height: 26px; width: auto; display: block;"></a>
+    <div style="display: {{ navLinksDisplay }}; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto;">
+      <a href="/projekte" style="font-size: 14px; font-weight: 500; color: #141A15; text-decoration: none; padding: 8px 12px; border-radius: 8px;" style-hover="background: #F4F4F2;">Projekte</a>
+      <a href="/kunden-gewinnen" style="font-size: 14px; font-weight: 500; color: #141A15; text-decoration: none; padding: 8px 12px; border-radius: 8px;" style-hover="background: #F4F4F2;">Kunden gewinnen</a>
+      <a href="/mitarbeiter-gewinnen" style="font-size: 14px; font-weight: 500; color: #141A15; text-decoration: none; padding: 8px 12px; border-radius: 8px;" style-hover="background: #F4F4F2;">Mitarbeiter gewinnen</a>
+    </div>
+    <a href="/erstgespraech" style="height: 44px; padding: 0 18px; border-radius: 8px; background: #E4F53F; color: #0C1B10; font-size: 15px; font-weight: 500; text-decoration: none; display: {{ navCtaDisplay }}; align-items: center; gap: 10px; box-shadow: 0 0 20px rgba(228, 245, 63, 0.45), 0 0 56px rgba(228, 245, 63, 0.22);" style-hover="background: #D6E731; color: #0C1B10;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0C1B10" aria-hidden="true"><path d="M2 21l21-9L2 3l3 8 12 1-12 1z"></path></svg>Kostenloses Erstgespräch</a>
+    <button type="button" onClick="{{ toggleMenu }}" aria-label="Menü öffnen" style="display: {{ burgerDisplay }}; margin-left: auto; width: 42px; height: 42px; flex: none; border-radius: 10px; border: 1px solid #C6D0C5; background: #F4F4F2; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; padding: 0;">
+      <span style="width: 18px; height: 2px; border-radius: 2px; background: #141A15; display: block;"></span>
+      <span style="width: 18px; height: 2px; border-radius: 2px; background: #141A15; display: block;"></span>
+      <span style="width: 18px; height: 2px; border-radius: 2px; background: #141A15; display: block;"></span>
+    </button>
+  </nav>
+  <div style="border-bottom: 1px solid #E2E4DD;"></div>
+  <section data-screen-label="Hero Projekte" style="padding: clamp(56px, 8vw, 92px) 20px clamp(64px, 9vw, 104px); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px;">
+    <span style="display: inline-block; padding: 8px 16px; border: 1px solid #C6D0C5; border-radius: 999px; font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #5C665E;">Projekte</span>
+    <h1 style="margin: 0; font-size: clamp(36px, 4.8vw, 60px); line-height: 1.05; font-weight: 700; letter-spacing: -0.025em; color: #141A15; max-width: 900px; text-wrap: balance;">Was wir für Betriebe in der Region <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; letter-spacing: 0;">gebaut haben</span></h1>
+    <p style="margin: 0; font-size: 19px; line-height: 1.6; color: #5C665E; max-width: 660px; text-wrap: pretty;">Marke, Webseite, Fotos, Video und bezahlte Werbung — je nachdem, was der Betrieb gebraucht hat. Hier sehen Sie, was dabei entstanden ist.</p>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 8px;">
+      <a href="/erstgespraech" style="height: 56px; padding: 0 28px; border-radius: 8px; background: #E4F53F; box-shadow: 0 0 22px rgba(228, 245, 63, 0.32), 0 2px 8px rgba(228, 245, 63, 0.18); color: #0C1B10; font-size: 16px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;" style-hover="background: #EEFA6E;">Kostenloses Erstgespräch<span style="font-size: 18px;">→</span></a>
+      <a href="#projekte" style="height: 56px; padding: 0 26px; border-radius: 8px; border: 1px solid #C6D0C5; background: #FFFFFF; color: #141A15; font-size: 16px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center;" style-hover="background: #F4F4F2; border: 1px solid #A9B4A8; color: #141A15;">Projekte ansehen</a>
+    </div>
+  </section>
+<div style="background: #FFFFFF; padding: 0 24px clamp(48px, 6vw, 72px); display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <p style="margin: 0; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #5C665E; text-align: center;">50+ Partnerbetriebe vertrauen uns seit 2022</p>
+    <div style="width: min(1160px, 100%); margin: 0 auto; overflow: hidden; mask-image: linear-gradient(90deg, transparent 0, black 64px, black calc(100% - 64px), transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0, black 64px, black calc(100% - 64px), transparent 100%);">
+      <div style="display: flex; gap: 48px; width: max-content; animation: marquee 38s linear infinite;"><div style="display: flex; gap: 48px;"><div style="width: 130px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/nkn-pv-elektrik.png" alt="NKN PV & Elektrik" loading="lazy" decoding="async" style="max-width: 100%; max-height: 46px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 150px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/dmk-bau.png" alt="DMK Bau" loading="lazy" decoding="async" style="max-width: 100%; max-height: 44px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 160px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/hepa-baut.png" alt="HePa Baut" loading="lazy" decoding="async" style="max-width: 100%; max-height: 42px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 150px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/hepa-solar.png" alt="HePa Solar" loading="lazy" decoding="async" style="max-width: 100%; max-height: 38px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 62px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/messing-fahrschule.png" alt="Fahrschule Messing" loading="lazy" decoding="async" style="max-width: 100%; max-height: 50px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 110px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/tierbestattung-memoria.png" alt="Memoria Tierbestattung" loading="lazy" decoding="async" style="max-width: 100%; max-height: 48px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div></div><div style="display: flex; gap: 48px;" aria-hidden="true"><div style="width: 130px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/nkn-pv-elektrik.png" alt="NKN PV & Elektrik" loading="lazy" decoding="async" style="max-width: 100%; max-height: 46px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 150px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/dmk-bau.png" alt="DMK Bau" loading="lazy" decoding="async" style="max-width: 100%; max-height: 44px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 160px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/hepa-baut.png" alt="HePa Baut" loading="lazy" decoding="async" style="max-width: 100%; max-height: 42px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 150px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/hepa-solar.png" alt="HePa Solar" loading="lazy" decoding="async" style="max-width: 100%; max-height: 38px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 62px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/messing-fahrschule.png" alt="Fahrschule Messing" loading="lazy" decoding="async" style="max-width: 100%; max-height: 50px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div><div style="width: 110px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/tierbestattung-memoria.png" alt="Memoria Tierbestattung" loading="lazy" decoding="async" style="max-width: 100%; max-height: 48px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.75;"></div></div></div>
+    </div>
+</div>
+
+<div id="projekte" data-screen-label="Projekte (dunkles Band)" style="background: #FFFFFF; padding: clamp(64px, 9vw, 96px) 20px; display: flex; flex-direction: column; align-items: center; gap: 64px;">
+  <header style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; width: min(1160px, 100%);">
+    <span style="display: inline-block; padding: 8px 16px; border: 1px solid #C6D0C5; border-radius: 999px; font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #5C665E;">Projekte</span>
+    <h2 style="margin: 0; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.15; font-weight: 700; letter-spacing: -0.015em; color: #141A15">Unsere letzten <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; letter-spacing: 0;">Projekte</span></h2>
+  </header>
+<section data-screen-label="Beweisfall (gestapelt)" style="display: flex; flex-direction: column; gap: 16px; width: min(1160px, 100%);">
+    <div style="background: #143026; border: 1px solid #1E3B2E; border-radius: 16px; padding: 48px; display: flex; flex-wrap: wrap; gap: 40px; align-items: center;">
+      <div style="flex: 1 1 380px; min-width: 280px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+          <span style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #9DB3A6;">Umzüge Bergstraße · Umzüge und Entrümpelung</span>
+        </div>
+        <h3 style="margin: 0; font-size: clamp(26px, 2.6vw, 34px); line-height: 1.2; font-weight: 700; color: #F3F6F1;">Von null auf&nbsp;<br><span style="background: #E4F53F; color: #0C1B10; padding: 0.04em 0.22em; border-radius: 4px; font-family: &quot;Playfair Display&quot;, serif; font-style: italic; font-weight: 600;">20&nbsp;Anfragen pro Monat</span></h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #9DB3A6; max-width: 520px;">Umzüge Bergstraße ist unser eigener Betrieb. Wir haben ihn mit denselben Mitteln aufgebaut, mit denen wir für unsere Kunden arbeiten — Name, Logo, Webseite, Google-Profil. Die ersten Anfragen kamen über bezahlte Werbung.</p>
+        <a href="/projekte" style="height: 52px; padding: 0 24px; border-radius: 10px; border: 1px solid #4D5C3B; background: rgba(228, 245, 63, 0.07); color: #F3F6F1; font-size: 16px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center;" style-hover="background: #143026; color: #F3F6F1;">Zum Projekt</a>
+      </div>
+      <div style="flex: 1 1 380px; min-width: 280px; border-radius: 12px; overflow: hidden; border: 1px solid #21382B; background: #0B1712; position: relative;">
+        <span style="position: absolute; bottom: 14px; right: 14px; z-index: 2; padding: 5px 12px; border-radius: 999px; background: #E4F53F; color: #0C1B10; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);">Eigener Betrieb</span>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #0F281E; border-bottom: 1px solid #21382B;">
+          <div style="display: flex; gap: 6px;">
+            <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+            <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+            <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+          </div>
+          <div style="flex: 1; min-width: 0; height: 22px; border-radius: 999px; background: #143026; display: flex; align-items: center; padding: 0 12px; font-family: monospace; font-size: 11px; color: #9DB3A6; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">umzuege-bergstrasse.de</div>
+        </div>
+        <img src="projekt-umzuege.png" width="1200" height="727" loading="lazy" decoding="async" alt="Startseite Umzüge Bergstraße" style="display: block; width: 100%; height: auto;">
+      </div>
+    </div>
+  </section>
+<section data-screen-label="Kartenvarianten" style="display: flex; flex-direction: column; gap: 16px; width: min(1160px, 100%);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr)); max-width: 1160px; gap: 24px;">
+      <div style="background: #143026; border: 1px solid #1E3B2E; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="padding: 16px 16px 0 16px;">
+          <div style="border-radius: 10px; overflow: hidden; border: 1px solid #21382B; background: #0B1712;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #0F281E; border-bottom: 1px solid #21382B;">
+              <div style="display: flex; gap: 6px;">
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+              </div>
+              <div style="flex: 1; min-width: 0; height: 22px; border-radius: 999px; background: #143026; display: flex; align-items: center; padding: 0 12px; font-family: monospace; font-size: 11px; color: #9DB3A6; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">hepa-baut.de</div>
+            </div>
+            <img src="uploads/pasted-1788262317870-0.png" width="1140" height="688" loading="lazy" decoding="async" alt="Startseite HePa Baut" style="display: block; width: 100%; height: auto;">
+          </div>
+        </div>
+        <div style="padding: 28px 32px 32px 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; flex: 1;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+            <span style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #9DB3A6;">HEPA Baut · Sanierung</span>
+          </div>
+          <h3 style="margin: 0; font-size: 22px; line-height: 1.3; font-weight: 700; color: #F3F6F1;">Eine Webseite, die drei Geschäfte sauber trennt</h3>
+          <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #9DB3A6;">Altbau- und Badsanierung, Renovierung, Wasserschaden — vorher liefen die drei ineinander. Jetzt: eine eigene Startseite je Leistung plus rund 150 Städteseiten pro Leistung im 30-Kilometer-Umkreis, über 450 Seiten insgesamt. Kontaktformular, Rückruf und Click-to-Call auf jeder Seite.</p>
+          <a href="/projekte" style="font-size: 17px; font-weight: 500; color: #F3F6F1; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; margin-top: auto; padding-top: 8px;" style-hover="color: #E4F53F;">Projekt ansehen →</a>
+        </div>
+      </div>
+
+      <div style="background: #143026; border: 1px solid #1E3B2E; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="padding: 16px 16px 0 16px;">
+          <div style="border-radius: 10px; overflow: hidden; border: 1px solid #21382B; background: #0B1712;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #0F281E; border-bottom: 1px solid #21382B;">
+              <div style="display: flex; gap: 6px;">
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+              </div>
+              <div style="flex: 1; min-width: 0; height: 22px; border-radius: 999px; background: #143026; display: flex; align-items: center; padding: 0 12px; font-family: monospace; font-size: 11px; color: #9DB3A6; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">jhoch2.de</div>
+            </div>
+            <img src="uploads/pasted-1788262335067-0.png" width="1140" height="687" loading="lazy" decoding="async" alt="Startseite J Hoch 2" style="display: block; width: 100%; height: auto;">
+          </div>
+        </div>
+        <div style="padding: 28px 32px 32px 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; flex: 1;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+            <span style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #9DB3A6;">Jhoch2 · Wasserschadensanierung</span>
+          </div>
+          <h3 style="margin: 0; font-size: 22px; line-height: 1.3; font-weight: 700; color: #F3F6F1;">Marke und Auftritt von Grund auf</h3>
+          <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #9DB3A6;">Logo, Farben, Schriften, Visitenkarten und Aufkleber für die Trocknungsgeräte — dazu ein Foto- und Videodreh mit dem ganzen Team. Auf der Webseite eigene Seiten für Versicherungen und Hausverwaltungen, plus Google Ads für die Auftragsgewinnung.</p>
+          <a href="/projekte" style="font-size: 17px; font-weight: 500; color: #F3F6F1; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; margin-top: auto; padding-top: 8px;" style-hover="color: #E4F53F;">Projekt ansehen →</a>
+        </div>
+      </div>
+
+      <div style="background: #143026; border: 1px solid #1E3B2E; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="padding: 16px 16px 0 16px;">
+          <div style="border-radius: 10px; overflow: hidden; border: 1px solid #21382B; background: #0B1712;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #0F281E; border-bottom: 1px solid #21382B;">
+              <div style="display: flex; gap: 6px;">
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+              </div>
+              <div style="flex: 1; min-width: 0; height: 22px; border-radius: 999px; background: #143026; display: flex; align-items: center; padding: 0 12px; font-family: monospace; font-size: 11px; color: #9DB3A6; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">nkn-pv.de</div>
+            </div>
+            <img src="uploads/pasted-1788262368538-0.png" width="3958" height="2384" loading="lazy" decoding="async" alt="Startseite NKN und PV Elektrik" style="display: block; width: 100%; height: auto;">
+          </div>
+        </div>
+        <div style="padding: 28px 32px 32px 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; flex: 1;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+            <span style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #9DB3A6;">NKN &amp; PV Elektrik · Elektro und Photovoltaik</span>
+          </div>
+          <h3 style="margin: 0; font-size: 22px; line-height: 1.3; font-weight: 700; color: #F3F6F1;">Der komplette Auftritt aus einer Hand</h3>
+          <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #9DB3A6;">Logo, Farben, Schriften, Webseite — dazu Flyer und Visitenkarten.</p>
+          <a href="/projekte" style="font-size: 17px; font-weight: 500; color: #F3F6F1; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; margin-top: auto; padding-top: 8px;" style-hover="color: #E4F53F;">Projekt ansehen →</a>
+        </div>
+      </div>
+
+      <div style="background: #143026; border: 1px solid #1E3B2E; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="padding: 16px 16px 0 16px;">
+          <div style="border-radius: 10px; overflow: hidden; border: 1px solid #21382B; background: #0B1712;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #0F281E; border-bottom: 1px solid #21382B;">
+              <div style="display: flex; gap: 6px;">
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+                <div style="width: 9px; height: 9px; border-radius: 50%; background: #3A4E42;"></div>
+              </div>
+              <div style="flex: 1; min-width: 0; height: 22px; border-radius: 999px; background: #143026; display: flex; align-items: center; padding: 0 12px; font-family: monospace; font-size: 11px; color: #9DB3A6; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">dmk-bau.de</div>
+            </div>
+            <div style="aspect-ratio: 16 / 10; background: repeating-linear-gradient(45deg, #0F281E 0 14px, #0D2118 14px 28px); display: flex; align-items: center; justify-content: center;">
+              <span style="font-family: monospace; font-size: 13px; color: #9DB3A6;">SCREENSHOT · DMK Bau</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 28px 32px 32px 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; flex: 1;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+            <span style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #9DB3A6;">DMK Bau · Bauunternehmen</span>
+          </div>
+          <h3 style="margin: 0; font-size: 22px; line-height: 1.3; font-weight: 700; color: #F3F6F1;">Kampagnen für Kundengewinnung und neue Fachkräfte im Bau</h3>
+          <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #9DB3A6;">Bezahlte Kampagnen für zwei Ziele: Anfragen von Inhabern und Bewerbungen von Fachkräften. Über 100.000 Aufrufe innerhalb der ersten Wochen — bei einem Betrieb, den in der Region ohnehin jeder kennt.</p>
+          <a href="/projekte" style="font-size: 17px; font-weight: 500; color: #F3F6F1; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; margin-top: auto; padding-top: 8px;" style-hover="color: #E4F53F;">Projekt ansehen →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section data-screen-label="Bewertungen" style="background: #0D2118; padding: clamp(64px, 9vw, 112px) 20px clamp(72px, 10vw, 120px);">
+  <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 56px;">
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px;">
+      <span style="display: inline-block; padding: 8px 16px; border: 1px solid #1E3B2E; border-radius: 999px; font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #9DB3A6;">Bewertungen</span>
+      <h2 style="margin: 0; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.15; font-weight: 700; letter-spacing: -0.015em; color: #FFFFFF;">Was unsere Kunden <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;">sagen</span></h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 24px; width: 100%; align-items: stretch;">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
+        <div style="background: #123122; border: 1px solid #1E3B2E; border-radius: 18px; padding: clamp(24px, 4vw, 34px) clamp(22px, 4vw, 32px); display: flex; flex-direction: column; gap: 22px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="110" height="20" viewBox="0 0 110 20" fill="#FBBC04" aria-label="5 von 5 Sternen"><path d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"></path><path transform="translate(22.5)" d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"></path><path transform="translate(45)" d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"></path><path transform="translate(67.5)" d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"></path><path transform="translate(90)" d="M10 1.2l2.5 5 5.5.8-4 3.9.9 5.5L10 13.8l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"></path></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-label="Google" style="flex: none;"><path fill="#4285F4" d="M23 12.2c0-.8-.1-1.6-.2-2.3H12v4.4h6.2c-.3 1.4-1.1 2.6-2.3 3.4v2.8h3.7C21.7 18.5 23 15.6 23 12.2z"></path><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.7-2.8c-1 .7-2.3 1.1-3.6 1.1-2.8 0-5.2-1.9-6.1-4.5H2.1v3C3.9 20.7 7.7 23 12 23z"></path><path fill="#FBBC04" d="M5.9 14.1c-.2-.7-.4-1.4-.4-2.1s.1-1.5.4-2.1v-3H2.1C1.4 8.4 1 10.1 1 12s.4 3.6 1.1 5.1l3.8-3z"></path><path fill="#EA4335" d="M12 5.4c1.6 0 3 .5 4.1 1.6l3.2-3.2C17.5 2 15 1 12 1 7.7 1 3.9 3.3 2.1 6.9l3.8 3c.9-2.6 3.3-4.5 6.1-4.5z"></path></svg>
+          </div>
+          <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #C4D3C8; text-wrap: pretty; white-space: pre-line;">{{ r.text }}</p>
+          <div style="display: flex; align-items: center; gap: 14px; margin-top: auto;">
+            <div style="width: 48px; height: 48px; border-radius: 12px; flex: none; background: repeating-linear-gradient(45deg, #17392A 0 8px, #143224 8px 16px); display: flex; align-items: center; justify-content: center;"><span style="font-family: monospace; font-size: 9px; color: #7E9184;">FOTO</span></div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 17px; font-weight: 700; color: #FFFFFF;">{{ r.name }}</span>
+              <span style="font-size: 15px; color: #9DB3A6;">{{ r.company }}</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <a href="#kontakt" style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px; border-radius: 12px; background: #E3F53F; color: #0C1B10; font-size: 17px; font-weight: 700; text-decoration: none;" style-hover="background: #EEFA6E;">
+      <span style="font-size: 18px;">→</span>Zusammenarbeit anfragen
+    </a>
+  </div>
+</section>
+
+<section data-screen-label="Zusammenarbeit" style="background: #FFFFFF; padding: clamp(56px, 8vw, 96px) 20px;">
+  <div style="max-width: 1240px; margin: 0 auto; background: #0D2118; border-radius: 24px; padding: clamp(28px, 5vw, 76px); display: flex; flex-wrap: wrap; gap: clamp(36px, 6vw, 96px); align-items: flex-start;">
+
+    <div style="flex: 1 1 320px; display: flex; flex-direction: column; align-items: flex-start; gap: 26px;">
+      <h2 style="margin: 0; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; color: #FFFFFF;">So können Sie mit uns <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;">zusammenarbeiten</span></h2>
+      <p style="margin: 0; font-size: 18px; line-height: 1.7; color: #C4D3C8; text-wrap: pretty;">Wir verstehen zu gut, dass die Suche nach einem vertrauenswürdigen Dienstleister mindestens genauso schwer ist, wie die Suche nach den passenden Mitarbeitern.</p>
+      <p style="margin: 0; font-size: 18px; line-height: 1.7; color: #C4D3C8; text-wrap: pretty;">In einem kostenfreien Erstgespräch finden wir gemeinsam heraus, ob wir Ihre Herausforderung annehmen können!</p>
+      <a href="/erstgespraech" style="margin-top: 8px; display: inline-flex; align-items: center; gap: 12px; padding: 18px 30px; border-radius: 12px; background: #E4F53F; box-shadow: 0 0 22px rgba(228, 245, 63, 0.32), 0 2px 8px rgba(228, 245, 63, 0.18); color: #0C1B10; font-size: 17px; font-weight: 700; text-decoration: none;" style-hover="background: #EEFA6E;">Jetzt Erstgespräch vereinbaren<span style="font-size: 18px;">→</span></a>
+    </div>
+
+    <div style="flex: 1.15 1 380px; display: flex; flex-direction: column; gap: 36px; padding-top: 6px;">
+      <div style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 22px; align-items: start;">
+        <span style="width: 56px; height: 56px; border-radius: 999px; background: #143026; border: 1px solid #1E3B2E; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #E4F53F;">1</span>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <h3 style="margin: 0; font-size: 21px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; color: #FFFFFF;">Erstgespräch anfragen</h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.65; color: #9DB3A6; text-wrap: pretty;">Klicken Sie einfach auf den Button und tragen sich ein.</p>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 22px; align-items: start;">
+        <span style="width: 56px; height: 56px; border-radius: 999px; background: #143026; border: 1px solid #1E3B2E; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #E4F53F;">2</span>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <h3 style="margin: 0; font-size: 21px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; color: #FFFFFF;">Termin auswählen</h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.65; color: #9DB3A6; text-wrap: pretty;">Jede Woche halten wir uns ein begrenztes Kontigent an Terminen für Erstgespräche frei. Wählen Sie sich jetzt Ihren Termin!</p>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 22px; align-items: start;">
+        <span style="width: 56px; height: 56px; border-radius: 999px; background: #143026; border: 1px solid #1E3B2E; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #E4F53F;">3</span>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <h3 style="margin: 0; font-size: 21px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; color: #FFFFFF;">Persönliches Erstgespräch wahrnehmen</h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.65; color: #9DB3A6; text-wrap: pretty;">Im Erstgespräch klären wir Ihre Situation und entwickeln gemeinsam ein erstes Bild, auf Basis dessen wir später eine individuelle Strategie aufsetzen können.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer data-screen-label="Footer" style="background: #0C1B10; padding: clamp(64px, 9vw, 96px) clamp(20px, 5.5vw, 100px) 40px; overflow: hidden;">
+  <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 72px;">
+
+    <div style="display: flex; flex-wrap: wrap; gap: 32px 40px; align-items: flex-end; padding-bottom: 56px; border-bottom: 1px solid #1E3B2E;">
+      <div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 22px;">
+        <span style="font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: #6F8377;">Bereit, wenn Sie es sind</span>
+        <h2 style="margin: 0; font-size: clamp(38px, 6vw, 78px); line-height: 0.98; font-weight: 700; letter-spacing: -0.035em; color: #FFFFFF; max-width: 760px;">Lassen Sie uns über Ihren Betrieb <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; letter-spacing: -0.02em;">sprechen</span></h2>
+      </div>
+      <a href="/erstgespraech" style="display: inline-flex; align-items: center; gap: 14px; padding: 20px 32px; border-radius: 999px; background: #E4F53F; box-shadow: 0 0 22px rgba(228, 245, 63, 0.32), 0 2px 8px rgba(228, 245, 63, 0.18); color: #0C1B10; font-size: 17px; font-weight: 700; text-decoration: none; white-space: nowrap;" style-hover="background: #EEFA6E;">Kostenloses Erstgespräch<span style="font-size: 19px;">→</span></a>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px 48px;">
+
+      <div style="flex: 1.2 1 260px; display: flex; flex-direction: column; align-items: flex-start; gap: 26px;">
+        <img src="logo-stolz.svg" alt="Stolz Marketing" style="height: 26px; width: auto; display: block; margin-left: 0;">
+        <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #8A9A8D; max-width: 300px;">Marketing für Handwerksbetriebe und Dienstleister an der Bergstraße und in Südhessen.</p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="tel:+491784444156" style="font-size: 16px; color: #F3F6F1; text-decoration: none;" style-hover="color: #E4F53F;">0178 4444 156</a>
+          <a href="mailto:iwo@stolz-marketing.de" style="font-size: 16px; color: #F3F6F1; text-decoration: none;" style-hover="color: #E4F53F;">iwo@stolz-marketing.de</a>
+          <span style="font-size: 15px; line-height: 1.6; color: #8A9A8D;">Gewerbegebiet Bensheim<br>Deutschland</span>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 190px; display: flex; flex-direction: column; gap: 18px;">
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #6F8377;">Menü</span>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="/" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Startseite</a>
+          <a href="/kunden-gewinnen" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Kunden gewinnen</a>
+          <a href="/mitarbeiter-gewinnen" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Mitarbeiter gewinnen</a>
+          <a href="/projekte" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Projekte</a>
+          <a href="/ueber-uns" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Über uns</a>
+          <a href="#kontakt" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Kontakt</a>
+        </div>
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #6F8377; margin-top: 16px;">Tools</span>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="/vakanzkostenrechner" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Vakanzkostenrechner</a>
+          <a href="/website-check" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Website-Check</a>
+          <a href="/sichtbarkeits-check" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Sichtbarkeits-Check</a>
+        </div>
+      </div>
+
+      <div style="flex: 2 1 340px; display: flex; flex-direction: column; gap: 18px;">
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #6F8377;">Branchen</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); gap: 12px 32px;">
+          <a href="/branchen/shk" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">SHK &amp; Heizungsbau</a>
+          <a href="/branchen/elektro" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Elektrotechnik</a>
+          <a href="/branchen/maler" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Maler &amp; Lackierer</a>
+          <a href="/branchen/schreiner" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Schreiner &amp; Tischler</a>
+          <a href="/branchen/dachdecker" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Dachdecker</a>
+          <a href="/branchen/zimmerei" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Zimmerei &amp; Holzbau</a>
+          <a href="/branchen/garten-landschaftsbau" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Garten- &amp; Landschaftsbau</a>
+          <a href="/branchen/bau" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Hoch- &amp; Rohbau</a>
+          <a href="/branchen/fliesenleger" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Fliesen- &amp; Bodenleger</a>
+          <a href="/branchen/metallbau" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Metall- &amp; Schlosserbau</a>
+          <a href="/branchen/photovoltaik" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Photovoltaik &amp; Solar</a>
+        </div>
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #6F8377; margin-top: 16px;">Rechtliches</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px 32px;">
+          <a href="/impressum" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Impressum</a>
+          <a href="/datenschutz" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Datenschutz</a>
+          <a href="/agb" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">AGB</a>
+          <a href="/cookies" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Cookie-Einstellungen</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="width: 100%; margin-bottom: -72px;">
+      <svg viewBox="0 0 1000 136" width="100%" height="auto" role="img" aria-label="Stolz Marketing" style="display: block; overflow: visible;">
+        <text x="0" y="104" textLength="1000" lengthAdjust="spacingAndGlyphs" fill="#12281B" font-family="Inter, system-ui, sans-serif" font-size="128" font-weight="700" letter-spacing="-4">Stolz Marketing</text>
+      </svg>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding-top: 28px; border-top: 1px solid #1E3B2E;">
+      <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.06em; color: #6F8377;">© 2026 Stolz Marketing · Bensheim</span>
+      <div style="display: flex; gap: 20px;">
+        <a href="https://www.instagram.com/" style="font-family: monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #8A9A8D; text-decoration: none;" style-hover="color: #E4F53F;">Instagram</a>
+        <a href="https://www.linkedin.com/" style="font-family: monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #8A9A8D; text-decoration: none;" style-hover="color: #E4F53F;">LinkedIn</a>
+        <a href="https://www.youtube.com/" style="font-family: monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #8A9A8D; text-decoration: none;" style-hover="color: #E4F53F;">YouTube</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { active: 0 };
+
+  get crew() {
+    return [
+      { name: "Iwo Sawicki", role: "Inhaber · Ihr Ansprechpartner", img: "portrait-iwo.jpg", pos: "50% 20%" },
+      { name: "Timon", role: "Foto- und Videoproduktion", img: "portrait-timon.jpg", pos: "55% 30%" },
+      { name: "Gintas", role: "Schnitt und Bearbeitung", img: "portrait-gintas.jpg", pos: "50% 22%" },
+      { name: "Moritz", role: "Bezahlte Werbung", img: "", pos: "50% 30%" }
+    ];
+  }
+
+  get reviewData() {
+    return [
+      { text: "Von Anfang an war die Kommunikation klar, professionell und auf den Punkt. Meine Vorstellungen wurden nicht nur umgesetzt, sondern noch besser in Szene gesetzt als ich es mir vorgestellt hatte.\n\nWer eine Agentur sucht, die mitdenkt und liefert, ist hier genau richtig. Klare Empfehlung!", name: "Janne Tom Klüppelholz", company: "" },
+      { text: "Iwo hat eine beeindruckende Webseite für mich erstellt und hochwertige Werbefotos geschossen. Seine kreative Herangehensweise, professionelle Arbeit und effiziente Zusammenarbeit haben mich beeindruckt. Ich bin mit den Ergebnissen sehr zufrieden und kann Iwo wärmstens empfehlen!", name: "Dariusz Krzyszton", company: "DMK Bau" },
+      { text: "Sehr netter Kontakt! Die Design-Ideen und Lösungsvorschläge sind immer sehr gut.👍🏼\nMit so jemanden kann man gut zusammen arbeiten!", name: "André Zehner", company: "Zehner Immobilien" }
+    ];
+  }
+
+  get faqData() {
+    return [
+      { q: "Was kostet eine neue Webseite?", a: "Das hängt vom Umfang ab. Nach einem kurzen Gespräch bekommen Sie ein Festpreisangebot — keine Stundenzettel, keine Nachträge." },
+      { q: "Wie lange dauert die Umsetzung?", a: "Von der Freigabe der Inhalte bis zum Livegang rechnen wir in der Regel mit vier bis sechs Wochen." },
+      { q: "Muss ich Texte und Bilder selbst liefern?", a: "Nein. Wir kommen zu Ihnen, fotografieren und filmen vor Ort und schreiben die Texte. Sie geben frei." },
+      { q: "Arbeiten Sie nur regional?", a: "Ja. Wir arbeiten mit Betrieben in Südhessen und an der Bergstraße — dort kennen wir den Markt und sind schnell vor Ort." },
+      { q: "Was passiert nach dem Livegang?", a: "Wir bleiben Ansprechpartner: Pflege, Änderungen, Auswertung der Anfragen. Sie bekommen keine Seite und dann Funkstille." }
+    ];
+  }
+
+  componentDidMount() {
+    this._scroller = () => {
+      const y = (document.scrollingElement || document.documentElement).scrollTop || window.scrollY || 0;
+      const stuck = y > 500;
+      if (stuck !== this.state.stuck) this.setState({ stuck });
+    };
+    window.addEventListener("scroll", this._scroller, { passive: true });
+    this._scroller();
+    this._resizer = () => {
+      const vw = window.innerWidth;
+      if (vw !== this.state.vw) this.setState({ vw });
+    };
+    window.addEventListener("resize", this._resizer, { passive: true });
+    this._resizer();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.menuOpen !== this.state.menuOpen) {
+      document.body.style.overflow = this.state.menuOpen ? "hidden" : "";
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this._scroller);
+    window.removeEventListener("resize", this._resizer);
+    document.body.style.overflow = "";
+  }
+
+  renderVals() {
+    const crew = this.crew;
+    const a = this.state.active;
+    const open = this.state.faqOpen == null ? 0 : this.state.faqOpen;
+    const stuck = !!this.state.stuck;
+    const vw = this.state.vw || (typeof window !== "undefined" ? window.innerWidth : 1440);
+    const navMobile = vw < 1040;
+    return {
+      navLinksDisplay: navMobile ? "none" : "flex",
+      navCtaDisplay: navMobile ? "none" : "inline-flex",
+      burgerDisplay: navMobile ? "flex" : "none",
+      menuDisplay: this.state.menuOpen ? "flex" : "none",
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      stickyTransform: stuck ? "translateY(0)" : "translateY(-104%)",
+      stickyOpacity: stuck ? 1 : 0,
+      stickyPointer: stuck ? "auto" : "none",
+      reviews: this.reviewData,
+      faqs: this.faqData.map((f, i) => ({
+        q: f.q,
+        a: f.a,
+        isOpen: i === open,
+        maxHeight: i === open ? "300px" : "0px",
+        opacity: i === open ? 1 : 0,
+        sign: i === open ? "−" : "+",
+        num: String(i + 1).padStart(2, "0"),
+        toggle: () => this.setState(s => ({ faqOpen: s.faqOpen === i ? -1 : i }))
+      })),
+      people: crew.map((p, i) => ({
+        name: p.name,
+        role: p.role,
+        img: p.img,
+        pos: p.pos,
+        flex: i === a ? "3 1 0" : "0 1 150px",
+        minWidth: i === a ? "280px" : "110px",
+        open: i === a ? 1 : 0,
+        dotColor: i === a ? "#E3F53F" : "#1E3B2E",
+        dotWidth: i === a ? "30px" : "8px",
+        select: () => this.setState({ active: i })
+      })),
+      prev: () => this.setState(s => ({ active: (s.active + crew.length - 1) % crew.length })),
+      next: () => this.setState(s => ({ active: (s.active + 1) % crew.length }))
+    };
+  }
+}
+</script>
+</body>
+</html>

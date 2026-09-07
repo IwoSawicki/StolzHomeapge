@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Karte Deutschland</title>
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
+  #map { width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+(async function () {
+  const W = 560, H = 720;
+  const topo = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json");
+  const countries = topojson.feature(topo, topo.objects.countries).features;
+  const de = countries.find(f => f.properties && f.properties.name === "Germany");
+
+  const projection = d3.geoMercator().fitExtent([[30, 30], [W - 30, H - 30]], de);
+  const path = d3.geoPath(projection);
+
+  const svg = d3.select("#map").append("svg")
+    .attr("viewBox", "0 0 " + W + " " + H)
+    .attr("width", "100%").attr("height", "100%")
+    .attr("preserveAspectRatio", "xMidYMid meet");
+
+  const grad = svg.append("defs").append("linearGradient")
+    .attr("id", "g").attr("x1", "0").attr("y1", "0").attr("x2", "0").attr("y2", "1");
+  grad.append("stop").attr("offset", "0").attr("stop-color", "#42603F");
+  grad.append("stop").attr("offset", "1").attr("stop-color", "#8FA85F");
+
+  const f = svg.select("defs").append("filter").attr("id", "sh")
+    .attr("x", "-30%").attr("y", "-30%").attr("width", "180%").attr("height", "180%");
+  f.append("feDropShadow").attr("dx", 0).attr("dy", 18).attr("stdDeviation", 22)
+    .attr("flood-color", "#000000").attr("flood-opacity", 0.45);
+
+  svg.append("path").datum(de)
+    .attr("d", path)
+    .attr("fill", "url(#g)")
+    .attr("stroke", "#16281B")
+    .attr("stroke-width", 1.4)
+    .attr("filter", "url(#sh)");
+
+  // Bergstraße / Südhessen
+  const p = projection([8.63, 49.68]);
+
+  svg.append("circle").attr("cx", p[0]).attr("cy", p[1]).attr("r", 34)
+    .attr("fill", "#E3F53F").attr("opacity", 0.18);
+  svg.append("path")
+    .attr("transform", "translate(" + p[0] + "," + p[1] + ")")
+    .attr("d", "M0 17c0 0 -12.5 -9 -12.5 -18.3A12.5 12.5 0 0 1 12.5 -1.3C12.5 8 0 17 0 17z")
+    .attr("fill", "#E3F53F").attr("stroke", "#0C1B10").attr("stroke-width", 1.2);
+  svg.append("circle").attr("cx", p[0]).attr("cy", p[1] - 2).attr("r", 4.2).attr("fill", "#0C1B10");
+
+  const lbl = svg.append("g").attr("transform", "translate(" + (p[0] + 22) + "," + (p[1] - 6) + ")");
+  lbl.append("text").attr("x", 0).attr("y", 0)
+    .attr("fill", "#FFFFFF").attr("font-size", 26).attr("font-weight", 700)
+    .attr("font-family", "Inter, system-ui, sans-serif")
+    .text("Stolz Marketing");
+  lbl.append("text").attr("x", 0).attr("y", 26)
+    .attr("fill", "#E3F53F").attr("font-size", 20)
+    .attr("font-family", "Inter, system-ui, sans-serif")
+    .text("Gewerbegebiet Bensheim");
+})();
+</script>
+</body>
+</html>

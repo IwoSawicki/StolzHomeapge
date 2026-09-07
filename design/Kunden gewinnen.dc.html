@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Playfair+Display:ital,wght@1,500;1,600&amp;display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #FFFFFF; font-family: 'Inter', sans-serif; color: #141A15; }
+a { color: #141A15; } a:hover { color: #48582A; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+</style>
+</helmet>
+
+<nav data-screen-label="Sticky Header" style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 12px clamp(20px, 5.5vw, 100px); display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; background: rgba(13, 33, 24, 0.72); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%); border-bottom: 1px solid rgba(228, 245, 63, 0.12); transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease; will-change: transform; transform: {{ stickyTransform }}; opacity: {{ stickyOpacity }}; pointer-events: {{ stickyPointer }};">
+  <a href="/" style="display: inline-flex; align-items: center; text-decoration: none;"><img src="logo-stolz.svg" alt="Stolz Marketing" style="height: 24px; width: auto; display: block;"></a>
+  <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto;">
+    <a href="/projekte" style="font-size: 14px; font-weight: 500; color: #F3F6F1; text-decoration: none; padding: 8px 12px; border-radius: 8px;" style-hover="background: rgba(228, 245, 63, 0.1);">Projekte</a>
+    <a href="/kunden-gewinnen" style="font-size: 14px; font-weight: 500; color: #F3F6F1; text-decoration: none; padding: 8px 12px; border-radius: 8px;" style-hover="background: rgba(228, 245, 63, 0.1);">Kunden gewinnen</a>
+    <a href="/mitarbeiter-gewinnen" style="font-size: 14px; font-weight: 500; color: #F3F6F1; text-decoration: none; padding: 8px 12px; border-radius: 8px;" style-hover="background: rgba(228, 245, 63, 0.1);">Mitarbeiter gewinnen</a>
+  </div>
+  <a href="/erstgespraech" style="height: 40px; padding: 0 16px; border-radius: 8px; background: #E4F53F; box-shadow: 0 0 22px rgba(228, 245, 63, 0.32), 0 2px 8px rgba(228, 245, 63, 0.18); color: #0C1B10; font-size: 15px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;" style-hover="background: #D6E731; color: #0C1B10;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0C1B10" aria-hidden="true"><path d="M2 21l21-9L2 3l3 8 12 1-12 1z"></path></svg>Kostenloses Erstgespräch</a>
+</nav>
+
+<div data-screen-label="Band 1: Hero + Marquee" style="background: #0D2118;">
+  <nav style="position: relative; z-index: 2; padding: 20px clamp(20px, 5.5vw, 100px); display: flex; align-items: center; flex-wrap: wrap; gap: 14px 28px;">
+    <a href="/" style="display: inline-flex; align-items: center; text-decoration: none;"><img src="logo-stolz.svg" alt="Stolz Marketing" style="height: 26px; width: auto; display: block;"></a>
+    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto;">
+      <a href="/projekte" style="font-size: 16px; font-weight: 500; color: #F3F6F1; text-decoration: none; padding: 10px 14px; border-radius: 10px;" style-hover="background: #143026;">Projekte</a>
+      <a href="/kunden-gewinnen" style="font-size: 16px; font-weight: 500; color: #F3F6F1; text-decoration: none; padding: 10px 14px; border-radius: 10px; background: #143026;" style-hover="background: #1A3B2C;">Kunden gewinnen</a>
+      <a href="/mitarbeiter-gewinnen" style="font-size: 16px; font-weight: 500; color: #F3F6F1; text-decoration: none; padding: 10px 14px; border-radius: 10px;" style-hover="background: #143026;">Mitarbeiter gewinnen</a>
+    </div>
+    <a href="/erstgespraech" style="height: 52px; padding: 0 24px; border-radius: 10px; background: #E4F53F; color: #0C1B10; font-size: 17px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 0 20px rgba(228, 245, 63, 0.45), 0 0 56px rgba(228, 245, 63, 0.22);" style-hover="background: #D6E731; color: #0C1B10;"><svg width="18" height="18" viewBox="0 0 24 24" fill="#0C1B10" aria-hidden="true"><path d="M2 21l21-9L2 3l3 8 12 1-12 1z"></path></svg>Kostenloses Erstgespräch</a>
+  </nav>
+  <div style="border-bottom: 1px solid #21382B;"></div>
+
+  <section data-screen-label="Hero" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: stretch; min-height: calc(100vh - 182px);">
+    <div style="flex: 1.2 1 520px; min-width: 300px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 28px; padding: 64px 20px 96px clamp(20px, 5.5vw, 100px); box-sizing: border-box;">
+      <span style="display: inline-block; padding: 8px 16px; border: 1px solid #E4F53F; border-radius: 999px; font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #E4F53F;">Neue Aufträge gewinnen</span>
+      <h1 style="margin: 0; font-size: clamp(36px, 4.8vw, 60px); line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; color: #F3F6F1; text-wrap: balance;">Planbar <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; letter-spacing: 0;">Wunschaufträge</span> gewinnen mit dem Platzhirsch-System</h1>
+      <p style="margin: 0; font-size: 19px; line-height: 1.6; color: #9DB3A6; max-width: 620px; text-wrap: pretty;">Für Handwerksbetriebe an der Bergstraße und im Rhein-Neckar-Raum, die nicht mehr auf Zufall und Empfehlung warten wollen — sondern selbst entscheiden, welche Projekte reinkommen.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+        <a href="/erstgespraech" style="height: 56px; padding: 0 28px; border-radius: 8px; background: #E4F53F; box-shadow: 0 0 22px rgba(228, 245, 63, 0.32), 0 2px 8px rgba(228, 245, 63, 0.18); color: #0C1B10; font-size: 16px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;" style-hover="background: #EEFA6E;">Kostenloses Erstgespräch<span style="font-size: 18px;">→</span></a>
+        <a href="#system" style="height: 56px; padding: 0 26px; border-radius: 8px; border: 1px solid #4D5C3B; background: rgba(228, 245, 63, 0.07); color: #F3F6F1; font-size: 16px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center;" style-hover="background: rgba(228, 245, 63, 0.14); border: 1px solid #66774A; color: #F3F6F1;">So funktioniert es</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2px; margin-top: 12px;">
+        <span style="font-size: 22px; font-weight: 500; letter-spacing: -0.01em; line-height: 1; color: #FFFFFF;">Google</span>
+        <span style="font-size: 12px; letter-spacing: 3px; color: #F5B301; line-height: 1;">★★★★★</span>
+      </div>
+    </div>
+    <div style="flex: 1 1 520px; min-width: 300px; min-height: clamp(340px, 48vw, 520px); margin-top: -92px; background: url(&quot;./screenshot-2026-09-01-at-13-18-02-mti7v13x-1hkw.png&quot;) center / cover no-repeat;"></div>
+  </section>
+
+  <section data-screen-label="Logo-Marquee" style="min-height: 90px; display: flex; align-items: center; flex-wrap: wrap; padding: 16px clamp(20px, 5.5vw, 100px) 16px clamp(20px, 5.5vw, 100px); box-sizing: border-box; gap: 24px 48px;">
+    <p style="margin: 0; flex: 0 1 auto; max-width: 380px; font-size: 16px; line-height: 1.5; color: #9DB3A6;"><strong style="color: #F3F6F1; font-weight: 700;">Über 50 Projekte</strong> für Handwerks&shy;betriebe <br>seit 2022.</p>
+    <div style="flex: 1 1 320px; min-width: 0; overflow: hidden; mask-image: linear-gradient(90deg, transparent 0, black 64px, black calc(100% - 64px), transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0, black 64px, black calc(100% - 64px), transparent 100%);">
+      <div style="display: flex; gap: 48px; width: max-content; animation: marquee 38s linear infinite;">
+        <div style="display: flex; gap: 48px;">
+          <div style="width: 130px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/nkn-pv-elektrik.png" alt="NKN PV &amp; Elektrik" loading="lazy" decoding="async" style="max-width: 100%; max-height: 42px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 150px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/dmk-bau.png" alt="DMK Bau" loading="lazy" decoding="async" style="max-width: 100%; max-height: 40px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 160px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/hepa-baut.png" alt="HePa Baut" loading="lazy" decoding="async" style="max-width: 100%; max-height: 38px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 150px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/hepa-solar.png" alt="HePa Solar" loading="lazy" decoding="async" style="max-width: 100%; max-height: 34px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 62px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/messing-fahrschule.png" alt="Fahrschule Messing" loading="lazy" decoding="async" style="max-width: 100%; max-height: 46px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 110px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/tierbestattung-memoria.png" alt="Memoria Tierbestattung" loading="lazy" decoding="async" style="max-width: 100%; max-height: 44px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+        </div>
+        <div style="display: flex; gap: 48px;" aria-hidden="true">
+          <div style="width: 130px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/nkn-pv-elektrik.png" alt="" loading="lazy" decoding="async" style="max-width: 100%; max-height: 42px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 150px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/dmk-bau.png" alt="" loading="lazy" decoding="async" style="max-width: 100%; max-height: 40px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 160px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/hepa-baut.png" alt="" loading="lazy" decoding="async" style="max-width: 100%; max-height: 38px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 150px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/hepa-solar.png" alt="" loading="lazy" decoding="async" style="max-width: 100%; max-height: 34px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 62px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/messing-fahrschule.png" alt="" loading="lazy" decoding="async" style="max-width: 100%; max-height: 46px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+          <div style="width: 110px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="logos/mono/tierbestattung-memoria.png" alt="" loading="lazy" decoding="async" style="max-width: 100%; max-height: 44px; width: auto; height: auto; object-fit: contain; display: block; opacity: 0.85; filter: brightness(1.85);"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section data-screen-label="2 Ausgangslage" style="background: #FFFFFF; padding: clamp(64px, 9vw, 112px) 20px;">
+  <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: flex-end;">
+      <div style="flex: 1 1 460px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #7E8A80;">Die Ausgangslage</span>
+        <h2 style="margin: 0; font-size: clamp(32px, 4vw, 50px); line-height: 1.06; font-weight: 700; letter-spacing: -0.03em; color: #141A15; text-wrap: balance;">Wonach Ihr Kunde entscheidet, <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; letter-spacing: -0.01em;">bevor er anruft</span></h2>
+      </div>
+      <p style="flex: 1 1 340px; margin: 0; font-size: 18px; line-height: 1.7; color: #4A544B; max-width: 460px; text-wrap: pretty;">Bei jedem Gewerk läuft das anders. Was überall gleich ist: Die Entscheidung fällt online, bevor Sie überhaupt von der Anfrage wissen.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 1px; background: #E2E4DD; border-top: 1px solid #E2E4DD; border-bottom: 1px solid #E2E4DD;">
+      <div style="background: #FFFFFF; padding: 40px 36px 44px; display: flex; flex-direction: column; gap: 14px;">
+        <span style="font-family: monospace; font-size: 12px; color: #A9B4A8;">01</span>
+        <h3 style="margin: 0; font-size: 23px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; color: #141A15;">Er holt mehr als ein Angebot</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #4A544B; text-wrap: pretty;">Zwei, drei Angebote sind der Normalfall, nicht das Misstrauen. Wer dabei aussieht wie die anderen, wird über den Preis verglichen — auch wenn er besser arbeitet.</p>
+      </div>
+      <div style="background: #FFFFFF; padding: 40px 36px 44px; display: flex; flex-direction: column; gap: 14px;">
+        <span style="font-family: monospace; font-size: 12px; color: #A9B4A8;">02</span>
+        <h3 style="margin: 0; font-size: 23px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; color: #141A15;">Er schaut nach, bevor er anruft</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #4A544B; text-wrap: pretty;">Google, die Karte, die Bewertungen, die Webseite. Was er dort findet, entscheidet, ob Ihr Betrieb überhaupt auf der Liste landet.</p>
+      </div>
+      <div style="background: #FFFFFF; padding: 40px 36px 44px; display: flex; flex-direction: column; gap: 14px;">
+        <span style="font-family: monospace; font-size: 12px; color: #A9B4A8;">03</span>
+        <h3 style="margin: 0; font-size: 23px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; color: #141A15;">Er entscheidet nicht allein</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #4A544B; text-wrap: pretty;">Bei größeren Aufträgen sitzt jemand daneben — Ehepartner, Familie, jemand mit einer zweiten Meinung. Diese Person kennt Sie nicht. Sie kennt nur Ihre Seite.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="system" data-screen-label="3 Das System" style="background: #F7F7F5; padding: clamp(64px, 9vw, 112px) 20px;">
+  <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px;">
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px;">
+      <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #7E8A80;">Das Platzhirsch-System</span>
+      <h2 style="margin: 0; font-size: clamp(32px, 4vw, 50px); line-height: 1.06; font-weight: 700; letter-spacing: -0.03em; color: #141A15;">Drei Schritte, <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;">immer in dieser Reihenfolge</span></h2>
+      <p style="margin: 0; font-size: 19px; line-height: 1.6; color: #4A544B; max-width: 620px; text-wrap: pretty;">Erst wissen, wofür Sie stehen. Dann zeigen, dass Sie es können. Dann dafür sorgen, dass man Sie findet.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; align-items: stretch;">
+      <div style="background: #FFFFFF; border: 1px solid #E2E4DD; border-radius: 20px; padding: 36px 32px 38px; display: flex; flex-direction: column; gap: 16px;">
+        <span style="width: 52px; height: 52px; border-radius: 14px; background: #E4F53F; display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 700; color: #0C1B10;">01</span>
+        <h3 style="margin: 8px 0 0 0; font-size: 23px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; color: #141A15;">Platzhirsch-Positionierung</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #4A544B; text-wrap: pretty;">Wir verstehen zuerst, wonach Ihre Kunden entscheiden. Dann legen wir fest, was Sie besser können als die anderen im Ort — und welche Aufträge Sie eigentlich wollen. Wer das zeigen kann, wird nicht mehr nur über den Preis verglichen.</p>
+        <p style="margin: 6px 0 0 0; font-size: 17px; line-height: 1.5; font-style: italic; color: #141A15;">Erst wissen, wofür Sie stehen.</p>
+      </div>
+      <div style="background: #0D2118; border: 1px solid #0D2118; border-radius: 20px; padding: 36px 32px 38px; display: flex; flex-direction: column; gap: 16px;">
+        <span style="width: 52px; height: 52px; border-radius: 14px; background: #E4F53F; display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 700; color: #0C1B10;">02</span>
+        <h3 style="margin: 8px 0 0 0; font-size: 23px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; color: #FFFFFF;">Vorzeige-Webseite</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #A9BBAE; text-wrap: pretty;">Ihre Projekte, Bewertungen und Erfahrung so gezeigt, dass auch der Mitentscheider keine Zweifel mehr hat. Mit Anfrageformular, Terminbuchung und automatischer Sofort-Antwort auf jede Anfrage.</p>
+        <p style="margin: 6px 0 0 0; font-size: 17px; line-height: 1.5; font-style: italic; color: #E4F53F;">Zeigen statt behaupten.</p>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #E2E4DD; border-radius: 20px; padding: 36px 32px 38px; display: flex; flex-direction: column; gap: 16px;">
+        <span style="width: 52px; height: 52px; border-radius: 14px; background: #E4F53F; display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 700; color: #0C1B10;">03</span>
+        <h3 style="margin: 8px 0 0 0; font-size: 23px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; color: #141A15;">Omnipräsenz</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #4A544B; text-wrap: pretty;">Egal wo Ihr Kunde sucht: Sie tauchen auf. In der Google-Suche, auf der Karte, bei den Bewertungen — und in den Antworten von ChatGPT und Co.</p>
+        <p style="margin: 6px 0 0 0; font-size: 17px; line-height: 1.5; font-style: italic; color: #141A15;">Da sein, wo gesucht wird.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section data-screen-label="4 Leistungsumfang" style="background: #0D2118; padding: clamp(64px, 9vw, 112px) 20px;">
+  <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: flex-end;">
+      <div style="flex: 1 1 460px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #7E9184;">Leistungsumfang</span>
+        <h2 style="margin: 0; font-size: clamp(32px, 4vw, 50px); line-height: 1.06; font-weight: 700; letter-spacing: -0.03em; color: #FFFFFF; text-wrap: balance;">Was am Ende <span style="background-color: #E4F53F; color: #0C1B10; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;">bei Ihnen liegt</span></h2>
+      </div>
+      <p style="flex: 1 1 340px; margin: 0; font-size: 18px; line-height: 1.7; color: #A9BBAE; max-width: 440px; text-wrap: pretty;">Kein Abo auf eine Leistung, die niemand nachzählen kann. Das hier ist die Liste.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; align-items: start;">
+      <div style="background: #123122; border: 1px solid #1E3B2E; border-radius: 20px; padding: 34px 30px 38px; display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; align-items: baseline; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid #1E3B2E;">
+          <span style="font-family: monospace; font-size: 12px; color: #E4F53F;">01</span>
+          <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: #FFFFFF;">Positionierung</span>
+        </div>
+        <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px;">
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Schriftliche Positionierung Ihres Betriebs</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Festgelegter Zielauftrag: Gewerk, Auftragswert, Radius</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Ihre Kernbotschaften und was Sie von den anderen im Ort unterscheidet</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Struktur und Textgerüst der Webseite</li>
+        </ul>
+      </div>
+      <div style="background: #123122; border: 1px solid #1E3B2E; border-radius: 20px; padding: 34px 30px 38px; display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; align-items: baseline; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid #1E3B2E;">
+          <span style="font-family: monospace; font-size: 12px; color: #E4F53F;">02</span>
+          <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: #FFFFFF;">Webseite</span>
+        </div>
+        <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px;">
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Webseite, gebaut für Ihren Zielauftrag</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Echte Bilder von Ihrem Betrieb statt gekaufter Motive</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Anfrageformular und Terminbuchung</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Automatische Sofort-Antwort auf jede Anfrage</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Automatische Bewertungsanfrage nach abgeschlossenem Auftrag</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Tracking ab dem ersten Tag: Sie sehen, woher Anfragen kommen</li>
+        </ul>
+      </div>
+      <div style="background: #123122; border: 1px solid #1E3B2E; border-radius: 20px; padding: 34px 30px 38px; display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; align-items: baseline; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid #1E3B2E;">
+          <span style="font-family: monospace; font-size: 12px; color: #E4F53F;">03</span>
+          <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: #FFFFFF;">Sichtbarkeit</span>
+        </div>
+        <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px;">
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Google Ads, eingerichtet und laufend betreut</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Google-Unternehmensprofil aufgebaut und gepflegt</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Systematischer Aufbau Ihrer Bewertungen</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>Sichtbarkeit in ChatGPT, Perplexity und anderen KI-Antworten</li>
+          <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.55; color: #C4D3C8;"><span style="color: #E4F53F;">✓</span>SEO auf Basis der Ads-Daten, nicht auf Verdacht</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="5 Erstgespräch" style="background: #FFFFFF; padding: clamp(64px, 9vw, 112px) 20px;">
+  <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(40px, 6vw, 80px); align-items: flex-start;">
+    <div style="flex: 1 1 380px; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
+      <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #7E8A80;">Der Einstieg</span>
+      <h2 style="margin: 0; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.08; font-weight: 700; letter-spacing: -0.03em; color: #141A15; text-wrap: balance;">Vor dem ersten Euro schauen wir uns <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;">Ihren Markt</span> an</h2>
+      <p style="margin: 0; font-size: 18px; line-height: 1.7; color: #4A544B; text-wrap: pretty;">Wir bringen ins Gespräch mit, wie viele Menschen in Ihrer Region tatsächlich nach Ihren Leistungen suchen und wie Sie neben den zwei stärksten Betrieben im Ort dastehen. Das kostet nichts und dauert eine Stunde.</p>
+      <div style="margin-top: 6px; padding: 26px 28px; background: #E4F53F; border-radius: 16px;">
+        <p style="margin: 0; font-size: 19px; line-height: 1.55; font-weight: 700; letter-spacing: -0.01em; color: #0C1B10; text-wrap: pretty;">Kommt dabei heraus, dass in Ihrer Region zu wenig gesucht wird, sagen wir Ihnen das. Dann bringt Ihnen dieses System nichts.</p>
+      </div>
+      <a href="#anfrage" style="margin-top: 8px; height: 56px; padding: 0 28px; border-radius: 8px; background: #141A15; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;" style-hover="background: #2A3A2C; color: #FFFFFF;">Kostenloses Erstgespräch<span style="font-size: 18px;">→</span></a>
+    </div>
+    <div style="flex: 1 1 420px; display: flex; flex-direction: column; border-top: 1px solid #E2E4DD;">
+      <div style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 18px; padding: 22px 0; border-bottom: 1px solid #E2E4DD; align-items: start;">
+        <span style="font-family: monospace; font-size: 12px; color: #A9B4A8; padding-top: 4px;">01</span>
+        <span style="font-size: 17px; line-height: 1.6; color: #141A15;">Wie oft im Monat im Umkreis nach Ihren Leistungen gesucht wird</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 18px; padding: 22px 0; border-bottom: 1px solid #E2E4DD; align-items: start;">
+        <span style="font-family: monospace; font-size: 12px; color: #A9B4A8; padding-top: 4px;">02</span>
+        <span style="font-size: 17px; line-height: 1.6; color: #141A15;">Was eine Anfrage über Google bei Ihnen ungefähr kosten würde</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 18px; padding: 22px 0; border-bottom: 1px solid #E2E4DD; align-items: start;">
+        <span style="font-family: monospace; font-size: 12px; color: #A9B4A8; padding-top: 4px;">03</span>
+        <span style="font-size: 17px; line-height: 1.6; color: #141A15;">Wie Ihr Google-Profil gegen die zwei stärksten Betriebe im Ort dasteht</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 18px; padding: 22px 0; border-bottom: 1px solid #E2E4DD; align-items: start;">
+        <span style="font-family: monospace; font-size: 12px; color: #A9B4A8; padding-top: 4px;">04</span>
+        <span style="font-size: 17px; line-height: 1.6; color: #141A15;">Wie schnell Ihre Seite auf dem Handy lädt und wie viele Wege zur Anfrage es gibt</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 18px; padding: 22px 0; border-bottom: 1px solid #E2E4DD; align-items: start;">
+        <span style="font-family: monospace; font-size: 12px; color: #A9B4A8; padding-top: 4px;">05</span>
+        <span style="font-size: 17px; line-height: 1.6; color: #141A15;">Ob Sie heute sehen können, woher Ihre Anfragen kommen</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="6 Aufnahmekriterien" style="background: #F7F7F5; padding: clamp(64px, 9vw, 112px) 20px;">
+  <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: flex-end;">
+      <div style="flex: 1 1 420px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #7E8A80;">Aufnahmekriterien</span>
+        <h2 style="margin: 0; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.08; font-weight: 700; letter-spacing: -0.03em; color: #141A15;">Nicht für jeden Betrieb <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;">das Richtige</span></h2>
+      </div>
+      <p style="flex: 1 1 340px; margin: 0; font-size: 18px; line-height: 1.7; color: #4A544B; max-width: 460px; text-wrap: pretty;">Das System lebt davon, dass in Ihrer Region nach Ihren Leistungen gesucht wird. Wo das nicht so ist, hilft auch kein Budget. Deshalb sagen wir vorher, wann es passt.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 20px; align-items: start;">
+      <div style="background: #FFFFFF; border: 1px solid #E2E4DD; border-radius: 20px; padding: 34px 32px 38px; display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #E4F53F; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #0C1B10;">✓</span>
+          <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: #141A15;">Passt</span>
+        </div>
+        <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0;">
+          <li style="font-size: 17px; line-height: 1.6; color: #141A15; padding: 16px 0; border-top: 1px solid #EBEBE7;">Privatkunden, die Geld in ihr eigenes Haus stecken — Sanierung, Renovierung, Innenausbau, Bad, Maler, Boden, Garten, Schreiner</li>
+          <li style="font-size: 17px; line-height: 1.6; color: #141A15; padding: 16px 0; border-top: 1px solid #EBEBE7;">Auftragswerte etwa zwischen 3.000 und 30.000 €</li>
+          <li style="font-size: 17px; line-height: 1.6; color: #141A15; padding: 16px 0; border-top: 1px solid #EBEBE7;">Der Kunde entscheidet allein oder zu zweit, nicht in einem Gremium</li>
+          <li style="font-size: 17px; line-height: 1.6; color: #141A15; padding: 16px 0; border-top: 1px solid #EBEBE7;">Sie arbeiten in einem festen Umkreis, nicht bundesweit</li>
+          <li style="font-size: 17px; line-height: 1.6; color: #141A15; padding: 16px 0; border-top: 1px solid #EBEBE7;">Sie können mehr Anfragen auch annehmen und zeitnah zurückrufen</li>
+        </ul>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #E2E4DD; border-radius: 20px; padding: 34px 32px 38px; display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #E7E9E3; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #6B756D;">—</span>
+          <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: #6B756D;">Passt nicht</span>
+        </div>
+        <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0;">
+          <li style="font-size: 17px; line-height: 1.6; color: #6B756D; padding: 16px 0; border-top: 1px solid #EBEBE7;">Werkstätten und KFZ: Auftragswerte zu niedrig, Portale beherrschen die Suche</li>
+          <li style="font-size: 17px; line-height: 1.6; color: #6B756D; padding: 16px 0; border-top: 1px solid #EBEBE7;">Industrie und Ausschreibungsgeschäft: Dort läuft der Einkauf nicht über die Suche</li>
+          <li style="font-size: 17px; line-height: 1.6; color: #6B756D; padding: 16px 0; border-top: 1px solid #EBEBE7;">Betriebe, bei denen Anfragen heute schon drei Tage liegenbleiben</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="7 Ausbau" style="background: #0D2118; padding: clamp(40px, 5vw, 56px) 20px;">
+  <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 24px 56px; align-items: flex-start;">
+    <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 10px;">
+      <span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em; color: #FFFFFF;">Was danach dazukommen kann</span>
+      <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #8A9A8D; max-width: 380px;">Nicht alles auf einmal. Wenn die Aufträge da sind und der nächste Engpass sichtbar wird, gibt es die nächste Stufe.</p>
+    </div>
+    <div style="flex: 1.4 1 420px; display: flex; flex-direction: column;">
+      <a href="/mitarbeiter-gewinnen" style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 14px 0; border-top: 1px solid #1E3B2E; text-decoration: none;" style-hover="background: #123122;">
+        <span style="font-size: 16px; font-weight: 700; color: #F3F6F1;">Meistermagnet</span>
+        <span style="font-size: 15px; color: #8A9A8D;">— wenn Aufträge da sind, aber Leute fehlen</span>
+      </a>
+      <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 14px 0; border-top: 1px solid #1E3B2E;">
+        <span style="font-size: 16px; font-weight: 700; color: #F3F6F1;">Social-Präsenz</span>
+        <span style="font-size: 15px; color: #8A9A8D;">— wenn die Suche ausgeschöpft ist</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 14px 0; border-top: 1px solid #1E3B2E; border-bottom: 1px solid #1E3B2E;">
+        <span style="font-size: 16px; font-weight: 700; color: #F3F6F1;">Anfrage-Annahme</span>
+        <span style="font-size: 15px; color: #8A9A8D;">— wenn Anfragen liegenbleiben</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="8 FAQ" style="background: #FFFFFF; padding: clamp(64px, 9vw, 112px) 20px;">
+  <div style="max-width: 1160px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(36px, 5vw, 72px); align-items: flex-start;">
+    <div style="flex: 0.8 1 280px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; position: sticky; top: 40px;">
+      <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #7E8A80;">Häufige Fragen</span>
+      <h2 style="margin: 0; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.08; font-weight: 700; letter-spacing: -0.03em; color: #141A15;">Was uns am häufigsten <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;">gefragt wird</span></h2>
+    </div>
+    <div style="flex: 1.2 1 420px; display: flex; flex-direction: column;">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+        <div style="border-top: 1px solid #E2E4DD;">
+          <button type="button" onClick="{{ f.toggle }}" style="width: 100%; background: transparent; border: none; padding: 26px 0; display: flex; align-items: center; gap: 20px; cursor: pointer; text-align: left; font-family: inherit;">
+            <span style="flex: 1; font-size: 19px; font-weight: 700; letter-spacing: -0.015em; color: #141A15;">{{ f.q }}</span>
+            <span style="flex: none; width: 34px; height: 34px; border-radius: 999px; border: 1px solid #C6D0C5; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #141A15;">{{ f.sign }}</span>
+          </button>
+          <div style="overflow: hidden; transition: max-height 320ms ease, opacity 260ms ease; max-height: {{ f.maxHeight }}; opacity: {{ f.opacity }};">
+            <p style="margin: 0; padding: 0 54px 30px 0; font-size: 17px; line-height: 1.7; color: #4A544B; text-wrap: pretty;">{{ f.a }}</p>
+          </div>
+        </div>
+      </sc-for>
+      <div style="border-top: 1px solid #E2E4DD;"></div>
+    </div>
+  </div>
+</section>
+<section id="anfrage" data-screen-label="9 Abschluss" style="background: #0C1B10; padding: clamp(64px, 9vw, 104px) clamp(20px, 5.5vw, 100px) clamp(56px, 8vw, 88px);">
+  <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(40px, 6vw, 88px); align-items: flex-start;">
+    <div style="flex: 1 1 400px; display: flex; flex-direction: column; align-items: flex-start; gap: 26px;">
+      <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6F8377;">Erstgespräch</span>
+      <h2 style="margin: 0; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1; font-weight: 700; letter-spacing: -0.03em; color: #FFFFFF; text-wrap: pretty;">Wir wissen zu gut, dass die Suche nach der richtigen Agentur mindestens genauso schwer ist wie die Suche nach <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;">guten Aufträgen</span>.</h2>
+      <p style="margin: 0; font-size: 18px; line-height: 1.7; color: #C4D3C8; max-width: 520px; text-wrap: pretty;">Im kostenlosen Erstgespräch schauen wir uns an, wonach in Ihrer Region gesucht wird und wie Sie gegen die anderen im Ort dastehen. Danach wissen wir beide, ob sich eine Zusammenarbeit überhaupt lohnt.</p>
+      <div style="margin-top: 12px; padding-top: 26px; border-top: 1px solid #1E3B2E; display: flex; flex-direction: column; gap: 6px;">
+        <span style="font-size: 15px; color: #8A9A8D;">Lieber direkt anrufen?</span>
+        <a href="tel:+491784444156" style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: #FFFFFF; text-decoration: none;" style-hover="color: #E4F53F;">0178 4444 156</a>
+        <span style="font-size: 15px; color: #8A9A8D;">Bergstraße und Rhein-Neckar</span>
+      </div>
+    </div>
+    <form onSubmit="{{ onSubmit }}" style="flex: 1 1 400px; background: #123122; border: 1px solid #1E3B2E; border-radius: 20px; padding: clamp(28px, 4vw, 40px); display: flex; flex-direction: column; gap: 18px;">
+      <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: #9DB3A6;">Name
+        <input type="text" name="name" autoComplete="name" style="height: 52px; padding: 0 16px; border-radius: 10px; border: 1px solid #1E3B2E; background: #0D2118; color: #F3F6F1; font-size: 16px; font-family: inherit; box-sizing: border-box;">
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: #9DB3A6;">Telefonnummer
+        <input type="tel" name="telefon" autoComplete="tel" style="height: 52px; padding: 0 16px; border-radius: 10px; border: 1px solid #1E3B2E; background: #0D2118; color: #F3F6F1; font-size: 16px; font-family: inherit; box-sizing: border-box;">
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: #9DB3A6;">Betrieb
+        <input type="text" name="betrieb" autoComplete="organization" style="height: 52px; padding: 0 16px; border-radius: 10px; border: 1px solid #1E3B2E; background: #0D2118; color: #F3F6F1; font-size: 16px; font-family: inherit; box-sizing: border-box;">
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: #9DB3A6;">Worum es geht
+        <textarea name="nachricht" rows="4" style="padding: 14px 16px; border-radius: 10px; border: 1px solid #1E3B2E; background: #0D2118; color: #F3F6F1; font-size: 16px; font-family: inherit; line-height: 1.5; resize: vertical; box-sizing: border-box;"></textarea>
+      </label>
+      <button type="submit" style="margin-top: 6px; height: 56px; border: none; border-radius: 10px; background: #E4F53F; box-shadow: 0 0 22px rgba(228, 245, 63, 0.32), 0 2px 8px rgba(228, 245, 63, 0.18); color: #0C1B10; font-size: 17px; font-weight: 700; font-family: inherit; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px;" style-hover="background: #EEFA6E;">Erstgespräch anfragen<span style="font-size: 18px;">→</span></button>
+    </form>
+  </div>
+</section>
+
+<footer data-screen-label="Footer" style="background: #0C1B10; padding: 0 clamp(20px, 5.5vw, 100px) 40px; overflow: hidden;">
+  <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 72px;">
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px 48px;">
+
+      <div style="flex: 1.2 1 260px; display: flex; flex-direction: column; align-items: flex-start; gap: 26px;">
+        <img src="logo-stolz.svg" alt="Stolz Marketing" style="height: 26px; width: auto; display: block; margin-left: 0;">
+        <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #8A9A8D; max-width: 300px;">Marketing für Handwerksbetriebe und Dienstleister an der Bergstraße und in Südhessen.</p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="tel:+491784444156" style="font-size: 16px; color: #F3F6F1; text-decoration: none;" style-hover="color: #E4F53F;">0178 4444 156</a>
+          <a href="mailto:iwo@stolz-marketing.de" style="font-size: 16px; color: #F3F6F1; text-decoration: none;" style-hover="color: #E4F53F;">iwo@stolz-marketing.de</a>
+          <span style="font-size: 15px; line-height: 1.6; color: #8A9A8D;">Gewerbegebiet Bensheim<br>Deutschland</span>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 190px; display: flex; flex-direction: column; gap: 18px;">
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #6F8377;">Menü</span>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="/" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Startseite</a>
+          <a href="/kunden-gewinnen" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Kunden gewinnen</a>
+          <a href="/mitarbeiter-gewinnen" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Mitarbeiter gewinnen</a>
+          <a href="/projekte" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Projekte</a>
+          <a href="/ueber-uns" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Über uns</a>
+          <a href="#kontakt" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Kontakt</a>
+        </div>
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #6F8377; margin-top: 16px;">Tools</span>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="/vakanzkostenrechner" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Vakanzkostenrechner</a>
+          <a href="/website-check" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Website-Check</a>
+          <a href="/sichtbarkeits-check" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Sichtbarkeits-Check</a>
+        </div>
+      </div>
+
+      <div style="flex: 2 1 340px; display: flex; flex-direction: column; gap: 18px;">
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #6F8377;">Branchen</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); gap: 12px 32px;">
+          <a href="/branchen/shk" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">SHK &amp; Heizungsbau</a>
+          <a href="/branchen/elektro" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Elektrotechnik</a>
+          <a href="/branchen/maler" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Maler &amp; Lackierer</a>
+          <a href="/branchen/schreiner" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Schreiner &amp; Tischler</a>
+          <a href="/branchen/dachdecker" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Dachdecker</a>
+          <a href="/branchen/zimmerei" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Zimmerei &amp; Holzbau</a>
+          <a href="/branchen/garten-landschaftsbau" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Garten- &amp; Landschaftsbau</a>
+          <a href="/branchen/bau" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Hoch- &amp; Rohbau</a>
+          <a href="/branchen/fliesenleger" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Fliesen- &amp; Bodenleger</a>
+          <a href="/branchen/metallbau" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Metall- &amp; Schlosserbau</a>
+          <a href="/branchen/photovoltaik" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Photovoltaik &amp; Solar</a>
+        </div>
+        <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #6F8377; margin-top: 16px;">Rechtliches</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px 32px;">
+          <a href="/impressum" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Impressum</a>
+          <a href="/datenschutz" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Datenschutz</a>
+          <a href="/agb" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">AGB</a>
+          <a href="/cookies" style="font-size: 15px; color: #D8E2DA; text-decoration: none;" style-hover="color: #E4F53F;">Cookie-Einstellungen</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="width: 100%; margin-bottom: -72px;">
+      <svg viewBox="0 0 1000 136" width="100%" height="auto" role="img" aria-label="Stolz Marketing" style="display: block; overflow: visible;">
+        <text x="0" y="104" textLength="1000" lengthAdjust="spacingAndGlyphs" fill="#12281B" font-family="Inter, system-ui, sans-serif" font-size="128" font-weight="700" letter-spacing="-4">Stolz Marketing</text>
+      </svg>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding-top: 28px; border-top: 1px solid #1E3B2E;">
+      <span style="font-family: monospace; font-size: 12px; letter-spacing: 0.06em; color: #6F8377;">© 2026 Stolz Marketing · Bensheim</span>
+      <div style="display: flex; gap: 20px;">
+        <a href="https://www.instagram.com/" style="font-family: monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #8A9A8D; text-decoration: none;" style-hover="color: #E4F53F;">Instagram</a>
+        <a href="https://www.linkedin.com/" style="font-family: monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #8A9A8D; text-decoration: none;" style-hover="color: #E4F53F;">LinkedIn</a>
+        <a href="https://www.youtube.com/" style="font-family: monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #8A9A8D; text-decoration: none;" style-hover="color: #E4F53F;">YouTube</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { faqOpen: -1, stuck: false };
+
+  get faqData() {
+    return [
+      { q: "Wir haben eigentlich genug Arbeit. Lohnt sich das trotzdem?", a: "Kommt darauf an, ob Sie mit den Aufträgen zufrieden sind, die reinkommen. Bei den meisten Betrieben, mit denen wir sprechen, geht es nicht um die Menge, sondern darum, dass die kleinen Reparaturaufträge den Kalender füllen und die großen Projekte woanders landen. Wenn das bei Ihnen nicht so ist, sagen wir Ihnen im Gespräch ehrlich, dass Sie uns gerade nicht brauchen." },
+      { q: "Wir hatten schon eine Agentur. Das hat nichts gebracht.", a: "Das hören wir oft, und meistens liegt es an der Reihenfolge. Wenn Werbung geschaltet wird, bevor feststeht, wofür der Betrieb steht und wohin die Anfragen laufen, ist das Geld weg — unabhängig davon, wie gut die Anzeigen sind. Deshalb fängt bei uns nichts mit Werbung an." },
+      { q: "Was kostet das?", a: "Das hängt vom Umfang ab und davon, wie viel Werbebudget in Ihrer Region sinnvoll ist. Beides steht nach dem Erstgespräch fest, weil wir dann Ihre Zahlen kennen. Wir schicken keine Preisliste, weil sie ohne Ihre Zahlen nichts aussagt." },
+      { q: "Machen Sie auch Social Media?", a: "Nicht als Standard. Wir arbeiten dort, wo Ihre Kunden aktiv suchen — das ist die Suche, die Karte und die Bewertungen. Social Media kann sinnvoll sein, wenn in Ihrer Region kaum gesucht wird. Das sehen wir in der Marktanalyse und sprechen es dann an." },
+      { q: "Arbeiten Sie mit jedem Betrieb?", a: "Nein. Die Kriterien stehen weiter oben auf dieser Seite. Wenn einer davon nicht passt, sagen wir das im Erstgespräch, statt Ihnen etwas zu verkaufen, das nicht greift." }
+    ];
+  }
+
+  componentDidMount() {
+    this._scroller = () => {
+      const y = (document.scrollingElement || document.documentElement).scrollTop || window.scrollY || 0;
+      const stuck = y > 500;
+      if (stuck !== this.state.stuck) this.setState({ stuck });
+    };
+    window.addEventListener("scroll", this._scroller, { passive: true });
+    this._scroller();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this._scroller);
+  }
+
+  renderVals() {
+    const open = this.state.faqOpen;
+    const stuck = !!this.state.stuck;
+    return {
+      stickyTransform: stuck ? "translateY(0)" : "translateY(-104%)",
+      stickyOpacity: stuck ? 1 : 0,
+      stickyPointer: stuck ? "auto" : "none",
+      faqs: this.faqData.map((f, i) => ({
+        q: f.q,
+        a: f.a,
+        maxHeight: i === open ? "340px" : "0px",
+        opacity: i === open ? 1 : 0,
+        sign: i === open ? "−" : "+",
+        toggle: () => this.setState(s => ({ faqOpen: s.faqOpen === i ? -1 : i }))
+      })),
+      onSubmit: (e) => { e.preventDefault(); }
+    };
+  }
+}
+</script>
+</body>
+</html>
