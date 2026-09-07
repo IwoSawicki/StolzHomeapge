@@ -9,33 +9,16 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'never',
   devToolbar: { enabled: false },
-  // CSS inline ins HTML (spart den render-blockenden Stylesheet-Request → LCP/FCP)
+  // CSS inline ins HTML (spart den render-blockenden Stylesheet-Request)
   build: { inlineStylesheets: 'always' },
-  // Bild-Optimierungs-Cache in node_modules/.cache legen: Dokploy/Nixpacks
-  // mountet genau diesen Pfad als Build-Cache → optimierte Bilder werden
-  // zwischen Deploys wiederverwendet statt jedes Mal neu berechnet.
+  // Bild-Cache in node_modules/.cache: Dokploy mountet den Pfad als
+  // Build-Cache, optimierte Bilder überleben so den nächsten Deploy.
   cacheDir: './node_modules/.cache/astro',
-  integrations: [
-    sitemap({
-      // interne Seiten (Archiv, QR-Redirect, Kunden-Angebote) nicht in die Sitemap
-      filter: (page) =>
-        !page.includes('/archiv') &&
-        !page.includes('/korbaktion') &&
-        !page.includes('/website-betreuung') &&
-        !page.includes('/vorschau') &&
-        !page.includes('/alle-projekte'),
-    }),
-  ],
+  integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
     preview: {
-      // astro preview läuft hinter dem Dokploy-Proxy: eigene Domains erlauben
-      allowedHosts: [
-        'dev.stolz-ki.de',
-        'dev.stolz-marketing.de',
-        'stolz-marketing.de',
-        'www.stolz-marketing.de',
-      ],
+      allowedHosts: ['stolz-marketing.de', 'www.stolz-marketing.de', 'dev.stolz-marketing.de'],
     },
   },
 });

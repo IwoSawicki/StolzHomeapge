@@ -1,139 +1,25 @@
 ---
+// Basis-Layout: <head>, Meta, Fonts, Slot.
+// Wird beim Nachbau der Design-Vorlage ausgebaut.
 import '../styles/global.css';
-import ogImage from '../assets/og-image-stolz-marketing.png';
-import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
-  /** Seitentitel; Original nutzt auf allen Seiten denselben Titel */
   title?: string;
   description?: string;
-  /** interne Seiten (Vorschau/Archiv) nicht indexieren */
-  noindex?: boolean;
 }
-
-const {
-  title = 'STOLZ Marketing | Mehr Kunden & Mitarbeiter für lokale Betriebe',
-  description = 'STOLZ Marketing bringt lokalen Betrieben mehr Anfragen und passende Bewerbungen — Website, Google, Social Media & Recruiting aus einer Hand. Messbar und verständlich.',
-  noindex = false,
-} = Astro.props;
-
-const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImageUrl = new URL(ogImage.src, Astro.site);
-
-// Staging-Build (env PUBLIC_STAGING=true in der Dev-Dokploy-App):
-// gesamte Seite auf noindex, damit dev.stolz-marketing.de NICHT bei
-// Google landet (Duplicate Content).
-const istStaging = import.meta.env.PUBLIC_STAGING === 'true';
-const nichtIndexieren = noindex || istStaging;
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: 'STOLZ Marketing',
-  description,
-  url: Astro.site?.toString(),
-  email: 'iwo@stolz-marketing.de',
-  telephone: '+49 178 4444156',
-  founder: { '@type': 'Person', name: 'Iwo Sawicki' },
-  vatID: 'DE350093785',
-  // verknüpft die Marke maschinenlesbar mit den Social-Profilen
-  // (LinkedIn/Facebook ergänzen, sobald vorhanden)
-  sameAs: ['https://www.instagram.com/stolz.marketing/'],
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Heidelbergerstraße 15D',
-    postalCode: '64385',
-    addressLocality: 'Reichelsheim',
-    addressCountry: 'DE',
-  },
-  areaServed: 'Rhein-Main-Gebiet',
-};
+const { title = 'STOLZ Marketing', description = '' } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="robots" content={nichtIndexieren ? 'noindex, nofollow' : 'max-image-preview:large'} />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImageUrl} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageUrl} />
-
-    <!-- Kritische Schriftschnitte vorladen (Headlines + Body) -->
-    <link rel="preload" href="/fonts/inter-display-800-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-500-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-600-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-700-normal.woff2" as="font" type="font/woff2" crossorigin />
-
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-
-    <!-- Nicht-Produktions-Hosts (Staging/Dev): sofort noindex setzen,
-         damit z. B. dev.stolz-marketing.de nie bei Google landet. Läuft
-         hostnamenbasiert → unabhängig von Build-Env, immer korrekt. -->
-    <script is:inline>
-      (function () {
-        var h = location.hostname;
-        window.__istProd__ = h === 'stolz-marketing.de' || h === 'www.stolz-marketing.de';
-        if (!window.__istProd__) {
-          var m = document.createElement('meta');
-          m.name = 'robots';
-          m.content = 'noindex, nofollow';
-          document.head.appendChild(m);
-        }
-      })();
-    </script>
-
-    <!-- Umami: cookielos, kein Consent nötig. data-domains sorgt dafür,
-         dass NUR auf der Produktionsdomain gezählt wird (nicht auf Staging). -->
-    <script
-      defer
-      src="https://analytics.stolz-marketing.de/script.js"
-      data-website-id="46f1a591-c35f-43ce-b9ad-f0e08a8a2504"
-      data-domains="stolz-marketing.de,www.stolz-marketing.de"></script>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   </head>
   <body>
     <slot />
-    <!-- Google Analytics wird erst nach Zustimmung im Banner geladen -->
-    <CookieBanner />
-
-    <script>
-      // Scroll-Reveal: blendet [data-reveal]-Elemente ein, sobald sie in
-      // den Viewport scrollen. Respektiert reduzierte Bewegung.
-      const revealEls = document.querySelectorAll('[data-reveal]');
-      if (revealEls.length) {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          revealEls.forEach((el) => el.classList.add('ist-sichtbar'));
-        } else {
-          const io = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add('ist-sichtbar');
-                  io.unobserve(entry.target);
-                }
-              });
-            },
-            { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
-          );
-          revealEls.forEach((el) => io.observe(el));
-        }
-      }
-    </script>
   </body>
 </html>

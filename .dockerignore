@@ -6,3 +6,6 @@ original
 docs
 scripts
 *.log
+
+# Design-Vorlagen aus Claude Design (nur Referenz, nie deployen)
+design/
