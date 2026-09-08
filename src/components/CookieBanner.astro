@@ -1,0 +1,102 @@
+---
+/* Einwilligungsbanner für Google Analytics.
+
+   Logik unverändert vom bisherigen Auftritt (Branch main), Gestaltung aus
+   dem neuen Designsystem:
+
+   - GA wird NICHT automatisch geladen, sondern erst nach „Akzeptieren".
+   - Die Wahl liegt in localStorage; danach erscheint das Banner nicht mehr.
+   - Über „Cookie-Einstellungen" im Footer lässt sie sich neu treffen.
+   - Getrackt wird nur auf der Produktionsdomain, nicht auf der Vorschau.
+
+   Umami braucht kein Banner: cookielos, läuft direkt im BaseLayout. */
+const GA_ID = 'G-ZK7F06197Z';
+---
+
+<div
+  data-cookie-banner
+  aria-live="polite"
+  class="pointer-events-none fixed inset-x-0 bottom-0 z-90 hidden p-16 btn:inset-x-auto btn:right-24 btn:bottom-24 btn:p-0"
+>
+  <div
+    class="pointer-events-auto mx-auto flex max-w-440 flex-col gap-12 rounded-20 border border-line bg-paper p-24 shadow-[0_18px_48px_rgb(20_26_21/0.18)]"
+  >
+    <p class="m-0 text-17 font-bold tracking-name text-ink">Cookies und Analyse</p>
+    <p class="m-0 text-15 leading-body text-ink-muted">
+      Wir nutzen Google Analytics, um unsere Website zu verbessern. Sie entscheiden
+      selbst, ob wir das dürfen. Details stehen in der <a
+        href="/datenschutz"
+        class="underline underline-offset-2 hover:text-lime-link-hover"
+        >Datenschutzerklärung</a
+      >.
+    </p>
+    <div class="mt-4 flex flex-col gap-10 btn:flex-row">
+      <button
+        type="button"
+        data-cookie-accept
+        class="flex-1 cursor-pointer rounded-10 border-none bg-lime px-20 py-12 font-[inherit] text-15 font-bold text-forest-deep transition-colors duration-200 hover:bg-lime-bright"
+      >
+        Akzeptieren
+      </button>
+      <button
+        type="button"
+        data-cookie-decline
+        class="flex-1 cursor-pointer rounded-10 border border-line-strong bg-paper px-20 py-12 font-[inherit] text-15 font-medium text-ink transition-colors duration-200 hover:bg-paper-warm"
+      >
+        Ablehnen
+      </button>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ GA_ID }}>
+  const SCHLUESSEL = 'stolz-consent';
+  const banner = document.querySelector('[data-cookie-banner]');
+
+  function ladeGA() {
+    if (window.__gaGeladen) return;
+    // Nur auf der Produktionsdomain zählen, nicht auf Vorschau oder lokal
+    const host = location.hostname;
+    if (host !== 'stolz-marketing.de' && host !== 'www.stolz-marketing.de') return;
+    window.__gaGeladen = true;
+
+    const skript = document.createElement('script');
+    skript.async = true;
+    skript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(skript);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  const zeige = () => banner?.classList.remove('hidden');
+  const verstecke = () => banner?.classList.add('hidden');
+
+  const wahl = localStorage.getItem(SCHLUESSEL);
+  if (wahl === 'accepted') ladeGA();
+  else if (wahl !== 'declined') zeige();
+
+  document.querySelector('[data-cookie-accept]')?.addEventListener('click', () => {
+    localStorage.setItem(SCHLUESSEL, 'accepted');
+    ladeGA();
+    verstecke();
+  });
+
+  document.querySelector('[data-cookie-decline]')?.addEventListener('click', () => {
+    localStorage.setItem(SCHLUESSEL, 'declined');
+    verstecke();
+  });
+
+  // „Cookie-Einstellungen" im Footer öffnet die Wahl erneut
+  document.querySelectorAll('[data-cookie-reset]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      zeige();
+    });
+  });
+</script>

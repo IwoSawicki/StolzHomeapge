@@ -8,6 +8,8 @@ export interface NavLink {
   href: string;
   /** Seite existiert noch nicht – im Footer ausgegraut statt verlinkt */
   nochNicht?: boolean;
+  /** Kein Link, sondern öffnet das Einwilligungsbanner erneut */
+  cookieSchalter?: boolean;
 }
 
 /** Hauptnavigation – Header (statisch, sticky und Burger-Menü) */
@@ -62,18 +64,14 @@ export const footerRechtliches: NavLink[] = [
   { label: 'Impressum', href: '/impressum' },
   { label: 'Datenschutz', href: '/datenschutz' },
   { label: 'AGB', href: '/agb', nochNicht: true },
-  { label: 'Cookie-Einstellungen', href: '/cookies', nochNicht: true },
+  { label: 'Cookie-Einstellungen', href: '#', cookieSchalter: true },
 ];
 
-/* Die Vorlage verlinkt hier auf die nackten Portal-Startseiten
-   (https://www.instagram.com/ usw.), hat also noch keine echten Profile
-   hinterlegt. Instagram ist aus CLAUDE.md bekannt und deshalb gesetzt;
-   LinkedIn und YouTube warten auf die richtigen URLs
-   (siehe docs/ABWEICHUNGEN.md). */
+/* Die Vorlage verlinkt hier auf die nackten Portal-Startseiten; die echten
+   Profile hat Iwo nachgereicht. YouTube ist entfallen, es gibt keinen Kanal. */
 export const socialLinks: NavLink[] = [
   { label: 'Instagram', href: 'https://www.instagram.com/stolz.marketing/' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-  { label: 'YouTube', href: 'https://www.youtube.com/' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/iwo-sawicki/' },
 ];
 
 /** Kontaktdaten – Quelle: Vorlage und CLAUDE.md */

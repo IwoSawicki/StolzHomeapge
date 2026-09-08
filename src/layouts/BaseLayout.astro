@@ -2,6 +2,8 @@
 /* Basis-Layout: <head>, Meta, Schriften, JSON-LD.
    Wird von jeder Seite verwendet. */
 import '../styles/global.css';
+import ogBild from '../assets/og-image-stolz-marketing.png';
+import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
   title: string;
@@ -15,6 +17,9 @@ interface Props {
 const { title, description, canonical, noindex = false } = Astro.props;
 
 const canonicalUrl = new URL(canonical ?? Astro.url.pathname, Astro.site);
+/* Vorschaubild beim Teilen. Astro liefert einen Pfad, Open Graph braucht
+   eine absolute URL. */
+const ogBildUrl = new URL(ogBild.src, Astro.site);
 
 /* Eckdaten aus CLAUDE.md (Impressum). Die Vorlage nennt im Kontaktbereich
    „Gewerbegebiet Bensheim" — das ist der Arbeitsort, nicht die im Impressum
@@ -65,7 +70,12 @@ const jsonLd = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogBildUrl} />
+    <meta property="og:image:width" content={String(ogBild.width)} />
+    <meta property="og:image:height" content={String(ogBild.height)} />
+    <meta property="og:image:alt" content="Stolz Marketing" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogBildUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
@@ -90,8 +100,19 @@ const jsonLd = {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    {/* Umami: cookielos, deshalb ohne Einwilligung. data-domains sorgt dafür,
+        dass nur auf der Produktionsdomain gezählt wird, nicht auf der
+        Vorschau unter redesign.stolz-marketing.de. */}
+    <script
+      defer
+      src="https://analytics.stolz-marketing.de/script.js"
+      data-website-id="46f1a591-c35f-43ce-b9ad-f0e08a8a2504"
+      data-domains="stolz-marketing.de,www.stolz-marketing.de"></script>
   </head>
   <body>
     <slot />
+    {/* Google Analytics lädt erst nach Zustimmung im Banner */}
+    <CookieBanner />
   </body>
 </html>

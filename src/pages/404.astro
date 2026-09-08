@@ -1,0 +1,66 @@
+---
+/* 404: heller Kopf, kurze Erklärung, Weg zurück.
+   Nicht indexieren – die Seite hat keinen eigenen Inhalt. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import { hauptnavigation, erstgespraech } from '../data/navigation';
+---
+
+<BaseLayout
+  title="Seite nicht gefunden | Stolz Marketing"
+  description="Diese Seite gibt es nicht (mehr)."
+  noindex
+>
+  <div class="bg-paper">
+    <Header variante="hell" />
+  </div>
+
+  <main class="bg-paper px-20 pt-hero-top pb-section-y-lg">
+    <div class="mx-auto flex max-w-720 flex-col items-center gap-24 text-center">
+      <Eyebrow variante="hell">Fehler 404</Eyebrow>
+
+      <h1 class="m-0 text-h2-system leading-system font-bold tracking-system text-ink">
+        Diese Seite gibt es <span class="marker font-display font-semibold italic"
+          >nicht mehr</span
+        >
+      </h1>
+
+      <p class="m-0 max-w-560 text-18 leading-body text-ink-muted">
+        Vielleicht hat sich die Adresse geändert oder ein Link zeigt ins Leere. Über die
+        Seiten unten kommen Sie weiter — oder rufen Sie einfach an.
+      </p>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-12">
+        <a
+          href={erstgespraech.href}
+          class="inline-flex h-56 items-center gap-10 rounded-8 bg-lime px-28 text-16 font-bold text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright"
+        >
+          Kostenloses Erstgespräch<span class="text-18" aria-hidden="true">→</span>
+        </a>
+        <a
+          href="/"
+          class="box-content inline-flex h-56 items-center rounded-8 border border-line-strong bg-paper px-26 text-16 font-medium text-ink no-underline transition-colors duration-200 hover:border-sketch-light hover:bg-paper-hover"
+        >
+          Zur Startseite
+        </a>
+      </div>
+
+      <nav aria-label="Weitere Seiten" class="mt-16 flex flex-wrap justify-center gap-x-24 gap-y-12">
+        {
+          hauptnavigation.map((link) => (
+            <a
+              href={link.href}
+              class="text-16 text-ink-muted underline underline-offset-4 transition-colors hover:text-lime-link-hover"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

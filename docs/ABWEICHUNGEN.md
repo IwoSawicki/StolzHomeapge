@@ -176,9 +176,10 @@ H1 und Lead der Startseite gebildet:
   Südhessen: Wunschprojekte gewinnen, offene Stellen besetzen und den Betrieb
   online so zeigen, wie er wirklich ist."
 
-**[Rückfrage]** Bitte freigeben oder umformulieren. Ein OG-Bild fehlt noch
-(die Vorlage liefert keins) — solange es fehlt, greift beim Teilen kein
-Vorschaubild.
+Das OG-Bild ist aus dem Branch `main` übernommen (1200×630, das von Open Graph
+empfohlene Maß) und liegt unter `src/assets/og-image-stolz-marketing.png`.
+
+**[Rückfrage]** Title und Description bitte noch freigeben oder umformulieren.
 
 ---
 
@@ -192,8 +193,9 @@ Anschrift Heidelbergerstraße 15D, 64385 Reichelsheim.
 (`ProfessionalService`) steht die Anschrift aus CLAUDE.md, weil strukturierte
 Daten die eingetragene Adresse erwarten.
 
-**[Rückfrage]** Ist Bensheim ein zweiter Standort oder die neue Anschrift?
-Falls Reichelsheim gilt, müsste auch der sichtbare Text angepasst werden.
+**Geklärt:** Das Büro steht in Bensheim und damit wird geworben; die Firma ist
+offiziell in Reichelsheim gemeldet. Die jetzige Aufteilung ist also richtig —
+sichtbar Bensheim, in den strukturierten Daten und im Impressum Reichelsheim.
 
 ---
 
@@ -203,12 +205,9 @@ Die Vorlage verlinkt die nackten Portal-Startseiten
 (`https://www.instagram.com/`, `.../linkedin.com/`, `.../youtube.com/`), hat
 dort also noch keine echten Profile hinterlegt.
 
-**Umgesetzt:** Instagram zeigt auf das aus CLAUDE.md bekannte Profil
-`https://www.instagram.com/stolz.marketing/`. LinkedIn und YouTube stehen
-unverändert auf der Portal-Startseite.
-
-**[Rückfrage]** Die richtigen URLs für LinkedIn und YouTube — oder die beiden
-Links entfernen, wenn es die Profile nicht gibt.
+**Umgesetzt und geklärt:** Instagram und LinkedIn
+(`https://www.linkedin.com/in/iwo-sawicki/`) zeigen auf die echten Profile.
+YouTube ist entfallen — es gibt keinen Kanal.
 
 ---
 
@@ -301,22 +300,15 @@ Abweichungen von jener Vorlage:
 
 ---
 
-## 18. Datenschutztext beschreibt nicht den heutigen Stand
+## 18. Datenschutztext an den heutigen Stand angepasst
 
-Der Text ist 1:1 von der alten Seite übernommen, wie gewünscht. Inhaltlich
-passt er aber nicht mehr auf den Neuaufbau:
+Der Text kam 1:1 von der alten Seite und passte nicht mehr. Nach Klärung mit
+Iwo:
 
-- Er beschreibt **Google Analytics, Google Ads, Umami Analytics, Calendly und
-  Font Awesome**. Der Neuaufbau lädt derzeit nichts davon — die Startseite
-  stellt keinen einzigen Fremdrequest.
-- Er nennt **den Versanddienst des Kontaktformulars nicht**. Das Formular
-  sendet über Web3Forms; als Auftragsverarbeiter gehört der Dienst in die
-  Erklärung. Das war schon auf der alten Seite so.
-- Der Abschnitt „Cookies" beschreibt Cookies, die der Neuaufbau nicht setzt.
-
-**[Rückfrage]** Sobald feststeht, was tatsächlich zum Einsatz kommt
-(Analytics ja/nein, Calendly für die Terminbuchung, Web3Forms), ziehe ich den
-Text nach. Bis dahin steht die alte Fassung unverändert.
+- **Web3Forms ergänzt** — der Versanddienst beider Kontaktformulare, mit
+  Rechtsgrundlagen und dem Hinweis auf die Drittlandübermittlung.
+- **Calendly und Font Awesome entfernt** — beides kommt nicht zum Einsatz.
+- **Google Analytics und Umami bleiben**, weil beide weiterhin laden.
 
 ---
 
@@ -406,7 +398,47 @@ nicht auf — sobald sie gebaut werden, braucht es eine Entscheidung.
 
 ---
 
-## 23. Noch offen aus der Vorlage selbst
+## 23. Analytics und Einwilligung
+
+Vom bisherigen Auftritt übernommen, Gestaltung neu:
+
+- **Umami** (`analytics.stolz-marketing.de`) läuft ohne Einwilligung — cookielos.
+  `data-domains` begrenzt die Zählung auf die Produktionsdomain, die Vorschau
+  unter `redesign.stolz-marketing.de` zählt also nicht mit.
+- **Google Analytics** (`G-ZK7F06197Z`) lädt **erst nach Zustimmung** im
+  Einwilligungsbanner, mit `anonymize_ip`, und ebenfalls nur auf der
+  Produktionsdomain. Die Wahl liegt in `localStorage`; „Cookie-Einstellungen"
+  im Footer öffnet sie erneut.
+
+Geprüft: Beim Erstbesuch erscheint das Banner und es geht **kein** Request an
+`googletagmanager.com`; nach Ablehnen bleibt das Banner weg; der Footer-Schalter
+öffnet es wieder.
+
+---
+
+## 24. Branchen: Raster statt Slider, ohne Links
+
+Der Slider ist entfallen, die Sektion ist jetzt das Raster ohne Bilder. Die
+Kacheln sind **nicht verlinkt und tragen keinen Pfeilkreis**, weil es die
+Branchenseiten vorerst nicht geben wird (Entscheidung Iwo). Dazu passend ist
+der Einleitungssatz von „Wählen Sie Ihre Branche und sehen Sie, wie wir dort
+arbeiten." auf „Das sind die Gewerke, mit denen wir arbeiten." geändert — die
+alte Formulierung fordert zu einem Klick auf, den es nicht gibt.
+
+Damit erledigt sich auch Punkt 22: die abweichenden Branchen-URLs spielen
+keine Rolle mehr, solange keine Seiten existieren.
+
+---
+
+## 25. 404-Seite ergänzt
+
+Die Vorlage sieht keine vor; ohne sie liefert nginx seine nackte
+Standardmeldung. Die Seite trägt `noindex`, führt zurück auf Startseite und
+Erstgespräch und listet die Hauptnavigation.
+
+---
+
+## 26. Noch offen aus der Vorlage selbst
 
 Aus `design/README.md`, „Offene Punkte" — im Nachbau stehen dort die
 Platzhalterflächen der Vorlage:

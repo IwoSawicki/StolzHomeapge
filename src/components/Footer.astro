@@ -100,7 +100,16 @@ const jahr = 2026;
         <span class:list={[spaltenUeberschrift, 'mt-16']}>Rechtliches</span>
         <div class="flex flex-wrap gap-x-32 gap-y-12">
           {footerRechtliches.map((l) =>
-            l.nochNicht ? <span class={bald}>{l.label}</span> : <a href={l.href} class={linkKlasse}>{l.label}</a>,
+            l.cookieSchalter ? (
+              /* Öffnet das Einwilligungsbanner erneut, statt auf eine Seite zu führen */
+              <button type="button" data-cookie-reset class:list={[linkKlasse, 'cursor-pointer border-none bg-transparent p-0 text-left font-[inherit]']}>
+                {l.label}
+              </button>
+            ) : l.nochNicht ? (
+              <span class={bald}>{l.label}</span>
+            ) : (
+              <a href={l.href} class={linkKlasse}>{l.label}</a>
+            ),
           )}
         </div>
       </nav>
