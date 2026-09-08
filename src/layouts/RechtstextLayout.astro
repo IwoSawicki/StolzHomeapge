@@ -1,0 +1,72 @@
+---
+/* Layout für Rechtstexte (Impressum, Datenschutz).
+   Heller Grund, heller Header, schmale Lesespalte. Die Fließtext-Typografie
+   kommt aus den Design-Tokens und wird hier einmal für alle Rechtstexte
+   festgelegt. */
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Überschrift der Seite */
+  ueberschrift: string;
+  /** Kursiv hervorgehobenes Wort in der Überschrift */
+  akzent?: string;
+  stand?: string;
+}
+
+const { title, description, ueberschrift, akzent, stand } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="bg-paper">
+    <Header variante="hell" />
+  </div>
+
+  <main class="bg-paper px-20 pt-hero-top pb-section-y-lg">
+    <div class="mx-auto flex max-w-content flex-col gap-40">
+      <header class="flex flex-col gap-16">
+        <h1 class="m-0 text-h2-faq leading-tightest font-bold tracking-faq text-ink">
+          {ueberschrift}{
+            akzent && (
+              <>
+                {' '}
+                <span class="font-display font-semibold italic">{akzent}</span>
+              </>
+            )
+          }
+        </h1>
+        {
+          stand && (
+            <p class="m-0 font-mono text-12 tracking-mono uppercase text-ink-faint">
+              Stand: {stand}
+            </p>
+          )
+        }
+        <div class="h-1 w-full bg-rule"></div>
+      </header>
+
+      {/*
+        Fließtext-Typografie der Rechtstexte. Die Texte kommen als fertiges
+        HTML (h2/h3/h4/p/a/br) aus der alten Seite, deshalb wird hier über
+        den Container gestylt statt an jedem Element.
+      */}
+      <div
+        class="max-w-820 text-17 leading-prose text-ink-soft
+          [&_a:hover]:text-lime-link-hover [&_a]:underline [&_a]:underline-offset-2
+          [&_h2]:mt-56 [&_h2]:mb-0 [&_h2]:text-26 [&_h2]:leading-card [&_h2]:font-bold
+          [&_h2]:tracking-heading [&_h2]:text-ink first:[&_h2]:mt-0
+          [&_h3]:mt-32 [&_h3]:mb-0 [&_h3]:text-20 [&_h3]:leading-card [&_h3]:font-bold
+          [&_h3]:tracking-heading [&_h3]:text-ink
+          [&_h4]:mt-24 [&_h4]:mb-0 [&_h4]:text-17 [&_h4]:leading-card [&_h4]:font-bold [&_h4]:text-ink
+          [&_p]:mt-12 [&_p]:mb-0"
+      >
+        <slot />
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+/* Datenschutzerklärung – Text 1:1 aus der alten Seite. Er liegt als fertiges
+   HTML in src/data/rechtstexte/datenschutz.html, damit er sich ohne Umbau
+   der Komponente aktualisieren lässt.
+
+   ACHTUNG, inhaltlich zu prüfen (siehe docs/ABWEICHUNGEN.md): Der Text
+   beschreibt Dienste, die der Neuaufbau derzeit nicht einsetzt (Google
+   Analytics, Google Ads, Umami, Calendly, Font Awesome), und nennt
+   umgekehrt den Versanddienst des Kontaktformulars nicht. */
+import RechtstextLayout from '../layouts/RechtstextLayout.astro';
+import datenschutzText from '../data/rechtstexte/datenschutz.html?raw';
+---
+
+<RechtstextLayout
+  title="Datenschutz | Stolz Marketing"
+  description="Datenschutzerklärung von Stolz Marketing: welche Daten wir erheben, wozu wir sie nutzen und welche Rechte Sie haben."
+  ueberschrift="Datenschutz"
+>
+  <Fragment set:html={datenschutzText} />
+</RechtstextLayout>

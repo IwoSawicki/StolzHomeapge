@@ -1,0 +1,20 @@
+---
+/* Kontaktseite: heller Header, Formular, Footer. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Kontaktformular from '../components/sections/Kontaktformular.astro';
+---
+
+<BaseLayout
+  title="Kontakt | Stolz Marketing"
+  description="Kostenloses Erstgespräch vereinbaren: Schreiben Sie uns über das Formular, rufen Sie an oder senden Sie eine Mail. Wir melden uns zeitnah zurück."
+>
+  <div class="bg-paper">
+    <Header variante="hell" />
+  </div>
+  <main>
+    <Kontaktformular />
+  </main>
+  <Footer />
+</BaseLayout>
