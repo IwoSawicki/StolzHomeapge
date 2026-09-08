@@ -19,12 +19,11 @@ interface Props {
 const { grund = 'dunkel', mitHinweis = true } = Astro.props;
 const istHell = grund === 'hell';
 
-const screenshots = import.meta.glob<{ default: ImageMetadata }>(
-  '../../assets/projekte/*.png',
+const bilder = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/projekte/*.{png,jpg}',
   { eager: true },
 );
-const bild = (datei: string) =>
-  screenshots[`../../assets/projekte/${datei}`]!.default;
+const bild = (datei: string) => bilder[`../../assets/projekte/${datei}`]!.default;
 ---
 
 <div
@@ -104,6 +103,22 @@ const bild = (datei: string) =>
         projekte.map((projekt) => (
           <article class="flex flex-col overflow-hidden rounded-16 border border-edge bg-forest-card">
             <div class="px-16 pt-16">
+              {projekt.foto ? (
+                /* Foto statt Webseite: kein Browser-Rahmen, sonst läse es sich
+                   wie ein Screenshot der Seite. */
+                <div class="overflow-hidden rounded-10 border border-edge-soft bg-forest-well">
+                  <Image
+                    src={bild(projekt.foto)}
+                    alt={projekt.fotoAlt!}
+                    widths={[560, 840, 1140]}
+                    sizes="(min-width: 1200px) 540px, (min-width: 720px) 45vw, 90vw"
+                    loading="lazy"
+                    decoding="async"
+                    class="block aspect-[16/10] w-full object-cover"
+                    style={`object-position: ${projekt.fotoPosition ?? '50% 50%'}`}
+                  />
+                </div>
+              ) : (
               <BrowserRahmen domain={projekt.domain}>
                 {projekt.screenshot ? (
                   <Image
@@ -127,6 +142,7 @@ const bild = (datei: string) =>
                   </div>
                 )}
               </BrowserRahmen>
+              )}
             </div>
 
             <div class="box-content flex flex-1 flex-col items-start gap-12 px-32 pt-28 pb-32">

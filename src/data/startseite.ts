@@ -32,6 +32,11 @@ export interface Projekt {
   /** Dateiname in src/assets/projekte – fehlt er, wird die Platzhalterfläche gezeigt */
   screenshot?: string;
   screenshotAlt?: string;
+  /** Foto statt Webseiten-Screenshot: wird ohne Browser-Rahmen gezeigt */
+  foto?: string;
+  fotoAlt?: string;
+  /** Bildausschnitt für das Foto (object-position) */
+  fotoPosition?: string;
   href: string;
 }
 
@@ -68,7 +73,13 @@ export const projekte: Projekt[] = [
     titel: 'Kampagnen für Kundengewinnung und neue Fachkräfte im Bau',
     text: 'Bezahlte Kampagnen für zwei Ziele: Anfragen von Inhabern und Bewerbungen von Fachkräften. Über 100.000 Aufrufe innerhalb der ersten Wochen — bei einem Betrieb, den in der Region ohnehin jeder kennt.',
     domain: 'dmk-bau.de',
-    // Screenshot liegt noch nicht vor – die Vorlage zeigt hier eine Platzhalterfläche
+    /* Kein Webseiten-Screenshot, sondern ein Foto vom Dreh im Betrieb —
+       passend dazu, dass es bei DMK um Kampagnen ging, nicht um eine Seite.
+       Das Bild ist hochformatig, der Ausschnitt sitzt deshalb auf der
+       Bürozeile mit dem Firmenschild. */
+    foto: 'dmk-fotoshooting-platzhalter.jpg',
+    fotoAlt: 'Foto- und Videodreh im Betrieb von DMK Bau',
+    fotoPosition: '50% 42%',
     href: '/projekte',
   },
 ];
