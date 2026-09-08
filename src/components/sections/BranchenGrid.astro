@@ -1,0 +1,71 @@
+---
+/* Zweite Fassung der Branchen-Sektion: ein Raster statt des Sliders, ohne
+   Bilder. Damit entfällt die Abhängigkeit von den elf Motiven, die noch
+   fehlen (design/README.md, Offene Punkte Nr. 2).
+
+   Aufbau, Farben und Maße kommen aus dem Designsystem. Der Kopf ist mit
+   dem der Slider-Fassung identisch, damit beide austauschbar sind — nur
+   die Pfeilbuttons entfallen, weil es nichts zu scrollen gibt.
+
+   Umschalten in src/pages/index.astro: Branchen ↔ BranchenGrid. */
+import Eyebrow from '../Eyebrow.astro';
+import { branchen } from '../../data/startseite';
+---
+
+<section class="bg-paper px-20 py-section-y-branchen">
+  <div class="mx-auto flex max-w-content flex-col gap-40">
+    <div class="flex max-w-720 flex-col items-start gap-18">
+      <Eyebrow variante="hell">Branchen</Eyebrow>
+      <h2 class="m-0 text-h2-branchen leading-h2 font-bold tracking-heading text-ink">
+        Wir kennen <span class="font-display font-medium italic">Ihr Gewerk</span>
+      </h2>
+      <p class="m-0 max-w-620 text-18 leading-quote text-ink-muted">
+        Jedes Handwerk hat eigene Kunden, eigene Angebotslogik und eigene Bewerber.
+        Wählen Sie Ihre Branche und sehen Sie, wie wir dort arbeiten.
+      </p>
+    </div>
+
+    {/* Bleibt auch mobil zweispaltig — dasselbe Muster wie das Team-Raster
+        der Vorlage, sonst wird die Liste auf dem Handy sehr lang. */}
+    <ul
+      class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(240px,calc(50%-8px)),1fr))] gap-16 p-0"
+    >
+      {
+        branchen.map((branche) => (
+          <li>
+            <a
+              href={branche.href}
+              class="group flex h-full flex-col justify-between gap-24 rounded-16 border border-line bg-paper-warm px-24 py-22 no-underline transition-colors duration-200 hover:border-line-strong hover:bg-paper"
+            >
+              <div class="flex flex-col gap-4">
+                <span class="text-22 leading-card font-bold tracking-heading text-ink">
+                  {branche.name}
+                </span>
+                <span class="text-15 leading-caption text-ink-muted">{branche.sub}</span>
+              </div>
+
+              <span
+                class="flex h-34 w-34 flex-none items-center justify-center rounded-full bg-lime text-forest-deep transition-transform duration-200 group-hover:translate-x-2"
+                aria-hidden="true"
+              >
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M7 17 17 7" />
+                  <path d="M8 7h9v9" />
+                </svg>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
