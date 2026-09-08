@@ -17,9 +17,25 @@ interface Props {
   lead: string;
   /** Beschriftung der Bild-Platzhalterfläche – Bild liegt noch nicht vor */
   bildPlatzhalter: string;
+  /** Ziel des Haupt-CTA. Standard ist die Kontaktseite; Seiten mit eigenem
+      Formular springen stattdessen dorthin. */
+  ctaZiel?: string;
+  /** Zusatzzeile unter den Google-Sternen, z. B. Anzahl der Bewertungen */
+  vertrauenText?: string;
+  /** Breitenbegrenzung der Überschrift – steuert den Zeilenumbruch */
+  titelBreite?: string;
 }
-const { eyebrow, titelVorn, titelAkzent, titelHinten, lead, bildPlatzhalter } =
-  Astro.props;
+const {
+  eyebrow,
+  titelVorn,
+  titelAkzent,
+  titelHinten,
+  lead,
+  bildPlatzhalter,
+  ctaZiel = erstgespraech.href,
+  vertrauenText,
+  titelBreite = 'max-w-720',
+} = Astro.props;
 ---
 
 <section
@@ -29,7 +45,10 @@ const { eyebrow, titelVorn, titelAkzent, titelHinten, lead, bildPlatzhalter } =
     <Eyebrow variante="lime" class="self-start">{eyebrow}</Eyebrow>
 
     <h1
-      class="m-0 max-w-720 text-h1-sub leading-hero font-bold tracking-faq text-paper"
+      class:list={[
+        'm-0 text-h1-sub leading-hero font-bold tracking-faq text-paper',
+        titelBreite,
+      ]}
     >
       {titelVorn}<span class="font-display font-semibold tracking-none italic"
         >{titelAkzent}</span
@@ -40,7 +59,7 @@ const { eyebrow, titelVorn, titelAkzent, titelHinten, lead, bildPlatzhalter } =
 
     <div class="flex flex-wrap gap-12">
       <a
-        href={erstgespraech.href}
+        href={ctaZiel}
         class="inline-flex h-56 items-center gap-10 rounded-8 bg-lime px-28 text-16 font-bold text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright"
       >
         Kostenloses Erstgespräch<span class="text-18" aria-hidden="true">→</span>
@@ -59,6 +78,7 @@ const { eyebrow, titelVorn, titelAkzent, titelHinten, lead, bildPlatzhalter } =
       <span class="text-12 leading-none tracking-[3px] text-star-alt" aria-label="5 von 5 Sternen"
         >★★★★★</span
       >
+      {vertrauenText && <span class="text-15 leading-body text-mint">{vertrauenText}</span>}
     </div>
   </div>
 

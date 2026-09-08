@@ -1,0 +1,147 @@
+---
+/* „Im Vergleich“: dreispaltige Tabelle. Die dritte Spalte (Meistermagnet)
+   ist hervorgehoben — heller Kartengrund und Akzentlinie oben, aber bewusst
+   nicht flächig in Akzentfarbe.
+
+   Vier Spalten brauchen Platz: erst ab der Nav-Schwelle (1040px) steht die
+   Tabelle, darunter stehen dieselben Inhalte als drei Karten untereinander,
+   Meistermagnet zuerst. Immer nur eine der beiden Darstellungen ist sichtbar
+   — die andere ist per display:none auch für Screenreader weg.
+   Handoff: BUILDmitarbeitergewinnen.md, Sektion 5 */
+import { vergleichZeilen, vergleichWege } from '../../../data/mitarbeiter-gewinnen';
+
+/* Auf dem Handy steht der Meistermagnet oben */
+const kartenReihenfolge = [...vergleichWege].sort(
+  (a, b) => Number(b.hervorgehoben ?? false) - Number(a.hervorgehoben ?? false),
+);
+
+const kopfZelle = 'px-20 py-18 text-left align-bottom text-17 font-bold tracking-name';
+const zeilenKopf = 'px-0 py-20 pr-20 text-left align-top text-15 font-bold text-ink';
+const zelle =
+  'px-20 py-20 align-top text-16 leading-quote text-ink-quiet [overflow-wrap:anywhere]';
+---
+
+<section class="bg-paper px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-56">
+    <div class="flex flex-col items-start gap-16">
+      <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+        Im Vergleich
+      </span>
+      <h2 class="m-0 text-h2-sub-lg leading-tightest font-bold tracking-system text-ink">
+        Drei Wege, <span class="font-display font-semibold tracking-none italic"
+          >eine Stelle zu besetzen</span
+        >
+      </h2>
+    </div>
+
+    {/* --- ab 720px: Tabelle ------------------------------------------- */}
+    <table class="hidden w-full table-fixed border-collapse nav:table">
+      {/* Die drei Wege bekommen gleich breite Spalten, damit keiner optisch
+          mehr Gewicht bekommt als der andere. */}
+      <colgroup>
+        <col style="width:19%" />
+        <col style="width:27%" />
+        <col style="width:27%" />
+        <col style="width:27%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th class={zeilenKopf}><span class="sr-only">Merkmal</span></th>
+          {
+            vergleichWege.map((weg) => (
+              <th
+                scope="col"
+                class:list={[
+                  kopfZelle,
+                  weg.hervorgehoben
+                    ? 'rounded-t-16 border-t-3 border-lime bg-paper-soft text-ink'
+                    : 'border-b border-line text-ink-quieter',
+                ]}
+              >
+                {weg.name}
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody>
+        {
+          vergleichZeilen.map((zeile, z) => (
+            <tr>
+              <th
+                scope="row"
+                class:list={[
+                  zeilenKopf,
+                  'border-t border-line',
+                  z === vergleichZeilen.length - 1 && 'border-b',
+                ]}
+              >
+                {zeile}
+              </th>
+              {vergleichWege.map((weg) => (
+                <td
+                  class:list={[
+                    zelle,
+                    weg.hervorgehoben
+                      ? 'bg-paper-soft font-medium text-ink'
+                      : 'border-t border-line',
+                    !weg.hervorgehoben && z === vergleichZeilen.length - 1
+                      ? 'border-b border-line'
+                      : '',
+                    weg.hervorgehoben && z === vergleichZeilen.length - 1
+                      ? 'rounded-b-16'
+                      : '',
+                  ]}
+                >
+                  {weg.werte[z]}
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    {/* --- unter 720px: Karten, Meistermagnet zuerst --------------------- */}
+    <div class="flex flex-col gap-20 nav:hidden">
+      {
+        kartenReihenfolge.map((weg) => (
+          <div
+            class:list={[
+              'flex flex-col gap-16 rounded-16 px-card-x pt-card-y pb-card-b',
+              weg.hervorgehoben
+                ? 'border-t-3 border-lime bg-paper-soft'
+                : 'border border-line bg-paper',
+            ]}
+          >
+            <h3
+              class:list={[
+                'm-0 text-19 font-bold tracking-name',
+                weg.hervorgehoben ? 'text-ink' : 'text-ink-quieter',
+              ]}
+            >
+              {weg.name}
+            </h3>
+            <dl class="m-0 flex flex-col gap-12">
+              {vergleichZeilen.map((zeile, z) => (
+                <div class="flex flex-col gap-2 border-t border-line pt-12">
+                  <dt class="text-13 font-medium tracking-eyebrow uppercase text-ink-faint">
+                    {zeile}
+                  </dt>
+                  <dd
+                    class:list={[
+                      'm-0 text-16 leading-quote',
+                      weg.hervorgehoben ? 'font-medium text-ink' : 'text-ink-quiet',
+                    ]}
+                  >
+                    {weg.werte[z]}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,7 +1,23 @@
 ---
-/* „Leistungsumfang": dunkles Band mit drei Karten, in denen die Leistungen
-   als Häkchenliste stehen. Vorlage: data-screen-label="4 Leistungsumfang" */
-import { leistungsumfang } from '../../../data/kunden-gewinnen';
+/* „Leistungsumfang“: dunkles Band mit drei Karten, in denen die Leistungen
+   als Häkchenliste stehen. Beide Leistungsseiten teilen sich den Aufbau.
+   Vorlage: data-screen-label="4 Leistungsumfang" */
+interface Block {
+  titel: string;
+  punkte: string[];
+}
+
+interface Props {
+  eyebrow: string;
+  /** Text vor dem hervorgehobenen Teil der Überschrift */
+  titelVorn: string;
+  /** hervorgehobener Teil (Textmarker, kursiv) */
+  titelAkzent: string;
+  lead: string;
+  bloecke: Block[];
+}
+
+const { eyebrow, titelVorn, titelAkzent, lead, bloecke } = Astro.props;
 ---
 
 <section class="bg-forest px-20 py-section-y-lg">
@@ -9,16 +25,18 @@ import { leistungsumfang } from '../../../data/kunden-gewinnen';
     <div class="flex flex-wrap items-end gap-x-64 gap-y-32">
       <div class="flex flex-1 basis-460 flex-col items-start gap-16">
         <span class="font-mono text-12 tracking-eyebrow uppercase text-mint-dim">
-          Leistungsumfang
+          {eyebrow}
         </span>
-        <h2 class="m-0 text-h2-sub-lg leading-tightest font-bold tracking-system text-paper">
-          Was am Ende <span class="marker-flach font-display font-semibold italic"
-            >bei Ihnen liegt</span
+        <h2
+          class="m-0 text-h2-sub-lg leading-tightest font-bold tracking-system text-paper"
+        >
+          {titelVorn}<span class="marker-flach font-display font-semibold italic"
+            >{titelAkzent}</span
           >
         </h2>
       </div>
       <p class="m-0 max-w-420 flex-1 basis-340 text-18 leading-prose text-mint-light">
-        Kein Abo auf eine Leistung, die niemand nachzählen kann. Das hier ist die Liste.
+        {lead}
       </p>
     </div>
 
@@ -26,13 +44,15 @@ import { leistungsumfang } from '../../../data/kunden-gewinnen';
       class="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-stretch gap-24"
     >
       {
-        leistungsumfang.map((block, i) => (
+        bloecke.map((block, i) => (
           <div class="flex flex-col rounded-18 border border-edge bg-forest-review px-quote-x py-quote-y">
             <div class="flex items-baseline gap-12 border-b border-edge pb-16">
               <span class="font-mono text-12 text-lime">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <h3 class="m-0 text-19 font-bold tracking-name text-cream">{block.titel}</h3>
+              <h3 class="m-0 text-19 font-bold tracking-name text-cream">
+                {block.titel}
+              </h3>
             </div>
             <ul class="m-0 flex list-none flex-col gap-12 p-0 pt-20">
               {block.punkte.map((punkt) => (

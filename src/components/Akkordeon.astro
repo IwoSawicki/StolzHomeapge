@@ -1,5 +1,5 @@
 ---
-/* Aufklappbare Frage-Antwort-Liste. Immer genau ein Eintrag offen, Klick auf
+/* Aufklappbare Frage-Antwort-Liste. Höchstens ein Eintrag offen, Klick auf
    den offenen schließt ihn. Zeichen wechselt + / −.
 
    Wird von der FAQ der Startseite (mit Nummern) und der Leistungsseiten
@@ -17,6 +17,9 @@ interface Props {
   frageGroesse?: 'text-19' | 'text-20';
   /** Eindeutiges Präfix für die IDs, falls mehrere Akkordeons auf einer Seite */
   id?: string;
+  /** Erster Eintrag beim Laden offen. Auf /mitarbeiter-gewinnen laut Handoff
+      ausdrücklich aus: dort starten alle Einträge geschlossen. */
+  ersterOffen?: boolean;
   class?: string;
 }
 
@@ -25,8 +28,12 @@ const {
   mitNummern = false,
   frageGroesse = 'text-20',
   id = 'faq',
+  ersterOffen = true,
   class: klasse,
 } = Astro.props;
+
+/** true, wenn dieser Eintrag beim Laden offen steht */
+const offen = (i: number) => ersterOffen && i === 0;
 ---
 
 <div class:list={['flex flex-col', klasse]} data-akkordeon>
@@ -37,7 +44,7 @@ const {
           <button
             type="button"
             data-akkordeon-frage
-            aria-expanded={i === 0 ? 'true' : 'false'}
+            aria-expanded={offen(i) ? 'true' : 'false'}
             aria-controls={`${id}-antwort-${i}`}
             id={`${id}-frage-${i}`}
             class="flex w-full cursor-pointer items-center gap-20 border-none bg-transparent py-26 text-left font-[inherit]"
@@ -57,7 +64,7 @@ const {
               aria-hidden="true"
               class="box-content flex h-34 w-34 flex-none items-center justify-center rounded-full border border-line-strong text-18 text-ink"
             >
-              {i === 0 ? '−' : '+'}
+              {offen(i) ? '−' : '+'}
             </span>
           </button>
         </h3>
@@ -66,7 +73,7 @@ const {
           role="region"
           aria-labelledby={`${id}-frage-${i}`}
           class="overflow-hidden transition-[max-height,opacity] duration-300 ease-out"
-          style={i === 0 ? 'max-height:400px;opacity:1' : 'max-height:0;opacity:0'}
+          style={offen(i) ? 'max-height:400px;opacity:1' : 'max-height:0;opacity:0'}
         >
           <p
             class:list={[

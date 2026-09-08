@@ -1,0 +1,43 @@
+---
+/* „Die Ausgangslage“: Kopf zweispaltig — Überschrift links, die beiden
+   Fließtextabsätze rechts. Darunter die sechs Wechselgründe als Raster,
+   jeder mit gefettetem Anfang.
+   Handoff: BUILDmitarbeitergewinnen.md, Sektion 2 */
+import { ausgangslageAbsaetze, wechselgruende } from '../../../data/mitarbeiter-gewinnen';
+---
+
+<section class="bg-paper px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-56">
+    <div class="flex flex-wrap items-end gap-x-64 gap-y-32">
+      <div class="flex flex-1 basis-460 flex-col items-start gap-16">
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+          Die Ausgangslage
+        </span>
+        <h2 class="m-0 text-h2-sub-lg leading-tightest font-bold tracking-system text-ink">
+          Die besten Handwerker schreiben <span
+            class="font-display font-semibold tracking-none italic">keine Bewerbungen</span
+          >
+        </h2>
+      </div>
+      <div class="flex max-w-460 flex-1 basis-340 flex-col gap-18">
+        {
+          ausgangslageAbsaetze.map((absatz) => (
+            <p class="m-0 text-18 leading-prose text-ink-quiet">{absatz}</p>
+          ))
+        }
+      </div>
+    </div>
+
+    <ul
+      class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-x-24 gap-y-32 p-0"
+    >
+      {
+        wechselgruende.map((grund) => (
+          <li class="border-t border-line pt-24 text-17 leading-quote text-ink-quiet">
+            <strong class="font-bold text-ink">{grund.titel}</strong> {grund.text}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

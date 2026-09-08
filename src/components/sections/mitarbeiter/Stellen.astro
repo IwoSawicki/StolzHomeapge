@@ -1,0 +1,77 @@
+---
+/* „Was Sie besetzen wollen“: vier Zeilen als Leiter. Keine Karten, kein
+   Raster — nur Trennlinien. Der Anstieg wird links über vier Balken gezeigt,
+   die von Stufe zu Stufe weiter gefüllt sind, und über die von oben nach
+   unten wachsende Überschrift.
+   Handoff: BUILDmitarbeitergewinnen.md, Sektion 6 */
+import { stufen } from '../../../data/mitarbeiter-gewinnen';
+
+/* Balkenhöhen der Leiter, von links nach rechts ansteigend */
+const balkenHoehen = [14, 24, 34, 44];
+/* Überschriftgröße wächst mit der Stufe */
+const titelGroessen = ['text-19', 'text-20', 'text-22', 'text-23'];
+---
+
+<section class="bg-paper-soft px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-56">
+    <div class="flex flex-wrap items-end gap-x-64 gap-y-32">
+      <div class="flex flex-1 basis-460 flex-col items-start gap-16">
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+          Was Sie besetzen wollen
+        </span>
+        <h2 class="m-0 text-h2-sub-lg leading-tightest font-bold tracking-system text-ink">
+          Nicht jede Stelle ist <span
+            class="font-display font-semibold tracking-none italic">gleich schwer</span
+          >
+        </h2>
+      </div>
+      <p class="m-0 max-w-460 flex-1 basis-340 text-18 leading-prose text-ink-quiet">
+        Eine Bürokraft ist etwas anderes als ein gelernter Anlagenmechaniker mit
+        Führerschein und Bereitschaft zur Montage. Wie schwer eine Stelle ist,
+        entscheidet darüber, wie viel Material wir brauchen, wie lange es dauert und was
+        eine Anfrage kostet. Wir sagen das vorher, nicht in der Rechnung.
+      </p>
+    </div>
+
+    <ol class="m-0 flex list-none flex-col p-0">
+      {
+        stufen.map((stufe, i) => (
+          <li class="flex flex-wrap items-start gap-x-32 gap-y-16 border-t border-line py-30 last:border-b last:border-line">
+            {/* Leiter: gefüllte Balken bis zur aktuellen Stufe */}
+            <div
+              class="flex h-44 w-72 flex-none items-end gap-4"
+              aria-hidden="true"
+            >
+              {balkenHoehen.map((hoehe, b) => (
+                <span
+                  class:list={[
+                    'w-12 flex-none rounded-3',
+                    b <= i ? 'bg-ink' : 'bg-line',
+                  ]}
+                  style={`height:${hoehe}px`}
+                />
+              ))}
+            </div>
+
+            <div class="flex min-w-280 flex-1 basis-520 flex-col items-start gap-8">
+              <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+                Stufe {i + 1}
+              </span>
+              <h3
+                class:list={[
+                  'm-0 leading-card font-bold tracking-heading text-ink',
+                  titelGroessen[i],
+                ]}
+              >
+                {stufe.titel}
+              </h3>
+              <p class="m-0 max-w-720 text-17 leading-quote text-ink-quiet">
+                {stufe.text}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

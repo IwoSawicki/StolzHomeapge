@@ -6,8 +6,10 @@ import Akkordeon from '../../Akkordeon.astro';
 interface Props {
   eintraege: { frage: string; antwort: string }[];
   id: string;
+  /** Erster Eintrag beim Laden offen */
+  ersterOffen?: boolean;
 }
-const { eintraege, id } = Astro.props;
+const { eintraege, id, ersterOffen = true } = Astro.props;
 ---
 
 <section class="bg-paper px-20 py-section-y-lg">
@@ -23,6 +25,12 @@ const { eintraege, id } = Astro.props;
       </h2>
     </div>
 
-    <Akkordeon eintraege={eintraege} frageGroesse="text-19" id={id} class="flex-[1.2] basis-420" />
+    <Akkordeon
+      eintraege={eintraege}
+      frageGroesse="text-19"
+      id={id}
+      ersterOffen={ersterOffen}
+      class="flex-[1.2] basis-420"
+    />
   </div>
 </section>

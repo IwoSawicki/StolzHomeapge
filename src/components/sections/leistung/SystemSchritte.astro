@@ -1,39 +1,55 @@
 ---
-/* „Das Platzhirsch-System": drei Karten, die mittlere dunkel hervorgehoben.
+/* „Das System“: drei Karten, eine davon hervorgehoben, darunter optional ein
+   abgesetzter Satz. Beide Leistungsseiten teilen sich den Aufbau — nur die
+   Texte unterscheiden sich.
    Vorlage: data-screen-label="3 Das System" */
-import { systemSchritte } from '../../../data/kunden-gewinnen';
+interface Schritt {
+  titel: string;
+  text: string;
+  merksatz: string;
+  hervorgehoben: boolean;
+}
+
+interface Props {
+  eyebrow: string;
+  /** Text vor dem kursiv hervorgehobenen Teil */
+  titelVorn: string;
+  /** kursiv hervorgehobener Teil der Überschrift */
+  titelAkzent: string;
+  lead: string;
+  schritte: Schritt[];
+  /** abgesetzter, zentrierter Satz unter den Karten */
+  nachsatz?: string;
+}
+
+const { eyebrow, titelVorn, titelAkzent, lead, schritte, nachsatz } = Astro.props;
 ---
 
 <section id="system" class="bg-paper-soft px-20 py-section-y-lg">
   <div class="mx-auto flex max-w-content flex-col gap-56">
     <div class="flex flex-col items-center gap-16 text-center">
       <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
-        Das Platzhirsch-System
+        {eyebrow}
       </span>
       <h2
         class="m-0 max-w-860 text-h2-sub-lg leading-tightest font-bold tracking-system text-ink"
       >
-        Drei Schritte, <span class="font-display font-semibold tracking-none italic"
-          >immer in dieser Reihenfolge</span
+        {titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{titelAkzent}</span
         >
       </h2>
-      <p class="m-0 max-w-680 text-19 leading-body text-ink-quiet">
-        Erst wissen, wofür Sie stehen. Dann zeigen, dass Sie es können. Dann dafür
-        sorgen, dass man Sie findet.
-      </p>
+      <p class="m-0 max-w-680 text-19 leading-body text-ink-quiet">{lead}</p>
     </div>
 
     <div
       class="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-stretch gap-24"
     >
       {
-        systemSchritte.map((schritt, i) => (
+        schritte.map((schritt, i) => (
           <div
             class:list={[
               'flex flex-col items-start gap-16 rounded-20 border p-card-x pt-card-y pb-card-b',
-              schritt.hervorgehoben
-                ? 'border-forest bg-forest'
-                : 'border-line bg-paper',
+              schritt.hervorgehoben ? 'border-forest bg-forest' : 'border-line bg-paper',
             ]}
           >
             <span
@@ -74,5 +90,13 @@ import { systemSchritte } from '../../../data/kunden-gewinnen';
         ))
       }
     </div>
+
+    {
+      nachsatz && (
+        <p class="mx-auto m-0 max-w-760 border-t border-line pt-32 text-center text-18 leading-prose text-ink-quiet">
+          {nachsatz}
+        </p>
+      )
+    }
   </div>
 </section>

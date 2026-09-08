@@ -7,14 +7,14 @@ import Footer from '../components/Footer.astro';
 import HeroLeistung from '../components/sections/HeroLeistung.astro';
 import MarqueeBand from '../components/sections/MarqueeBand.astro';
 import Ausgangslage from '../components/sections/kunden/Ausgangslage.astro';
-import DasSystem from '../components/sections/kunden/DasSystem.astro';
-import Leistungsumfang from '../components/sections/kunden/Leistungsumfang.astro';
+import SystemSchritte from '../components/sections/leistung/SystemSchritte.astro';
+import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
 import Erstgespraech from '../components/sections/kunden/Erstgespraech.astro';
 import Aufnahmekriterien from '../components/sections/kunden/Aufnahmekriterien.astro';
 import Ausbau from '../components/sections/kunden/Ausbau.astro';
-import FaqLeistung from '../components/sections/kunden/FaqLeistung.astro';
+import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
 import Abschluss from '../components/sections/kunden/Abschluss.astro';
-import { faqs } from '../data/kunden-gewinnen';
+import { faqs, systemSchritte, leistungsumfang } from '../data/kunden-gewinnen';
 ---
 
 <BaseLayout
@@ -37,8 +37,20 @@ import { faqs } from '../data/kunden-gewinnen';
 
   <main>
     <Ausgangslage />
-    <DasSystem />
-    <Leistungsumfang />
+    <SystemSchritte
+      eyebrow="Das Platzhirsch-System"
+      titelVorn="Drei Schritte, "
+      titelAkzent="immer in dieser Reihenfolge"
+      lead="Erst wissen, wofür Sie stehen. Dann zeigen, dass Sie es können. Dann dafür sorgen, dass man Sie findet."
+      schritte={systemSchritte}
+    />
+    <Leistungsumfang
+      eyebrow="Leistungsumfang"
+      titelVorn="Was am Ende "
+      titelAkzent="bei Ihnen liegt"
+      lead="Kein Abo auf eine Leistung, die niemand nachzählen kann. Das hier ist die Liste."
+      bloecke={leistungsumfang}
+    />
     <Erstgespraech />
     <Aufnahmekriterien />
     <Ausbau />

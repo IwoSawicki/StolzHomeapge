@@ -329,13 +329,11 @@ und Projekte-Seite dieselbe Sektion teilen.
   Feld als Pflicht, ein leeres Formular wäre absendbar. Name und Telefonnummer
   sind jetzt Pflicht, Betrieb und Nachricht optional.
 
-**Mitarbeiter einstellen.** Die Vorlage enthält nur Hero und Logo-Marquee; der
-Rest steht dort als Platzhalter „TODO · Copy folgt" mit der Liste der geplanten
-Sektionen (`design/README.md`, Offene Punkte Nr. 3). Genau so ist die Seite
-nachgebaut — sie ist bewusst unfertig, weil die Inhalte fehlen.
-
-**[Rückfrage]** Die Texte für „Mitarbeiter einstellen" fehlen komplett. Sobald
-sie da sind, baue ich die Seite analog zu „Kunden gewinnen" fertig.
+**Mitarbeiter gewinnen.** Die Design-Vorlage enthält nur Hero und
+Logo-Marquee; der Rest stand dort als Platzhalter „TODO · Copy folgt". Die
+Inhalte kamen später als eigenes Handoff-Dokument
+(`BUILDmitarbeitergewinnen.md`, Stand 02.09.2026). Die Seite ist danach
+gebaut — siehe Punkt 27.
 
 ---
 
@@ -473,4 +471,117 @@ Gegen den gerenderten Prototyp gemessen (Desktop 1440, Tablet 1024, Mobil 390):
   Hero-Buttons untereinander unter 390px
 - Branchen-Slider scrollt um exakt 350px (330px Karte + 20px Gap), gleiche
   Snap-Ausgangsposition wie die Vorlage
-- FAQ öffnet den ersten Eintrag, immer genau einer offen, Zeichen wechselt +/−
+- FAQ: höchstens einer offen, Zeichen wechselt +/−. Startseite und
+  „Kunden gewinnen" öffnen den ersten Eintrag wie die Vorlage;
+  „Mitarbeiter gewinnen" startet komplett geschlossen, so verlangt es das
+  eigene Handoff dieser Seite.
+
+---
+
+## 27. „Mitarbeiter gewinnen" nach eigenem Handoff
+
+Grundlage ist nicht `design/Mitarbeiter einstellen.dc.html` (dort steht nur
+Hero und Marquee), sondern `BUILDmitarbeitergewinnen.md` — Texte wörtlich,
+Hell/Dunkel-Wechsel und Sektionsreihenfolge wie dort vorgegeben.
+
+Umgesetzt sind Sektion 1, 1b, 2, 3, 4, 5, 6, 8 und 9. **Sektion 7
+(Referenzfälle) ist bewusst nicht angelegt** — auch nicht als Platzhalter,
+so steht es im Handoff. Damit stehen drei helle Sektionen am Stück (5, 6, 8),
+was das Handoff ausdrücklich zulässt.
+
+Neu gebaut, weil es dafür kein Vorbild in `design/` gibt:
+
+- **Sektion 5 „Im Vergleich"** — dreispaltige Tabelle, die Meistermagnet-Spalte
+  über hellen Kartengrund und eine Akzentlinie oben hervorgehoben, nicht
+  flächig in Akzentfarbe.
+- **Sektion 6 „Was Sie besetzen wollen"** — vier Zeilen als Leiter, nur durch
+  Linien getrennt (keine Karten, kein Raster). Der Anstieg wird über vier
+  Balken links und die von Stufe zu Stufe wachsende Überschrift gezeigt.
+
+### Punkte, bei denen ich vom Handoff abgewichen bin
+
+**a) Sektion 1b bleibt drin, obwohl nur sieben Logos vorliegen.**
+Das Handoff verlangt acht freigegebene Kundenlogos und sonst die ersatzlose
+Streichung der Sektion. Vorhanden sind sieben aufbereitete Logos, sechs davon
+laufen im Marquee. Gestrichen wäre die Sektion aber auch der einzige Bruch
+gegenüber `/kunden-gewinnen`, wo dieselbe Leiste steht — und das Handoff
+verlangt im selben Atemzug, dass sich beide Seiten „nebeneinander wie ein Paar
+lesen". Weil es ein Marquee ist und keine statische Achterreihe, fällt die
+Anzahl optisch nicht auf.
+**[Rückfrage]** Soll die Leiste trotzdem raus, oder liefern Sie zwei weitere
+freigegebene Logos nach?
+
+**b) Die H1 steht nicht auf drei Zeilen.**
+Bei 1440px sind es fünf Zeilen, bei 1040px drei. Der Satz hat 76 Zeichen; drei
+Zeilen bräuchten bei der Größe `clamp(36px, 4.8vw, 60px)` rund 1040px
+Textbreite, die Hero-Spalte hat aber 626px. Entweder deutlich kleinere Schrift
+(dann bricht die Schwesterseiten-Parität) oder eine kürzere Überschrift.
+`/kunden-gewinnen` steht zum Vergleich auf vier Zeilen.
+**[Rückfrage]** Soll die Überschrift gekürzt werden?
+
+**c) Die Trust-Zeile ist nicht verlinkt.**
+„Google · 5,0 Sterne aus 20 Bewertungen" steht da, die URL des Google-Profils
+liegt mir aber nicht vor, und raten will ich sie nicht.
+**[Rückfrage]** Bitte die Profil-URL nachreichen. Auf `/kunden-gewinnen` steht
+die Zeile weiterhin ohne Anzahl — dort nennt die Vorlage keine.
+
+**d) Der Haupt-CTA im Hero springt zu Sektion 9, nicht auf `/kontakt`.**
+So steht es im Handoff, und das Ziel gibt es auf der Seite. Die generelle Regel
+„alle Buttons auf /kontakt" (Punkt 21) galt für Buttons ohne Ziel.
+
+**e) Kursive Serif in den Sektionsüberschriften.**
+Das Handoff markiert die Serif-Kursive nur in der H1. Die Sektionsüberschriften
+2, 5 und 6 haben trotzdem einen kursiven Schlussteil bekommen, weil jede
+Überschrift auf `/kunden-gewinnen` einen hat und die Seiten sonst nicht als
+Paar lesbar sind.
+**[Rückfrage]** Falls das zu viel ist, nehme ich sie in diesen drei
+Überschriften raus.
+
+**f) Die Vergleichstabelle klappt erst unter 1040px auf Karten um**, nicht
+unter 720px. Vier Spalten brauchen Platz; bei 730px wurde es unleserlich eng.
+1040px ist der Nav-Breakpoint des Designsystems, es kommt also keine neue
+Schwelle dazu.
+
+**g) Die hervorgehobene Karte in Sektion 3 ist die mittlere** („Betriebs-
+Einblick"). Das Handoff sagt dazu nichts; auf `/kunden-gewinnen` ist ebenfalls
+die mittlere dunkel hervorgehoben.
+
+### Sonstiges
+
+- **Kein Ortsname auf der Seite** (Entscheidung 08.09.), auch nicht in Titel
+  und Description. Die Zeile „Bergstraße und Rhein-Neckar" unter der
+  Telefonnummer, die `/kunden-gewinnen` im Abschlussblock hat, entfällt hier
+  deshalb. Geprüft: im `<main>` steht kein Ortsname.
+  Übrig bleiben der seitenweite Footer („Gewerbegebiet Bensheim",
+  „© 2026 Stolz Marketing · Bensheim", der Untertitel „… an der Bergstraße und
+  in Südhessen") und die strukturierten Daten im `<head>`. Beides gilt für
+  alle Seiten und lässt sich nicht für eine einzelne abschalten; das Handoff
+  führt im Footer selbst eine Adresse auf, die Regel zielt also auf den
+  Seiteninhalt.
+  **[Rückfrage]** Falls der Footer trotzdem ortlos werden soll, sagen Sie
+  Bescheid — dann gilt das für alle Seiten.
+- **Alle FAQ-Einträge starten geschlossen.** Dafür hat `Akkordeon` die neue
+  Eigenschaft `ersterOffen`; Standard bleibt „erster offen", damit sich an
+  Startseite und `/kunden-gewinnen` nichts ändert.
+- **Sektion 9 und der Footer bilden ein Band** — beide auf `forest-deep`,
+  keine Kante dazwischen. Das galt schon vorher.
+- **„Kein zweiter Call-to-Action":** im Seiteninhalt gibt es keinen — kein
+  Vakanzkostenrechner, kein Download, kein zweiter Anfrageblock. Der
+  Claim-Block „Lassen Sie uns über Ihren Betrieb sprechen" mit Knopf gehört
+  zum seitenweiten Footer und steht auf jeder Seite, auch auf
+  `/kunden-gewinnen`.
+- **Bild-Platzhalter im Hero** ist als solcher beschriftet („BILD · Betrieb,
+  Halle, Fahrzeug, Team") und trägt bewusst einen anderen Text als der auf
+  `/kunden-gewinnen`, damit dort nicht dasselbe Motiv landet.
+- **Pflichtfelder im Formular** wie auf `/kunden-gewinnen`: Name und
+  Telefonnummer Pflicht, Betrieb und „Welche Stelle wollen Sie besetzen?"
+  optional.
+
+### Zusammengelegt
+
+Sektion 3 und 4 sind auf beiden Leistungsseiten baugleich. Sie liegen jetzt als
+`SystemSchritte` und `Leistungsumfang` in
+`src/components/sections/leistung/` und bekommen ihre Texte über Props; die
+FAQ-Sektion ist mit umgezogen. Gegengeprüft: das gebaute Markup von
+`/kunden-gewinnen` ist danach bis auf die Reihenfolge zweier CSS-Klassen
+identisch, alle anderen Seiten sind unverändert.

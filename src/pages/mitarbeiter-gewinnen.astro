@@ -1,49 +1,77 @@
 ---
-/* Serviceseite Personalgewinnung.
+/* Serviceseite Personalgewinnung — „Der Meistermagnet“.
 
-   Die Vorlage ist hier bewusst unfertig: design/Mitarbeiter einstellen.dc.html
-   enthält nur Hero und Logo-Marquee, alles Weitere steht dort als
-   Platzhalterfläche „TODO · Copy folgt" (design/README.md, Offene Punkte
-   Nr. 3). Genau so ist es hier nachgebaut. */
+   Inhalte 1:1 aus dem Handoff BUILDmitarbeitergewinnen.md (Stand 02.09.2026).
+   Sektionsreihenfolge und Hell/Dunkel-Wechsel wie dort vorgegeben:
+   1 Hero (dunkel) · 1b Logoleiste (dunkel, gleiches Band) · 2 Ausgangslage
+   (hell) · 3 Das System (hell) · 4 Leistungsumfang (dunkel) · 5 Vergleich
+   (hell) · 6 Stellen (hell) · 8 FAQ (hell) · 9 Abschluss (dunkel, ein Band
+   mit dem Footer).
+
+   Sektion 7 (Referenzfälle) ist im Handoff gesperrt und wird bewusst nicht
+   angelegt — auch nicht als Platzhalter. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeroLeistung from '../components/sections/HeroLeistung.astro';
 import MarqueeBand from '../components/sections/MarqueeBand.astro';
+import Ausgangslage from '../components/sections/mitarbeiter/Ausgangslage.astro';
+import SystemSchritte from '../components/sections/leistung/SystemSchritte.astro';
+import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
+import Vergleich from '../components/sections/mitarbeiter/Vergleich.astro';
+import Stellen from '../components/sections/mitarbeiter/Stellen.astro';
+import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
+import Abschluss from '../components/sections/mitarbeiter/Abschluss.astro';
+import {
+  systemSchritte,
+  systemNachsatz,
+  leistungsumfang,
+  faqs,
+} from '../data/mitarbeiter-gewinnen';
 ---
 
 <BaseLayout
   title="Mitarbeiter gewinnen | Stolz Marketing"
-  description="Die besten Mitarbeiter der Region für Ihren Betrieb gewinnen — mit dem Meistermagnet-System für Handwerksbetriebe an der Bergstraße."
+  description="Fachkräfte gewinnen, die zu Ihrem Betrieb passen — mit dem Meistermagnet-System für Handwerksbetriebe."
 >
+  {/* Hero und Logoleiste stehen zusammen im dunklen Band, ohne Kante dazwischen */}
   <div class="bg-forest">
     <Header />
     <HeroLeistung
       eyebrow="Neue Mitarbeiter einstellen"
-      titelVorn="Die "
-      titelAkzent="besten Mitarbeiter"
-      titelHinten=" der Region für Ihren Betrieb gewinnen durch das Meistermagnet-System"
-      lead="Für Handwerksbetriebe an der Bergstraße, die keine Stellenanzeigen mehr schalten wollen, auf die sich niemand bewirbt — sondern Fachkräfte erreichen, die gerade nicht suchen."
-      bildPlatzhalter="BILD · Hero Personalgewinnung"
+      titelVorn=""
+      titelAkzent="Fachkräfte"
+      titelHinten=" gewinnen, die zu Ihrem Betrieb passen — mit dem Meistermagnet-System"
+      lead="Für Handwerksbetriebe, die nicht auf die warten wollen, die gerade suchen — sondern Fachkräfte erreichen, die gerade nicht suchen."
+      bildPlatzhalter="BILD · Betrieb, Halle, Fahrzeug, Team"
+      ctaZiel="#anfrage"
+      vertrauenText="5,0 Sterne aus 20 Bewertungen"
     />
     <MarqueeBand />
   </div>
 
   <main>
-    {/* Platzhalter aus der Vorlage – die Inhalte fehlen dort noch */}
-    <section id="system" class="bg-paper px-20 py-section-y-md">
-      <div class="mx-auto max-w-content">
-        <div
-          class="flex flex-col items-start gap-14 rounded-16 border border-dashed border-line-strong px-card-x py-card-y"
-        >
-          <span class="font-mono text-13 text-ink-muted">TODO · Copy folgt</span>
-          <p class="m-0 text-15 leading-prose text-ink-muted">
-            Problem / Ist-Zustand · Meistermagnet-System in Schritten · Beweisfälle ·
-            Ablauf · Aufnahmekriterien · FAQ · Abschluss-CTA
-          </p>
-        </div>
-      </div>
-    </section>
+    <Ausgangslage />
+    <SystemSchritte
+      eyebrow="Der Meistermagnet"
+      titelVorn="Drei Schritte, "
+      titelAkzent="immer in dieser Reihenfolge"
+      lead="Erst verstehen, wofür Ihr Betrieb steht. Dann zeigen, wie es bei Ihnen wirklich ist. Dann die Richtigen darauf ansprechen."
+      schritte={systemSchritte}
+      nachsatz={systemNachsatz}
+    />
+    <Leistungsumfang
+      eyebrow="Leistungsumfang"
+      titelVorn="Was am Ende "
+      titelAkzent="bei Ihnen liegt"
+      lead="Am Ende gehört Ihnen etwas — nicht nur eine Rechnung über eine Vermittlung."
+      bloecke={leistungsumfang}
+    />
+    <Vergleich />
+    <Stellen />
+    {/* Alle Einträge starten geschlossen – so im Handoff vorgegeben */}
+    <FaqLeistung eintraege={faqs} id="faq-mitarbeiter" ersterOffen={false} />
+    <Abschluss />
   </main>
 
   <Footer />
