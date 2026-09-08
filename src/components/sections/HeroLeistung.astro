@@ -4,7 +4,7 @@
    Texte unterscheiden sich.
    Vorlage: design/Kunden gewinnen.dc.html bzw. Mitarbeiter einstellen.dc.html */
 import Eyebrow from '../Eyebrow.astro';
-import { erstgespraech } from '../../data/navigation';
+import { erstgespraech, kontakt } from '../../data/navigation';
 
 interface Props {
   eyebrow: string;
@@ -72,14 +72,28 @@ const {
       </a>
     </div>
 
-    {/* Google-Bewertung */}
-    <div class="mt-12 flex flex-col gap-2">
-      <span class="text-22 leading-none font-medium tracking-name text-cream">Google</span>
+    {/* Google-Bewertung – führt aufs Unternehmensprofil */}
+    <a
+      href={kontakt.googleProfil}
+      target="_blank"
+      rel="noopener"
+      class="group mt-12 flex flex-col gap-2 self-start no-underline"
+    >
+      <span
+        class="text-22 leading-none font-medium tracking-name text-cream transition-colors group-hover:text-lime"
+        >Google</span
+      >
       <span class="text-12 leading-none tracking-[3px] text-star-alt" aria-label="5 von 5 Sternen"
         >★★★★★</span
       >
-      {vertrauenText && <span class="text-15 leading-body text-mint">{vertrauenText}</span>}
-    </div>
+      {
+        vertrauenText && (
+          <span class="text-15 leading-body text-mint transition-colors group-hover:text-mint-light">
+            {vertrauenText}
+          </span>
+        )
+      }
+    </a>
   </div>
 
   {/* Bildfläche – Motiv liegt noch nicht vor */}

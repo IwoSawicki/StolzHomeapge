@@ -508,8 +508,7 @@ gegenüber `/kunden-gewinnen`, wo dieselbe Leiste steht — und das Handoff
 verlangt im selben Atemzug, dass sich beide Seiten „nebeneinander wie ein Paar
 lesen". Weil es ein Marquee ist und keine statische Achterreihe, fällt die
 Anzahl optisch nicht auf.
-**[Rückfrage]** Soll die Leiste trotzdem raus, oder liefern Sie zwei weitere
-freigegebene Logos nach?
+**Geklärt:** Die Leiste bleibt.
 
 **b) Die H1 steht nicht auf drei Zeilen.**
 Bei 1440px sind es fünf Zeilen, bei 1040px drei. Der Satz hat 76 Zeichen; drei
@@ -517,13 +516,13 @@ Zeilen bräuchten bei der Größe `clamp(36px, 4.8vw, 60px)` rund 1040px
 Textbreite, die Hero-Spalte hat aber 626px. Entweder deutlich kleinere Schrift
 (dann bricht die Schwesterseiten-Parität) oder eine kürzere Überschrift.
 `/kunden-gewinnen` steht zum Vergleich auf vier Zeilen.
-**[Rückfrage]** Soll die Überschrift gekürzt werden?
+**Geklärt:** Bleibt so, die Überschrift wird nicht gekürzt.
 
-**c) Die Trust-Zeile ist nicht verlinkt.**
-„Google · 5,0 Sterne aus 20 Bewertungen" steht da, die URL des Google-Profils
-liegt mir aber nicht vor, und raten will ich sie nicht.
-**[Rückfrage]** Bitte die Profil-URL nachreichen. Auf `/kunden-gewinnen` steht
-die Zeile weiterhin ohne Anzahl — dort nennt die Vorlage keine.
+**c) Trust-Zeile verlinkt.**
+„Google · 5,0 Sterne aus 20 Bewertungen" führt aufs Google-Unternehmensprofil
+(`https://share.google/0GWPnrbiuxQtM4OO7`, in `src/data/navigation.ts` unter
+`kontakt.googleProfil`). Der Block auf `/kunden-gewinnen` ist mitverlinkt,
+steht dort aber weiterhin ohne Anzahl — die Vorlage nennt dort keine.
 
 **d) Der Haupt-CTA im Hero springt zu Sektion 9, nicht auf `/kontakt`.**
 So steht es im Handoff, und das Ziel gibt es auf der Seite. Die generelle Regel
@@ -558,8 +557,9 @@ die mittlere dunkel hervorgehoben.
   alle Seiten und lässt sich nicht für eine einzelne abschalten; das Handoff
   führt im Footer selbst eine Adresse auf, die Regel zielt also auf den
   Seiteninhalt.
-  **[Rückfrage]** Falls der Footer trotzdem ortlos werden soll, sagen Sie
-  Bescheid — dann gilt das für alle Seiten.
+  **Geklärt:** „Gewerbegebiet Bensheim" bleibt im Footer stehen. Wie die
+  Region darüber genau heißen soll („… an der Bergstraße und in Südhessen"),
+  legt Iwo noch fest.
 - **Alle FAQ-Einträge starten geschlossen.** Dafür hat `Akkordeon` die neue
   Eigenschaft `ersterOffen`; Standard bleibt „erster offen", damit sich an
   Startseite und `/kunden-gewinnen` nichts ändert.

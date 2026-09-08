@@ -81,4 +81,6 @@ export const kontakt = {
   email: 'iwo@stolz-marketing.de',
   ortZeile1: 'Gewerbegebiet Bensheim',
   ortZeile2: 'Deutschland',
+  /* Google-Unternehmensprofil – Ziel der Trust-Zeile in den Heros */
+  googleProfil: 'https://share.google/0GWPnrbiuxQtM4OO7',
 };
