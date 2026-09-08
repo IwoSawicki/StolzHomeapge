@@ -253,7 +253,66 @@ wieder auf den Pixel.
 
 ---
 
-## 16. Noch offen aus der Vorlage selbst
+## 16. Kopfbereich nach dem bisherigen Auftritt
+
+Die Design-Vorlage sieht als Sticky-Leiste dieselbe Anordnung wie im
+Seitenkopf vor und unter 1040px ein Vollbild-Overlay. Iwo bevorzugt die
+Lösung des bisherigen Auftritts (Branch `main`), deshalb ist sie übernommen —
+Aufbau und Verhalten von dort, Farben und Maße aus dem neuen Designsystem:
+
+- **Desktop:** oben weiterhin die statische Navigation der Vorlage. Ab 500px
+  Scrolltiefe fährt die Leiste ein, deren Links und CTA jetzt in einer
+  abgesetzten Pille mit Rahmen und Blur sitzen.
+- **Mobil:** oben ein Balken mit Logo und Menü-Knopf, dessen Menü nach unten
+  aufklappt. Sobald er aus dem Blick scrollt, erscheint unten eine schwebende
+  Glas-Pille; ihre Links klappen nach oben auf, gestaffelt, mit geblurrtem
+  Hintergrund. Das Vollbild-Overlay der Vorlage entfällt dafür.
+
+Die Umschaltschwelle bleibt der Breakpoint 1040px aus dem Designsystem (der
+alte Auftritt schaltete bei 1200px).
+
+---
+
+## 17. Kontaktseite ist nicht Teil der Vorlage
+
+`design/` enthält vier Seiten, eine Kontaktseite ist nicht dabei. Die Seite
+folgt der Vorlage, die Iwo geschickt hat (zentrierte Spalte, beschriftete
+Felder, leuchtender CTA, Kontaktzeile darunter), umgesetzt mit den Tokens des
+Stolz-Designsystems auf hellem Grund.
+
+Abweichungen von jener Vorlage:
+
+- **Kein Telefonfeld mit Ländervorwahl-Auswahl.** Das braucht eine
+  zusätzliche Bibliothek; CLAUDE.md verlangt dafür eine Rückfrage. Aktuell ein
+  normales `tel`-Feld.
+- **Nachrichtenfeld ergänzt** (optional), damit Anfragen gleich Kontext haben.
+- Der gelbe Akzent in der Überschrift ist der Textmarker des Designsystems,
+  weil Lime als Schriftfarbe auf Weiß nicht lesbar wäre.
+
+**[Rückfrage]** Soll das Telefonfeld die Ländervorwahl-Auswahl bekommen?
+
+---
+
+## 18. Datenschutztext beschreibt nicht den heutigen Stand
+
+Der Text ist 1:1 von der alten Seite übernommen, wie gewünscht. Inhaltlich
+passt er aber nicht mehr auf den Neuaufbau:
+
+- Er beschreibt **Google Analytics, Google Ads, Umami Analytics, Calendly und
+  Font Awesome**. Der Neuaufbau lädt derzeit nichts davon — die Startseite
+  stellt keinen einzigen Fremdrequest.
+- Er nennt **den Versanddienst des Kontaktformulars nicht**. Das Formular
+  sendet über Web3Forms; als Auftragsverarbeiter gehört der Dienst in die
+  Erklärung. Das war schon auf der alten Seite so.
+- Der Abschnitt „Cookies" beschreibt Cookies, die der Neuaufbau nicht setzt.
+
+**[Rückfrage]** Sobald feststeht, was tatsächlich zum Einsatz kommt
+(Analytics ja/nein, Calendly für die Terminbuchung, Web3Forms), ziehe ich den
+Text nach. Bis dahin steht die alte Fassung unverändert.
+
+---
+
+## 19. Noch offen aus der Vorlage selbst
 
 Aus `design/README.md`, „Offene Punkte" — im Nachbau stehen dort die
 Platzhalterflächen der Vorlage:

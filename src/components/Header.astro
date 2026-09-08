@@ -1,19 +1,28 @@
 ---
-/* Kopfbereich der Vorlage. Er besteht aus drei Teilen:
-   1. statische Navigation im Seitenkopf (scrollt mit weg)
-   2. Sticky-Leiste, die ab 500px Scrolltiefe von oben einfährt
-   3. Vollbild-Burger-Menü unter 1040px
+/* Kopfbereich.
 
-   Die Vorlage steuert Sichtbarkeit über JS-Inline-Styles; hier übernehmen
-   das Media Queries (Breakpoint „nav" = 1040px), JS bleibt auf das
-   Nötige beschränkt: Scroll-Schwelle und Menü-Umschalter. */
+   Aufbau übernommen vom bisherigen Auftritt (Branch main), Farben und
+   Maße aus dem neuen Designsystem:
+
+   Desktop (ab 1040px)
+     1. statische Navigation im Seitenkopf, scrollt mit weg
+     2. ab 500px Scrolltiefe fährt eine Leiste von oben ein, deren Links in
+        einer abgesetzten Pille mit Blur sitzen — wie beim alten Auftritt
+
+   Mobil (unter 1040px)
+     1. oben ein statischer Balken mit Logo und Menü-Knopf, dessen Menü
+        nach unten aufklappt; scrollt mit weg
+     2. sobald er aus dem Blick ist, erscheint unten eine schwebende
+        Glas-Pille. Ihre Links klappen nach OBEN auf, gestaffelt, mit
+        geblurrtem Hintergrund dahinter.
+
+   Der Papierflieger-CTA bleibt an allen drei Stellen derselbe. */
 import Logo from './Logo.astro';
-import Button from './Button.astro';
 import PfeilIcon from './icons/Papierflieger.astro';
 import { hauptnavigation, erstgespraech } from '../data/navigation';
 
 interface Props {
-  /** dunkel = Grün (Startseite), hell = Weiß (Projekte-Seite) */
+  /** dunkel = Grün (Startseite), hell = Weiß (Projekte, Rechtstexte, Kontakt) */
   variante?: 'dunkel' | 'hell';
 }
 const { variante = 'dunkel' } = Astro.props;
@@ -25,17 +34,17 @@ const navLink = istHell
   : 'text-cream hover:bg-forest-card';
 ---
 
-{/* --- Sticky-Leiste: ab 500px Scrolltiefe ------------------------------- */}
+{/* ---------- Desktop: Sticky-Leiste ab 500px Scrolltiefe ---------- */}
 <nav
-  id="sticky-nav"
   data-sticky-nav
   aria-label="Hauptnavigation"
   class:list={[
-    'fixed inset-x-0 top-0 z-50 flex flex-wrap items-center gap-x-24 gap-y-12',
+    'fixed inset-x-0 top-0 z-50 hidden flex-wrap items-center gap-x-24 gap-y-12',
     'px-page-x py-12 backdrop-blur-[14px] backdrop-saturate-[1.6]',
     'pointer-events-none -translate-y-[104%] opacity-0 will-change-transform',
     'transition-[transform,opacity] duration-[380ms] ease-sticky',
     'data-[stuck]:pointer-events-auto data-[stuck]:translate-y-0 data-[stuck]:opacity-100',
+    'nav:flex',
     istHell
       ? 'border-b border-line bg-paper/82'
       : 'border-b border-lime/12 bg-forest/72',
@@ -45,43 +54,39 @@ const navLink = istHell
     <Logo variante={istHell ? 'dunkel' : 'hell'} hoehe={24} />
   </a>
 
-  <div class="ml-auto hidden flex-wrap items-center gap-8 nav:flex">
+  {/* Links und CTA sitzen zusammen in einer abgesetzten Pille */}
+  <div
+    class:list={[
+      'ml-auto flex flex-wrap items-center gap-4 rounded-12 border p-6 backdrop-blur-[5px]',
+      istHell ? 'border-line bg-paper-warm/70' : 'border-lime/12 bg-lime/5',
+    ]}
+  >
     {
       hauptnavigation.map((link) => (
         <a
           href={link.href}
           class:list={[
-            'rounded-8 px-12 py-8 text-14 font-medium no-underline transition-colors',
-            istHell ? 'text-ink hover:bg-paper-hover' : 'text-cream hover:bg-lime/10',
+            'flex h-34 items-center rounded-8 px-12 text-14 font-medium no-underline transition-colors',
+            istHell ? 'text-ink hover:bg-paper' : 'text-cream hover:bg-lime/10',
           ]}
         >
           {link.label}
         </a>
       ))
     }
+    <a
+      href={erstgespraech.href}
+      class="ml-4 inline-flex h-34 items-center gap-8 rounded-8 bg-lime px-14 text-14 font-medium text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-hover"
+    >
+      <PfeilIcon groesse={14} />
+      {erstgespraech.label}
+    </a>
   </div>
-
-  <Button href={erstgespraech.href} variante="lime-klein" class="hidden nav:inline-flex">
-    <PfeilIcon />
-    {erstgespraech.label}
-  </Button>
-
-  <button
-    type="button"
-    data-menu-open
-    aria-label="Menü öffnen"
-    aria-expanded="false"
-    aria-controls="burger-menue"
-    class="ml-auto flex h-42 w-42 flex-none cursor-pointer flex-col items-center justify-center gap-5 rounded-10 border border-lime/28 bg-lime/8 p-0 nav:hidden"
-  >
-    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
-    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
-    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
-  </button>
 </nav>
 
-{/* --- Statische Navigation im Seitenkopf -------------------------------- */}
+{/* ---------- Statische Navigation im Seitenkopf ---------- */}
 <nav
+  data-topbar
   aria-label="Hauptnavigation"
   class="relative z-2 flex flex-wrap items-center gap-x-28 gap-y-14 px-page-x py-18"
 >
@@ -105,7 +110,6 @@ const navLink = istHell
     }
   </div>
 
-  {/* Im Seitenkopf ist der CTA etwas höher und leuchtet stärker */}
   <a
     href={erstgespraech.href}
     class="hidden h-44 items-center gap-10 rounded-8 bg-lime px-18 text-15 font-medium text-forest-deep no-underline shadow-glow-strong transition-colors duration-200 hover:bg-lime-hover nav:inline-flex"
@@ -114,66 +118,236 @@ const navLink = istHell
     {erstgespraech.label}
   </a>
 
+  {/* Mobil: Menü-Knopf, klappt das Menü darunter auf */}
   <button
     type="button"
-    data-menu-open
+    data-topmenu-toggle
     aria-label="Menü öffnen"
     aria-expanded="false"
-    aria-controls="burger-menue"
-    class="ml-auto flex h-42 w-42 flex-none cursor-pointer flex-col items-center justify-center gap-5 rounded-10 border border-lime/28 bg-lime/8 p-0 nav:hidden"
+    aria-controls="menue-oben"
+    class:list={[
+      'relative ml-auto block h-42 w-42 flex-none cursor-pointer rounded-10 border p-0 nav:hidden',
+      istHell ? 'border-line-strong bg-paper-warm' : 'border-lime/28 bg-lime/8',
+    ]}
   >
-    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
-    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
-    <span class="block h-2 w-18 rounded-2 bg-lime"></span>
+    <span
+      data-topline="oben"
+      class:list={[
+        'absolute top-[15px] left-[11px] block h-2 w-18 rounded-2 transition-transform duration-200',
+        istHell ? 'bg-ink' : 'bg-lime',
+      ]}
+    ></span>
+    <span
+      data-topline="unten"
+      class:list={[
+        'absolute top-[24px] left-[11px] block h-2 w-18 rounded-2 transition-transform duration-200',
+        istHell ? 'bg-ink' : 'bg-lime',
+      ]}
+    ></span>
   </button>
-</nav>
 
-{/* --- Burger-Menü ------------------------------------------------------- */}
-<div
-  id="burger-menue"
-  data-menu
-  class="fixed inset-0 z-60 hidden flex-col bg-forest px-page-x pt-14 pb-32 data-[open]:flex"
->
-  <div class="flex items-center justify-between gap-16">
-    <a href="/" class="inline-flex items-center no-underline" aria-label="Zur Startseite">
-      <Logo variante="hell" hoehe={24} />
-    </a>
-    <button
-      type="button"
-      data-menu-close
-      aria-label="Menü schließen"
-      class="flex h-42 w-42 flex-none cursor-pointer items-center justify-center rounded-10 border border-lime/28 bg-lime/8 p-0 text-22 leading-none text-lime"
-    >
-      ×
-    </button>
-  </div>
-
-  <div class="mt-28 flex flex-col gap-4">
+  {/* Aufklappmenü des oberen Balkens */}
+  <nav
+    id="menue-oben"
+    data-topmenu
+    aria-label="Mobilnavigation oben"
+    class:list={[
+      'absolute inset-x-0 top-full z-50 flex origin-top flex-col gap-4 border-b px-page-x pt-8 pb-24 nav:hidden',
+      istHell
+        ? 'border-line bg-paper shadow-[0_18px_40px_rgb(20_26_21/0.12)]'
+        : 'border-edge-soft bg-forest shadow-[0_18px_40px_rgb(9_24_17/0.55)]',
+    ]}
+  >
     {
       hauptnavigation.map((link) => (
         <a
           href={link.href}
-          data-menu-link
-          class="border-b border-edge-soft py-14 text-22 font-medium text-cream no-underline"
+          data-topmenu-link
+          class:list={[
+            'border-b py-14 text-22 font-medium no-underline last:border-b-0',
+            istHell ? 'border-line text-ink' : 'border-edge-soft text-cream',
+          ]}
         >
           {link.label}
         </a>
       ))
     }
-  </div>
+    <a
+      href={erstgespraech.href}
+      data-topmenu-link
+      class="mt-16 inline-flex h-50 items-center justify-center gap-10 rounded-10 bg-lime px-20 text-16 font-medium text-forest-deep no-underline shadow-glow"
+    >
+      <PfeilIcon />
+      {erstgespraech.label}
+    </a>
+  </nav>
+</nav>
 
-  <a
-    href={erstgespraech.href}
-    data-menu-link
-    class="mt-28 inline-flex h-50 items-center justify-center gap-10 rounded-10 bg-lime px-20 text-16 font-medium text-forest-deep no-underline shadow-glow"
+{/* ---------- Mobil: schwebende Pille unten ---------- */}
+<div
+  data-pillnav
+  class="pill-versteckt fixed inset-x-0 bottom-0 z-50 px-16 pb-[max(14px,env(safe-area-inset-bottom))] nav:hidden"
+>
+  <div
+    data-pill
+    class:list={['pill mx-auto flex w-full flex-col overflow-hidden rounded-24', istHell && 'pill-hell']}
   >
-    <PfeilIcon />
-    {erstgespraech.label}
-  </a>
+    {/* Links – stehen im DOM ÜBER der Zeile, klappen also nach oben auf */}
+    <nav id="menue-pille" data-pill-links class="pill-links" aria-label="Mobilnavigation">
+      <div class="px-20 pt-20 pb-16">
+        {
+          hauptnavigation.map((link, i) => (
+            <a
+              href={link.href}
+              data-pill-link
+              data-staffel
+              style={`--i:${i}`}
+              class:list={[
+                'flex items-center border-b py-14 text-26 font-bold tracking-heading no-underline last:border-b-0',
+                istHell ? 'border-line text-ink' : 'border-edge-soft text-cream',
+              ]}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <div data-staffel style={`--i:${hauptnavigation.length}`} class="mt-20">
+          <a
+            href={erstgespraech.href}
+            data-pill-link
+            class="inline-flex h-50 w-full items-center justify-center gap-10 rounded-10 bg-lime px-20 text-16 font-medium text-forest-deep no-underline shadow-glow"
+          >
+            <PfeilIcon />
+            {erstgespraech.label}
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    {/* Immer sichtbare Zeile: Logo links, Menü-Knopf rechts */}
+    <div class="flex items-center justify-between gap-16 py-10 pr-10 pl-20">
+      <a href="/" class="inline-flex items-center no-underline" aria-label="Zur Startseite">
+        <Logo variante={istHell ? 'dunkel' : 'hell'} hoehe={22} />
+      </a>
+      <button
+        type="button"
+        data-pill-toggle
+        aria-label="Menü öffnen"
+        aria-expanded="false"
+        aria-controls="menue-pille"
+        class="relative block h-42 w-42 flex-none cursor-pointer rounded-full border-none bg-transparent p-0"
+      >
+        <span
+          data-pillline="oben"
+          class:list={[
+            'absolute top-[15px] left-[11px] block h-2 w-18 rounded-2 transition-transform duration-200',
+            istHell ? 'bg-ink' : 'bg-lime',
+          ]}></span>
+        <span
+          data-pillline="unten"
+          class:list={[
+            'absolute top-[24px] left-[11px] block h-2 w-18 rounded-2 transition-transform duration-200',
+            istHell ? 'bg-ink' : 'bg-lime',
+          ]}></span>
+      </button>
+    </div>
+  </div>
 </div>
 
+{/* Geblurrter Hintergrund, solange die Pille offen ist */}
+<div
+  data-pill-backdrop
+  class="fixed inset-0 z-40 hidden bg-forest-deep/30 backdrop-blur-[3px] nav:hidden"
+>
+</div>
+
+<style>
+  /* --- Pille unten: Ein- und Ausfahren --- */
+  [data-pillnav] {
+    transition:
+      opacity 300ms ease,
+      transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-pillnav].pill-versteckt {
+    opacity: 0;
+    transform: translateY(130%);
+    pointer-events: none;
+  }
+
+  /* --- Aufklappmenü des oberen Balkens --- */
+  [data-topmenu] {
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 200ms ease,
+      transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-topmenu].ist-offen {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* --- Glas-Pille --- */
+  .pill {
+    background: color-mix(in srgb, var(--color-forest) 82%, transparent);
+    border: 1px solid var(--color-edge);
+    box-shadow: 0 8px 32px rgb(9 24 17 / 0.38);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    transition: max-width 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .pill.ist-offen {
+    background: color-mix(in srgb, var(--color-forest) 95%, transparent);
+  }
+  .pill-hell {
+    background: color-mix(in srgb, var(--color-paper) 82%, transparent);
+    border-color: var(--color-line);
+    box-shadow: 0 8px 32px rgb(20 26 21 / 0.14);
+  }
+  .pill-hell.ist-offen {
+    background: color-mix(in srgb, var(--color-paper) 95%, transparent);
+  }
+
+  /* --- Links klappen nach oben auf --- */
+  .pill-links {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .pill.ist-offen .pill-links {
+    max-height: 78vh;
+    overflow-y: auto;
+  }
+
+  /* --- Einträge gestaffelt einblenden --- */
+  .pill-links [data-staffel] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 300ms ease,
+      transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .pill.ist-offen .pill-links [data-staffel] {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(var(--i) * 45ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-pillnav],
+    [data-topmenu],
+    .pill,
+    .pill-links,
+    .pill-links [data-staffel] {
+      transition: none;
+    }
+  }
+</style>
+
 <script>
-  // Sticky-Leiste ab 500px Scrolltiefe einblenden
+  // ---------- Desktop: Sticky-Leiste ab 500px Scrolltiefe ----------
   const stickyNav = document.querySelector<HTMLElement>('[data-sticky-nav]');
   if (stickyNav) {
     const pruefen = () => {
@@ -184,37 +358,101 @@ const navLink = istHell
     pruefen();
   }
 
-  // Burger-Menü
-  const menue = document.querySelector<HTMLElement>('[data-menu]');
-  const oeffner = document.querySelectorAll<HTMLButtonElement>('[data-menu-open]');
-  const schliesser = document.querySelectorAll<HTMLElement>(
-    '[data-menu-close], [data-menu-link]',
-  );
+  // Menü-Knopf: Balken zum Kreuz drehen
+  const zuKreuz = (oben: HTMLElement | null, unten: HTMLElement | null, offen: boolean) => {
+    if (oben) oben.style.transform = offen ? 'translateY(4.5px) rotate(45deg)' : '';
+    if (unten) unten.style.transform = offen ? 'translateY(-4.5px) rotate(-45deg)' : '';
+  };
 
-  if (menue) {
-    menue.inert = true;
-    const setzen = (offen: boolean) => {
-      menue.toggleAttribute('data-open', offen);
-      menue.inert = !offen;
-      // Vorlage: Seite hinter dem Overlay nicht mitscrollen lassen
-      document.body.style.overflow = offen ? 'hidden' : '';
-      oeffner.forEach((b) => b.setAttribute('aria-expanded', String(offen)));
-      if (offen) menue.querySelector<HTMLElement>('[data-menu-close]')?.focus();
-    };
+  // ---------- Oberer Balken: Menü klappt nach unten auf ----------
+  const topbar = document.querySelector<HTMLElement>('[data-topbar]');
+  const topToggle = document.querySelector<HTMLButtonElement>('[data-topmenu-toggle]');
+  const topMenu = document.querySelector<HTMLElement>('[data-topmenu]');
+  const topLinien = {
+    oben: document.querySelector<HTMLElement>('[data-topline="oben"]'),
+    unten: document.querySelector<HTMLElement>('[data-topline="unten"]'),
+  };
 
-    oeffner.forEach((b) => b.addEventListener('click', () => setzen(true)));
-    schliesser.forEach((b) => b.addEventListener('click', () => setzen(false)));
+  let topOffen = false;
+  const setzeTop = (offen: boolean) => {
+    topOffen = offen;
+    topMenu?.classList.toggle('ist-offen', offen);
+    topToggle?.setAttribute('aria-expanded', String(offen));
+    topToggle?.setAttribute('aria-label', offen ? 'Menü schließen' : 'Menü öffnen');
+    zuKreuz(topLinien.oben, topLinien.unten, offen);
+  };
 
-    // Mit Escape schließen, und wenn das Fenster über den Breakpoint wächst
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && menue.hasAttribute('data-open')) setzen(false);
-    });
-    window.addEventListener(
-      'resize',
-      () => {
-        if (window.innerWidth >= 1040 && menue.hasAttribute('data-open')) setzen(false);
-      },
-      { passive: true },
-    );
+  topToggle?.addEventListener('click', () => setzeTop(!topOffen));
+  document
+    .querySelectorAll('[data-topmenu-link]')
+    .forEach((a) => a.addEventListener('click', () => setzeTop(false)));
+
+  // ---------- Untere Pille ----------
+  const pillNav = document.querySelector<HTMLElement>('[data-pillnav]');
+  const pill = document.querySelector<HTMLElement>('[data-pill]');
+  const pillToggle = document.querySelector<HTMLButtonElement>('[data-pill-toggle]');
+  const pillBackdrop = document.querySelector<HTMLElement>('[data-pill-backdrop]');
+  const pillLinien = {
+    oben: document.querySelector<HTMLElement>('[data-pillline="oben"]'),
+    unten: document.querySelector<HTMLElement>('[data-pillline="unten"]'),
+  };
+
+  let pillOffen = false;
+  const setzePille = (offen: boolean) => {
+    pillOffen = offen;
+    if (pill) {
+      // im Ruhezustand kompakt, beim Öffnen etwas breiter
+      pill.style.maxWidth = offen ? '460px' : '360px';
+      pill.classList.toggle('ist-offen', offen);
+    }
+    pillToggle?.setAttribute('aria-expanded', String(offen));
+    pillToggle?.setAttribute('aria-label', offen ? 'Menü schließen' : 'Menü öffnen');
+    pillBackdrop?.classList.toggle('hidden', !offen);
+    // Seite hinter dem Overlay nicht mitscrollen lassen
+    document.body.style.overflow = offen ? 'hidden' : '';
+    zuKreuz(pillLinien.oben, pillLinien.unten, offen);
+  };
+
+  pillToggle?.addEventListener('click', () => setzePille(!pillOffen));
+  pillBackdrop?.addEventListener('click', () => setzePille(false));
+  document
+    .querySelectorAll('[data-pill-link]')
+    .forEach((a) => a.addEventListener('click', () => setzePille(false)));
+  setzePille(false);
+
+  // Beide Menüs mit Escape schließen
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (pillOffen) setzePille(false);
+    if (topOffen) setzeTop(false);
+  });
+
+  // Pille erscheint, sobald der obere Balken aus dem Blick gescrollt ist
+  if (pillNav && topbar) {
+    if ('IntersectionObserver' in window) {
+      const beobachter = new IntersectionObserver(
+        ([eintrag]) => {
+          pillNav.classList.toggle('pill-versteckt', eintrag.isIntersecting);
+          // Oben führt der Balken, unten die Pille — nie beide gleichzeitig
+          if (!eintrag.isIntersecting) setzeTop(false);
+          else if (pillOffen) setzePille(false);
+        },
+        { rootMargin: '-4px 0px 0px 0px' },
+      );
+      beobachter.observe(topbar);
+    } else {
+      pillNav.classList.remove('pill-versteckt');
+    }
   }
+
+  // Über dem Breakpoint sind beide Mobil-Menüs gegenstandslos
+  window.addEventListener(
+    'resize',
+    () => {
+      if (window.innerWidth < 1040) return;
+      if (pillOffen) setzePille(false);
+      if (topOffen) setzeTop(false);
+    },
+    { passive: true },
+  );
 </script>
