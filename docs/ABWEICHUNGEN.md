@@ -3,7 +3,7 @@
 Alles, was im Nachbau bewusst anders ist als in `design/`. Nichts davon wurde
 still geändert. Punkte mit **[Rückfrage]** brauchen eine Entscheidung von Iwo.
 
-Stand: Startseite. Die Unterseiten sind noch nicht gebaut.
+Stand: alle vier Seiten der Vorlage plus Kontakt, Impressum und Datenschutz.
 
 ---
 
@@ -320,7 +320,51 @@ Text nach. Bis dahin steht die alte Fassung unverändert.
 
 ---
 
-## 19. Noch offen aus der Vorlage selbst
+## 19. Unterseiten: was dort fehlt oder abweicht
+
+**Projekte.** Vollständig nach Vorlage. Der Projekte-Band steht dort auf Weiß
+statt auf Dunkelgrün (die Karten bleiben dunkel) und hat keine Hinweiszeile zu
+den Kampagnenzahlen — beides jetzt über Props gesteuert, damit sich Startseite
+und Projekte-Seite dieselbe Sektion teilen.
+
+**Kunden gewinnen.** Alle neun Sektionen umgesetzt. Zwei Punkte:
+
+- **Das Hero-Bild fehlt.** Die Vorlage verweist auf
+  `screenshot-2026-09-01-at-13-18-02-mti7v13x-1hkw.png`, die Datei ist im
+  Export nicht enthalten. Bis dahin steht dort die schraffierte
+  Platzhalterfläche.
+- **Pflichtfelder im Abschlussformular ergänzt.** Die Vorlage markiert kein
+  Feld als Pflicht, ein leeres Formular wäre absendbar. Name und Telefonnummer
+  sind jetzt Pflicht, Betrieb und Nachricht optional.
+
+**Mitarbeiter einstellen.** Die Vorlage enthält nur Hero und Logo-Marquee; der
+Rest steht dort als Platzhalter „TODO · Copy folgt" mit der Liste der geplanten
+Sektionen (`design/README.md`, Offene Punkte Nr. 3). Genau so ist die Seite
+nachgebaut — sie ist bewusst unfertig, weil die Inhalte fehlen.
+
+**[Rückfrage]** Die Texte für „Mitarbeiter einstellen" fehlen komplett. Sobald
+sie da sind, baue ich die Seite analog zu „Kunden gewinnen" fertig.
+
+---
+
+## 20. Wiederverwendung statt Kopien
+
+Beim Bau der Unterseiten sind mehrere Bausteine zusammengelegt worden, damit
+Inhalte nicht doppelt gepflegt werden müssen:
+
+- `LogoRail` — die laufende Logoreihe, genutzt von allen drei
+  Marquee-Ausprägungen (Startseite mit Verlauf, Projekte-Seite ohne, dunkles
+  Band der Leistungsseiten)
+- `Akkordeon` — die Auf-/Zuklapp-Mechanik, genutzt von der FAQ der Startseite
+  (mit Nummern) und der Leistungsseiten (ohne)
+- `Web3Formular` — Felder, Honeypot, Absenden und Statusmeldung, genutzt von
+  der Kontaktseite und dem Abschlussblock
+- `HeroLeistung` — der Hero beider Leistungsseiten, Texte über Props
+- `Projekte` — dieselbe Sektion auf Startseite und Projekte-Seite
+
+---
+
+## 21. Noch offen aus der Vorlage selbst
 
 Aus `design/README.md`, „Offene Punkte" — im Nachbau stehen dort die
 Platzhalterflächen der Vorlage:

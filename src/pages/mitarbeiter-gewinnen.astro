@@ -1,0 +1,50 @@
+---
+/* Serviceseite Personalgewinnung.
+
+   Die Vorlage ist hier bewusst unfertig: design/Mitarbeiter einstellen.dc.html
+   enthält nur Hero und Logo-Marquee, alles Weitere steht dort als
+   Platzhalterfläche „TODO · Copy folgt" (design/README.md, Offene Punkte
+   Nr. 3). Genau so ist es hier nachgebaut. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import HeroLeistung from '../components/sections/HeroLeistung.astro';
+import MarqueeBand from '../components/sections/MarqueeBand.astro';
+---
+
+<BaseLayout
+  title="Mitarbeiter gewinnen | Stolz Marketing"
+  description="Die besten Mitarbeiter der Region für Ihren Betrieb gewinnen — mit dem Meistermagnet-System für Handwerksbetriebe an der Bergstraße."
+>
+  <div class="bg-forest">
+    <Header />
+    <HeroLeistung
+      eyebrow="Neue Mitarbeiter einstellen"
+      titelVorn="Die "
+      titelAkzent="besten Mitarbeiter"
+      titelHinten=" der Region für Ihren Betrieb gewinnen durch das Meistermagnet-System"
+      lead="Für Handwerksbetriebe an der Bergstraße, die keine Stellenanzeigen mehr schalten wollen, auf die sich niemand bewirbt — sondern Fachkräfte erreichen, die gerade nicht suchen."
+      bildPlatzhalter="BILD · Hero Personalgewinnung"
+    />
+    <MarqueeBand />
+  </div>
+
+  <main>
+    {/* Platzhalter aus der Vorlage – die Inhalte fehlen dort noch */}
+    <section id="system" class="bg-paper px-20 py-section-y-md">
+      <div class="mx-auto max-w-content">
+        <div
+          class="flex flex-col items-start gap-14 rounded-16 border border-dashed border-line-strong px-card-x py-card-y"
+        >
+          <span class="font-mono text-13 text-ink-muted">TODO · Copy folgt</span>
+          <p class="m-0 text-15 leading-prose text-ink-muted">
+            Problem / Ist-Zustand · Meistermagnet-System in Schritten · Beweisfälle ·
+            Ablauf · Aufnahmekriterien · FAQ · Abschluss-CTA
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

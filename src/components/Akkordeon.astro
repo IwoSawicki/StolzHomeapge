@@ -1,0 +1,112 @@
+---
+/* Aufklappbare Frage-Antwort-Liste. Immer genau ein Eintrag offen, Klick auf
+   den offenen schließt ihn. Zeichen wechselt + / −.
+
+   Wird von der FAQ der Startseite (mit Nummern) und der Leistungsseiten
+   (ohne Nummern) verwendet — die Mechanik liegt deshalb nur hier. */
+interface Eintrag {
+  frage: string;
+  antwort: string;
+}
+
+interface Props {
+  eintraege: Eintrag[];
+  /** Startseite nummeriert die Fragen mit 01, 02 … */
+  mitNummern?: boolean;
+  /** Startseite 20px, Leistungsseiten 19px */
+  frageGroesse?: 'text-19' | 'text-20';
+  /** Eindeutiges Präfix für die IDs, falls mehrere Akkordeons auf einer Seite */
+  id?: string;
+  class?: string;
+}
+
+const {
+  eintraege,
+  mitNummern = false,
+  frageGroesse = 'text-20',
+  id = 'faq',
+  class: klasse,
+} = Astro.props;
+---
+
+<div class:list={['flex flex-col', klasse]} data-akkordeon>
+  {
+    eintraege.map((eintrag, i) => (
+      <div class="border-t border-rule">
+        <h3 class="m-0">
+          <button
+            type="button"
+            data-akkordeon-frage
+            aria-expanded={i === 0 ? 'true' : 'false'}
+            aria-controls={`${id}-antwort-${i}`}
+            id={`${id}-frage-${i}`}
+            class="flex w-full cursor-pointer items-center gap-20 border-none bg-transparent py-26 text-left font-[inherit]"
+          >
+            {mitNummern && (
+              <span class="w-24 flex-none font-mono text-13 text-ink-faint">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            )}
+            <span
+              class:list={['flex-1 font-bold tracking-heading text-ink', frageGroesse]}
+            >
+              {eintrag.frage}
+            </span>
+            <span
+              data-akkordeon-zeichen
+              aria-hidden="true"
+              class="box-content flex h-34 w-34 flex-none items-center justify-center rounded-full border border-line-strong text-18 text-ink"
+            >
+              {i === 0 ? '−' : '+'}
+            </span>
+          </button>
+        </h3>
+        <div
+          id={`${id}-antwort-${i}`}
+          role="region"
+          aria-labelledby={`${id}-frage-${i}`}
+          class="overflow-hidden transition-[max-height,opacity] duration-300 ease-out"
+          style={i === 0 ? 'max-height:400px;opacity:1' : 'max-height:0;opacity:0'}
+        >
+          <p
+            class:list={[
+              'm-0 pb-30 text-17 leading-prose text-ink-soft',
+              mitNummern ? 'px-54' : 'pr-54',
+            ]}
+          >
+            {eintrag.antwort}
+          </p>
+        </div>
+      </div>
+    ))
+  }
+  <div class="border-t border-rule"></div>
+</div>
+
+<script>
+  // Jedes Akkordeon auf der Seite für sich schalten
+  document.querySelectorAll<HTMLElement>('[data-akkordeon]').forEach((gruppe) => {
+    const fragen = Array.from(
+      gruppe.querySelectorAll<HTMLButtonElement>('[data-akkordeon-frage]'),
+    );
+
+    const setzen = (index: number, offen: boolean) => {
+      const frage = fragen[index];
+      const antwort = frage.parentElement!.nextElementSibling as HTMLElement;
+      const zeichen = frage.querySelector<HTMLElement>('[data-akkordeon-zeichen]')!;
+
+      frage.setAttribute('aria-expanded', String(offen));
+      antwort.style.maxHeight = offen ? '400px' : '0';
+      antwort.style.opacity = offen ? '1' : '0';
+      zeichen.textContent = offen ? '−' : '+';
+    };
+
+    fragen.forEach((frage, index) => {
+      frage.addEventListener('click', () => {
+        const warOffen = frage.getAttribute('aria-expanded') === 'true';
+        fragen.forEach((_, i) => setzen(i, false));
+        if (!warOffen) setzen(index, true);
+      });
+    });
+  });
+</script>

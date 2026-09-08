@@ -1,0 +1,44 @@
+---
+/* „Die Ausgangslage": Kopf zweispaltig, darunter drei nummerierte Spalten
+   mit Trennlinien. Vorlage: data-screen-label="2 Ausgangslage" */
+import { ausgangslage } from '../../../data/kunden-gewinnen';
+---
+
+<section class="bg-paper px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-56">
+    <div class="flex flex-wrap items-end gap-x-64 gap-y-32">
+      <div class="flex flex-1 basis-460 flex-col items-start gap-16">
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+          Die Ausgangslage
+        </span>
+        <h2 class="m-0 text-h2-sub-lg leading-tightest font-bold tracking-system text-ink">
+          Wonach Ihr Kunde entscheidet, <span
+            class="font-display font-semibold tracking-none italic">bevor er anruft</span
+          >
+        </h2>
+      </div>
+      <p class="m-0 max-w-420 flex-1 basis-340 text-18 leading-prose text-ink-quiet">
+        Bei jedem Gewerk läuft das anders. Was überall gleich ist: Die Entscheidung fällt
+        online, bevor Sie überhaupt von der Anfrage wissen.
+      </p>
+    </div>
+
+    <ol
+      class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-x-24 gap-y-40 p-0"
+    >
+      {
+        ausgangslage.map((punkt, i) => (
+          <li class="flex flex-col items-start gap-14 border-t border-line px-0 pt-28">
+            <span class="font-mono text-12 text-sketch-light">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="m-0 text-23 leading-card font-bold tracking-heading text-ink">
+              {punkt.titel}
+            </h3>
+            <p class="m-0 text-17 leading-quote text-ink-quiet">{punkt.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

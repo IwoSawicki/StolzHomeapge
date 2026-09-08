@@ -1,0 +1,48 @@
+---
+/* „Was danach dazukommen kann": schmales dunkles Band mit drei Zeilen.
+   Vorlage: data-screen-label="7 Ausbau" */
+import { ausbau } from '../../../data/kunden-gewinnen';
+---
+
+<section class="bg-forest px-20 py-[clamp(40px,5vw,56px)]">
+  <div class="mx-auto flex max-w-content flex-wrap items-start gap-x-64 gap-y-24">
+    <div class="flex flex-1 basis-300 flex-col gap-8">
+      <span class="text-17 font-bold tracking-name text-cream">
+        Was danach dazukommen kann
+      </span>
+      <p class="m-0 text-15 leading-body text-mint-dim">
+        Nicht alles auf einmal. Wenn die Aufträge da sind und der nächste Engpass sichtbar
+        wird, gibt es die nächste Stufe.
+      </p>
+    </div>
+
+    <ul class="m-0 flex flex-[1.4] basis-420 list-none flex-col gap-2 p-0">
+      {
+        ausbau.map((eintrag) => {
+          const inhalt = (
+            <>
+              <span class="text-16 font-bold text-cream">{eintrag.titel}</span>
+              <span class="text-15 text-mint-dim">{eintrag.zusatz}</span>
+            </>
+          );
+          return (
+            <li>
+              {eintrag.href ? (
+                <a
+                  href={eintrag.href}
+                  class="flex flex-wrap items-baseline gap-x-8 gap-y-2 rounded-10 px-14 py-12 no-underline transition-colors hover:bg-forest-review"
+                >
+                  {inhalt}
+                </a>
+              ) : (
+                <div class="flex flex-wrap items-baseline gap-x-8 gap-y-2 px-14 py-12">
+                  {inhalt}
+                </div>
+              )}
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>

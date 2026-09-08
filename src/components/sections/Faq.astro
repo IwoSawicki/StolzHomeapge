@@ -1,11 +1,11 @@
 ---
-/* FAQ: links ein mitlaufender Kopf, rechts das Akkordeon. Immer genau ein
-   Eintrag offen (Start: der erste), Zeichen wechselt + / −.
+/* FAQ der Startseite: links ein mitlaufender Kopf, rechts das Akkordeon.
    Vorlage: design/STARTSEITE.dc.html, data-screen-label="FAQ"
 
    Hinweis: Die Antworten sind laut design/README.md noch Entwürfe und
    inhaltlich nicht freigegeben. */
 import Button from '../Button.astro';
+import Akkordeon from '../Akkordeon.astro';
 import { faqs } from '../../data/startseite';
 ---
 
@@ -17,9 +17,7 @@ import { faqs } from '../../data/startseite';
       >
         FAQ
       </span>
-      <h2
-        class="m-0 text-h2-faq leading-tightest font-bold tracking-faq text-ink"
-      >
+      <h2 class="m-0 text-h2-faq leading-tightest font-bold tracking-faq text-ink">
         Häufige <span class="font-display font-semibold italic">Fragen</span>
       </h2>
       <p class="m-0 max-w-340 text-17 leading-prose text-ink-soft">
@@ -30,74 +28,12 @@ import { faqs } from '../../data/startseite';
       </Button>
     </div>
 
-    <div class="flex flex-[1.2] basis-420 flex-col">
-      {
-        faqs.map((faq, i) => (
-          <div class="border-t border-rule">
-            <h3 class="m-0">
-              <button
-                type="button"
-                data-faq-frage
-                aria-expanded={i === 0 ? 'true' : 'false'}
-                aria-controls={`faq-antwort-${i}`}
-                id={`faq-frage-${i}`}
-                class="flex w-full cursor-pointer items-center gap-20 border-none bg-transparent py-26 text-left font-[inherit]"
-              >
-                <span class="w-24 flex-none font-mono text-13 text-ink-faint">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span class="flex-1 text-20 font-bold tracking-heading text-ink">
-                  {faq.frage}
-                </span>
-                <span
-                  data-faq-zeichen
-                  aria-hidden="true"
-                  class="box-content flex h-34 w-34 flex-none items-center justify-center rounded-full border border-line-strong text-18 text-ink"
-                >
-                  {i === 0 ? '−' : '+'}
-                </span>
-              </button>
-            </h3>
-            <div
-              id={`faq-antwort-${i}`}
-              role="region"
-              aria-labelledby={`faq-frage-${i}`}
-              data-faq-antwort
-              class="overflow-hidden transition-[max-height,opacity] duration-300 ease-out"
-              style={i === 0 ? 'max-height:300px;opacity:1' : 'max-height:0;opacity:0'}
-            >
-              <p class="m-0 px-54 pb-30 text-17 leading-prose text-ink-soft">{faq.antwort}</p>
-            </div>
-          </div>
-        ))
-      }
-      <div class="border-t border-rule"></div>
-    </div>
+    <Akkordeon
+      eintraege={faqs}
+      mitNummern
+      frageGroesse="text-20"
+      id="faq-start"
+      class="flex-[1.2] basis-420"
+    />
   </div>
 </section>
-
-<script>
-  // Immer genau ein Eintrag offen: Klick öffnet den neuen und schließt den alten
-  const fragen = Array.from(
-    document.querySelectorAll<HTMLButtonElement>('[data-faq-frage]'),
-  );
-
-  const setzen = (index: number, offen: boolean) => {
-    const frage = fragen[index];
-    const antwort = frage.parentElement!.nextElementSibling as HTMLElement;
-    const zeichen = frage.querySelector<HTMLElement>('[data-faq-zeichen]')!;
-
-    frage.setAttribute('aria-expanded', String(offen));
-    antwort.style.maxHeight = offen ? '300px' : '0';
-    antwort.style.opacity = offen ? '1' : '0';
-    zeichen.textContent = offen ? '−' : '+';
-  };
-
-  fragen.forEach((frage, index) => {
-    frage.addEventListener('click', () => {
-      const warOffen = frage.getAttribute('aria-expanded') === 'true';
-      fragen.forEach((_, i) => setzen(i, false));
-      if (!warOffen) setzen(index, true);
-    });
-  });
-</script>

@@ -1,0 +1,78 @@
+---
+/* „Das Platzhirsch-System": drei Karten, die mittlere dunkel hervorgehoben.
+   Vorlage: data-screen-label="3 Das System" */
+import { systemSchritte } from '../../../data/kunden-gewinnen';
+---
+
+<section id="system" class="bg-paper-soft px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-56">
+    <div class="flex flex-col items-center gap-16 text-center">
+      <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+        Das Platzhirsch-System
+      </span>
+      <h2
+        class="m-0 max-w-860 text-h2-sub-lg leading-tightest font-bold tracking-system text-ink"
+      >
+        Drei Schritte, <span class="font-display font-semibold tracking-none italic"
+          >immer in dieser Reihenfolge</span
+        >
+      </h2>
+      <p class="m-0 max-w-680 text-19 leading-body text-ink-quiet">
+        Erst wissen, wofür Sie stehen. Dann zeigen, dass Sie es können. Dann dafür
+        sorgen, dass man Sie findet.
+      </p>
+    </div>
+
+    <div
+      class="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-stretch gap-24"
+    >
+      {
+        systemSchritte.map((schritt, i) => (
+          <div
+            class:list={[
+              'flex flex-col items-start gap-16 rounded-20 border p-card-x pt-card-y pb-card-b',
+              schritt.hervorgehoben
+                ? 'border-forest bg-forest'
+                : 'border-line bg-paper',
+            ]}
+          >
+            <span
+              class:list={[
+                'flex h-52 w-52 flex-none items-center justify-center rounded-14 font-mono text-14 font-bold',
+                schritt.hervorgehoben
+                  ? 'bg-lime text-forest-deep'
+                  : 'bg-paper-warm text-ink',
+              ]}
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3
+              class:list={[
+                'mt-8 mb-0 text-23 leading-card font-bold tracking-heading',
+                schritt.hervorgehoben ? 'text-paper' : 'text-ink',
+              ]}
+            >
+              {schritt.titel}
+            </h3>
+            <p
+              class:list={[
+                'm-0 text-17 leading-quote',
+                schritt.hervorgehoben ? 'text-mint-contact' : 'text-ink-quiet',
+              ]}
+            >
+              {schritt.text}
+            </p>
+            <p
+              class:list={[
+                'mt-6 mb-0 text-17 leading-tight-body italic',
+                schritt.hervorgehoben ? 'text-lime' : 'text-ink',
+              ]}
+            >
+              {schritt.merksatz}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

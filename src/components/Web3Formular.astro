@@ -1,0 +1,212 @@
+---
+/* Formular mit Versand über Web3Forms, wie schon auf der alten Seite.
+   Wird von der Kontaktseite und vom Abschlussblock der Leistungsseiten
+   verwendet — die Absendelogik liegt deshalb nur hier.
+
+   Der Access-Key ist ein öffentlicher Formularschlüssel, kein Geheimnis;
+   er gehört laut Web3Forms in das Formular. */
+
+export interface Feld {
+  name: string;
+  label: string;
+  type?: string;
+  platzhalter?: string;
+  pflicht?: boolean;
+  /** über die volle Breite statt in der Zweierspalte */
+  breit?: boolean;
+  mehrzeilig?: boolean;
+  autocomplete?: string;
+}
+
+interface Props {
+  felder: Feld[];
+  /** Betreff der Mail, die bei Iwo ankommt */
+  betreff: string;
+  knopfText: string;
+  /** hell = auf weißem Grund, dunkel = auf dunkler Karte */
+  variante?: 'hell' | 'dunkel';
+  /** Hinweis auf die Datenschutzerklärung unter dem Knopf */
+  mitDatenschutzhinweis?: boolean;
+  class?: string;
+}
+
+const {
+  felder,
+  betreff,
+  knopfText,
+  variante = 'hell',
+  mitDatenschutzhinweis = true,
+  class: klasse,
+} = Astro.props;
+
+const WEB3FORMS_KEY = 'e1ef8886-9026-40a1-9a3e-d130c209d607';
+const istHell = variante === 'hell';
+
+const labelKlasse = istHell
+  ? 'text-15 font-bold text-ink'
+  : 'text-15 font-bold text-cream';
+
+const feldKlasse = istHell
+  ? 'w-full rounded-10 border border-line bg-paper-warm px-16 py-14 text-16 text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-line-strong focus:bg-paper'
+  : 'w-full rounded-10 border border-edge bg-forest px-16 py-14 text-16 text-cream outline-none transition-colors placeholder:text-mint-dim focus:border-lime-edge';
+---
+
+<form data-web3-formular class:list={['flex flex-col gap-20', klasse]} novalidate>
+  <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+  <input type="hidden" name="subject" value={betreff} />
+  <input type="hidden" name="from_name" value="Stolz Marketing Website" />
+
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(min(220px,100%),1fr))] gap-x-16 gap-y-20">
+    {
+      felder.map((feld) => (
+        <div
+          class:list={[
+            'flex flex-col gap-8 text-left',
+            (feld.breit || feld.mehrzeilig) && 'col-span-full',
+          ]}
+        >
+          <label for={`w3-${feld.name}`} class={labelKlasse}>
+            {feld.label}
+            {!feld.pflicht && (
+              <span
+                class:list={[
+                  'font-medium',
+                  istHell ? 'text-ink-faint' : 'text-mint-dim',
+                ]}
+              >
+                {' '}
+                (optional)
+              </span>
+            )}
+          </label>
+          {feld.mehrzeilig ? (
+            <textarea
+              id={`w3-${feld.name}`}
+              name={feld.name}
+              rows="4"
+              placeholder={feld.platzhalter}
+              required={feld.pflicht}
+              class:list={[feldKlasse, 'resize-y']}
+            />
+          ) : (
+            <input
+              id={`w3-${feld.name}`}
+              type={feld.type ?? 'text'}
+              name={feld.name}
+              placeholder={feld.platzhalter}
+              required={feld.pflicht}
+              autocomplete={feld.autocomplete}
+              class={feldKlasse}
+            />
+          )}
+        </div>
+      ))
+    }
+  </div>
+
+  {/* Honeypot von Web3Forms – für Menschen unsichtbar */}
+  <input
+    type="checkbox"
+    name="botcheck"
+    class="hidden"
+    style="display:none"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+
+  <button
+    type="submit"
+    data-web3-knopf
+    class="mt-8 w-full cursor-pointer rounded-12 border-none bg-lime px-30 py-18 font-[inherit] text-17 font-bold text-forest-deep shadow-glow transition-colors duration-200 hover:bg-lime-bright disabled:cursor-not-allowed disabled:opacity-60"
+  >
+    {knopfText}
+  </button>
+
+  <p
+    data-web3-status
+    role="status"
+    aria-live="polite"
+    class:list={[
+      'm-0 hidden text-16 leading-body',
+      istHell ? 'text-ink' : 'text-cream',
+    ]}
+  >
+  </p>
+
+  {
+    mitDatenschutzhinweis && (
+      <p
+        class:list={[
+          'm-0 text-14 leading-body',
+          istHell ? 'text-ink-faint' : 'text-mint-dim',
+        ]}
+      >
+        Mit dem Absenden erklären Sie sich mit unserer{' '}
+        <a
+          href="/datenschutz"
+          class="underline underline-offset-2 hover:text-lime-link-hover"
+        >
+          Datenschutzerklärung
+        </a>{' '}
+        einverstanden.
+      </p>
+    )
+  }
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-web3-formular]').forEach((formular) => {
+    const knopf = formular.querySelector<HTMLButtonElement>('[data-web3-knopf]');
+    const status = formular.querySelector<HTMLParagraphElement>('[data-web3-status]');
+
+    const zeigeStatus = (text: string) => {
+      if (!status) return;
+      status.textContent = text;
+      status.classList.remove('hidden');
+    };
+
+    formular.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Browser-Validierung erst beim Absenden zeigen (novalidate am Formular)
+      if (!formular.checkValidity()) {
+        formular.reportValidity();
+        return;
+      }
+
+      const beschriftung = knopf?.textContent ?? '';
+      if (knopf) {
+        knopf.disabled = true;
+        knopf.textContent = 'Wird gesendet …';
+      }
+
+      try {
+        const antwort = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(formular),
+        });
+        const ergebnis = await antwort.json();
+
+        if (ergebnis.success) {
+          formular.reset();
+          zeigeStatus('Danke! Ihre Anfrage ist angekommen — wir melden uns zeitnah bei Ihnen.');
+        } else {
+          zeigeStatus(
+            'Da ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie an iwo@stolz-marketing.de.',
+          );
+        }
+      } catch {
+        zeigeStatus(
+          'Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut oder schreiben Sie an iwo@stolz-marketing.de.',
+        );
+      } finally {
+        if (knopf) {
+          knopf.disabled = false;
+          knopf.textContent = beschriftung;
+        }
+      }
+    });
+  });
+</script>

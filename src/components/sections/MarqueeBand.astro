@@ -1,0 +1,16 @@
+---
+/* Logo-Marquee im dunklen Hero-Band der Leistungsseiten: links die
+   Textzeile, rechts die laufende Reihe.
+   Vorlage: design/Kunden gewinnen.dc.html, data-screen-label="Logo-Marquee" */
+import LogoRail from '../LogoRail.astro';
+---
+
+<section
+  class="flex min-h-90 flex-wrap items-center gap-x-40 gap-y-20 border-t border-edge px-page-x py-20"
+>
+  <p class="m-0 max-w-380 flex-initial text-16 leading-tight-body text-mint">
+    <strong class="font-bold text-cream">Über 50 Projekte</strong> für Handwerks&shy;betriebe
+    <br />seit 2022.
+  </p>
+  <LogoRail class="min-w-0 flex-1 basis-320" />
+</section>

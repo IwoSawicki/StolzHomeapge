@@ -1,0 +1,71 @@
+---
+/* Hero der beiden Leistungsseiten: dunkles Band, links Text und Buttons,
+   rechts eine Bildfläche. Beide Seiten teilen sich den Aufbau, nur die
+   Texte unterscheiden sich.
+   Vorlage: design/Kunden gewinnen.dc.html bzw. Mitarbeiter einstellen.dc.html */
+import Eyebrow from '../Eyebrow.astro';
+
+interface Props {
+  eyebrow: string;
+  /** Text vor dem hervorgehobenen Wort */
+  titelVorn: string;
+  /** Kursiv hervorgehobenes Wort */
+  titelAkzent: string;
+  /** Text nach dem hervorgehobenen Wort */
+  titelHinten: string;
+  lead: string;
+  /** Beschriftung der Bild-Platzhalterfläche – Bild liegt noch nicht vor */
+  bildPlatzhalter: string;
+}
+const { eyebrow, titelVorn, titelAkzent, titelHinten, lead, bildPlatzhalter } =
+  Astro.props;
+---
+
+<section
+  class="flex flex-wrap items-stretch gap-48 px-page-x pt-[clamp(40px,5vw,64px)]"
+>
+  <div class="flex min-w-300 flex-[1.2] basis-520 flex-col justify-center gap-24">
+    <Eyebrow variante="lime" class="self-start">{eyebrow}</Eyebrow>
+
+    <h1
+      class="m-0 max-w-720 text-h1-sub leading-hero font-bold tracking-faq text-paper"
+    >
+      {titelVorn}<span class="font-display font-semibold tracking-none italic"
+        >{titelAkzent}</span
+      >{titelHinten}
+    </h1>
+
+    <p class="m-0 max-w-620 text-19 leading-body text-mint">{lead}</p>
+
+    <div class="flex flex-wrap gap-12">
+      <a
+        href="/erstgespraech"
+        class="inline-flex h-56 items-center gap-10 rounded-8 bg-lime px-28 text-16 font-bold text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright"
+      >
+        Kostenloses Erstgespräch<span class="text-18" aria-hidden="true">→</span>
+      </a>
+      <a
+        href="#system"
+        class="box-content inline-flex h-56 items-center rounded-8 border border-lime-edge bg-lime/7 px-26 text-16 font-medium text-cream no-underline transition-colors duration-200 hover:border-lime-edge-hover hover:bg-lime/14"
+      >
+        So funktioniert es
+      </a>
+    </div>
+
+    {/* Google-Bewertung */}
+    <div class="mt-12 flex flex-col gap-2">
+      <span class="text-22 leading-none font-medium tracking-name text-cream">Google</span>
+      <span class="text-12 leading-none tracking-[3px] text-star-alt" aria-label="5 von 5 Sternen"
+        >★★★★★</span
+      >
+    </div>
+  </div>
+
+  {/* Bildfläche – Motiv liegt noch nicht vor */}
+  <div
+    class="-mt-[92px] flex min-h-[clamp(340px,48vw,520px)] min-w-300 flex-1 basis-520 items-center justify-center"
+    style="background: repeating-linear-gradient(45deg, var(--color-forest-card) 0 14px, var(--color-forest-card-alt) 14px 28px)"
+  >
+    <span class="font-mono text-13 text-mint-placeholder">{bildPlatzhalter}</span>
+  </div>
+</section>

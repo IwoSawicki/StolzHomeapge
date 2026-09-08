@@ -1,61 +1,36 @@
 ---
-/* Übergang von Dunkelgrün nach Weiß, darunter die Caption und die
-   endlos laufende Logoreihe. Die Reihe ist doppelt im DOM, damit der
-   Umlauf bei -50% nahtlos wirkt; die Kopie ist aria-hidden.
-   Vorlage: design/STARTSEITE.dc.html, Abschnitt „Übergang + Logo-Marquee" */
-import { Image } from 'astro:assets';
-import { kundenlogos } from '../../data/startseite';
+/* Logo-Marquee mit Caption darüber, in zwei Ausprägungen:
 
-const logoDateien = import.meta.glob<{ default: ImageMetadata }>(
-  '../../assets/logos/*.png',
-  { eager: true },
-);
+   startseite – davor der Farbverlauf Dunkelgrün → Weiß, der die
+                überlappende Videofläche des Heros auffängt
+   hell       – ohne Verlauf, direkt unter dem Hero der Projekte-Seite
 
-const logos = kundenlogos.map((logo) => ({
-  ...logo,
-  bild: logoDateien[`../../assets/logos/${logo.datei}`]!.default,
-}));
+   Vorlage: design/STARTSEITE.dc.html bzw. design/Projekte.dc.html */
+import LogoRail from '../LogoRail.astro';
+
+interface Props {
+  variante?: 'startseite' | 'hell';
+}
+const { variante = 'startseite' } = Astro.props;
 ---
 
-{/* Farbverlauf Dunkelgrün → Weiß; die Höhe fängt die überlappende
-    Videofläche des Heros auf */}
-<div
-  class="h-[clamp(196px,calc(28vw+96px),422px)]"
-  style="background: linear-gradient(180deg, var(--color-forest) 0%, var(--color-paper) clamp(110px, 15vw, 220px))"
->
-</div>
+{
+  variante === 'startseite' && (
+    <div
+      class="h-[clamp(196px,calc(28vw+96px),422px)]"
+      style="background: linear-gradient(180deg, var(--color-forest) 0%, var(--color-paper) clamp(110px, 15vw, 220px))"
+    />
+  )
+}
 
-<div class="flex flex-col items-center gap-20 bg-paper px-24 pt-8">
-  <p
-    class="m-0 text-center text-14 font-medium tracking-caps uppercase text-ink-muted"
-  >
+<div
+  class:list={[
+    'flex flex-col items-center gap-20 bg-paper px-24',
+    variante === 'startseite' ? 'pt-8' : 'pb-[clamp(48px,6vw,72px)]',
+  ]}
+>
+  <p class="m-0 text-center text-14 font-medium tracking-caps uppercase text-ink-muted">
     50+ Partnerbetriebe vertrauen uns seit 2022
   </p>
-
-  <div class="marquee-mask mx-auto w-[min(1160px,100%)] overflow-hidden">
-    <div class="flex w-max animate-marquee gap-48">
-      {
-        [false, true].map((istKopie) => (
-          <div class="flex gap-48" aria-hidden={istKopie ? 'true' : undefined}>
-            {logos.map((logo) => (
-              <div
-                class="flex h-64 flex-shrink-0 items-center justify-center"
-                style={`width:${logo.slotBreite}px`}
-              >
-                <Image
-                  src={logo.bild}
-                  alt={istKopie ? '' : logo.name}
-                  loading="lazy"
-                  decoding="async"
-                  densities={[1, 2]}
-                  class="block h-auto w-auto max-w-full object-contain opacity-75"
-                  style={`max-height:${logo.maxHoehe}px`}
-                />
-              </div>
-            ))}
-          </div>
-        ))
-      }
-    </div>
-  </div>
+  <LogoRail class="mx-auto w-[min(1160px,100%)]" />
 </div>

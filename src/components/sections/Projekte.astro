@@ -8,6 +8,17 @@ import Button from '../Button.astro';
 import BrowserRahmen from '../BrowserRahmen.astro';
 import { projekte } from '../../data/startseite';
 
+interface Props {
+  /* Auf der Startseite steht das Band auf Dunkelgrün, auf der Projekte-Seite
+     auf Weiß. Die Karten bleiben in beiden Fällen dunkel. */
+  grund?: 'dunkel' | 'hell';
+  /* Die Hinweiszeile zu den Kampagnenzahlen steht nur auf der Startseite,
+     die Projekte-Seite der Vorlage hat sie nicht. */
+  mitHinweis?: boolean;
+}
+const { grund = 'dunkel', mitHinweis = true } = Astro.props;
+const istHell = grund === 'hell';
+
 const screenshots = import.meta.glob<{ default: ImageMetadata }>(
   '../../assets/projekte/*.png',
   { eager: true },
@@ -18,14 +29,20 @@ const bild = (datei: string) =>
 
 <div
   id="projekte"
-  class="flex flex-col items-center gap-64 bg-forest px-20 py-section-y"
+  class:list={[
+    'flex flex-col items-center gap-64 px-20 py-section-y',
+    istHell ? 'bg-paper' : 'bg-forest',
+  ]}
 >
   <header
     class="flex w-[min(1160px,100%)] flex-col items-center gap-16 text-center"
   >
-    <Eyebrow variante="dunkel">Projekte</Eyebrow>
+    <Eyebrow variante={istHell ? 'hell' : 'dunkel'}>Projekte</Eyebrow>
     <h2
-      class="m-0 text-h2 leading-h2-dark font-bold tracking-heading text-paper"
+      class:list={[
+        'm-0 text-h2 leading-h2-dark font-bold tracking-heading',
+        istHell ? 'text-ink' : 'text-paper',
+      ]}
     >
       Unsere letzten <span
         class="font-display font-semibold tracking-none italic">Projekte</span
@@ -133,10 +150,17 @@ const bild = (datei: string) =>
     </div>
   </section>
 
-  <p
-    class="m-0 -mt-32 w-[min(1160px,100%)] text-center text-15 leading-body text-mint-note"
-  >
-    Konkrete Kampagnenzahlen teilen wir aus Datenschutzgründen nicht auf der Homepage
-    — im persönlichen Gespräch gehen wir gerne auf die Ergebnisse ein.
-  </p>
+  {
+    mitHinweis && (
+    <p
+      class:list={[
+        'm-0 -mt-32 w-[min(1160px,100%)] text-center text-15 leading-body',
+        istHell ? 'text-ink-muted' : 'text-mint-note',
+      ]}
+    >
+      Konkrete Kampagnenzahlen teilen wir aus Datenschutzgründen nicht auf der Homepage
+      — im persönlichen Gespräch gehen wir gerne auf die Ergebnisse ein.
+    </p>
+    )
+  }
 </div>

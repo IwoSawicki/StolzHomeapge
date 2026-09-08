@@ -1,0 +1,50 @@
+---
+/* Die laufende Logoreihe für sich genommen.
+   Der Inhalt steht doppelt im DOM, damit der Umlauf bei -50% nahtlos wirkt;
+   die zweite Hälfte ist aria-hidden. Wird von allen Marquee-Varianten
+   verwendet (Startseite, Projekte-Seite, dunkles Hero-Band). */
+import { Image } from 'astro:assets';
+import { kundenlogos } from '../data/startseite';
+
+interface Props {
+  class?: string;
+}
+const { class: klasse } = Astro.props;
+
+const logoDateien = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/logos/*.png',
+  { eager: true },
+);
+
+const logos = kundenlogos.map((logo) => ({
+  ...logo,
+  bild: logoDateien[`../assets/logos/${logo.datei}`]!.default,
+}));
+---
+
+<div class:list={['marquee-mask overflow-hidden', klasse]}>
+  <div class="flex w-max animate-marquee gap-48">
+    {
+      [false, true].map((istKopie) => (
+        <div class="flex gap-48" aria-hidden={istKopie ? 'true' : undefined}>
+          {logos.map((logo) => (
+            <div
+              class="flex h-64 flex-shrink-0 items-center justify-center"
+              style={`width:${logo.slotBreite}px`}
+            >
+              <Image
+                src={logo.bild}
+                alt={istKopie ? '' : logo.name}
+                loading="lazy"
+                decoding="async"
+                densities={[1, 2]}
+                class="block h-auto w-auto max-w-full object-contain opacity-75"
+                style={`max-height:${logo.maxHoehe}px`}
+              />
+            </div>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>

@@ -1,0 +1,53 @@
+---
+/* „Der Einstieg": links Text, Hinweiskasten und CTA, rechts die fünf Punkte,
+   die im Erstgespräch geklärt werden.
+   Vorlage: data-screen-label="5 Erstgespräch" */
+import { erstgespraechPunkte } from '../../../data/kunden-gewinnen';
+---
+
+<section class="bg-paper px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-wrap items-start gap-x-64 gap-y-48">
+    <div class="flex flex-1 basis-380 flex-col items-start gap-20">
+      <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+        Der Einstieg
+      </span>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        Vor dem ersten Euro schauen wir uns <span
+          class="font-display font-semibold tracking-none italic">Ihren Markt</span
+        > an
+      </h2>
+      <p class="m-0 text-18 leading-prose text-ink-quiet">
+        Wir bringen ins Gespräch mit, wie viele Menschen in Ihrer Region tatsächlich nach
+        Ihren Leistungen suchen und wie Sie neben den zwei stärksten Betrieben im Ort
+        dastehen. Das kostet nichts und dauert eine Stunde.
+      </p>
+
+      <div class="mt-6 rounded-16 bg-paper-soft px-28 py-26">
+        <p class="m-0 text-19 leading-tight-body font-medium text-ink">
+          Kommt dabei heraus, dass in Ihrer Region zu wenig gesucht wird, sagen wir Ihnen
+          das. Dann bringt Ihnen dieses System nichts.
+        </p>
+      </div>
+
+      <a
+        href="#anfrage"
+        class="mt-8 inline-flex h-56 items-center gap-10 rounded-8 bg-ink px-28 text-16 font-bold text-paper no-underline transition-colors duration-200 hover:bg-ink-btn-hover"
+      >
+        Kostenloses Erstgespräch<span class="text-18" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <ol class="m-0 flex flex-1 basis-420 list-none flex-col gap-0 p-0">
+      {
+        erstgespraechPunkte.map((punkt, i) => (
+          <li class="grid grid-cols-[32px_minmax(0,1fr)] gap-16 border-b border-line py-18 last:border-b-0">
+            <span class="font-mono text-12 text-sketch-light">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span class="text-17 leading-body text-ink">{punkt}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

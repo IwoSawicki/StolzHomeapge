@@ -1,0 +1,31 @@
+---
+/* Referenzenseite. Sektionsreihenfolge aus design/Projekte.dc.html:
+   heller Kopf · Hero · Logo-Marquee · Projekte-Band (auf Weiß) ·
+   Bewertungen · Zusammenarbeit · Footer */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import HeroProjekte from '../components/sections/HeroProjekte.astro';
+import LogoMarquee from '../components/sections/LogoMarquee.astro';
+import Projekte from '../components/sections/Projekte.astro';
+import Bewertungen from '../components/sections/Bewertungen.astro';
+import Zusammenarbeit from '../components/sections/Zusammenarbeit.astro';
+---
+
+<BaseLayout
+  title="Projekte | Stolz Marketing"
+  description="Marke, Webseite, Fotos, Video und bezahlte Werbung für Handwerksbetriebe an der Bergstraße — was wir für Betriebe in der Region gebaut haben."
+>
+  <div class="bg-paper">
+    <Header variante="hell" />
+    <div class="border-b border-line"></div>
+  </div>
+  <main>
+    <HeroProjekte />
+    <LogoMarquee variante="hell" />
+    <Projekte grund="hell" mitHinweis={false} />
+    <Bewertungen />
+    <Zusammenarbeit />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,68 @@
+---
+/* „Aufnahmekriterien": zwei Karten — passt / passt nicht.
+   Vorlage: data-screen-label="6 Aufnahmekriterien" */
+import { passt, passtNicht } from '../../../data/kunden-gewinnen';
+
+const karten = [
+  { titel: 'Passt', zeichen: '✓', punkte: passt, positiv: true },
+  { titel: 'Passt nicht', zeichen: '—', punkte: passtNicht, positiv: false },
+];
+---
+
+<section class="bg-paper-soft px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-56">
+    <div class="flex flex-wrap items-end gap-x-64 gap-y-32">
+      <div class="flex flex-1 basis-420 flex-col items-start gap-16">
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+          Aufnahmekriterien
+        </span>
+        <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+          Nicht für jeden Betrieb <span
+            class="font-display font-semibold tracking-none italic">das Richtige</span
+          >
+        </h2>
+      </div>
+      <p class="m-0 max-w-420 flex-1 basis-340 text-18 leading-prose text-ink-quiet">
+        Das System lebt davon, dass in Ihrer Region nach Ihren Leistungen gesucht wird. Wo
+        das nicht so ist, hilft auch kein Budget. Deshalb sagen wir vorher, wann es passt.
+      </p>
+    </div>
+
+    <div
+      class="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] items-start gap-24"
+    >
+      {
+        karten.map((karte) => (
+          <div class="flex flex-col gap-20 rounded-20 border border-line bg-paper px-card-x pt-card-y pb-card-b">
+            <div class="flex items-center gap-12">
+              <span
+                class:list={[
+                  'box-content flex h-30 w-30 flex-none items-center justify-center rounded-full text-15 font-bold',
+                  karte.positiv
+                    ? 'bg-lime text-forest-deep'
+                    : 'border border-line-strong text-ink-quieter',
+                ]}
+                aria-hidden="true"
+              >
+                {karte.zeichen}
+              </span>
+              <h3 class="m-0 text-19 font-bold tracking-name text-ink">{karte.titel}</h3>
+            </div>
+            <ul class="m-0 flex list-none flex-col gap-14 p-0">
+              {karte.punkte.map((punkt) => (
+                <li
+                  class:list={[
+                    'border-b border-line pb-14 text-17 leading-body last:border-b-0 last:pb-0',
+                    karte.positiv ? 'text-ink' : 'text-ink-quieter',
+                  ]}
+                >
+                  {punkt}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

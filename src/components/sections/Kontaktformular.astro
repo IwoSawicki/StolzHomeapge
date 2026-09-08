@@ -6,40 +6,33 @@
    beschriftete Felder, leuchtender Button, Kontaktzeile darunter) —
    umgesetzt mit den Tokens des Stolz-Designsystems auf hellem Grund.
 
-   Versand über Web3Forms, wie schon auf der alten Seite. Der Access-Key
-   ist ein öffentlicher Formularschlüssel, kein Geheimnis; er gehört laut
-   Web3Forms in das Formular. */
+   Versand und Absendelogik liegen in Web3Formular. */
 import Eyebrow from '../Eyebrow.astro';
+import Web3Formular from '../Web3Formular.astro';
+import type { Feld } from '../Web3Formular.astro';
 import { kontakt } from '../../data/navigation';
 
-const WEB3FORMS_KEY = 'e1ef8886-9026-40a1-9a3e-d130c209d607';
-
-const felder = [
+const felder: Feld[] = [
   {
     name: 'webseite',
     label: 'Aktuelle Webseite',
     type: 'url',
     platzhalter: 'www.unternehmen.de',
-    pflicht: false,
     breit: true,
     autocomplete: 'url',
   },
   {
     name: 'vorname',
     label: 'Vorname',
-    type: 'text',
     platzhalter: 'z. B. Alex',
     pflicht: true,
-    breit: false,
     autocomplete: 'given-name',
   },
   {
     name: 'nachname',
     label: 'Nachname',
-    type: 'text',
     platzhalter: 'z. B. Weber',
     pflicht: true,
-    breit: false,
     autocomplete: 'family-name',
   },
   {
@@ -60,12 +53,13 @@ const felder = [
     breit: true,
     autocomplete: 'tel',
   },
+  {
+    name: 'nachricht',
+    label: 'Nachricht',
+    platzhalter: 'Worum geht es? Ein, zwei Sätze reichen.',
+    mehrzeilig: true,
+  },
 ];
-
-const feldKlasse =
-  'w-full rounded-10 border border-line bg-paper-warm px-16 py-14 text-16 text-ink ' +
-  'outline-none transition-colors placeholder:text-ink-faint ' +
-  'focus:border-line-strong focus:bg-paper';
 ---
 
 <section class="bg-paper px-20 pt-hero-top pb-section-y-lg">
@@ -86,90 +80,12 @@ const feldKlasse =
     </p>
   </div>
 
-  <form
-    data-kontakt-form
-    class="mx-auto mt-40 flex max-w-560 flex-col gap-20"
-    novalidate
-  >
-    <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
-    <input
-      type="hidden"
-      name="subject"
-      value="Neue Anfrage für ein Erstgespräch über stolz-marketing.de"
-    />
-    <input type="hidden" name="from_name" value="Stolz Marketing Website" />
-
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(min(220px,100%),1fr))] gap-x-16 gap-y-20">
-      {
-        felder.map((feld) => (
-          <div class:list={['flex flex-col gap-8 text-left', feld.breit && 'col-span-full']}>
-            <label for={`feld-${feld.name}`} class="text-15 font-bold text-ink">
-              {feld.label}
-              {!feld.pflicht && (
-                <span class="font-medium text-ink-faint"> (optional)</span>
-              )}
-            </label>
-            <input
-              id={`feld-${feld.name}`}
-              class={feldKlasse}
-              type={feld.type}
-              name={feld.name}
-              placeholder={feld.platzhalter}
-              required={feld.pflicht}
-              autocomplete={feld.autocomplete}
-            />
-          </div>
-        ))
-      }
-
-      <div class="col-span-full flex flex-col gap-8 text-left">
-        <label for="feld-nachricht" class="text-15 font-bold text-ink">
-          Nachricht<span class="font-medium text-ink-faint"> (optional)</span>
-        </label>
-        <textarea
-          id="feld-nachricht"
-          name="nachricht"
-          rows="4"
-          placeholder="Worum geht es? Ein, zwei Sätze reichen."
-          class:list={[feldKlasse, 'resize-y']}></textarea>
-      </div>
-    </div>
-
-    {/* Honeypot von Web3Forms – für Menschen unsichtbar */}
-    <input
-      type="checkbox"
-      name="botcheck"
-      class="hidden"
-      style="display:none"
-      tabindex="-1"
-      autocomplete="off"
-      aria-hidden="true"
-    />
-
-    <button
-      type="submit"
-      data-submit
-      class="mt-8 w-full cursor-pointer rounded-12 border-none bg-lime px-30 py-18 font-[inherit] text-17 font-bold text-forest-deep shadow-glow transition-colors duration-200 hover:bg-lime-bright disabled:cursor-not-allowed disabled:opacity-60"
-    >
-      Angaben absenden
-    </button>
-
-    <p
-      data-status
-      role="status"
-      aria-live="polite"
-      class="m-0 hidden text-16 leading-body"
-    >
-    </p>
-
-    <p class="m-0 text-14 leading-body text-ink-faint">
-      Mit dem Absenden erklären Sie sich mit unserer <a
-        href="/datenschutz"
-        class="underline underline-offset-2 hover:text-lime-link-hover"
-        >Datenschutzerklärung</a
-      > einverstanden.
-    </p>
-  </form>
+  <Web3Formular
+    felder={felder}
+    betreff="Neue Anfrage für ein Erstgespräch über stolz-marketing.de"
+    knopfText="Angaben absenden"
+    class="mx-auto mt-40 max-w-560"
+  />
 
   {/* Telefon und E-Mail als direkter Weg */}
   <div class="mx-auto mt-56 flex max-w-560 flex-wrap justify-center gap-x-56 gap-y-24">
@@ -214,65 +130,3 @@ const feldKlasse =
     </div>
   </div>
 </section>
-
-<script>
-  const formular = document.querySelector<HTMLFormElement>('[data-kontakt-form]');
-  const knopf = formular?.querySelector<HTMLButtonElement>('[data-submit]');
-  const status = formular?.querySelector<HTMLParagraphElement>('[data-status]');
-
-  const zeigeStatus = (text: string, art: 'ok' | 'fehler') => {
-    if (!status) return;
-    status.textContent = text;
-    status.classList.remove('hidden');
-    status.classList.toggle('text-ink', art === 'ok');
-    status.classList.toggle('text-ink-muted', art === 'fehler');
-  };
-
-  formular?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // Browser-Validierung erst beim Absenden zeigen (novalidate am Formular)
-    if (!formular.checkValidity()) {
-      formular.reportValidity();
-      return;
-    }
-
-    const beschriftung = knopf?.textContent ?? '';
-    if (knopf) {
-      knopf.disabled = true;
-      knopf.textContent = 'Wird gesendet …';
-    }
-
-    try {
-      const antwort = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(formular),
-      });
-      const ergebnis = await antwort.json();
-
-      if (ergebnis.success) {
-        formular.reset();
-        zeigeStatus(
-          'Danke! Ihre Anfrage ist angekommen — wir melden uns zeitnah bei Ihnen.',
-          'ok',
-        );
-      } else {
-        zeigeStatus(
-          'Da ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie an iwo@stolz-marketing.de.',
-          'fehler',
-        );
-      }
-    } catch {
-      zeigeStatus(
-        'Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut oder schreiben Sie an iwo@stolz-marketing.de.',
-        'fehler',
-      );
-    } finally {
-      if (knopf) {
-        knopf.disabled = false;
-        knopf.textContent = beschriftung;
-      }
-    }
-  });
-</script>

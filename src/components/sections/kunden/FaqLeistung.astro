@@ -1,0 +1,28 @@
+---
+/* FAQ der Leistungsseiten: links der Kopf, rechts das Akkordeon ohne Nummern.
+   Vorlage: data-screen-label="8 FAQ" */
+import Akkordeon from '../../Akkordeon.astro';
+
+interface Props {
+  eintraege: { frage: string; antwort: string }[];
+  id: string;
+}
+const { eintraege, id } = Astro.props;
+---
+
+<section class="bg-paper px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-wrap items-start gap-spalten-faq">
+    <div class="flex flex-[0.8] basis-280 flex-col items-start gap-16">
+      <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+        Häufige Fragen
+      </span>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        Was uns am häufigsten <span
+          class="font-display font-semibold tracking-none italic">gefragt wird</span
+        >
+      </h2>
+    </div>
+
+    <Akkordeon eintraege={eintraege} frageGroesse="text-19" id={id} class="flex-[1.2] basis-420" />
+  </div>
+</section>
