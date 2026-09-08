@@ -34,55 +34,50 @@ const navLink = istHell
   : 'text-cream hover:bg-forest-card';
 ---
 
-{/* ---------- Desktop: Sticky-Leiste ab 500px Scrolltiefe ---------- */}
-<nav
+{/* ---------- Desktop: schwebende Pille oben ab 500px Scrolltiefe ----------
+     Gleiche Optik wie das mobile Menü: weiß-transparentes Glas mit Blur,
+     Rahmen, weichem Schatten und runden Ecken — nur eben oben statt unten
+     und auf Inhaltsbreite statt über die ganze Fensterbreite. */}
+<div
   data-sticky-nav
-  aria-label="Hauptnavigation"
   class:list={[
-    'fixed inset-x-0 top-0 z-50 hidden flex-wrap items-center gap-x-24 gap-y-12',
-    'px-page-x py-12 backdrop-blur-[14px] backdrop-saturate-[1.6]',
-    'pointer-events-none -translate-y-[104%] opacity-0 will-change-transform',
+    'fixed inset-x-0 top-0 z-50 hidden px-20 pt-14 nav:block',
+    'pointer-events-none -translate-y-[130%] opacity-0 will-change-transform',
     'transition-[transform,opacity] duration-[380ms] ease-sticky',
     'data-[stuck]:pointer-events-auto data-[stuck]:translate-y-0 data-[stuck]:opacity-100',
-    'nav:flex',
-    istHell
-      ? 'border-b border-line bg-paper/82'
-      : 'border-b border-lime/12 bg-forest/72',
   ]}
 >
-  <a href="/" class="inline-flex items-center no-underline" aria-label="Zur Startseite">
-    <Logo variante={istHell ? 'dunkel' : 'hell'} hoehe={24} />
-  </a>
-
-  {/* Links und CTA sitzen zusammen in einer abgesetzten Pille */}
-  <div
-    class:list={[
-      'ml-auto flex flex-wrap items-center gap-4 rounded-12 border p-6 backdrop-blur-[5px]',
-      istHell ? 'border-line bg-paper-warm/70' : 'border-lime/12 bg-lime/5',
-    ]}
+  <nav
+    aria-label="Hauptnavigation"
+    class="glaspille glaspille-hell mx-auto flex max-w-content items-center gap-x-24 rounded-24 py-10 pr-10 pl-20 backdrop-blur-[14px] backdrop-saturate-[1.6]"
   >
-    {
-      hauptnavigation.map((link) => (
-        <a
-          href={link.href}
-          class:list={[
-            'flex h-34 items-center rounded-8 px-12 text-14 font-medium no-underline transition-colors',
-            istHell ? 'text-ink hover:bg-paper' : 'text-cream hover:bg-lime/10',
-          ]}
-        >
-          {link.label}
-        </a>
-      ))
-    }
+    <a href="/" class="inline-flex items-center no-underline" aria-label="Zur Startseite">
+      {/* Die Pille ist immer hell, deshalb hier immer die dunkle Wortmarke */}
+      <Logo variante="dunkel" hoehe={24} />
+    </a>
+
+    <div class="ml-auto flex flex-wrap items-center gap-4">
+      {
+        hauptnavigation.map((link) => (
+          <a
+            href={link.href}
+            class="flex h-38 items-center rounded-10 px-14 text-15 font-medium text-ink no-underline transition-colors hover:bg-paper-warm"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+
     <a
       href={erstgespraech.href}
-      class="ml-4 inline-flex h-34 items-center gap-8 rounded-8 bg-lime px-14 text-14 font-medium text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-hover"
+      class="ml-8 inline-flex h-38 items-center gap-8 rounded-10 bg-lime px-16 text-15 font-medium text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-hover"
     >
-      <PfeilIcon groesse={14} />
+      <PfeilIcon groesse={15} />
       {erstgespraech.label}
     </a>
-  </div>
-</nav>
+  </nav>
+</div>
 
 {/* ---------- Statische Navigation im Seitenkopf ---------- */}
 <nav
@@ -190,10 +185,11 @@ const navLink = istHell
 >
   <div
     data-pill
-    class:list={['pill mx-auto flex w-full flex-col overflow-hidden rounded-24', istHell && 'pill-hell']}
+    class:list={['glaspille mx-auto flex w-full flex-col overflow-hidden rounded-24 backdrop-blur-[14px] backdrop-saturate-[1.6]',
+      istHell && 'glaspille-hell']}
   >
     {/* Links – stehen im DOM ÜBER der Zeile, klappen also nach oben auf */}
-    <nav id="menue-pille" data-pill-links class="pill-links" aria-label="Mobilnavigation">
+    <nav id="menue-pille" data-pill-links class="glaspille-links" aria-label="Mobilnavigation">
       <div class="px-20 pt-20 pb-16">
         {
           hauptnavigation.map((link, i) => (
@@ -290,46 +286,46 @@ const navLink = istHell
   }
 
   /* --- Glas-Pille --- */
-  .pill {
+  .glaspille {
     background: color-mix(in srgb, var(--color-forest) 82%, transparent);
     border: 1px solid var(--color-edge);
     box-shadow: 0 8px 32px rgb(9 24 17 / 0.38);
-    backdrop-filter: blur(14px) saturate(160%);
-    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    /* Der Blur steht als Utility am Element: im Scoped-CSS hat der Minifier
+       die unpräfixierte Zeile verworfen und nur -webkit- übrig gelassen. */
     transition: max-width 320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .pill.ist-offen {
+  .glaspille.ist-offen {
     background: color-mix(in srgb, var(--color-forest) 95%, transparent);
   }
-  .pill-hell {
+  .glaspille-hell {
     background: color-mix(in srgb, var(--color-paper) 82%, transparent);
     border-color: var(--color-line);
     box-shadow: 0 8px 32px rgb(20 26 21 / 0.14);
   }
-  .pill-hell.ist-offen {
+  .glaspille-hell.ist-offen {
     background: color-mix(in srgb, var(--color-paper) 95%, transparent);
   }
 
   /* --- Links klappen nach oben auf --- */
-  .pill-links {
+  .glaspille-links {
     max-height: 0;
     overflow: hidden;
     transition: max-height 360ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .pill.ist-offen .pill-links {
+  .glaspille.ist-offen .glaspille-links {
     max-height: 78vh;
     overflow-y: auto;
   }
 
   /* --- Einträge gestaffelt einblenden --- */
-  .pill-links [data-staffel] {
+  .glaspille-links [data-staffel] {
     opacity: 0;
     transform: translateY(16px);
     transition:
       opacity 300ms ease,
       transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .pill.ist-offen .pill-links [data-staffel] {
+  .glaspille.ist-offen .glaspille-links [data-staffel] {
     opacity: 1;
     transform: none;
     transition-delay: calc(var(--i) * 45ms);
@@ -338,9 +334,9 @@ const navLink = istHell
   @media (prefers-reduced-motion: reduce) {
     [data-pillnav],
     [data-topmenu],
-    .pill,
-    .pill-links,
-    .pill-links [data-staffel] {
+    .glaspille,
+    .glaspille-links,
+    .glaspille-links [data-staffel] {
       transition: none;
     }
   }

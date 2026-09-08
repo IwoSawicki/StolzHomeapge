@@ -261,8 +261,10 @@ Lösung des bisherigen Auftritts (Branch `main`), deshalb ist sie übernommen �
 Aufbau und Verhalten von dort, Farben und Maße aus dem neuen Designsystem:
 
 - **Desktop:** oben weiterhin die statische Navigation der Vorlage. Ab 500px
-  Scrolltiefe fährt die Leiste ein, deren Links und CTA jetzt in einer
-  abgesetzten Pille mit Rahmen und Blur sitzen.
+  Scrolltiefe schwebt eine Pille von oben ein — weiß-transparentes Glas mit
+  Blur, Rahmen, weichem Schatten und runden Ecken, auf Inhaltsbreite (1160px)
+  zentriert statt über die volle Fensterbreite. Sie ist auch auf der dunklen
+  Startseite hell, damit sie sich vom Grund abhebt.
 - **Mobil:** oben ein Balken mit Logo und Menü-Knopf, dessen Menü nach unten
   aufklappt. Sobald er aus dem Blick scrollt, erscheint unten eine schwebende
   Glas-Pille; ihre Links klappen nach oben auf, gestaffelt, mit geblurrtem
@@ -270,6 +272,12 @@ Aufbau und Verhalten von dort, Farben und Maße aus dem neuen Designsystem:
 
 Die Umschaltschwelle bleibt der Breakpoint 1040px aus dem Designsystem (der
 alte Auftritt schaltete bei 1200px).
+
+Die Glas-Optik ist für beide — Sticky-Pille oben und Mobil-Pille unten — in
+**einer** Klasse `.glaspille` definiert, damit sie nicht auseinanderlaufen
+kann. Der Blur steht bewusst als Utility am Element und nicht im Scoped-CSS:
+dort verwarf der Minifier die unpräfixierte `backdrop-filter`-Zeile und ließ
+nur `-webkit-` übrig, wodurch der Blur in Chromium wirkungslos war.
 
 ---
 
