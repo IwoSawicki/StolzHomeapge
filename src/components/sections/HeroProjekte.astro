@@ -2,6 +2,7 @@
 /* Hero der Projekte-Seite: heller Grund, Eyebrow, H1, Lead und zwei Buttons.
    Vorlage: design/Projekte.dc.html, data-screen-label="Hero Projekte" */
 import Eyebrow from '../Eyebrow.astro';
+import { erstgespraech } from '../../data/navigation';
 ---
 
 <section
@@ -24,7 +25,7 @@ import Eyebrow from '../Eyebrow.astro';
 
   <div class="mt-8 flex flex-wrap justify-center gap-12">
     <a
-      href="/erstgespraech"
+      href={erstgespraech.href}
       class="inline-flex h-56 items-center gap-10 rounded-8 bg-lime px-28 text-16 font-bold text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright"
     >
       Kostenloses Erstgespräch<span class="text-18" aria-hidden="true">→</span>

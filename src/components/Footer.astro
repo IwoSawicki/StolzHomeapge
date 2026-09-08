@@ -5,6 +5,7 @@
 import Logo from './Logo.astro';
 import Button from './Button.astro';
 import {
+  erstgespraech,
   footerMenue,
   footerTools,
   footerBranchen,
@@ -14,6 +15,8 @@ import {
 } from '../data/navigation';
 
 const linkKlasse = 'text-15 text-mint-link no-underline transition-colors hover:text-lime';
+/* Seiten, die es noch nicht gibt, stehen grau da statt ins Leere zu führen */
+const bald = 'text-15 text-mint-dim';
 const spaltenUeberschrift =
   'font-mono text-12 tracking-footer uppercase text-mint-dimmer';
 
@@ -38,7 +41,7 @@ const jahr = 2026;
           >
         </h2>
       </div>
-      <Button href="/erstgespraech" variante="lime" class="gap-14 whitespace-nowrap">
+      <Button href={erstgespraech.href} variante="lime" class="gap-14 whitespace-nowrap">
         Kostenloses Erstgespräch<span class="text-19">→</span>
       </Button>
     </div>
@@ -71,11 +74,15 @@ const jahr = 2026;
       <nav aria-label="Footer" class="flex flex-1 basis-190 flex-col gap-18">
         <span class={spaltenUeberschrift}>Menü</span>
         <div class="flex flex-col gap-12">
-          {footerMenue.map((l) => <a href={l.href} class={linkKlasse}>{l.label}</a>)}
+          {footerMenue.map((l) =>
+            l.nochNicht ? <span class={bald}>{l.label}</span> : <a href={l.href} class={linkKlasse}>{l.label}</a>,
+          )}
         </div>
         <span class:list={[spaltenUeberschrift, 'mt-16']}>Tools</span>
         <div class="flex flex-col gap-12">
-          {footerTools.map((l) => <a href={l.href} class={linkKlasse}>{l.label}</a>)}
+          {footerTools.map((l) =>
+            l.nochNicht ? <span class={bald}>{l.label}</span> : <a href={l.href} class={linkKlasse}>{l.label}</a>,
+          )}
         </div>
       </nav>
 
@@ -84,11 +91,17 @@ const jahr = 2026;
         <div
           class="grid grid-cols-[repeat(auto-fit,minmax(min(170px,100%),1fr))] gap-x-32 gap-y-12"
         >
-          {footerBranchen.map((l) => <a href={l.href} class={linkKlasse}>{l.label}</a>)}
+          {/* Nicht verlinkt: die Branchenseiten gibt es noch nicht.
+              Sobald sie stehen, wird hier wieder ein <a> daraus. */}
+          {footerBranchen.map((l) =>
+            l.nochNicht ? <span class={bald}>{l.label}</span> : <a href={l.href} class={linkKlasse}>{l.label}</a>,
+          )}
         </div>
         <span class:list={[spaltenUeberschrift, 'mt-16']}>Rechtliches</span>
         <div class="flex flex-wrap gap-x-32 gap-y-12">
-          {footerRechtliches.map((l) => <a href={l.href} class={linkKlasse}>{l.label}</a>)}
+          {footerRechtliches.map((l) =>
+            l.nochNicht ? <span class={bald}>{l.label}</span> : <a href={l.href} class={linkKlasse}>{l.label}</a>,
+          )}
         </div>
       </nav>
     </div>

@@ -11,7 +11,12 @@ import { faqs } from '../../data/startseite';
 
 <section class="bg-paper px-20 py-section-y-lg">
   <div class="mx-auto flex max-w-content flex-wrap items-start gap-spalten-faq">
-    <div class="sticky top-40 flex flex-[0.8] basis-280 flex-col items-start gap-20">
+    {/* Der Kopf läuft nur mit, solange er neben dem Akkordeon steht. Die
+        Spalten brechen bei rund 776px um; darunter würde sticky den Kopf
+        über das Akkordeon schieben. */}
+    <div
+      class="flex flex-[0.8] basis-280 flex-col items-start gap-20 min-[800px]:sticky min-[800px]:top-40"
+    >
       <span
         class="inline-block rounded-6 border border-line-strong px-9 py-4 font-mono text-12 tracking-mono text-ink-faint"
       >
@@ -23,7 +28,7 @@ import { faqs } from '../../data/startseite';
       <p class="m-0 max-w-340 text-17 leading-prose text-ink-soft">
         Steht Ihre Frage nicht dabei, rufen Sie an. Antwort kostet nichts.
       </p>
-      <Button href="#kontakt" variante="tinte" class="mt-6">
+      <Button href="/kontakt" variante="tinte" class="mt-6">
         <span aria-hidden="true">→</span>Frage stellen
       </Button>
     </div>

@@ -6,6 +6,8 @@
 export interface NavLink {
   label: string;
   href: string;
+  /** Seite existiert noch nicht – im Footer ausgegraut statt verlinkt */
+  nochNicht?: boolean;
 }
 
 /** Hauptnavigation – Header (statisch, sticky und Burger-Menü) */
@@ -15,9 +17,12 @@ export const hauptnavigation: NavLink[] = [
   { label: 'Mitarbeiter gewinnen', href: '/mitarbeiter-gewinnen' },
 ];
 
+/* Ziel aller Erstgespräch-Buttons. Die Vorlage verlinkt hier /erstgespraech;
+   diese Seite gibt es nicht, das Erstgespräch wird über die Kontaktseite
+   angefragt (Entscheidung Iwo). */
 export const erstgespraech: NavLink = {
   label: 'Kostenloses Erstgespräch',
-  href: '/erstgespraech',
+  href: '/kontakt',
 };
 
 /** Footer-Spalte „Menü" */
@@ -26,38 +31,38 @@ export const footerMenue: NavLink[] = [
   { label: 'Kunden gewinnen', href: '/kunden-gewinnen' },
   { label: 'Mitarbeiter gewinnen', href: '/mitarbeiter-gewinnen' },
   { label: 'Projekte', href: '/projekte' },
-  { label: 'Über uns', href: '/ueber-uns' },
-  { label: 'Kontakt', href: '#kontakt' },
+  { label: 'Über uns', href: '/ueber-uns', nochNicht: true },
+  { label: 'Kontakt', href: '/kontakt' },
 ];
 
 /** Footer-Spalte „Tools" */
 export const footerTools: NavLink[] = [
-  { label: 'Vakanzkostenrechner', href: '/vakanzkostenrechner' },
-  { label: 'Website-Check', href: '/website-check' },
-  { label: 'Sichtbarkeits-Check', href: '/sichtbarkeits-check' },
+  { label: 'Vakanzkostenrechner', href: '/vakanzkostenrechner', nochNicht: true },
+  { label: 'Website-Check', href: '/website-check', nochNicht: true },
+  { label: 'Sichtbarkeits-Check', href: '/sichtbarkeits-check', nochNicht: true },
 ];
 
 /** Footer-Spalte „Branchen" */
 export const footerBranchen: NavLink[] = [
-  { label: 'SHK & Heizungsbau', href: '/branchen/shk' },
-  { label: 'Elektrotechnik', href: '/branchen/elektro' },
-  { label: 'Maler & Lackierer', href: '/branchen/maler' },
-  { label: 'Schreiner & Tischler', href: '/branchen/schreiner' },
-  { label: 'Dachdecker', href: '/branchen/dachdecker' },
-  { label: 'Zimmerei & Holzbau', href: '/branchen/zimmerei' },
-  { label: 'Garten- & Landschaftsbau', href: '/branchen/garten-landschaftsbau' },
-  { label: 'Hoch- & Rohbau', href: '/branchen/bau' },
-  { label: 'Fliesen- & Bodenleger', href: '/branchen/fliesenleger' },
-  { label: 'Metall- & Schlosserbau', href: '/branchen/metallbau' },
-  { label: 'Photovoltaik & Solar', href: '/branchen/photovoltaik' },
+  { label: 'SHK & Heizungsbau', href: '/branchen/shk', nochNicht: true },
+  { label: 'Elektrotechnik', href: '/branchen/elektro', nochNicht: true },
+  { label: 'Maler & Lackierer', href: '/branchen/maler', nochNicht: true },
+  { label: 'Schreiner & Tischler', href: '/branchen/schreiner', nochNicht: true },
+  { label: 'Dachdecker', href: '/branchen/dachdecker', nochNicht: true },
+  { label: 'Zimmerei & Holzbau', href: '/branchen/zimmerei', nochNicht: true },
+  { label: 'Garten- & Landschaftsbau', href: '/branchen/garten-landschaftsbau', nochNicht: true },
+  { label: 'Hoch- & Rohbau', href: '/branchen/bau', nochNicht: true },
+  { label: 'Fliesen- & Bodenleger', href: '/branchen/fliesenleger', nochNicht: true },
+  { label: 'Metall- & Schlosserbau', href: '/branchen/metallbau', nochNicht: true },
+  { label: 'Photovoltaik & Solar', href: '/branchen/photovoltaik', nochNicht: true },
 ];
 
 /** Footer-Spalte „Rechtliches" */
 export const footerRechtliches: NavLink[] = [
   { label: 'Impressum', href: '/impressum' },
   { label: 'Datenschutz', href: '/datenschutz' },
-  { label: 'AGB', href: '/agb' },
-  { label: 'Cookie-Einstellungen', href: '/cookies' },
+  { label: 'AGB', href: '/agb', nochNicht: true },
+  { label: 'Cookie-Einstellungen', href: '/cookies', nochNicht: true },
 ];
 
 /* Die Vorlage verlinkt hier auf die nackten Portal-Startseiten

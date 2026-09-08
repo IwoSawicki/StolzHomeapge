@@ -3,6 +3,7 @@
    rechts die drei nummerierten Schritte.
    Vorlage: design/STARTSEITE.dc.html, data-screen-label="Zusammenarbeit" */
 import Button from '../Button.astro';
+import { erstgespraech } from '../../data/navigation';
 
 const schritte = [
   {
@@ -41,7 +42,7 @@ const schritte = [
         In einem kostenfreien Erstgespräch finden wir gemeinsam heraus, ob wir Ihre
         Herausforderung annehmen können!
       </p>
-      <Button href="/erstgespraech" variante="lime" class="mt-8">
+      <Button href={erstgespraech.href} variante="lime" class="mt-8">
         Jetzt Erstgespräch vereinbaren<span class="text-18" aria-hidden="true">→</span>
       </Button>
     </div>

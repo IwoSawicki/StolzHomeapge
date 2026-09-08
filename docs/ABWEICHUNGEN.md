@@ -364,7 +364,49 @@ Inhalte nicht doppelt gepflegt werden müssen:
 
 ---
 
-## 21. Noch offen aus der Vorlage selbst
+## 21. Änderungen auf Wunsch von Iwo
+
+- **Alle Erstgespräch-Buttons zeigen auf `/kontakt`.** Die Vorlage verlinkt
+  `/erstgespraech`; diese Seite gibt es nicht. Das Ziel steht jetzt an einer
+  Stelle in `src/data/navigation.ts`. Ebenso die CTAs unter den Bewertungen und
+  in der FAQ, die vorher auf den Anker `#kontakt` zeigten — der lief auf der
+  Projekte-Seite ins Leere, weil es dort keine Kontaktsektion gibt. Nur der
+  Button im Abschnitt „Der Einstieg" springt weiterhin zum Formular auf
+  derselben Seite (`#anfrage`).
+- **Footer-Links ohne Seite sind ausgegraut und nicht klickbar** statt ins Leere
+  zu führen: Über uns, die drei Tools, alle elf Branchen, AGB und
+  Cookie-Einstellungen. Gesteuert über `nochNicht: true` in
+  `src/data/navigation.ts` — Flag entfernen, sobald die Seite steht.
+- **Logo-Icon auf hellem Grund in Tinte statt Lime.** Die Vorlage nutzt dort
+  `logo-stolz-dark.svg` mit gelbem Icon; auf Weiß trägt das Gelb nicht.
+- **Beweisfall-Karte:** Innenabstand von festen 48px auf
+  `clamp(32px, 5vw, 48px)`, damit sie mobil denselben Rand hat wie die
+  Projektkarten daneben (32px). Ab 960px unverändert 48px.
+- **FAQ-Kopf läuft nur zweispaltig mit.** Die Vorlage setzt `position: sticky`
+  ohne Bedingung; sobald die Spalten umbrechen (unter rund 776px), schob sich
+  der Kopf über das Akkordeon. Jetzt erst ab 800px sticky.
+
+---
+
+## 22. Zwei URLs für dasselbe Gewerk
+
+Der Branchen-Slider und der Footer verlinken teils unterschiedlich:
+
+| Slider | Footer |
+| --- | --- |
+| `/branchen/galabau` | `/branchen/garten-landschaftsbau` |
+| `/branchen/zimmerer` | `/branchen/zimmerei` |
+
+Dazu kennt der Slider `/branchen/umzuege`, das der Footer nicht führt, und der
+Footer `/branchen/photovoltaik`, das im Slider fehlt. Beides steht so in der
+Vorlage.
+
+**[Rückfrage]** Welche Schreibweise gilt? Solange die Seiten fehlen, fällt es
+nicht auf — sobald sie gebaut werden, braucht es eine Entscheidung.
+
+---
+
+## 23. Noch offen aus der Vorlage selbst
 
 Aus `design/README.md`, „Offene Punkte" — im Nachbau stehen dort die
 Platzhalterflächen der Vorlage:
