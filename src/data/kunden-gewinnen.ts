@@ -24,8 +24,15 @@ export const systemSchritte = [
     hervorgehoben: false,
   },
   {
-    titel: 'Vorzeige-Webseite',
-    text: 'Ihre Projekte, Bewertungen und Erfahrung so gezeigt, dass auch der Mitentscheider keine Zweifel mehr hat. Mit Anfrageformular, Terminbuchung und automatischer Sofort-Antwort auf jede Anfrage.',
+    /* Hieß in der Vorlage „Vorzeige-Webseite". Der Schritt umfasst mehr als
+       die Seite — Google-Profil, Bewertungen, Bilder — und soll nicht so
+       wirken, als bauten wir nur Homepages (Entscheidung Iwo). „Auftritt"
+       ist zudem das Wort, das auf der Seite ohnehin schon steht
+       („Der komplette Auftritt aus einer Hand"). */
+    titel: 'Vorzeige-Auftritt',
+    /* Die „automatische Sofort-Antwort" stand auch hier — dieselbe Zusage,
+       dieselbe Streichung. */
+    text: 'Ihre Projekte, Bewertungen und Erfahrung so gezeigt, dass auch der Mitentscheider keine Zweifel mehr hat. Mit Anfrageformular und Terminbuchung.',
     merksatz: 'Zeigen statt behaupten.',
     hervorgehoben: true,
   },
@@ -53,8 +60,9 @@ export const leistungsumfang = [
       'Webseite, gebaut für Ihren Zielauftrag',
       'Echte Bilder von Ihrem Betrieb statt gekaufter Motive',
       'Anfrageformular und Terminbuchung',
-      'Automatische Sofort-Antwort auf jede Anfrage',
-      'Automatische Bewertungsanfrage nach abgeschlossenem Auftrag',
+      /* „Automatische Sofort-Antwort" und „Automatische Bewertungsanfrage"
+         sind gestrichen: die Leistungen bieten wir nicht an
+         (Entscheidung Iwo). */
       'Tracking ab dem ersten Tag: Sie sehen, woher Anfragen kommen',
     ],
   },

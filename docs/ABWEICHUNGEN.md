@@ -978,3 +978,57 @@ Bildkacheln weiter nach außen (bis leicht über die Inhaltsbreite hinaus),
 und die beiden Teamporträts durch die neuen Hero-Motive der Leistungsseiten
 ersetzt. Damit zeigen die Kacheln jetzt vier Projekte und zwei Aufnahmen von
 Drehtagen.
+
+---
+
+## 40. Footer: sechs Branchen, dazu eine Merkliste geplanter Landingpages
+
+**Branchen im Footer auf sechs gekürzt** — SHK, Elektrotechnik,
+Photovoltaik, Hoch- und Rohbau, Dachdecker, Maler. Ausgewählt nach
+Marktgröße und danach, wofür wir belegbar gearbeitet haben (DMK und HePa im
+Bau, NKN und HePa Solar bei Elektro und PV). Das vollständige Raster mit
+zwölf Gewerken bleibt auf der Startseite.
+
+**Neue Spalte „Leistungen vor Ort"** mit sechs geplanten Landingpages. Die
+Seiten gibt es noch nicht; die Einträge stehen ausgegraut da wie die
+übrigen offenen Seiten und dienen als sichtbare Merkliste (Wunsch von Iwo).
+
+Grundlage ist der Search-Console-Export vom 07.09.2026, letzte drei Monate:
+
+- 32 Klicks, alle auf Markensuchen („stolz marketing" und Varianten)
+- **460 Impressionen auf Nicht-Marken-Suchen — davon null Klicks**, weil die
+  Startseite dort auf Position 10 bis 16 steht
+
+| Begriff | Impressionen | Ø Position |
+| --- | --- | --- |
+| webdesign bensheim + Varianten | ~200 | 14,0 |
+| webdesign heppenheim | 63 | 7,3 |
+| seo (Bensheim, Hemsbach u. a.) | 35 | 10,3 |
+| webseitenpflege / -betreuung bensheim | 28 | 16,0 |
+| webdesign bergstraße | 27 | 10,5 |
+| online marketing bensheim | 17 | 14,1 |
+
+Bewusst **nicht** aufgenommen: „wordpress agentur bensheim" und „joomla
+agentur bensheim" (zusammen 44 Impressionen). Wir bauen weder mit WordPress
+noch mit Joomla — dafür zu ranken wäre eine Zusage, die wir nicht halten.
+
+---
+
+## 41. Kleinere Korrekturen auf Wunsch
+
+- **Glimmer auf den Leistungskarten.** Die beiden Knöpfe, die auf die
+  Leistungsseiten führen, haben jetzt denselben Lichtschimmer wie die
+  Hero-Knöpfe. Auf hellem Grund läuft er mit höherer Deckkraft (0,55 statt
+  0,22), sonst wäre er kaum zu sehen.
+- **„Vorzeige-Webseite" heißt jetzt „Vorzeige-Auftritt".** Der Schritt
+  umfasst mehr als die Seite — Google-Profil, Bewertungen, Bilder — und
+  soll nicht so wirken, als bauten wir nur Homepages. „Auftritt" ist zudem
+  das Wort, das auf der Seite ohnehin schon steht („Der komplette Auftritt
+  aus einer Hand"). Die Spaltenüberschrift „Webseite" im Leistungsumfang
+  bleibt vorerst: dort ist die Webseite tatsächlich der Gegenstand der
+  Aufzählung.
+- **Zwei Leistungen gestrichen**, weil sie nicht angeboten werden:
+  „Automatische Sofort-Antwort auf jede Anfrage" und „Automatische
+  Bewertungsanfrage nach abgeschlossenem Auftrag". Die Sofort-Antwort stand
+  an zwei Stellen — im Leistungsumfang und im Text von Schritt 2 —, beide
+  sind raus.

@@ -48,21 +48,44 @@ export const footerTools: NavLink[] = [
   { label: 'Sichtbarkeits-Check', href: '/sichtbarkeits-check', nochNicht: true },
 ];
 
-/** Footer-Spalte „Branchen" */
+/** Footer-Spalte „Branchen" — die sechs wichtigsten.
+    Ausgewählt nach Marktgröße und danach, wofür wir belegbar gearbeitet
+    haben: DMK und HePa im Bau, NKN und HePa Solar bei Elektro und PV.
+    Das vollständige Raster mit zwölf Gewerken steht auf der Startseite. */
 export const footerBranchen: NavLink[] = [
   { label: 'SHK & Heizungsbau', href: '/branchen/shk', nochNicht: true },
   { label: 'Elektrotechnik', href: '/branchen/elektro', nochNicht: true },
-  { label: 'Maler & Lackierer', href: '/branchen/maler', nochNicht: true },
-  { label: 'Schreiner & Tischler', href: '/branchen/schreiner', nochNicht: true },
-  { label: 'Dachdecker', href: '/branchen/dachdecker', nochNicht: true },
-  { label: 'Zimmerei & Holzbau', href: '/branchen/zimmerei', nochNicht: true },
-  { label: 'Garten- & Landschaftsbau', href: '/branchen/garten-landschaftsbau', nochNicht: true },
-  { label: 'Hoch- & Rohbau', href: '/branchen/bau', nochNicht: true },
-  { label: 'Fliesen- & Bodenleger', href: '/branchen/fliesenleger', nochNicht: true },
-  { label: 'Metall- & Schlosserbau', href: '/branchen/metallbau', nochNicht: true },
   { label: 'Photovoltaik & Solar', href: '/branchen/photovoltaik', nochNicht: true },
-  { label: 'Industrie- & Anlagenbau', href: '/branchen/industrie-anlagenbau', nochNicht: true },
-  { label: 'Produktion & Fertigung', href: '/branchen/produktion-fertigung', nochNicht: true },
+  { label: 'Hoch- & Rohbau', href: '/branchen/bau', nochNicht: true },
+  { label: 'Dachdecker', href: '/branchen/dachdecker', nochNicht: true },
+  { label: 'Maler & Lackierer', href: '/branchen/maler', nochNicht: true },
+];
+
+/** Footer-Spalte „Leistungen vor Ort" — geplante Landingpages.
+
+    Grundlage ist der Search-Console-Export vom 07.09.2026 (letzte drei
+    Monate): 460 Impressionen auf Nicht-Marken-Suchen, davon null Klicks,
+    weil die Startseite dort auf Position 10 bis 16 steht. Die sechs
+    Begriffe mit dem meisten Volumen beziehungsweise der besten
+    Ausgangsposition:
+
+      webdesign bensheim + Varianten   ~200 Impr.   Ø Position 14
+      webdesign heppenheim               63 Impr.   Ø Position  7,3
+      seo (Bensheim, Hemsbach u. a.)     35 Impr.   Ø Position 10,3
+      webseitenpflege / -betreuung       28 Impr.   Ø Position 16
+      webdesign bergstraße               27 Impr.   Ø Position 10,5
+      online marketing bensheim          17 Impr.   Ø Position 14
+
+    Die Seiten gibt es noch NICHT. Die Einträge stehen bewusst schon hier,
+    ausgegraut wie die übrigen offenen Seiten, als sichtbare Merkliste.
+    Sobald eine Seite steht: `nochNicht` entfernen. */
+export const footerStandorte: NavLink[] = [
+  { label: 'Webdesign Bensheim', href: '/webdesign-bensheim', nochNicht: true },
+  { label: 'Webdesign Heppenheim', href: '/webdesign-heppenheim', nochNicht: true },
+  { label: 'Webdesign Bergstraße', href: '/webdesign-bergstrasse', nochNicht: true },
+  { label: 'SEO Bensheim', href: '/seo-bensheim', nochNicht: true },
+  { label: 'Online-Marketing Bensheim', href: '/online-marketing-bensheim', nochNicht: true },
+  { label: 'Website-Betreuung Bensheim', href: '/website-betreuung-bensheim', nochNicht: true },
 ];
 
 /* Footer-Spalte „Rechtliches". AGB stehen bewusst nicht drin: es gibt

@@ -9,6 +9,7 @@ import {
   footerMenue,
   footerTools,
   footerBranchen,
+  footerStandorte,
   footerRechtliches,
   socialLinks,
   kontakt,
@@ -86,7 +87,7 @@ const jahr = 2026;
         </div>
       </nav>
 
-      <nav aria-label="Branchen und Rechtliches" class="flex flex-[2] basis-340 flex-col gap-18">
+      <nav aria-label="Branchen, Leistungen vor Ort und Rechtliches" class="flex flex-[2] basis-340 flex-col gap-18">
         <span class={spaltenUeberschrift}>Branchen</span>
         <div
           class="grid grid-cols-[repeat(auto-fit,minmax(min(170px,100%),1fr))] gap-x-32 gap-y-12"
@@ -97,6 +98,18 @@ const jahr = 2026;
             l.nochNicht ? <span class={bald}>{l.label}</span> : <a href={l.href} class={linkKlasse}>{l.label}</a>,
           )}
         </div>
+        <span class:list={[spaltenUeberschrift, 'mt-16']}>Leistungen vor Ort</span>
+        <div
+          class="grid grid-cols-[repeat(auto-fit,minmax(min(170px,100%),1fr))] gap-x-32 gap-y-12"
+        >
+          {/* Geplante Landingpages, noch nicht gebaut — stehen ausgegraut
+              als sichtbare Merkliste. Begründung der Auswahl in
+              src/data/navigation.ts. */}
+          {footerStandorte.map((l) =>
+            l.nochNicht ? <span class={bald}>{l.label}</span> : <a href={l.href} class={linkKlasse}>{l.label}</a>,
+          )}
+        </div>
+
         <span class:list={[spaltenUeberschrift, 'mt-16']}>Rechtliches</span>
         <div class="flex flex-wrap gap-x-32 gap-y-12">
           {footerRechtliches.map((l) =>
