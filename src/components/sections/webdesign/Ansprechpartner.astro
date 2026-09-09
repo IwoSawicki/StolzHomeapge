@@ -11,6 +11,23 @@ import { Image } from 'astro:assets';
 import Eyebrow from '../../Eyebrow.astro';
 import { kontakt } from '../../../data/navigation';
 import portraitIwo from '../../../assets/portraits/iwo-sawicki.jpg';
+
+/* Der Text ist überschreibbar, damit zwei Landingpages nicht denselben
+   Absatz tragen. Auf /webdesign-bensheim geht es um Erreichbarkeit, auf
+   /webdesign-bergstrasse um den Standort — beides wahr, aber nicht
+   dasselbe. */
+interface Props {
+  titelVorn?: string;
+  titelMarker?: string;
+  text?: string;
+  rolle?: string;
+}
+const {
+  titelVorn = 'Sie sprechen mit der Person, die auch ',
+  titelMarker = 'arbeitet',
+  text = 'Kein Kundenberater, der weiterreicht, und kein Ticketsystem. Wofür Ihr Betrieb steht, wie die Seite aufgebaut wird und woran wir messen, ob sie etwas bringt — das besprechen Sie mit mir. Die Umsetzung macht unser Team: Webseite, Kamera, Schnitt und bezahlte Werbung. Ihr Ansprechpartner bleibt derselbe, von der ersten Frage bis nach dem Livegang.',
+  rolle = 'Inhaber · Stolz Marketing, Bensheim',
+} = Astro.props;
 ---
 
 <section class="bg-paper px-page-x py-section-y-sm">
@@ -35,21 +52,15 @@ import portraitIwo from '../../../assets/portraits/iwo-sawicki.jpg';
     >
       <Eyebrow variante="warm">Ihr Ansprechpartner</Eyebrow>
       <h2 class="m-0 text-h2-about leading-tightest font-bold tracking-system text-ink">
-        Sie sprechen mit der Person, die auch <span
+        {titelVorn}<span
           class="marker-flach font-display text-h2-system font-semibold tracking-system italic"
-          >arbeitet</span
+          >{titelMarker}</span
         >
       </h2>
-      <p class="m-0 max-w-660 text-18 leading-prose text-ink-body">
-        Kein Kundenberater, der weiterreicht, und kein Ticketsystem. Wofür Ihr Betrieb
-        steht, wie die Seite aufgebaut wird und woran wir messen, ob sie etwas bringt —
-        das besprechen Sie mit mir. Die Umsetzung macht unser Team: Webseite, Kamera,
-        Schnitt und bezahlte Werbung. Ihr Ansprechpartner bleibt derselbe, von der
-        ersten Frage bis nach dem Livegang.
-      </p>
+      <p class="m-0 max-w-660 text-18 leading-prose text-ink-body">{text}</p>
       <div class="mt-2 flex flex-col gap-3">
         <span class="text-26 font-bold tracking-name text-ink">Iwo Sawicki</span>
-        <span class="text-15 text-ink-label">Inhaber · Stolz Marketing, Bensheim</span>
+        <span class="text-15 text-ink-label">{rolle}</span>
       </div>
       <a
         href={kontakt.telefonLink}

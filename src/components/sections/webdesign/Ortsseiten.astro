@@ -1,0 +1,69 @@
+---
+/* „Karte und Plätze darunter": der Abschnitt, den es nur auf dieser Seite
+   gibt und der sie inhaltlich von /webdesign-bensheim trennt.
+
+   Er beantwortet die Frage, die Iwo selbst gestellt hat: reicht nicht ein
+   starkes Google-Profil, um in der Nachbarstadt gefunden zu werden? Die
+   ehrliche Antwort ist zweigeteilt — für die Karte ja, für die
+   Suchergebnisse darunter nein. Genau das erklärt der Block, und genau
+   daraus folgt, warum Ortsseiten trotzdem sinnvoll sind.
+
+   Bewusst keine Behauptung über Positionen, sondern nur die Beschreibung
+   zweier Flächen auf derselben Suchergebnisseite. */
+import Eyebrow from '../../Eyebrow.astro';
+import { ortsseiten } from '../../../data/webdesign-bergstrasse';
+---
+
+<section class="bg-forest px-page-x py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-48">
+    <div class="flex max-w-760 flex-col items-start gap-20">
+      <Eyebrow variante="lime">Region statt Ort</Eyebrow>
+      <h2
+        class="m-0 text-h2-sub-lg leading-tightest font-bold tracking-system text-paper"
+      >
+        {/* Der zusammengesetzte Begriff ist als ein Wort 291px breit; auf
+            320px breiten Geräten stehen nur 280px zur Verfügung. Weiches
+            Trennzeichen an echter Trennstelle statt break-word. */}
+        Eine Such­ergebnis­seite, <span
+          class="font-display font-semibold tracking-none italic">zwei Flächen</span
+        >
+      </h2>
+      <p class="m-0 max-w-660 text-19 leading-body text-mint">
+        Wer die ganze Bergstraße bedienen will, muss beide bespielen. Die meisten
+        Betriebe haben nur eine davon — und wissen nicht, dass die andere existiert.
+      </p>
+    </div>
+
+    <ol
+      class="m-0 grid list-none grid-cols-1 gap-16 p-0 btn:grid-cols-3"
+    >
+      {
+        ortsseiten.punkte.map((punkt, i) => (
+          <li class="flex flex-col gap-12 rounded-16 border border-edge bg-forest-well px-28 py-26">
+            <span class="font-mono text-13 font-bold text-lime">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span class="text-20 leading-card font-bold tracking-heading text-paper">
+              {punkt.titel}
+            </span>
+            <p class="m-0 text-16 leading-body text-mint">{punkt.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="flex max-w-860 flex-col items-start gap-16 border-l-2 border-lime pl-24">
+      <p class="m-0 text-18 leading-prose text-cream">{ortsseiten.beleg}</p>
+      {/* Verweis nach unten auf die Ortsseite. Eine Regionsseite, die nicht
+          auf ihre Orte verlinkt, ist eine Sackgasse — und genau das
+          unterscheidet ein sauberes Regions-Ort-Gefüge von einem
+          Doorway-Netz. */}
+      <a
+        href="/webdesign-bensheim"
+        class="text-17 font-medium text-cream underline decoration-1 underline-offset-4 transition-colors hover:text-lime"
+      >
+        Webdesign in Bensheim →
+      </a>
+    </div>
+  </div>
+</section>

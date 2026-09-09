@@ -1,0 +1,96 @@
+---
+/* Die Projekte als Stationen entlang der Bergstraße, von Nord nach Süd.
+
+   Die Bergstraße ist eine Straße — die alte Route von Darmstadt bis
+   Wiesloch. Deshalb hier keine Landkarte, sondern eine Strecke: eine
+   senkrechte Linie mit Haltepunkten. Das zeigt in einem Bild, was der
+   Text sonst behaupten müsste, nämlich dass die Projekte über die ganze
+   Achse verteilt liegen und nicht alle in einem Ort.
+
+   Der Odenwald steht als eigene Gruppe darunter und nicht auf der Linie:
+   Reichelsheim liegt hinter dem Bergrücken, in einem anderen Kreis. Wer
+   hier wohnt, merkt den Unterschied sofort.
+
+   Die Linie ist rein dekorativ (aria-hidden), die Stationen sind eine
+   normale Liste — für Vorlesegeräte bleibt es eine Aufzählung von Orten
+   und Projekten. */
+import Eyebrow from '../../Eyebrow.astro';
+import { stationen, odenwald } from '../../../data/webdesign-bergstrasse';
+---
+
+<section class="bg-paper px-page-x py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-56">
+    <div class="flex max-w-720 flex-col items-start gap-18">
+      <Eyebrow variante="hell">Unsere Projekte</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        Von Darmstadt bis <span
+          class="font-display font-semibold tracking-none italic">Weinheim</span
+        >
+      </h2>
+      <p class="m-0 max-w-620 text-18 leading-quote text-ink-muted">
+        Die Bergstraße ist keine Stadt, sondern eine Strecke. Unsere Projekte liegen
+        über ihre ganze Länge verteilt — und im Odenwald dahinter.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-40">
+      {/* --- Die Achse ------------------------------------------------- */}
+      <ol class="relative m-0 flex list-none flex-col gap-0 p-0">
+        {/* Durchgehende Linie hinter den Punkten */}
+        <span
+          class="pointer-events-none absolute top-12 bottom-12 left-7 w-2 bg-line"
+          aria-hidden="true"></span>
+
+        {/* Auf schmalen Geräten stehen Ort und Projekt untereinander:
+            nebeneinander blieben bei 320px rund 100px pro Spalte, in die
+            „Nieder-Ramstädter Weinmacher" nicht hineinpasst. */}
+        {
+          stationen.map((station) => (
+            <li class="relative flex flex-col gap-2 py-14 pl-32 btn:flex-row btn:items-start btn:gap-20">
+              <span
+                class="absolute top-[22px] left-0 h-16 w-16 rounded-full border-[3px] border-paper bg-ink"
+                aria-hidden="true"
+              />
+              <div class="flex flex-col gap-1 btn:min-w-[min(160px,100%)] btn:basis-180">
+                <span class="text-19 leading-card font-bold tracking-heading text-ink">
+                  {station.ort}
+                </span>
+                {station.zusatz && (
+                  <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+                    {station.zusatz}
+                  </span>
+                )}
+              </div>
+              <div class="flex min-w-0 flex-1 flex-col gap-1 btn:basis-300">
+                <span class="text-17 leading-card font-bold text-ink">
+                  {station.kunde}
+                </span>
+                <span class="text-16 leading-body text-ink-muted">{station.was}</span>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      {/* --- Odenwald, bewusst abgesetzt -------------------------------- */}
+      <div class="flex flex-col gap-16 rounded-20 border border-line bg-paper-warm px-28 py-26">
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+          Und hinter dem Bergrücken
+        </span>
+        <ul class="m-0 flex list-none flex-col gap-14 p-0">
+          {
+            odenwald.map((eintrag) => (
+              <li class="flex flex-wrap items-baseline gap-x-20 gap-y-2">
+                <span class="min-w-140 text-17 font-bold tracking-heading text-ink">
+                  {eintrag.ort}
+                </span>
+                <span class="text-17 font-bold text-ink">{eintrag.kunde}</span>
+                <span class="text-16 leading-body text-ink-muted">{eintrag.was}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

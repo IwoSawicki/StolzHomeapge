@@ -90,7 +90,7 @@ export const footerBranchen: NavLink[] = branchen
     ausgegraut wie die übrigen offenen Seiten, als sichtbare Merkliste.
     Sobald eine Seite steht: `nochNicht` entfernen. */
 export const footerStandorte: NavLink[] = [
-  { label: 'Webdesign Bergstraße', href: '/webdesign-bergstrasse', nochNicht: true },
+  { label: 'Webdesign Bergstraße', href: '/webdesign-bergstrasse' },
   /* gebaut — steht als einzige der sechs schon als Link da */
   { label: 'Webdesign Bensheim', href: '/webdesign-bensheim' },
   { label: 'Webdesign Heppenheim', href: '/webdesign-heppenheim', nochNicht: true },

@@ -1,0 +1,42 @@
+---
+/* „Was eine Agentur aus der Region anders macht": drei Punkte, die alle
+   aus der Entfernung folgen und nicht aus einer Behauptung über Qualität.
+
+   Das ist der Kern der Seite, wie Iwo sie sich vorgestellt hat — regional
+   verankert statt austauschbar. Damit das nicht zur Floskel wird, steht
+   hier nichts, was eine Agentur aus Frankfurt genauso behaupten könnte:
+   zum Dreh kommen, die Orte kennen, erreichbar sein. */
+import Eyebrow from '../../Eyebrow.astro';
+import { verankerung } from '../../../data/webdesign-bergstrasse';
+---
+
+<section class="bg-paper-soft px-page-x py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-48">
+    <div class="flex max-w-760 flex-col items-start gap-18">
+      <Eyebrow variante="hell">Aus der Region</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        Nah genug, um <span
+          class="font-display font-semibold tracking-none italic">vorbeizukommen</span
+        >
+      </h2>
+      <p class="m-0 max-w-660 text-18 leading-quote text-ink-muted">
+        Wir sitzen im Odenwald und arbeiten auf der Bergstraße. Das ist kein
+        Standortmarketing, sondern der Grund, warum manche Dinge bei uns
+        selbstverständlich sind, die anderswo extra kosten.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-16 btn:grid-cols-3">
+      {
+        verankerung.map((punkt) => (
+          <div class="flex flex-col gap-12 rounded-20 border border-line bg-paper px-28 py-26">
+            <span class="text-21 leading-card font-bold tracking-heading text-ink">
+              {punkt.titel}
+            </span>
+            <p class="m-0 text-17 leading-body text-ink-quiet">{punkt.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,126 @@
+---
+/* Landingpage „Webdesign Bergstraße".
+
+   Liegt eine Ebene über /webdesign-bensheim und beantwortet eine andere
+   Frage: nicht „gibt es hier bei mir jemanden?", sondern „wer deckt die
+   Region ab?". Daraus folgt der Aufbau —
+
+     1. Hero        regional verankert statt austauschbar
+     2. Strecke     die Projekte über die ganze Achse, das ist der Beweis
+     3. Verankerung was aus der Nähe folgt: Dreh vor Ort, Orte kennen, erreichbar
+     4. Zwei Flächen Karte vs. organische Ergebnisse — der Abschnitt, den es
+                    nur hier gibt, samt Verweis auf die Ortsseite Bensheim
+     5. Umfang      was am Ende bei ihm liegt
+     6. Person
+     7. FAQ         regionale Fragen, andere als auf der Bensheim-Seite
+     8. Anfrage
+
+   Kein Textbaustein von /webdesign-bensheim ist übernommen. Das ist keine
+   Kosmetik: zwei Seiten, die sich nur im Ortsnamen unterscheiden, wertet
+   Google als Doorway und kann beide abwerten.
+
+   Zielbegriff ist „webdesign bergstraße" (27 Impressionen, Ø Position
+   10,5 im Search-Console-Export). Das Volumen ist klein — der Wert dieser
+   Seite liegt darin, dass sie das Dach für die Ortsseiten bildet und einen
+   Umzug übersteht, weil sie an keiner Stadt hängt. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import HeroLeistung from '../components/sections/HeroLeistung.astro';
+import heroBild from '../assets/leistungen/mitarbeitergewinnung.jpg';
+import Streckenkarte from '../components/sections/webdesign/Streckenkarte.astro';
+import Verankerung from '../components/sections/webdesign/Verankerung.astro';
+import Ortsseiten from '../components/sections/webdesign/Ortsseiten.astro';
+import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
+import Ansprechpartner from '../components/sections/webdesign/Ansprechpartner.astro';
+import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
+import Abschluss from '../components/sections/leistung/Abschluss.astro';
+import type { Feld } from '../components/Web3Formular.astro';
+import { faqs, leistungsumfang, abschluss } from '../data/webdesign-bergstrasse';
+
+const anfrageFelder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  {
+    name: 'telefon',
+    label: 'Telefonnummer',
+    type: 'tel',
+    pflicht: true,
+    breit: true,
+    autocomplete: 'tel',
+  },
+  { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
+  { name: 'ort', label: 'Ort', breit: true, platzhalter: 'z. B. Heppenheim' },
+  { name: 'nachricht', label: 'Worum es geht', mehrzeilig: true },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.frage,
+    acceptedAnswer: { '@type': 'Answer', text: f.antwort },
+  })),
+};
+---
+
+<BaseLayout
+  title="Webdesign Bergstraße – Agentur aus der Region | Stolz Marketing"
+  description="Webdesign für Betriebe an der Bergstraße — von Darmstadt bis Weinheim. Wir kommen für Fotos und Videos in Ihren Betrieb und sorgen dafür, dass man Sie findet."
+>
+  <HeroLeistung
+    eyebrow="Stolz Marketing"
+    titelVorn="Ihre "
+    titelAkzent="Webdesign Agentur"
+    titelHinten=" an der Bergstraße"
+    lead="Von Darmstadt bis Weinheim, plus der Odenwald dahinter. Wir bauen Ihre Webseite, kommen für Fotos und Videos in Ihren Betrieb und sorgen dafür, dass Ihre Kunden Sie in Ihren Orten bei Google finden."
+    bild={heroBild}
+    bildAlt="Handwerker auf einer Baustelle in der Region Bergstraße"
+    ctaZiel="#anfrage"
+    vertrauenText="Über 50 Projekte seit 2022"
+    titelBreite="max-w-760"
+  />
+
+  <main>
+    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+    <Streckenkarte />
+
+    <Verankerung />
+
+    <Ortsseiten />
+
+    <Leistungsumfang
+      eyebrow="Leistungsumfang"
+      titelVorn="Was am Ende "
+      titelAkzent="bei Ihnen liegt"
+      lead="Kein Abo auf eine Leistung, die niemand nachzählen kann. Das hier ist die Liste."
+      bloecke={leistungsumfang}
+    />
+
+    {/* Eigener Text statt des Standards von /webdesign-bensheim: zwei
+        Landingpages dürfen nicht denselben Absatz tragen. Inhaltlich trägt
+        er hier den Standort — Odenwald im Rücken, Bergstraße vor der Tür. */}
+    <Ansprechpartner
+      titelVorn="Ich sitze im Odenwald und arbeite auf der "
+      titelMarker="Bergstraße"
+      text="Meine Anschrift ist Reichelsheim, gearbeitet wird zwischen Darmstadt und Weinheim. Das ist kein Zufall, sondern der Radius, in dem ich morgens bei einem Kunden auf der Baustelle stehen und mittags beim nächsten am Tisch sitzen kann. Wofür Ihr Betrieb steht, welche Orte sich für Sie lohnen und woran wir messen, ob es funktioniert — das besprechen Sie mit mir, nicht mit einem Kundenberater."
+      rolle="Inhaber · Stolz Marketing"
+    />
+
+    <FaqLeistung eintraege={faqs} id="faq-bergstrasse" />
+
+    <Abschluss
+      titelVorn={abschluss.titelVorn}
+      titelMarker={abschluss.titelMarker}
+      titelMitte={abschluss.titelMitte}
+      titelKursiv={abschluss.titelKursiv}
+      titelHinten={abschluss.titelHinten}
+      lead={abschluss.lead}
+      felder={anfrageFelder}
+      betreff="Anfrage über /webdesign-bergstrasse"
+      ortZeile="Bergstraße und Odenwald"
+    />
+  </main>
+
+  <Footer />
+</BaseLayout>
