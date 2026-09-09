@@ -7,14 +7,17 @@
    Branchenseiten gibt es noch nicht. Sobald sie stehen, wird aus dem <li>
    wieder ein <a> mit Pfeilkreis. */
 import Eyebrow from '../Eyebrow.astro';
-import { branchen, SICHTBARE_BRANCHEN } from '../../data/startseite';
+import { branchen, KERNBRANCHEN } from '../../data/startseite';
 
-/* Auf der Startseite stehen sechs Gewerke — Auswahl und Reihenfolge von
-   Iwo. Sechs lesen sich als Fokus, zwölf lasen sich wie „wir nehmen
-   jeden". Die übrigen bleiben in den Daten; zum Erweitern reicht es,
-   SICHTBARE_BRANCHEN in src/data/startseite.ts zu erhöhen — der Footer
-   zieht automatisch mit. */
-const sichtbar = branchen.slice(0, SICHTBARE_BRANCHEN);
+/* Ab 720px stehen alle zwölf Gewerke da, darunter nur die ersten sechs.
+   Auf dem Handy liegt jede Kachel über die volle Breite, zwölf davon
+   wären ein sehr langer Block; auf dem Desktop kostet die vollständige
+   Liste dagegen nur eine Rasterzeile mehr und zeigt die ganze Breite
+   dessen, womit wir arbeiten.
+
+   Ausgeblendet wird per CSS, nicht beim Rendern: so steht die volle
+   Liste im HTML und damit auch für Suchmaschinen und Vorlesegeräte
+   bereit, unabhängig davon, mit welchem Gerät gerade gelesen wird. */
 ---
 
 <section class="bg-paper px-20 py-section-y-branchen">
@@ -31,22 +34,28 @@ const sichtbar = branchen.slice(0, SICHTBARE_BRANCHEN);
     </div>
 
     {/* Die Spaltenzahl ergibt sich intrinsisch: eine Spur ist mindestens
-        340px breit, passen zwei davon nicht nebeneinander, wird die Liste
-        einspaltig. Bei sechs Kacheln ergibt das 3+3 auf dem Desktop,
-        2+2+2 auf dem Tablet und eine Spalte auf dem Handy — nirgends
-        eine angebrochene Reihe. Auf dem Handy heißt das volle Breite;
-        zwei Spalten ergäben dort Kacheln von rund 150px, in die
-        „Landschaftsbau" oder „Renovierung" nicht hineinpassen.
+        240px breit, passen zwei davon nicht nebeneinander, wird die
+        Liste einspaltig. Zwölf Kacheln ergeben so vier Spalten auf dem
+        Desktop und drei auf dem Tablet, jeweils ohne angebrochene Reihe;
+        auf dem Handy eine Spalte über die volle Breite. Zwei Spalten
+        ergäben dort Kacheln von rund 150px, in die „Landschaftsbau"
+        oder „Renovierung" nicht hineinpassen.
 
         Kein overflow-wrap: break-word mehr. Es hat Wörter ohne weiches
         Trennzeichen an beliebiger Stelle und ohne Trennstrich zerlegt
-        („Dachdec/ker", „Sanierun/g"). Getrennt wird jetzt ausschließlich
-        an den Stellen, die in den Daten als U+00AD hinterlegt sind —
-        dort erscheint auch ein Trennstrich. */}
-    <ul class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(340px,100%),1fr))] gap-16 p-0">
+        („Dachdec/ker", „Sanierun/g"). Umbrochen wird jetzt nur an
+        Wortgrenzen; die Kacheln sind überall breit genug dafür. Wird
+        später ein längerer Name aufgenommen, bekommt er ein weiches
+        Trennzeichen (U+00AD) an einer echten Trennstelle. */}
+    <ul class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(240px,100%),1fr))] gap-16 p-0">
       {
-        sichtbar.map((branche) => (
-          <li class="flex flex-col gap-4 rounded-16 border border-line bg-paper-warm px-24 py-22 btn:px-30 btn:py-30">
+        branchen.map((branche, i) => (
+          <li
+            class:list={[
+              'flex flex-col gap-4 rounded-16 border border-line bg-paper-warm px-24 py-22',
+              i >= KERNBRANCHEN && 'hidden btn:flex',
+            ]}
+          >
             <span class="text-22 leading-card font-bold tracking-heading text-ink hyphens-auto">
               {branche.name}
             </span>

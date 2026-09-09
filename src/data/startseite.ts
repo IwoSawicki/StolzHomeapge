@@ -165,16 +165,16 @@ export interface Branche {
 
    Die beiden letzten Einträge stehen bewusst für den Meistermagneten:
    Industrie sucht keine Kunden über Google, aber sehr wohl Leute. */
-/** Wie viele Gewerke auf der Startseite und im Footer erscheinen.
-    Beide Listen greifen darauf zu, damit sie nicht auseinanderlaufen. */
-export const SICHTBARE_BRANCHEN = 6;
+/** Die ersten sechs Einträge sind die Kernbranchen: nur sie erscheinen
+    auf dem Handy und im Footer. Auf breiten Bildschirmen ist Platz für
+    alle zwölf. */
+export const KERNBRANCHEN = 6;
 
 export const branchen: Branche[] = [
-  /* Reihenfolge der ersten sechs von Iwo vorgegeben — das sind die
-     Gewerke, die auf der Startseite gezeigt werden (siehe
-     SICHTBARE_BRANCHEN oben). Die übrigen stehen
-     bewusst weiter hier: sie beschreiben ebenfalls Zielkunden, und die
-     Zahl lässt sich damit ohne Datenpflege wieder erhöhen. */
+  /* Reihenfolge der ersten sechs von Iwo vorgegeben. Die letzten beiden
+     davon sind bewusst die Industriebranchen: sie tragen das
+     Mitarbeiterthema, und genau dort sitzen die Betriebe mit dem
+     größten Personalbedarf. */
   {
     name: 'Sanierung & Renovierung',
     sub: 'Altbau, Bad, Wasserschaden',
@@ -195,6 +195,20 @@ export const branchen: Branche[] = [
     platzhalter: 'Bild SHK',
   },
   {
+    name: 'Industrie- und Anlagenbau',
+    sub: 'Montage, Wartung, Instandhaltung',
+    href: '/branchen/industrie-anlagenbau',
+    platzhalter: 'Bild Industrie- und Anlagenbau',
+  },
+  {
+    name: 'Produktion & Fertigung',
+    sub: 'Industriebetriebe und Zulieferer',
+    href: '/branchen/produktion-fertigung',
+    platzhalter: 'Bild Produktion und Fertigung',
+  },
+
+  /* --- ab hier nur auf breiten Bildschirmen sichtbar ----------------- */
+  {
     name: 'Fenster & Türen',
     sub: 'Einbau, Austausch, Rollläden',
     href: '/branchen/fenster-tueren',
@@ -206,8 +220,6 @@ export const branchen: Branche[] = [
     href: '/branchen/galabau',
     platzhalter: 'Bild GaLaBau',
   },
-
-  /* --- ab hier nicht auf der Startseite sichtbar --------------------- */
   {
     name: 'Dachdecker',
     sub: 'Dach, Abdichtung, Spengler',
@@ -233,18 +245,6 @@ export const branchen: Branche[] = [
     sub: 'Umbau, Anbau, Neubau',
     href: '/branchen/bau',
     platzhalter: 'Bild Bauunternehmen',
-  },
-  {
-    name: 'Industrie- und Anlagenbau',
-    sub: 'Montage, Wartung, Instandhaltung',
-    href: '/branchen/industrie-anlagenbau',
-    platzhalter: 'Bild Industrie- und Anlagenbau',
-  },
-  {
-    name: 'Produktion & Fertigung',
-    sub: 'Industriebetriebe und Zulieferer',
-    href: '/branchen/produktion-fertigung',
-    platzhalter: 'Bild Produktion und Fertigung',
   },
 ];
 

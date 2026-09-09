@@ -3,7 +3,7 @@
    die es noch nicht gibt, sind in design/README.md unter „Offene Punkte"
    gelistet — die Links bleiben trotzdem wie in der Vorlage. */
 
-import { branchen, SICHTBARE_BRANCHEN } from './startseite';
+import { branchen, KERNBRANCHEN } from './startseite';
 
 export interface NavLink {
   label: string;
@@ -50,16 +50,16 @@ export const footerTools: NavLink[] = [
   { label: 'Sichtbarkeits-Check', href: '/sichtbarkeits-check', nochNicht: true },
 ];
 
-/** Footer-Spalte „Branchen" — dieselben sechs Gewerke wie im Raster auf
-    der Startseite, in derselben Reihenfolge und Schreibweise. Bewusst
-    abgeleitet statt abgetippt: zwei gepflegte Listen laufen sonst
-    auseinander, und der Besucher sieht im Footer andere Gewerke als in
-    der Sektion darüber.
+/** Footer-Spalte „Branchen" — die sechs Kernbranchen, dieselben, die auf
+    dem Handy im Raster stehen, in derselben Reihenfolge und
+    Schreibweise. Bewusst abgeleitet statt abgetippt: zwei gepflegte
+    Listen laufen sonst auseinander, und der Besucher sieht im Footer
+    andere Gewerke als in der Sektion darüber.
 
     Die Ziele sind die geplanten Branchenseiten; die gibt es noch nicht,
     deshalb stehen die Einträge ausgegraut da (`nochNicht`). */
 export const footerBranchen: NavLink[] = branchen
-  .slice(0, SICHTBARE_BRANCHEN)
+  .slice(0, KERNBRANCHEN)
   .map((branche) => ({ label: branche.name, href: branche.href, nochNicht: true }));
 
 /** Footer-Spalte „Leistungen vor Ort" — geplante Landingpages.
