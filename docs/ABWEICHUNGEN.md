@@ -994,12 +994,7 @@ Die Wörter stehen so bereits in den Aufnahmekriterien auf
 `/kunden-gewinnen` („Sanierung, Renovierung, Innenausbau, Bad, Maler,
 Boden, Garten, Schreiner").
 
-**[Rückfrage] Das Raster auf der Startseite kennt diese Kategorie noch
-nicht.** Dort stehen zwölf Gewerke in drei vollen Reihen, „Sanierung &
-Renovierung" ist nicht darunter — obwohl zwei der vier gezeigten Projekte
-(HePa Baut, Jhoch2) genau dort hineingehören. Entweder verdrängt sie ein
-Gewerk (Fliesenleger oder Zimmerer wären meine Kandidaten) oder das Raster
-bekommt eine dreizehnte Kachel und damit eine angebrochene Reihe.
+Das Raster auf der Startseite ist mitgezogen — siehe Punkt 44.
 
 **Neue Spalte „Leistungen vor Ort"** mit sechs geplanten Landingpages. Die
 Seiten gibt es noch nicht; die Einträge stehen ausgegraut da wie die
@@ -1106,3 +1101,55 @@ ausdrücklich gewünscht, der Wortlaut ist unverändert.
 `/kunden-gewinnen` „Bergstraße und Rhein-Neckar". Auf
 `/mitarbeiter-gewinnen` gilt weiterhin die Regel, dass kein Ortsname auf der
 Seite steht. Das Bauteil hat dafür die optionale Eigenschaft `ortZeile`.
+
+---
+
+## 44. Branchenraster kritisch durchgesehen
+
+Iwo war mit der Liste nicht zufrieden und hat „Bauunternehmen" in Frage
+gestellt: Die Branche laufe über Ausschreibungen und sei gerade schwach.
+Der Einwand trifft — und er deckt sich mit den eigenen Aufnahmekriterien auf
+`/kunden-gewinnen`, die genau das ausschließen: „Industrie und
+Ausschreibungsgeschäft: Dort läuft der Einkauf nicht über die Suche."
+
+Die Liste ist deshalb gegen dieselben Kriterien geprüft worden, die dort
+stehen: Privatkunde entscheidet allein oder zu zweit, Auftragswert etwa
+3.000 bis 30.000 Euro, wird lokal gesucht — dazu Fachkräftemangel, damit
+auch der Meistermagnet greift.
+
+**Heraus:**
+
+| Gewerk | Grund |
+| --- | --- |
+| Fliesenleger | geht in „Sanierung und Renovierung" auf (Bad, Boden) |
+| Zimmerer | kommt meist über Architekt oder Bauunternehmen, kaum lokale Suche |
+| Metallbau | überwiegend B2B und Ausschreibung — genau der ausgeschlossene Fall |
+
+**Herein:**
+
+| Gewerk | Grund |
+| --- | --- |
+| Sanierung und Renovierung | HePa Baut und Jhoch2 sitzen genau hier; steht wörtlich in den Aufnahmekriterien |
+| Fenster und Türen | Privatkunde, hoher Auftragswert, wird lokal stark gesucht, Fachkräftemangel |
+| Fassade und Dämmung | Privatkunde, hoher Auftragswert, durch die Energievorgaben dauerhaft nachgefragt |
+
+**Umbenannt:** „Bauunternehmen" trägt jetzt den Untertitel „Umbau, Anbau,
+Neubau" statt „Roh- und Hochbau". Damit zeigt der Eintrag aufs
+Privatkundengeschäft — und das ist bei DMK Bau auch der Fall: Der
+Projekttext auf der Startseite nennt ausdrücklich „Anfragen von Inhabern".
+Das Ausschreibungsgeschäft wäre über Suche ohnehin nicht zu gewinnen.
+
+**Bewusst geblieben:** „Industrie- und Anlagenbau" und „Produktion und
+Fertigung". Für die Kundengewinnung passen sie nicht — für den
+Meistermagneten sehr wohl: Industrie sucht keine Kunden über Google, aber
+sehr wohl Leute.
+
+Es bleiben zwölf Kacheln, also drei volle Reihen. Footer und Raster
+verwenden jetzt dieselben Kategorien und Adressen.
+
+**[Rückfrage] Die Einleitung sagt „Das sind die Gewerke, mit denen wir
+arbeiten."** Das liest sich als Beleg vorhandener Kunden. Tatsächlich ist
+die Liste eine Zielmarkt-Angabe — für „Fenster und Türen" oder „Fassade und
+Dämmung" gibt es (noch) keinen Kunden. Entweder bleibt es dabei, oder der
+Satz wird zu etwas wie „Auf diese Gewerke sind wir eingestellt." Der
+Wortlaut stammt aus der Vorlage, deshalb frage ich lieber nach.
