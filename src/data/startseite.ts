@@ -85,6 +85,10 @@ export const projekte: Projekt[] = [
 ];
 
 export interface Branche {
+  /* Lange Komposita tragen weiche Trennstriche (U+00AD): auf dem Handy
+     stehen zwei Kacheln nebeneinander, „Landschaftsbau" passt dort sonst
+     nicht in die Zeile und schob die Seite seitlich hinaus. Das Zeichen ist
+     unsichtbar, solange das Wort in die Zeile passt. */
   name: string;
   sub: string;
   href: string;
@@ -108,7 +112,7 @@ export const branchen: Branche[] = [
   { name: 'SHK', sub: 'Sanitär, Heizung, Klima', href: '/branchen/shk', platzhalter: 'Bild SHK' },
   {
     name: 'Elektro',
-    sub: 'Elektroinstallation und PV',
+    sub: 'Elektro­installation und PV',
     href: '/branchen/elektro',
     platzhalter: 'Bild Elektro',
   },
@@ -119,7 +123,7 @@ export const branchen: Branche[] = [
     platzhalter: 'Bild Dachdecker',
   },
   {
-    name: 'Sanierung und Renovierung',
+    name: 'Sanierung und Reno­vierung',
     sub: 'Altbau, Bad, Wasserschaden',
     href: '/branchen/sanierung-renovierung',
     platzhalter: 'Bild Sanierung',
@@ -139,12 +143,12 @@ export const branchen: Branche[] = [
   },
   {
     name: 'Fassade und Dämmung',
-    sub: 'Stuckateur und Wärmedämmung',
+    sub: 'Stuckateur und Wärme­dämmung',
     href: '/branchen/fassade-daemmung',
     platzhalter: 'Bild Fassade',
   },
   {
-    name: 'Garten- und Landschaftsbau',
+    name: 'Garten- und Land­schafts­bau',
     sub: 'Außenanlagen und Pflege',
     href: '/branchen/galabau',
     platzhalter: 'Bild GaLaBau',
@@ -152,20 +156,20 @@ export const branchen: Branche[] = [
   {
     /* Untertitel zeigt bewusst aufs Privatkundengeschäft: über
        Ausschreibungen läuft nichts, was mit Suche zu gewinnen wäre. */
-    name: 'Bauunternehmen',
+    name: 'Bau­unter­nehmen',
     sub: 'Umbau, Anbau, Neubau',
     href: '/branchen/bau',
     platzhalter: 'Bild Bauunternehmen',
   },
   {
-    name: 'Industrie- und Anlagenbau',
-    sub: 'Montage, Wartung, Instandhaltung',
+    name: 'Industrie- und Anlagen­bau',
+    sub: 'Montage, Wartung, Instand­haltung',
     href: '/branchen/industrie-anlagenbau',
     platzhalter: 'Bild Industrie- und Anlagenbau',
   },
   {
     name: 'Produktion und Fertigung',
-    sub: 'Industriebetriebe und Zulieferer',
+    sub: 'Industrie­betriebe und Zulieferer',
     href: '/branchen/produktion-fertigung',
     platzhalter: 'Bild Produktion und Fertigung',
   },

@@ -1200,3 +1200,24 @@ trotzdem ein klickbarer Link ankommt.
 Gegengeprüft mit abgefangenem Absenden: Eingabe „stolz-marketing.de" ist
 gültig, an Web3Forms geht „https://stolz-marketing.de", die Bestätigung
 erscheint.
+
+---
+
+## 48. Fehler behoben: Startseite ließ sich seitlich schieben
+
+Auf dem Handy war die Startseite um 19px seitlich verschiebbar. Ursache
+war das Branchenraster: Es steht dort zweispaltig, eine Kachel ist rund
+167px breit, und lange Komposita wie „Landschaftsbau", „Bauunternehmen"
+oder „Elektroinstallation" passen nicht in die Zeile.
+
+**Behoben** über weiche Trennstriche (U+00AD) in den betroffenen Namen und
+Untertiteln, dazu `hyphens-auto` und `overflow-wrap: break-word` als
+Netz. Das Zeichen ist unsichtbar, solange das Wort in die Zeile passt.
+
+Der Fehler bestand von Anfang an — meine früheren Prüfungen haben ihn als
+„7px, kommt vom abgeschnittenen Marquee" abgetan. Das war falsch: die
+Seite ließ sich tatsächlich schieben. Der Test prüft jetzt zusätzlich, ob
+sich das Dokument wirklich seitlich scrollen lässt, statt nur `scrollWidth`
+mit `clientWidth` zu vergleichen.
+
+Ergebnis: **alle acht Seiten, Desktop und Handy, ohne seitlichen Überlauf.**

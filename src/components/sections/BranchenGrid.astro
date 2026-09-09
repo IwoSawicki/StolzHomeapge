@@ -25,16 +25,22 @@ import { branchen } from '../../data/startseite';
 
     {/* Bleibt auch mobil zweispaltig — dasselbe Muster wie das Team-Raster
         der Vorlage, sonst wird die Liste auf dem Handy sehr lang. */}
+    {/* Lange Komposita wie „Landschaftsbau" passen bei zwei Spalten auf dem
+        Handy nicht in die Kachel und schoben die Seite seitlich hinaus.
+        hyphens-auto trennt sie (das html-Element trägt lang="de"),
+        break-word fängt den Rest ab. */}
     <ul
       class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(240px,calc(50%-8px)),1fr))] gap-16 p-0"
     >
       {
         branchen.map((branche) => (
           <li class="flex flex-col gap-4 rounded-16 border border-line bg-paper-warm px-24 py-22">
-            <span class="text-22 leading-card font-bold tracking-heading text-ink">
+            <span class="text-22 leading-card font-bold tracking-heading text-ink hyphens-auto [overflow-wrap:break-word]">
               {branche.name}
             </span>
-            <span class="text-15 leading-caption text-ink-muted">{branche.sub}</span>
+            <span class="text-15 leading-caption text-ink-muted hyphens-auto [overflow-wrap:break-word]">
+              {branche.sub}
+            </span>
           </li>
         ))
       }
