@@ -1,11 +1,36 @@
 ---
 /* Hero der Startseite: dunkles Band mit statischer Navigation, Eyebrow,
-   H1, Lead, zwei Sekundärbuttons mit Lichtschimmer und der 16:9-Videofläche,
+   H1, Lead, zwei Sekundärbuttons mit Lichtschimmer und der Videofläche,
    die per negativem margin-bottom in die nächste Sektion hineinragt.
-   Vorlage: design/STARTSEITE.dc.html, "Hero zentriert" */
+   Vorlage: design/STARTSEITE.dc.html, "Hero zentriert"
+
+   Das Showreel ist dasselbe wie im bisherigen Auftritt (Branch main):
+   Hochformat 9:16, 22 Sekunden, mit Ton. In der Kachel läuft es stumm
+   und endlos, ein Klick öffnet es groß mit Ton — Overlay-Logik ebenfalls
+   von dort übernommen.
+
+   Format der Kachel: unter 1040px steht das Video hochkant und füllt die
+   Kachel; ab 1040px bleibt es beim Querformat der Vorlage, das Video steht
+   darin mittig und der Rest ist eine unscharfe Vergrößerung des Standbilds,
+   damit neben dem Hochformat keine tote Fläche entsteht. */
+import { getImage } from 'astro:assets';
 import Header from '../Header.astro';
 import Eyebrow from '../Eyebrow.astro';
+import showreel from '../../assets/startseite/stolz-showreel.mp4';
+import posterBild from '../../assets/startseite/hero-videopreview.png';
+
+/* Standbild als optimiertes WebP: liegt sofort da, während das Video lädt
+   (kein schwarzes Flackern) und ist zugleich der unscharfe Hintergrund. */
+const poster = await getImage({
+  src: posterBild,
+  format: 'webp',
+  width: 720,
+  quality: 62,
+});
 ---
+
+{/* Standbild früh laden – es ist das LCP-Element der Startseite */}
+<link rel="preload" as="image" href={poster.src} type="image/webp" fetchpriority="high" />
 
 <div class="bg-forest">
   <Header />
@@ -57,25 +82,148 @@ import Eyebrow from '../Eyebrow.astro';
       </a>
     </div>
 
-    {/*
-      Videofläche. Das Video fehlt noch (design/README.md, Offene Punkte Nr. 1),
-      deshalb steht hier die Platzhalterfläche der Vorlage.
-    */}
-    <div
-      class="relative z-1 mt-32 mb-hero-overlap flex aspect-video w-[min(1160px,100%)] flex-col items-center justify-center gap-20 rounded-16 border border-edge box-border"
-      style="background: repeating-linear-gradient(45deg, var(--color-forest-card) 0 14px, var(--color-forest-card-alt) 14px 28px)"
-    >
+    {/* --- Videofläche ------------------------------------------------- */}
+    <div class="relative z-1 mt-32 mb-hero-overlap w-full max-w-440 nav:w-[min(1160px,100%)] nav:max-w-none">
       <div
-        class="flex h-88 w-88 items-center justify-center rounded-full bg-lime shadow-glow-play"
+        class="group relative box-border aspect-[9/16] max-h-[80vh] w-full overflow-hidden rounded-16 border border-edge bg-forest-card nav:aspect-video nav:max-h-none"
       >
+        {/* Unscharfe Vergrößerung des Standbilds – nur im Querformat sichtbar */}
         <div
-          class="ml-6 h-0 w-0 border-y-14 border-l-22 border-y-transparent border-l-forest-deep"
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 hidden scale-110 bg-cover bg-center opacity-40 blur-[40px] nav:block"
+          style={`background-image: url(${poster.src})`}
         >
         </div>
+
+        <video
+          class="relative h-full w-full object-cover nav:object-contain"
+          src={showreel}
+          poster={poster.src}
+          fetchpriority="high"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          data-hero-video
+          aria-label="Showreel von Stolz Marketing, läuft stumm"></video>
+
+        {/* Die ganze Kachel öffnet das Showreel groß mit Ton */}
+        <button
+          type="button"
+          data-showreel-open
+          class="absolute inset-0 flex cursor-pointer items-center justify-center border-none bg-transparent p-0"
+          aria-label="Showreel mit Ton in groß ansehen"
+        >
+          <span
+            class="flex h-88 w-88 items-center justify-center rounded-full bg-lime shadow-glow-play transition-transform duration-200 group-hover:scale-105"
+          >
+            <span
+              aria-hidden="true"
+              class="ml-6 h-0 w-0 border-y-14 border-l-22 border-y-transparent border-l-forest-deep"
+            ></span>
+          </span>
+        </button>
       </div>
-      <span class="max-w-360 text-center font-mono text-13 leading-body text-mint">
-        PLATZHALTER · VIDEO<br />Iwo stellt den Betrieb vor, 60–90 Sekunden
-      </span>
     </div>
   </section>
 </div>
+
+{/* --- Overlay: Showreel groß, Seite dahinter geblurrt ----------------- */}
+<div
+  data-showreel-modal
+  role="dialog"
+  aria-modal="true"
+  aria-label="Showreel in groß"
+  class="fixed inset-0 z-100 hidden items-center justify-center bg-forest-deep/80 p-20 backdrop-blur-lg btn:p-40"
+>
+  <button
+    type="button"
+    data-showreel-close
+    aria-label="Video schließen"
+    class="absolute top-20 right-20 flex h-44 w-44 cursor-pointer items-center justify-center rounded-full border-none bg-paper text-ink transition-transform duration-200 hover:scale-105"
+  >
+    <svg
+      class="h-20 w-20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      aria-hidden="true"
+    >
+      <path d="M6 6l12 12M18 6 6 18"></path>
+    </svg>
+  </button>
+  {/* width/height geben das Seitenverhältnis schon vor dem Laden vor, damit
+      der Rahmen beim Öffnen nicht von 300×150 aufspringt. */}
+  <video
+    data-showreel-video
+    class="h-auto w-auto max-h-[85vh] max-w-full rounded-20 bg-forest-deep"
+    src={showreel}
+    width="800"
+    height="1422"
+    controls
+    playsinline
+    preload="none"></video>
+</div>
+
+<script>
+  // Showreel-Overlay: öffnet das Video groß und mit Ton von vorn;
+  // schließen über X, Klick auf den Hintergrund oder Escape.
+  const modal = document.querySelector<HTMLElement>('[data-showreel-modal]');
+  const video = document.querySelector<HTMLVideoElement>('[data-showreel-video]');
+  const oeffnen = document.querySelector<HTMLElement>('[data-showreel-open]');
+  const schliessen = document.querySelector<HTMLElement>('[data-showreel-close]');
+  let zurueckZu: HTMLElement | null = null;
+
+  function oeffneModal() {
+    if (!modal || !video) return;
+    zurueckZu = document.activeElement as HTMLElement;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    video.currentTime = 0;
+    video.muted = false;
+    video.volume = 1;
+    void video.play();
+    schliessen?.focus();
+  }
+
+  function schliesseModal() {
+    if (!modal || !video) return;
+    video.pause();
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+    zurueckZu?.focus();
+  }
+
+  oeffnen?.addEventListener('click', oeffneModal);
+  schliessen?.addEventListener('click', schliesseModal);
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) schliesseModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) schliesseModal();
+  });
+
+  // Autoplay-Anstoß für die Kachel: mobile Browser starten Videos trotz
+  // autoplay/muted nicht immer (iOS im Stromsparmodus). Wer „weniger
+  // Bewegung" eingestellt hat, bekommt das Standbild statt der Schleife.
+  const kachel = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  if (kachel) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      kachel.removeAttribute('autoplay');
+      kachel.pause();
+    } else {
+      const anspielen = () => {
+        if (kachel.paused) kachel.play().catch(() => {});
+      };
+      anspielen();
+      ['touchstart', 'scroll', 'click'].forEach((ev) =>
+        window.addEventListener(ev, anspielen, { once: true, passive: true }),
+      );
+    }
+  }
+</script>

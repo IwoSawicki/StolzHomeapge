@@ -441,8 +441,7 @@ Erstgespräch und listet die Hauptnavigation.
 Aus `design/README.md`, „Offene Punkte" — im Nachbau stehen dort die
 Platzhalterflächen der Vorlage:
 
-1. **Hero-Video** fehlt — 16:9-Fläche mit Play-Kreis und Beschriftung
-   „PLATZHALTER · VIDEO / Iwo stellt den Betrieb vor, 60–90 Sekunden"
+1. ~~**Hero-Video** fehlt~~ — erledigt, siehe Punkt 28
 2. **Bilder der 11 Branchen-Kacheln** fehlen — schraffierte Flächen mit
    „Bild SHK" usw.
 3. **Porträt Moritz** fehlt
@@ -585,3 +584,48 @@ Sektion 3 und 4 sind auf beiden Leistungsseiten baugleich. Sie liegen jetzt als
 FAQ-Sektion ist mit umgezogen. Gegengeprüft: das gebaute Markup von
 `/kunden-gewinnen` ist danach bis auf die Reihenfolge zweier CSS-Klassen
 identisch, alle anderen Seiten sind unverändert.
+
+---
+
+## 28. Hero-Video: Showreel im Hochformat
+
+Die Vorlage sieht im Hero eine 16:9-Fläche mit Play-Kreis vor und die
+Beschriftung „PLATZHALTER · VIDEO / Iwo stellt den Betrieb vor, 60–90
+Sekunden". Ein solches Querformat-Video gibt es nicht. Stattdessen läuft
+jetzt dasselbe Showreel wie im bisherigen Auftritt (Branch `main`) —
+800×1422, also 9:16, 22 Sekunden, mit Ton.
+
+**Umgesetzt** (Entscheidung Iwo):
+
+- **Unter 1040px** steht die Kachel hochkant (`aspect-[9/16]`, höchstens
+  440px breit und 80vh hoch) und das Video füllt sie aus. Das Hochformat
+  kommt damit voll zur Geltung.
+- **Ab 1040px** bleibt es beim Querformat der Vorlage. Das Video steht darin
+  mittig in voller Höhe, links und rechts liegt eine unscharfe, abgedunkelte
+  Vergrößerung des Standbilds — sonst stünde neben dem Hochformat tote
+  Fläche. Kein zweites Video-Element, nur das Standbild als Hintergrund.
+- Der Play-Kreis der Vorlage (88px, Lime, Glow) bleibt und ist jetzt der
+  Auslöser: **die ganze Kachel** öffnet das Showreel groß.
+
+**Verhalten aus `main` übernommen:** In der Kachel läuft das Video stumm,
+automatisch und in Schleife. Ein Klick öffnet es im Overlay über der
+geblurrten Seite und spielt es **mit Ton von vorn**. Schließen über das X,
+Klick auf den Hintergrund oder Escape.
+
+Ergänzt gegenüber `main`:
+
+- Beim Öffnen wandert der Fokus auf den Schließen-Knopf und beim Schließen
+  zurück auf die Kachel.
+- Wer „weniger Bewegung" eingestellt hat (`prefers-reduced-motion`), bekommt
+  das Standbild statt der Endlosschleife. Das Overlay funktioniert weiter.
+- Das Overlay-Video trägt `width`/`height`, damit der Rahmen beim Öffnen
+  nicht kurz von 300×150 aufspringt.
+
+**Ladeverhalten:** Das Standbild wird als WebP ausgeliefert (49 KB statt
+2,1 MB PNG) und per `preload` vorgezogen — es ist das LCP-Element der
+Startseite. Die Videodatei ist 6,2 MB groß; sie lädt wie auf `main` mit
+`preload="auto"`.
+
+**[Rückfrage]** Falls die 6,2 MB auf dem Handy zu viel sind, kann ich eine
+kleinere Fassung für schmale Bildschirme ausliefern — dafür bräuchte ich
+einmal `ffmpeg` im Build oder eine zweite, vorab komprimierte Datei.
