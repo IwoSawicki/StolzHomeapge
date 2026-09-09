@@ -983,11 +983,19 @@ Drehtagen.
 
 ## 40. Footer: sechs Branchen, dazu eine Merkliste geplanter Landingpages
 
-**Branchen im Footer auf sechs gekürzt** — SHK, Elektrotechnik,
-Photovoltaik, Hoch- und Rohbau, Dachdecker, Maler. Ausgewählt nach
-Marktgröße und danach, wofür wir belegbar gearbeitet haben (DMK und HePa im
-Bau, NKN und HePa Solar bei Elektro und PV). Das vollständige Raster mit
-zwölf Gewerken bleibt auf der Startseite.
+**Branchen im Footer auf sechs gekürzt** (Auswahl Iwo): Bauunternehmen,
+Elektriker, SHK, Maler, Fliesenleger, Produktion & Fertigung.
+Bezeichnungen wie im Raster auf der Startseite, damit beide Listen dieselbe
+Sprache sprechen. Das vollständige Raster mit zwölf Gewerken bleibt dort.
+
+**[Rückfrage]** „Bauunternehmen" trifft DMK Bau, aber nicht HePa Baut —
+deren Geschäft sind Altbau- und Badsanierung, Renovierung und
+Wasserschaden. Ein eigener Eintrag **„Sanierung & Renovierung"** würde die
+genauer abholen und deckt sich mit den Aufnahmekriterien auf
+`/kunden-gewinnen`, die genau diese Wörter nennen („Sanierung, Renovierung,
+Innenausbau, Bad, Maler, Boden, Garten, Schreiner"). Er müsste einen der
+sechs verdrängen — mein Vorschlag wäre Fliesenleger, weil Bad und Boden
+darin ohnehin aufgehen.
 
 **Neue Spalte „Leistungen vor Ort"** mit sechs geplanten Landingpages. Die
 Seiten gibt es noch nicht; die Einträge stehen ausgegraut da wie die
@@ -1011,6 +1019,14 @@ Grundlage ist der Search-Console-Export vom 07.09.2026, letzte drei Monate:
 Bewusst **nicht** aufgenommen: „wordpress agentur bensheim" und „joomla
 agentur bensheim" (zusammen 44 Impressionen). Wir bauen weder mit WordPress
 noch mit Joomla — dafür zu ranken wäre eine Zusage, die wir nicht halten.
+
+**Reihenfolge mit der Region zuerst.** Iwo zieht möglicherweise in einigen
+Monaten um. Ortsseiten überstehen das problemlos — ortsgebunden ist das
+Google-Unternehmensprofil, nicht die Webseite —, aber eine Regionsseite
+trägt die Ortsseiten und altert nicht mit. Die SEO-Seite steht ebenfalls
+regional, weil sich das Volumen dort auf Bensheim **und** Hemsbach
+verteilt; „Online-Marketing" und „Website-Betreuung" bleiben in Bensheim,
+dort liegt das gesamte gemessene Volumen.
 
 ---
 

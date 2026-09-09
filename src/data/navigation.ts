@@ -48,17 +48,16 @@ export const footerTools: NavLink[] = [
   { label: 'Sichtbarkeits-Check', href: '/sichtbarkeits-check', nochNicht: true },
 ];
 
-/** Footer-Spalte „Branchen" — die sechs wichtigsten.
-    Ausgewählt nach Marktgröße und danach, wofür wir belegbar gearbeitet
-    haben: DMK und HePa im Bau, NKN und HePa Solar bei Elektro und PV.
-    Das vollständige Raster mit zwölf Gewerken steht auf der Startseite. */
+/** Footer-Spalte „Branchen" — die sechs wichtigsten (Auswahl Iwo).
+    Bezeichnungen wie im Raster auf der Startseite, damit beide Listen
+    dieselbe Sprache sprechen. */
 export const footerBranchen: NavLink[] = [
-  { label: 'SHK & Heizungsbau', href: '/branchen/shk', nochNicht: true },
-  { label: 'Elektrotechnik', href: '/branchen/elektro', nochNicht: true },
-  { label: 'Photovoltaik & Solar', href: '/branchen/photovoltaik', nochNicht: true },
-  { label: 'Hoch- & Rohbau', href: '/branchen/bau', nochNicht: true },
-  { label: 'Dachdecker', href: '/branchen/dachdecker', nochNicht: true },
-  { label: 'Maler & Lackierer', href: '/branchen/maler', nochNicht: true },
+  { label: 'Bauunternehmen', href: '/branchen/bau', nochNicht: true },
+  { label: 'Elektriker', href: '/branchen/elektro', nochNicht: true },
+  { label: 'SHK', href: '/branchen/shk', nochNicht: true },
+  { label: 'Maler', href: '/branchen/maler', nochNicht: true },
+  { label: 'Fliesenleger', href: '/branchen/fliesenleger', nochNicht: true },
+  { label: 'Produktion & Fertigung', href: '/branchen/produktion-fertigung', nochNicht: true },
 ];
 
 /** Footer-Spalte „Leistungen vor Ort" — geplante Landingpages.
@@ -76,14 +75,23 @@ export const footerBranchen: NavLink[] = [
       webdesign bergstraße               27 Impr.   Ø Position 10,5
       online marketing bensheim          17 Impr.   Ø Position 14
 
+    Reihenfolge bewusst mit der Region zuerst: Iwo zieht möglicherweise in
+    ein paar Monaten um. Ortsseiten überstehen einen Umzug zwar problemlos —
+    ortsgebunden ist das Google-Unternehmensprofil, nicht die Webseite —,
+    aber eine Regionsseite trägt die Ortsseiten und altert nicht mit. Die
+    SEO-Seite steht ebenfalls regional, weil sich das Volumen dort auf
+    Bensheim UND Hemsbach verteilt; „Online-Marketing" und
+    „Website-Betreuung" bleiben in Bensheim, dort liegt das gesamte
+    gemessene Volumen.
+
     Die Seiten gibt es noch NICHT. Die Einträge stehen bewusst schon hier,
     ausgegraut wie die übrigen offenen Seiten, als sichtbare Merkliste.
     Sobald eine Seite steht: `nochNicht` entfernen. */
 export const footerStandorte: NavLink[] = [
+  { label: 'Webdesign Bergstraße', href: '/webdesign-bergstrasse', nochNicht: true },
   { label: 'Webdesign Bensheim', href: '/webdesign-bensheim', nochNicht: true },
   { label: 'Webdesign Heppenheim', href: '/webdesign-heppenheim', nochNicht: true },
-  { label: 'Webdesign Bergstraße', href: '/webdesign-bergstrasse', nochNicht: true },
-  { label: 'SEO Bensheim', href: '/seo-bensheim', nochNicht: true },
+  { label: 'SEO Bergstraße', href: '/seo-bergstrasse', nochNicht: true },
   { label: 'Online-Marketing Bensheim', href: '/online-marketing-bensheim', nochNicht: true },
   { label: 'Website-Betreuung Bensheim', href: '/website-betreuung-bensheim', nochNicht: true },
 ];
