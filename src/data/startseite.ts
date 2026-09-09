@@ -169,7 +169,7 @@ export const branchen: Branche[] = [
   { name: 'SHK', sub: 'Sanitär, Heizung, Klima', href: '/branchen/shk', platzhalter: 'Bild SHK' },
   {
     name: 'Elektro',
-    sub: 'Elektro­installation und PV',
+    sub: 'Elektroinstallation und PV',
     href: '/branchen/elektro',
     platzhalter: 'Bild Elektro',
   },
@@ -180,7 +180,7 @@ export const branchen: Branche[] = [
     platzhalter: 'Bild Dachdecker',
   },
   {
-    name: 'Sanierung und Reno­vierung',
+    name: 'Sanierung und Renovierung',
     sub: 'Altbau, Bad, Wasserschaden',
     href: '/branchen/sanierung-renovierung',
     platzhalter: 'Bild Sanierung',
@@ -200,12 +200,12 @@ export const branchen: Branche[] = [
   },
   {
     name: 'Fassade und Dämmung',
-    sub: 'Stuckateur und Wärme­dämmung',
+    sub: 'Stuckateur und Wärmedämmung',
     href: '/branchen/fassade-daemmung',
     platzhalter: 'Bild Fassade',
   },
   {
-    name: 'Garten- und Land­schafts­bau',
+    name: 'Garten- und Landschaftsbau',
     sub: 'Außenanlagen und Pflege',
     href: '/branchen/galabau',
     platzhalter: 'Bild GaLaBau',
@@ -213,20 +213,20 @@ export const branchen: Branche[] = [
   {
     /* Untertitel zeigt bewusst aufs Privatkundengeschäft: über
        Ausschreibungen läuft nichts, was mit Suche zu gewinnen wäre. */
-    name: 'Bau­unter­nehmen',
+    name: 'Bauunternehmen',
     sub: 'Umbau, Anbau, Neubau',
     href: '/branchen/bau',
     platzhalter: 'Bild Bauunternehmen',
   },
   {
-    name: 'Industrie- und Anlagen­bau',
-    sub: 'Montage, Wartung, Instand­haltung',
+    name: 'Industrie- und Anlagenbau',
+    sub: 'Montage, Wartung, Instandhaltung',
     href: '/branchen/industrie-anlagenbau',
     platzhalter: 'Bild Industrie- und Anlagenbau',
   },
   {
     name: 'Produktion und Fertigung',
-    sub: 'Industrie­betriebe und Zulieferer',
+    sub: 'Industriebetriebe und Zulieferer',
     href: '/branchen/produktion-fertigung',
     platzhalter: 'Bild Produktion und Fertigung',
   },

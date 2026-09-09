@@ -33,8 +33,11 @@ import Bewerbungsliste from '../illustrationen/Bewerbungsliste.astro';
       auf.
     </p>
 
+    {/* min(320px, 100%) statt 320px: auf einem 320px breiten Gerät bleiben
+        nach dem Seitenrand nur 280px übrig — eine harte Untergrenze von
+        320px hätte die Seite dort seitlich verschiebbar gemacht. */}
     <div
-      class="mt-32 grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-24"
+      class="mt-32 grid w-full grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-24"
     >
       <div
         class="flex flex-col items-center gap-16 rounded-16 bg-paper-grey p-24 text-center btn:gap-20 btn:p-40"

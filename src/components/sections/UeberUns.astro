@@ -33,8 +33,12 @@ const portraits = import.meta.glob<{ default: ImageMetadata }>(
         />
       </div>
 
+      {/* basis-552 = die frühere Rechnung „basis-440 + 2x p-panel" mit
+          box-content, nur ohne box-content: der Innenabstand zählt jetzt
+          in die Breite hinein. Sonst ragte das Panel auf 320px breiten
+          Geräten über den Rand hinaus. Desktop bleibt unverändert. */}
       <div
-        class="box-content flex flex-[2] basis-440 flex-col items-start justify-center gap-22 rounded-20 bg-paper-warm p-panel"
+        class="flex flex-[2] basis-552 flex-col items-start justify-center gap-22 rounded-20 bg-paper-warm p-panel"
       >
         <Eyebrow variante="warm">Über uns</Eyebrow>
         <h2
@@ -42,7 +46,7 @@ const portraits = import.meta.glob<{ default: ImageMetadata }>(
         >
           Ihr <span
             class="marker-flach font-display text-h2-system font-semibold tracking-system italic"
-            >Ansprechpartner</span
+            >Ansprech­partner</span
           >
         </h2>
         <p class="m-0 max-w-660 text-18 leading-prose text-ink-body">

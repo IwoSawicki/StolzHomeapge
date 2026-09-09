@@ -212,7 +212,7 @@ const fett = (text: string) =>
             <div class="flex flex-col gap-24">
               {projekt.leistungsseiten.map((seite) => (
                 <article class="flex flex-wrap items-start gap-x-40 gap-y-24 rounded-20 border border-line bg-paper p-card-x">
-                  <div class="min-w-280 flex-1 basis-380">
+                  <div class="min-w-[min(280px,100%)] flex-1 basis-380">
                     <BrowserRahmen domain={seite.url.replace(/^https?:\/\//, '')} radius="r12">
                       <Image
                         src={bild('hepa', seite.bild)}
@@ -225,7 +225,7 @@ const fett = (text: string) =>
                       />
                     </BrowserRahmen>
                   </div>
-                  <div class="flex min-w-280 flex-1 basis-380 flex-col items-start gap-14">
+                  <div class="flex min-w-[min(280px,100%)] flex-1 basis-380 flex-col items-start gap-14">
                     <h3 class="m-0 text-23 leading-card font-bold tracking-heading text-ink">
                       {seite.name}
                     </h3>
@@ -279,7 +279,7 @@ const fett = (text: string) =>
       projekt.stadtStruktur && (
         <section class="px-20 py-section-y-md">
           <div class="mx-auto flex max-w-content flex-wrap items-start gap-x-64 gap-y-32">
-            <div class="flex min-w-280 flex-1 basis-380 flex-col items-start gap-16">
+            <div class="flex min-w-[min(280px,100%)] flex-1 basis-380 flex-col items-start gap-16">
               <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
                 In jeder Stadt <span class="font-display font-semibold tracking-none italic">im Umkreis</span>
               </h2>
@@ -298,7 +298,7 @@ const fett = (text: string) =>
                 )}
               </div>
             </div>
-            <div class="min-w-280 flex-1 basis-380 rounded-20 border border-line bg-paper-soft px-card-x py-card-y">
+            <div class="min-w-[min(280px,100%)] flex-1 basis-380 rounded-20 border border-line bg-paper-soft px-card-x py-card-y">
               <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
                 So sehen die Seitentitel aus
               </span>

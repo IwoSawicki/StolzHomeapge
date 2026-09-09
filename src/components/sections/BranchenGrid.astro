@@ -23,22 +23,25 @@ import { branchen } from '../../data/startseite';
       </p>
     </div>
 
-    {/* Bleibt auch mobil zweispaltig — dasselbe Muster wie das Team-Raster
-        der Vorlage, sonst wird die Liste auf dem Handy sehr lang. */}
-    {/* Lange Komposita wie „Landschaftsbau" passen bei zwei Spalten auf dem
-        Handy nicht in die Kachel und schoben die Seite seitlich hinaus.
-        hyphens-auto trennt sie (das html-Element trägt lang="de"),
-        break-word fängt den Rest ab. */}
-    <ul
-      class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(240px,calc(50%-8px)),1fr))] gap-16 p-0"
-    >
+    {/* Die Spaltenzahl ergibt sich intrinsisch: eine Spur ist mindestens
+        240px breit, passen zwei davon nicht nebeneinander, wird die Liste
+        einspaltig. Auf dem Handy heißt das eine Spalte über die volle
+        Breite — zwei Spalten ergäben dort Kacheln von rund 150px, in die
+        „Landschaftsbau" oder „Renovierung" nicht hineinpassen.
+
+        Kein overflow-wrap: break-word mehr. Es hat Wörter ohne weiches
+        Trennzeichen an beliebiger Stelle und ohne Trennstrich zerlegt
+        („Dachdec/ker", „Sanierun/g"). Getrennt wird jetzt ausschließlich
+        an den Stellen, die in den Daten als U+00AD hinterlegt sind —
+        dort erscheint auch ein Trennstrich. */}
+    <ul class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(240px,100%),1fr))] gap-16 p-0">
       {
         branchen.map((branche) => (
           <li class="flex flex-col gap-4 rounded-16 border border-line bg-paper-warm px-24 py-22">
-            <span class="text-22 leading-card font-bold tracking-heading text-ink hyphens-auto [overflow-wrap:break-word]">
+            <span class="text-22 leading-card font-bold tracking-heading text-ink hyphens-auto">
               {branche.name}
             </span>
-            <span class="text-15 leading-caption text-ink-muted hyphens-auto [overflow-wrap:break-word]">
+            <span class="text-15 leading-caption text-ink-muted hyphens-auto">
               {branche.sub}
             </span>
           </li>
