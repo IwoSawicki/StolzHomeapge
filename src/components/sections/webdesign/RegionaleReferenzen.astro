@@ -1,55 +1,87 @@
 ---
-/* Drei Projekte aus der Region, direkt unter dem Hero.
+/* Drei Projekte aus der Nachbarschaft, direkt unter dem Hero.
 
    Bewusst so früh: wer über eine Google-Suche kommt, vergleicht gerade
    mehrere Agenturen und will Belege sehen, bevor er Erklärungen liest.
-   Regionale Namen wirken dabei stärker als jede Behauptung — „Zehner
-   Immobilien aus Bensheim" beantwortet die stille Frage „arbeiten die
-   überhaupt hier?" in einer Zeile. */
+   Deshalb dieselbe Kartenoptik wie auf /projekte — dunkle Karte, Screenshot
+   im Browser-Rahmen —, nur dreispaltig statt zweispaltig, weil hier genau
+   drei stehen.
+
+   Der Ort steht an erster Stelle in der Zeile über dem Namen. Das
+   beantwortet die stille Frage „arbeiten die überhaupt hier?" schon beim
+   Überfliegen, ohne dass jemand den Text lesen muss. Fehlt der Ort in den
+   Daten, steht dort nur die Branche — lieber unvollständig als geraten. */
+import { Image } from 'astro:assets';
 import Eyebrow from '../../Eyebrow.astro';
+import BrowserRahmen from '../../BrowserRahmen.astro';
 import { regionaleProjekte } from '../../../data/webdesign-bensheim';
+
+const bilder = import.meta.glob<{ default: ImageMetadata }>(
+  '../../../assets/projekte/*.{png,jpg,webp}',
+  { eager: true },
+);
+const bild = (datei: string) => bilder[`../../../assets/projekte/${datei}`]!.default;
+
+/* „Projekt ansehen" nur, wo es wirklich eine Unterseite gibt. Die beiden
+   anderen führen auf die Übersicht und heißen deshalb auch so. */
+const linkText = (href: string) =>
+  href.startsWith('/projekte/') ? 'Projekt ansehen →' : 'Zu den Projekten →';
 ---
 
 <section class="bg-paper px-page-x py-section-y-lg">
   <div class="mx-auto flex max-w-content flex-col gap-40">
     <div class="flex max-w-720 flex-col items-start gap-18">
-      <Eyebrow variante="hell">Aus der Region</Eyebrow>
-      <h2
-        class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink"
-      >
-        Betriebe, die uns <span
-          class="font-display font-semibold tracking-none italic">hier kennen</span
+      <Eyebrow variante="hell">Aus der Nachbarschaft</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        Projekte aus Bensheim und <span
+          class="font-display font-semibold tracking-none italic">der Bergstraße</span
         >
       </h2>
       <p class="m-0 max-w-620 text-18 leading-quote text-ink-muted">
-        Über 50 Projekte seit 2022 — ein Teil davon direkt vor der Haustür.
+        Über 50 Projekte seit 2022. Diese vier sitzen direkt vor der Haustür.
       </p>
     </div>
 
-    <ul
-      class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-16 p-0"
-    >
+    {/* Feste 2x2-Anordnung ab 720px statt intrinsischer Spaltenzahl: bei
+        vier Karten entstünde sonst je nach Breite eine angebrochene Reihe.
+        Zwei Spalten geben den Screenshots außerdem genug Breite — bei drei
+        oder vier erkennt man auf ihnen nichts mehr. */}
+    <div class="grid grid-cols-1 gap-24 btn:grid-cols-2">
       {
         regionaleProjekte.map((projekt) => (
-          <li class="flex flex-col rounded-20 border border-line bg-paper-warm">
-            <a
-              href={projekt.href}
-              class="flex h-full flex-col gap-12 px-28 py-26 no-underline"
-            >
-              <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
-                {projekt.ort}
+          <article class="flex flex-col overflow-hidden rounded-16 border border-edge bg-forest-card">
+            <div class="px-16 pt-16">
+              <BrowserRahmen domain={projekt.domain}>
+                <Image
+                  src={bild(projekt.screenshot)}
+                  alt={projekt.screenshotAlt}
+                  widths={[420, 640, 900]}
+                  sizes="(min-width: 1200px) 360px, (min-width: 720px) 45vw, 90vw"
+                  loading="lazy"
+                  decoding="async"
+                  class="block h-auto w-full"
+                />
+              </BrowserRahmen>
+            </div>
+
+            <div class="flex flex-1 flex-col items-start gap-12 px-28 pt-24 pb-28">
+              <span class="text-13 font-medium tracking-eyebrow uppercase text-mint">
+                {projekt.ort ? `${projekt.ort} · ${projekt.branche}` : projekt.branche}
               </span>
-              <span class="text-22 leading-card font-bold tracking-heading text-ink">
+              <h3 class="m-0 text-22 leading-card-wide font-bold text-cream">
                 {projekt.kunde}
-              </span>
-              <p class="m-0 text-16 leading-body text-ink-muted">{projekt.text}</p>
-              <span class="mt-auto pt-8 font-mono text-13 text-ink-faint">
-                {projekt.domain}
-              </span>
-            </a>
-          </li>
+              </h3>
+              <p class="m-0 text-17 leading-body text-mint">{projekt.text}</p>
+              <a
+                href={projekt.href}
+                class="mt-auto pt-8 text-17 font-medium text-cream underline decoration-1 underline-offset-4 transition-colors hover:text-lime"
+              >
+                {linkText(projekt.href)}
+              </a>
+            </div>
+          </article>
         ))
       }
-    </ul>
+    </div>
   </div>
 </section>

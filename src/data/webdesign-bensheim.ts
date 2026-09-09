@@ -15,29 +15,55 @@
    nennt Platz 1 deshalb überall als Ziel und Arbeitsweise, nie als Zusage —
    und sagt das an einer Stelle auch ausdrücklich. */
 
-/** Drei Projekte aus der Region. Alle drei sind echte Kunden; die Orte
-    stimmen. Kein Projekt bekommt hier eine Zahl, die nicht belegt ist. */
+/** Vier Projekte aus der Nachbarschaft. Alle drei sind echte Kunden, die
+    Orte stimmen — und genau deshalb steht der Ort auch an erster Stelle in
+    der Zeile über dem Namen: „arbeiten die überhaupt hier?" ist die stille
+    Frage, mit der jemand aus einer Google-Suche ankommt.
+
+    Nur Zehner Immobilien sitzt wirklich in Bensheim. Memoria ist aus
+    Einhausen, HePa Baut aus Weinheim, Umzüge Bergstraße trägt die Region
+    im Namen. Die Überschrift sagt deshalb „Bensheim und die Bergstraße"
+    und nicht „aus Bensheim" — drei von vier wären sonst falsch. */
 export const regionaleProjekte = [
   {
-    kunde: 'Zehner Immobilien',
     ort: 'Bensheim',
+    branche: 'Immobilienvermittlung',
+    kunde: 'Zehner Immobilien',
     text: 'Neue Website mit klarer Positionierung für mehr Verkäufer-Anfragen.',
     domain: 'zehner-immobilien.de',
+    screenshot: 'zehner-immobilien-startseite.webp',
+    screenshotAlt: 'Startseite von Zehner Immobilien',
     href: '/projekte',
   },
   {
-    kunde: 'Umzüge Bergstraße',
     ort: 'Bergstraße',
+    branche: 'Umzüge und Entrümpelung',
+    kunde: 'Umzüge Bergstraße',
     text: 'Unser eigener Betrieb — und damit der Fall, an dem wir zuerst ausprobiert haben, was wir heute für andere bauen.',
     domain: 'umzuege-bergstrasse.de',
+    screenshot: 'umzuege-bergstrasse-startseite.png',
+    screenshotAlt: 'Startseite von Umzüge Bergstraße',
     href: '/projekte',
   },
   {
-    kunde: 'HePa Baut',
     ort: 'Weinheim',
+    branche: 'Sanierung und Renovierung',
+    kunde: 'HePa Baut',
     text: 'Eine eigene Startseite je Leistung, dazu über 150 Ortsseiten im Umkreis — jede auf ihre Stadt ausgerichtet.',
     domain: 'hepa-baut.de',
+    screenshot: 'hepa-baut-startseite.png',
+    screenshotAlt: 'Startseite von HePa Baut mit den drei getrennten Leistungsbereichen',
     href: '/projekte/hepa-baut',
+  },
+  {
+    ort: 'Einhausen',
+    branche: 'Tierbestattung',
+    kunde: 'Tierbestattung Memoria',
+    text: 'Website für einen würdevollen Abschied — Leistungen, Preise und Urnen ruhig und klar aufbereitet.',
+    domain: 'tierbestattung-memoria.de',
+    screenshot: 'tierbestattung-memoria-startseite.webp',
+    screenshotAlt: 'Startseite von Tierbestattung Memoria',
+    href: '/projekte',
   },
 ];
 
@@ -105,30 +131,36 @@ export const leistungsumfang = [
   },
 ];
 
-/** Ablauf in vier Schritten. Zeitangaben bewusst offen gelassen — es steht
-    nur da, was ohne Rückfrage bei Iwo zugesagt werden kann. */
+/** Ablauf in vier Schritten. Die Texte sind bewusst kurz: vier Karten
+    nebeneinander vertragen keine drei Sätze, sonst werden sie zu Türmen.
+    Zeitangaben stehen keine drin — es soll nur dastehen, was ohne Rückfrage
+    bei Iwo zugesagt werden kann.
+
+    Die Merksätze tragen die eigentliche Botschaft dieser Seite: es geht
+    nicht um eine schöne Webseite, sondern um die Strategie dahinter und um
+    Anfragen. */
 export const ablaufSchritte = [
   {
     titel: 'Erstgespräch',
-    text: 'Eine Stunde, kostenlos. Wir schauen uns an, wonach in Ihrer Region tatsächlich gesucht wird, wie Sie neben den zwei stärksten Betrieben im Ort dastehen und was eine Anfrage bei Ihnen ungefähr wert ist.',
+    text: 'Eine Stunde, kostenlos. Wir sehen uns an, wonach in Ihrer Region gesucht wird und was eine Anfrage bei Ihnen wert ist.',
     merksatz: 'Erst rechnen, dann bauen.',
     hervorgehoben: false,
   },
   {
     titel: 'Positionierung',
-    text: 'Bevor eine Zeile Design entsteht, steht fest, wofür Sie stehen, welche Aufträge Sie wollen und was Ihre Kunden entscheiden lässt. Das ist die Arbeit, die später den Unterschied macht.',
-    merksatz: 'Erst wissen, wofür Sie stehen.',
+    text: 'Bevor eine Zeile Design entsteht, steht fest, wofür Sie stehen, welche Aufträge Sie wollen und was Ihre Kunden entscheiden lässt.',
+    merksatz: 'Hier erarbeiten wir die Strategie.',
     hervorgehoben: true,
   },
   {
     titel: 'Umsetzung',
-    text: 'Aufbau, Texte, Bilder, Technik. Sie sehen Zwischenstände und sagen dazu etwas, bevor irgendetwas online geht. Fotos und Videos machen wir bei Ihnen im Betrieb.',
-    merksatz: 'Zeigen statt behaupten.',
+    text: 'Aufbau, Texte, Bilder, Technik. Fotos und Videos machen wir bei Ihnen im Betrieb. Sie sehen alles, bevor es online geht.',
+    merksatz: 'Gebaut für Anfragen, nicht für Applaus.',
     hervorgehoben: false,
   },
   {
     titel: 'Sichtbarkeit',
-    text: 'Nach dem Start beginnt der Teil, den die meisten Agenturen nicht mehr machen: Position beobachten, nachschärfen, Bewertungen aufbauen, Anfragen messen.',
+    text: 'Danach beginnt der Teil, den die meisten Agenturen nicht mehr machen: Position beobachten, nachschärfen, Anfragen messen.',
     merksatz: 'Online gehen ist der Anfang.',
     hervorgehoben: false,
   },
@@ -180,8 +212,12 @@ export const faqs = [
 /** Abschlussblock. Aufbau wie auf den Leistungsseiten: „richtigen Agentur"
     trägt den Marker, der kursive Teil unterscheidet die Seite. */
 export const abschluss = {
-  titelVorn: 'Die Suche nach der ',
-  titelMarker: 'richtigen Agentur',
+  titelVorn: 'Die Suche nach einer ',
+  /* Auf den beiden Leistungsseiten trägt „richtigen Agentur" den Marker.
+     Hier steht „vertrauenswürdigen" (Wunsch Iwo): wer über eine
+     Google-Suche kommt, kennt uns nicht — bei dem entscheidet Vertrauen,
+     nicht die Frage, ob wir fachlich die Richtigen sind. */
+  titelMarker: 'vertrauenswürdigen Agentur',
   titelMitte: ' ist anstrengender als sie sein müsste. Fangen wir mit ',
   titelKursiv: 'einem Gespräch',
   titelHinten: ' an.',

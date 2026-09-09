@@ -20,9 +20,21 @@ interface Props {
   schritte: Schritt[];
   /** abgesetzter, zentrierter Satz unter den Karten */
   nachsatz?: string;
+  /** Rasterklassen. Bei drei Karten füllt die intrinsische Voreinstellung
+      die Reihen sauber. Bei vier Karten nicht: je nach Breite entstünde
+      3+1. Solche Seiten geben die Spaltenzahl deshalb fest vor. */
+  rasterKlasse?: string;
 }
 
-const { eyebrow, titelVorn, titelAkzent, lead, schritte, nachsatz } = Astro.props;
+const {
+  eyebrow,
+  titelVorn,
+  titelAkzent,
+  lead,
+  schritte,
+  nachsatz,
+  rasterKlasse = 'grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))]',
+} = Astro.props;
 ---
 
 <section id="system" class="bg-paper-soft px-20 py-section-y-lg">
@@ -41,9 +53,7 @@ const { eyebrow, titelVorn, titelAkzent, lead, schritte, nachsatz } = Astro.prop
       <p class="m-0 max-w-680 text-19 leading-body text-ink-quiet">{lead}</p>
     </div>
 
-    <div
-      class="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-stretch gap-24"
-    >
+    <div class:list={['grid items-stretch gap-24', rasterKlasse]}>
       {
         schritte.map((schritt, i) => (
           <div
