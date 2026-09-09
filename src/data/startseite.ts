@@ -165,10 +165,14 @@ export interface Branche {
 
    Die beiden letzten Einträge stehen bewusst für den Meistermagneten:
    Industrie sucht keine Kunden über Google, aber sehr wohl Leute. */
+/** Wie viele Gewerke auf der Startseite und im Footer erscheinen.
+    Beide Listen greifen darauf zu, damit sie nicht auseinanderlaufen. */
+export const SICHTBARE_BRANCHEN = 6;
+
 export const branchen: Branche[] = [
   /* Reihenfolge der ersten sechs von Iwo vorgegeben — das sind die
      Gewerke, die auf der Startseite gezeigt werden (siehe
-     SICHTBARE_BRANCHEN in BranchenGrid.astro). Die übrigen stehen
+     SICHTBARE_BRANCHEN oben). Die übrigen stehen
      bewusst weiter hier: sie beschreiben ebenfalls Zielkunden, und die
      Zahl lässt sich damit ohne Datenpflege wieder erhöhen. */
   {

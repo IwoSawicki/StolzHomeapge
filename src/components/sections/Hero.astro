@@ -96,7 +96,12 @@ const poster = await getImage({
         </div>
 
         <video
-          class="relative h-full w-full object-cover nav:object-contain"
+          {/* PROBE: auf Desktop cover statt contain. Der Showreel ist 9:16
+              hochkant, die Kachel dort 16:9 — es bleibt also nur ein
+              waagerechter Streifen aus der Bildmitte stehen. Zurück auf den
+              alten Stand: nav:object-contain wieder anhängen. */}
+          class="relative h-full w-full object-cover"
+          style="object-position: 50% 42%"
           src={showreel}
           poster={poster.src}
           fetchpriority="high"

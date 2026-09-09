@@ -7,13 +7,13 @@
    Branchenseiten gibt es noch nicht. Sobald sie stehen, wird aus dem <li>
    wieder ein <a> mit Pfeilkreis. */
 import Eyebrow from '../Eyebrow.astro';
-import { branchen } from '../../data/startseite';
+import { branchen, SICHTBARE_BRANCHEN } from '../../data/startseite';
 
 /* Auf der Startseite stehen sechs Gewerke — Auswahl und Reihenfolge von
    Iwo. Sechs lesen sich als Fokus, zwölf lasen sich wie „wir nehmen
    jeden". Die übrigen bleiben in den Daten; zum Erweitern reicht es,
-   diese Zahl zu erhöhen. */
-const SICHTBARE_BRANCHEN = 6;
+   SICHTBARE_BRANCHEN in src/data/startseite.ts zu erhöhen — der Footer
+   zieht automatisch mit. */
 const sichtbar = branchen.slice(0, SICHTBARE_BRANCHEN);
 ---
 

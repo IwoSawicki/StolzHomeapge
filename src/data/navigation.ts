@@ -3,6 +3,8 @@
    die es noch nicht gibt, sind in design/README.md unter „Offene Punkte"
    gelistet — die Links bleiben trotzdem wie in der Vorlage. */
 
+import { branchen, SICHTBARE_BRANCHEN } from './startseite';
+
 export interface NavLink {
   label: string;
   href: string;
@@ -48,21 +50,17 @@ export const footerTools: NavLink[] = [
   { label: 'Sichtbarkeits-Check', href: '/sichtbarkeits-check', nochNicht: true },
 ];
 
-/** Footer-Spalte „Branchen" — die sechs wichtigsten (Auswahl Iwo).
-    Bezeichnungen wie im Raster auf der Startseite, damit beide Listen
-    dieselbe Sprache sprechen. */
-export const footerBranchen: NavLink[] = [
-  { label: 'Bauunternehmen', href: '/branchen/bau', nochNicht: true },
-  { label: 'Elektriker', href: '/branchen/elektro', nochNicht: true },
-  { label: 'SHK', href: '/branchen/shk', nochNicht: true },
-  { label: 'Maler', href: '/branchen/maler', nochNicht: true },
-  /* Statt Fliesenleger: „Bauunternehmen" trifft DMK Bau, aber nicht HePa
-     Baut oder Jhoch2 — deren Geschäft sind Sanierung, Renovierung und
-     Wasserschaden. Bad und Boden gehen darin ohnehin auf. Die Wörter
-     stehen so schon in den Aufnahmekriterien auf /kunden-gewinnen. */
-  { label: 'Sanierung & Renovierung', href: '/branchen/sanierung-renovierung', nochNicht: true },
-  { label: 'Produktion & Fertigung', href: '/branchen/produktion-fertigung', nochNicht: true },
-];
+/** Footer-Spalte „Branchen" — dieselben sechs Gewerke wie im Raster auf
+    der Startseite, in derselben Reihenfolge und Schreibweise. Bewusst
+    abgeleitet statt abgetippt: zwei gepflegte Listen laufen sonst
+    auseinander, und der Besucher sieht im Footer andere Gewerke als in
+    der Sektion darüber.
+
+    Die Ziele sind die geplanten Branchenseiten; die gibt es noch nicht,
+    deshalb stehen die Einträge ausgegraut da (`nochNicht`). */
+export const footerBranchen: NavLink[] = branchen
+  .slice(0, SICHTBARE_BRANCHEN)
+  .map((branche) => ({ label: branche.name, href: branche.href, nochNicht: true }));
 
 /** Footer-Spalte „Leistungen vor Ort" — geplante Landingpages.
 
