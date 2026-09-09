@@ -1059,3 +1059,30 @@ Drei Dinge sind bewusst so gebaut:
   DMK-Projekt auf der Startseite nennt bezahlte Kampagnen ausdrücklich für
   Anfragen, nicht nur für Bewerbungen. Kasten und FAQ verstärken sich
   jetzt gegenseitig statt nebeneinanderher zu laufen.
+
+---
+
+## 43. Abschluss beider Leistungsseiten vereinheitlicht
+
+Vorher waren es zwei Dateien mit unterschiedlicher Typografie: auf
+`/kunden-gewinnen` eine fette Überschrift mit Serifen-Kursive, auf
+`/mitarbeiter-gewinnen` zwei gleich große halbfette Absätze ohne Kursive (so
+stand es im dortigen Handoff).
+
+Jetzt teilen sich beide Seiten `sections/leistung/Abschluss.astro`. Der
+hervorgehobene Teil der Überschrift trägt auf beiden den **Textmarker** in
+Serifen-Kursive — dadurch kommt Farbe in eine Sektion, die sonst nur
+dunkelgrün ist, und beide Seiten enden gleich.
+
+Der Satzbau spielt mit: beide Überschriften laufen auf „… wie die Suche
+nach X" hinaus, X ist das markierte Wort — „guten Aufträgen" beziehungsweise
+„den richtigen Leuten".
+
+Damit weicht `/mitarbeiter-gewinnen` von seinem Handoff ab („beide Absätze
+in Halbfett"). Das ist so gewollt: Iwo hat die einheitliche Gestaltung
+ausdrücklich gewünscht, der Wortlaut ist unverändert.
+
+**Ein Unterschied bleibt bewusst:** Unter der Telefonnummer steht nur auf
+`/kunden-gewinnen` „Bergstraße und Rhein-Neckar". Auf
+`/mitarbeiter-gewinnen` gilt weiterhin die Regel, dass kein Ortsname auf der
+Seite steht. Das Bauteil hat dafür die optionale Eigenschaft `ortZeile`.

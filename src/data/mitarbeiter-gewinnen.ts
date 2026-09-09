@@ -219,7 +219,13 @@ export const faqs = [
 
 /* --- Sektion 9 · Abschluss ----------------------------------------------- */
 
-export const abschlussAbsaetze = [
-  'Wir wissen zu gut, dass die Suche nach einem Dienstleister, dem man vertraut, mindestens genauso schwer ist wie die Suche nach den richtigen Leuten.',
-  'Im Erstgespräch finden wir gemeinsam heraus, ob wir Ihre Aufgabe annehmen können.',
-];
+/* Wortlaut unverändert aus dem Handoff, nur für die Auszeichnung zerlegt:
+   Der letzte Teil steht als Serifen-Kursive auf dem Textmarker — genauso
+   wie auf /kunden-gewinnen, damit beide Abschlüsse gleich aussehen. */
+export const abschluss = {
+  titelVorn:
+    'Wir wissen zu gut, dass die Suche nach einem Dienstleister, dem man vertraut, mindestens genauso schwer ist wie die Suche nach ',
+  titelAkzent: 'den richtigen Leuten',
+  titelHinten: '.',
+  lead: 'Im Erstgespräch finden wir gemeinsam heraus, ob wir Ihre Aufgabe annehmen können.',
+};

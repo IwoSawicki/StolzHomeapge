@@ -20,13 +20,29 @@ import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.ast
 import Vergleich from '../components/sections/mitarbeiter/Vergleich.astro';
 import Stellen from '../components/sections/mitarbeiter/Stellen.astro';
 import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
-import Abschluss from '../components/sections/mitarbeiter/Abschluss.astro';
+import Abschluss from '../components/sections/leistung/Abschluss.astro';
+import type { Feld } from '../components/Web3Formular.astro';
 import {
   systemSchritte,
   systemNachsatz,
   leistungsumfang,
   faqs,
+  abschluss,
 } from '../data/mitarbeiter-gewinnen';
+
+const anfrageFelder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  {
+    name: 'telefon',
+    label: 'Telefonnummer',
+    type: 'tel',
+    pflicht: true,
+    breit: true,
+    autocomplete: 'tel',
+  },
+  { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
+  { name: 'stelle', label: 'Welche Stelle wollen Sie besetzen?', mehrzeilig: true },
+];
 ---
 
 <BaseLayout
@@ -66,7 +82,15 @@ import {
     <Vergleich />
     <Stellen />
     <FaqLeistung eintraege={faqs} id="faq-mitarbeiter" />
-    <Abschluss />
+    {/* Kein Ortsname auf dieser Seite – deshalb ohne ortZeile */}
+    <Abschluss
+      titelVorn={abschluss.titelVorn}
+      titelAkzent={abschluss.titelAkzent}
+      titelHinten={abschluss.titelHinten}
+      lead={abschluss.lead}
+      felder={anfrageFelder}
+      betreff="Neue Anfrage über /mitarbeiter-gewinnen"
+    />
   </main>
 
   <Footer />

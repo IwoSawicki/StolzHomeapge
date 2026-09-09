@@ -12,8 +12,23 @@ import Erstgespraech from '../components/sections/kunden/Erstgespraech.astro';
 import Aufnahmekriterien from '../components/sections/kunden/Aufnahmekriterien.astro';
 import Ausbau from '../components/sections/kunden/Ausbau.astro';
 import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
-import Abschluss from '../components/sections/kunden/Abschluss.astro';
+import Abschluss from '../components/sections/leistung/Abschluss.astro';
+import type { Feld } from '../components/Web3Formular.astro';
 import { faqs, systemSchritte, leistungsumfang } from '../data/kunden-gewinnen';
+
+const anfrageFelder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  {
+    name: 'telefon',
+    label: 'Telefonnummer',
+    type: 'tel',
+    pflicht: true,
+    breit: true,
+    autocomplete: 'tel',
+  },
+  { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
+  { name: 'nachricht', label: 'Worum es geht', mehrzeilig: true },
+];
 ---
 
 <BaseLayout
@@ -51,7 +66,15 @@ import { faqs, systemSchritte, leistungsumfang } from '../data/kunden-gewinnen';
     <Aufnahmekriterien />
     <Ausbau />
     <FaqLeistung eintraege={faqs} id="faq-kunden" />
-    <Abschluss />
+    <Abschluss
+      titelVorn="Wir wissen zu gut, dass die Suche nach der richtigen Agentur mindestens genauso schwer ist wie die Suche nach "
+      titelAkzent="guten Aufträgen"
+      titelHinten="."
+      lead="Im kostenlosen Erstgespräch schauen wir uns an, wonach in Ihrer Region gesucht wird und wie Sie gegen die anderen im Ort dastehen. Danach wissen wir beide, ob sich eine Zusammenarbeit überhaupt lohnt."
+      felder={anfrageFelder}
+      betreff="Neue Anfrage über /kunden-gewinnen"
+      ortZeile="Bergstraße und Rhein-Neckar"
+    />
   </main>
 
   <Footer />
