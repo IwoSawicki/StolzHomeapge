@@ -49,12 +49,14 @@ export interface Projekt {
 export const projekte: Projekt[] = [
   {
     eyebrow: 'HEPA Baut · Sanierung',
-    /* Der Titel nennt jetzt das Besondere statt der Absicht. Die Zahlen
-       decken sich mit dem Text darunter: rund 150 Städteseiten je Leistung,
-       über 450 insgesamt. „Leistungen" statt „Gewerke", weil Sanierung,
-       Renovierung und Wasserschaden Leistungen desselben Betriebs sind. */
-    titel: 'Webseite mit über 450 Ortsseiten für drei Leistungen',
-    text: 'Altbau- und Badsanierung, Renovierung, Wasserschaden — vorher liefen die drei ineinander. Jetzt: eine eigene Startseite je Leistung plus rund 150 Städteseiten pro Leistung im 30-Kilometer-Umkreis, über 450 Seiten insgesamt. Kontaktformular, Rückruf und Click-to-Call auf jeder Seite.',
+    /* Der Titel nennt das Besondere statt der Absicht. Die Zahl steht
+       bewusst bei „über 150": angelegt sind mehr, aber noch nicht alle
+       Seiten sind bei Google indexiert (Stand September 2026). Solange
+       das so ist, wird die kleinere, belegbare Zahl genannt.
+       „Leistungen" statt „Gewerke", weil Sanierung, Renovierung und
+       Wasserschaden Leistungen desselben Betriebs sind. */
+    titel: 'Webseite mit über 150 Ortsseiten für drei Leistungen',
+    text: 'Altbau- und Badsanierung, Renovierung, Wasserschaden — vorher liefen die drei ineinander. Jetzt: eine eigene Startseite je Leistung plus über 150 Städteseiten im 30-Kilometer-Umkreis, jede auf ihre Stadt ausgerichtet. Kontaktformular, Rückruf und Click-to-Call auf jeder Seite.',
     domain: 'hepa-baut.de',
     screenshot: 'hepa-baut-startseite.png',
     screenshotAlt: 'Startseite von HePa Baut mit den drei getrennten Leistungsbereichen',

@@ -1,0 +1,55 @@
+---
+/* Drei Projekte aus der Region, direkt unter dem Hero.
+
+   Bewusst so früh: wer über eine Google-Suche kommt, vergleicht gerade
+   mehrere Agenturen und will Belege sehen, bevor er Erklärungen liest.
+   Regionale Namen wirken dabei stärker als jede Behauptung — „Zehner
+   Immobilien aus Bensheim" beantwortet die stille Frage „arbeiten die
+   überhaupt hier?" in einer Zeile. */
+import Eyebrow from '../../Eyebrow.astro';
+import { regionaleProjekte } from '../../../data/webdesign-bensheim';
+---
+
+<section class="bg-paper px-page-x py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-40">
+    <div class="flex max-w-720 flex-col items-start gap-18">
+      <Eyebrow variante="hell">Aus der Region</Eyebrow>
+      <h2
+        class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink"
+      >
+        Betriebe, die uns <span
+          class="font-display font-semibold tracking-none italic">hier kennen</span
+        >
+      </h2>
+      <p class="m-0 max-w-620 text-18 leading-quote text-ink-muted">
+        Über 50 Projekte seit 2022 — ein Teil davon direkt vor der Haustür.
+      </p>
+    </div>
+
+    <ul
+      class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-16 p-0"
+    >
+      {
+        regionaleProjekte.map((projekt) => (
+          <li class="flex flex-col rounded-20 border border-line bg-paper-warm">
+            <a
+              href={projekt.href}
+              class="flex h-full flex-col gap-12 px-28 py-26 no-underline"
+            >
+              <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+                {projekt.ort}
+              </span>
+              <span class="text-22 leading-card font-bold tracking-heading text-ink">
+                {projekt.kunde}
+              </span>
+              <p class="m-0 text-16 leading-body text-ink-muted">{projekt.text}</p>
+              <span class="mt-auto pt-8 font-mono text-13 text-ink-faint">
+                {projekt.domain}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

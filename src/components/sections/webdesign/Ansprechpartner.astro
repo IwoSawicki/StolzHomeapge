@@ -1,0 +1,62 @@
+---
+/* Kompakte Fassung des Ansprechpartner-Panels von der Startseite: Porträt
+   links, Text rechts, ohne das Team-Raster darunter.
+
+   Auf dieser Landingpage trägt der Block mehr Gewicht als anderswo. Wer
+   „Webdesign Bensheim" sucht, vergleicht Agenturen, die alle dasselbe
+   behaupten. Ein Gesicht mit Namen und der Zusage, dass genau diese Person
+   ansprechbar bleibt, ist der Unterschied, den keine Agenturseite mit
+   Stockfotos hat. */
+import { Image } from 'astro:assets';
+import Eyebrow from '../../Eyebrow.astro';
+import { kontakt } from '../../../data/navigation';
+import portraitIwo from '../../../assets/portraits/iwo-sawicki.jpg';
+---
+
+<section class="bg-paper px-page-x py-section-y-sm">
+  <div class="mx-auto flex max-w-content flex-wrap items-stretch gap-32">
+    <div
+      class="relative min-h-portrait flex-1 basis-[min(300px,100%)] overflow-hidden rounded-20 bg-photo-bg"
+    >
+      <Image
+        src={portraitIwo}
+        alt="Iwo Sawicki, Inhaber von Stolz Marketing"
+        widths={[400, 700, 1000]}
+        sizes="(min-width: 1160px) 380px, (min-width: 720px) 35vw, 100vw"
+        loading="lazy"
+        decoding="async"
+        class="absolute inset-0 block h-full w-full object-cover"
+        style="object-position: 50% 18%"
+      />
+    </div>
+
+    <div
+      class="flex flex-[2] basis-552 flex-col items-start justify-center gap-22 rounded-20 bg-paper-warm p-panel"
+    >
+      <Eyebrow variante="warm">Ihr Ansprechpartner</Eyebrow>
+      <h2 class="m-0 text-h2-about leading-tightest font-bold tracking-system text-ink">
+        Sie sprechen mit der Person, die auch <span
+          class="marker-flach font-display text-h2-system font-semibold tracking-system italic"
+          >arbeitet</span
+        >
+      </h2>
+      <p class="m-0 max-w-660 text-18 leading-prose text-ink-body">
+        Kein Kundenberater, der weiterreicht, und kein Ticketsystem. Wofür Ihr Betrieb
+        steht, wie die Seite aufgebaut wird und woran wir messen, ob sie etwas bringt —
+        das besprechen Sie mit mir. Die Umsetzung macht unser Team: Webseite, Kamera,
+        Schnitt und bezahlte Werbung. Ihr Ansprechpartner bleibt derselbe, von der
+        ersten Frage bis nach dem Livegang.
+      </p>
+      <div class="mt-2 flex flex-col gap-3">
+        <span class="text-26 font-bold tracking-name text-ink">Iwo Sawicki</span>
+        <span class="text-15 text-ink-label">Inhaber · Stolz Marketing, Bensheim</span>
+      </div>
+      <a
+        href={kontakt.telefonLink}
+        class="mt-6 text-17 font-bold text-ink no-underline underline-offset-4 hover:underline"
+      >
+        {kontakt.telefonAnzeige}
+      </a>
+    </div>
+  </div>
+</section>

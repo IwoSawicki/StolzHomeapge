@@ -112,7 +112,7 @@ export const projektseiten: Projektseite[] = [
     keyfacts: [
       { label: 'Branche', wert: 'Bau & Sanierung' },
       { label: 'Leistungen', wert: 'Webseite · SEO' },
-      { label: 'Umfang', wert: 'über 450 Seiten' },
+      { label: 'Umfang', wert: 'über 150 Ortsseiten' },
       { label: 'Status', wert: 'Live' },
     ],
     leistungen: [
@@ -122,7 +122,7 @@ export const projektseiten: Projektseite[] = [
       },
       {
         titel: 'Lokales SEO in großem Stil',
-        text: 'Pro Leistung rund 150 Städte-Landingpages im 30-km-Umkreis um Weinheim, jede auf ihre Stadt optimiert.',
+        text: 'Über 150 Städte-Landingpages im 30-km-Umkreis um Weinheim, jede auf ihre Stadt optimiert.',
       },
       {
         titel: 'Auf die Anfrage optimiert',
@@ -158,7 +158,7 @@ export const projektseiten: Projektseite[] = [
           'Eigene Startseite für den Bereich',
           'Leistungen mit Vorher-Nachher-Belegen',
           'FAQ und Kundenzitate',
-          'rund 150 Städte-Landingpages',
+          'eigene Städte-Landingpages',
         ],
       },
       {
@@ -171,7 +171,7 @@ export const projektseiten: Projektseite[] = [
           'Kontaktformular direkt im ersten Bildschirm',
           'Leistungsübersicht mit Beispielen',
           'Klick-to-Call in jeder Sektion',
-          'rund 150 Städte-Landingpages',
+          'eigene Städte-Landingpages',
         ],
       },
       {
@@ -184,7 +184,7 @@ export const projektseiten: Projektseite[] = [
           'Kontaktformular ganz oben',
           'Soforthilfe-Hinweise',
           'Ablauf & Versicherung erklärt',
-          'rund 150 Städte-Landingpages',
+          'eigene Städte-Landingpages',
         ],
         hinweis: {
           titel: 'Erste Hilfe bei Wasserschaden — das ist jetzt zu tun',

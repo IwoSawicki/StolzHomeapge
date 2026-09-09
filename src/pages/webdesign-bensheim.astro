@@ -1,0 +1,140 @@
+---
+/* Landingpage „Webdesign Bensheim".
+
+   Anders als die beiden Leistungsseiten spricht diese Seite jemanden an,
+   der uns nicht kennt: er hat bei Google gesucht, will eine Webseite und
+   vergleicht gerade mehrere Agenturen. Der Aufbau folgt daraus —
+
+     1. Hero        was er gesucht hat, plus der Unterschied in einem Satz
+     2. Referenzen  Belege aus der Region, bevor irgendetwas erklärt wird
+     3. Sichtbarkeit der Reframe: eine Webseite, die niemand findet, bringt nichts
+     4. Umfang      konkret, was er bekommt — dafür ist er hier
+     5. Ablauf      Risiko nehmen
+     6. Person      der Unterschied, den keine Agentur mit Stockfotos hat
+     7. FAQ         Einwände räumen und Suchanfragen abfangen
+     8. Anfrage
+
+   Der Meistermagnet steht bewusst NICHT auf dieser Seite (Entscheidung
+   Iwo): ein zweites Angebot würde vom eigentlichen Anlass ablenken.
+
+   Zielbegriff dieser Seite ist „Webdesign Bensheim" samt Varianten. Damit
+   Google nicht zwischen dieser Seite und der Startseite schwankt, ist dies
+   die einzige Seite, die den Begriff in Titel und H1 führt. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import HeroLeistung from '../components/sections/HeroLeistung.astro';
+import heroBild from '../assets/leistungen/kundengewinnung.JPG';
+import RegionaleReferenzen from '../components/sections/webdesign/RegionaleReferenzen.astro';
+import PlatzEins from '../components/sections/webdesign/PlatzEins.astro';
+import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
+import SystemSchritte from '../components/sections/leistung/SystemSchritte.astro';
+import Ansprechpartner from '../components/sections/webdesign/Ansprechpartner.astro';
+import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
+import Abschluss from '../components/sections/leistung/Abschluss.astro';
+import type { Feld } from '../components/Web3Formular.astro';
+import {
+  faqs,
+  leistungsumfang,
+  ablaufSchritte,
+  abschluss,
+} from '../data/webdesign-bensheim';
+
+const anfrageFelder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  {
+    name: 'telefon',
+    label: 'Telefonnummer',
+    type: 'tel',
+    pflicht: true,
+    breit: true,
+    autocomplete: 'tel',
+  },
+  { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
+  {
+    name: 'webseite',
+    label: 'Aktuelle Webseite',
+    breit: true,
+    inputmode: 'url',
+    platzhalter: 'ihre-webseite.de',
+  },
+  { name: 'nachricht', label: 'Worum es geht', mehrzeilig: true },
+];
+
+/* FAQ als strukturierte Daten. Google kann daraus erweiterte Suchergebnisse
+   bauen; die Fragen stehen wortgleich auch sichtbar auf der Seite, sonst
+   wäre die Auszeichnung regelwidrig. */
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.frage,
+    acceptedAnswer: { '@type': 'Answer', text: f.antwort },
+  })),
+};
+---
+
+<BaseLayout
+  title="Webdesign Bensheim, das gefunden wird | Stolz Marketing"
+  description="Ihr Webdesign Partner aus Bensheim: Webseiten für Betriebe an der Bergstraße, die nicht nur gut aussehen, sondern bei Google gefunden werden. Über 50 Projekte seit 2022."
+>
+  {/* Kopfzeile, Hero und Logo-Marquee bilden zusammen das erste Band */}
+  <HeroLeistung
+    eyebrow="Stolz Marketing"
+    titelVorn="Ihr "
+    titelAkzent="Webdesign Partner"
+    titelHinten=" aus Bensheim"
+    lead="Wir bauen Ihre Webseite — und sorgen dafür, dass Ihre Kunden sie bei Google finden. Ganz oben, dort wo geklickt wird. Für Betriebe, Praxen und Kanzleien in Bensheim und an der Bergstraße."
+    bild={heroBild}
+    bildAlt="Zwei Handwerker bei der Arbeit auf einer Baustelle an der Bergstraße"
+    ctaZiel="#anfrage"
+    vertrauenText="Über 50 Projekte seit 2022"
+    titelBreite="max-w-760"
+  />
+
+  <main>
+    {/* JSON-LD darf laut Google auch im Body stehen; das BaseLayout hat
+        keinen Slot für den Kopfbereich, und dafür einen einzuführen wäre
+        für eine Seite zu viel. */}
+    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+    <RegionaleReferenzen />
+
+    <PlatzEins />
+
+    <Leistungsumfang
+      eyebrow="Leistungsumfang"
+      titelVorn="Was am Ende "
+      titelAkzent="bei Ihnen liegt"
+      lead="Kein Abo auf eine Leistung, die niemand nachzählen kann. Das hier ist die Liste."
+      bloecke={leistungsumfang}
+    />
+
+    <SystemSchritte
+      eyebrow="Ablauf"
+      titelVorn="Vier Schritte, "
+      titelAkzent="immer in dieser Reihenfolge"
+      lead="Erst rechnen, dann festlegen, wofür Sie stehen. Dann bauen. Und dann dafür sorgen, dass man Sie findet."
+      schritte={ablaufSchritte}
+      nachsatz="Sie können auch nur die Webseite haben. Die meisten wollen danach mehr."
+    />
+
+    <Ansprechpartner />
+
+    <FaqLeistung eintraege={faqs} id="faq-webdesign" />
+
+    <Abschluss
+      titelVorn={abschluss.titelVorn}
+      titelMarker={abschluss.titelMarker}
+      titelMitte={abschluss.titelMitte}
+      titelKursiv={abschluss.titelKursiv}
+      titelHinten={abschluss.titelHinten}
+      lead={abschluss.lead}
+      felder={anfrageFelder}
+      betreff="Anfrage über /webdesign-bensheim"
+      ortZeile="Bensheim und Kreis Bergstraße"
+    />
+  </main>
+
+  <Footer />
+</BaseLayout>

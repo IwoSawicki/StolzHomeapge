@@ -1,0 +1,113 @@
+---
+/* Die Kernsektion der Landingpage: der Moment, in dem die Seite das
+   verlässt, wonach der Besucher gesucht hat („eine Webseite"), und den
+   Rahmen weitet („eine Webseite, die gefunden wird").
+
+   Links steht das Argument, rechts eine Trefferliste als Bild: Platz 1 in
+   Lime, darunter die Plätze, die immer weniger geklickt werden. Sie ist
+   bewusst als Ziel gezeichnet und trägt keinen Firmennamen und keine
+   Google-Optik — es ist eine Veranschaulichung, keine Nachbildung einer
+   echten Trefferseite.
+
+   Der Satz unter der Liste ist kein Kleingedrucktes, sondern Absicht: eine
+   Position bei Google kann niemand zusichern. Das offen zu sagen wirkt
+   glaubwürdiger als die Behauptung, die alle anderen aufstellen — und hält
+   die Aussage nach § 5 UWG angreifbarkeitsfrei. */
+import Eyebrow from '../../Eyebrow.astro';
+import { rangliste, sichtbarkeitHebel } from '../../../data/webdesign-bensheim';
+---
+
+<section id="sichtbarkeit" class="bg-forest px-page-x py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-64">
+    <div class="flex flex-wrap items-start gap-x-64 gap-y-40">
+      {/* --- Argument --- */}
+      <div class="flex flex-1 basis-[min(480px,100%)] flex-col items-start gap-24">
+        <Eyebrow variante="lime">Sichtbarkeit</Eyebrow>
+
+        <h2
+          class="m-0 text-h2-sub-lg leading-tightest font-bold tracking-system text-paper"
+        >
+          Die schönste Webseite nützt nichts, wenn sie auf <span
+            class="font-display font-semibold tracking-none italic">Seite zwei</span
+          > steht.
+        </h2>
+
+        <div class="flex flex-col gap-16 text-19 leading-body text-mint">
+          <p class="m-0">
+            Fast jede Agentur baut Ihnen etwas Schönes. Danach ist sie weg. Was
+            niemand gefragt hat: Wer soll diese Seite eigentlich finden?
+          </p>
+          <p class="m-0">
+            Ihre Kunden googeln „Elektriker Bensheim" oder „Kanzlei Bergstraße" und
+            klicken auf die ersten drei Ergebnisse. Wer dort nicht steht, existiert
+            für diese Anfrage nicht — egal wie gut die Seite aussieht.
+          </p>
+          <p class="m-0 font-medium text-cream">
+            Deshalb hört unsere Arbeit nicht beim Design auf. Wir bauen die Seite so,
+            dass sie nach oben kann, und arbeiten danach weiter daran.
+          </p>
+        </div>
+      </div>
+
+      {/* --- Trefferliste als Zielbild --- */}
+      <div class="flex flex-1 basis-[min(400px,100%)] flex-col gap-14">
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-mint-dim">
+          Wo wir hinwollen
+        </span>
+
+        <ol class="m-0 flex list-none flex-col gap-8 p-0">
+          {
+            rangliste.map((eintrag) => (
+              <li
+                class:list={[
+                  'flex items-center gap-16 rounded-12 px-20 py-16 transition-colors',
+                  eintrag.ziel
+                    ? 'bg-lime text-forest-deep shadow-glow'
+                    : 'border border-edge bg-forest-well text-mint-dim',
+                ]}
+              >
+                <span
+                  class:list={[
+                    'font-mono text-15 tabular-nums',
+                    eintrag.ziel ? 'font-bold text-forest-deep' : 'text-mint-dimmer',
+                  ]}
+                >
+                  {String(eintrag.platz).padStart(2, '0')}
+                </span>
+                <span
+                  class:list={[
+                    'text-16 leading-card',
+                    eintrag.ziel ? 'font-bold' : 'font-medium',
+                  ]}
+                >
+                  {eintrag.label}
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+
+        <p class="m-0 mt-6 text-15 leading-body text-mint-dim">
+          Platz 1 garantieren kann niemand, der ehrlich ist — auch wir nicht.
+          Daran arbeiten schon.
+        </p>
+      </div>
+    </div>
+
+    {/* --- Die drei Hebel --- */}
+    <div
+      class="grid gap-16 grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))]"
+    >
+      {
+        sichtbarkeitHebel.map((hebel) => (
+          <div class="flex flex-col gap-10 rounded-16 border border-edge bg-forest-well px-28 py-26">
+            <span class="text-20 leading-card font-bold tracking-heading text-paper">
+              {hebel.titel}
+            </span>
+            <p class="m-0 text-16 leading-body text-mint">{hebel.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
