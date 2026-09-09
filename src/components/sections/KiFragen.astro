@@ -19,8 +19,8 @@ const projekte = import.meta.glob<{ default: ImageMetadata }>(
   '../../assets/projekte/*.{png,jpg}',
   { eager: true },
 );
-const portraits = import.meta.glob<{ default: ImageMetadata }>(
-  '../../assets/portraits/*.jpg',
+const leistungen = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/leistungen/*.{jpg,JPG}',
   { eager: true },
 );
 
@@ -28,22 +28,22 @@ const portraits = import.meta.glob<{ default: ImageMetadata }>(
    es gestreut wirkt und nicht wie ein Raster. */
 const kacheln = [
   { bild: projekte['../../assets/projekte/hepa-baut-startseite.png']!.default,
-    stil: 'left:0%; top:4%;   width:clamp(150px,15vw,250px)', dreh: '-3deg', schnitt: '50% 0%' },
-  { bild: portraits['../../assets/portraits/timon.jpg']!.default,
-    stil: 'left:7%; top:48%;  width:clamp(110px,10vw,165px)', dreh: '4deg', schnitt: '50% 20%' },
+    stil: 'left:-5%; top:3%;   width:clamp(150px,15vw,250px)', dreh: '-3deg', schnitt: '50% 0%' },
+  { bild: leistungen['../../assets/leistungen/kundengewinnung.JPG']!.default,
+    stil: 'left:1%;  top:44%;  width:clamp(120px,12vw,195px)', dreh: '4deg', schnitt: '50% 45%' },
   { bild: projekte['../../assets/projekte/nkn-pv-elektrik-startseite.png']!.default,
-    stil: 'left:1%; top:79%;  width:clamp(140px,13vw,215px)', dreh: '2deg', schnitt: '50% 0%' },
+    stil: 'left:-4%; top:80%;  width:clamp(140px,13vw,215px)', dreh: '2deg', schnitt: '50% 0%' },
   { bild: projekte['../../assets/projekte/dmk-fotoshooting-platzhalter.jpg']!.default,
-    stil: 'right:0%; top:0%;  width:clamp(120px,11vw,180px)', dreh: '3deg', schnitt: '50% 35%' },
+    stil: 'right:-5%; top:0%;  width:clamp(120px,11vw,180px)', dreh: '3deg', schnitt: '50% 35%' },
   { bild: projekte['../../assets/projekte/jhoch2-startseite.png']!.default,
-    stil: 'right:6%; top:44%; width:clamp(150px,15vw,250px)', dreh: '-4deg', schnitt: '50% 0%' },
-  { bild: portraits['../../assets/portraits/gintas.jpg']!.default,
-    stil: 'right:1%; top:82%; width:clamp(110px,10vw,165px)', dreh: '-2deg', schnitt: '50% 8%' },
+    stil: 'right:1%;  top:42%; width:clamp(150px,15vw,250px)', dreh: '-4deg', schnitt: '50% 0%' },
+  { bild: leistungen['../../assets/leistungen/mitarbeitergewinnung.jpg']!.default,
+    stil: 'right:-4%; top:81%; width:clamp(120px,12vw,195px)', dreh: '-2deg', schnitt: '50% 40%' },
 ];
 ---
 
-<section class="overflow-hidden bg-paper px-20 py-section-y-xl">
-  <div class="relative mx-auto max-w-content-wide nav:min-h-560">
+<section class="overflow-hidden bg-paper px-20 py-[clamp(96px,12vw,168px)]">
+  <div class="relative mx-auto max-w-content-wide nav:min-h-680">
     {/* --- verstreute Bilder, erst ab 1040px --- */}
     <div class="pointer-events-none absolute inset-0 hidden nav:block" aria-hidden="true">
       {
@@ -69,7 +69,7 @@ const kacheln = [
 
     {/* --- Mitte --- */}
     <div
-      class="relative mx-auto flex max-w-680 flex-col items-center gap-22 py-16 text-center nav:py-64"
+      class="relative mx-auto flex max-w-680 flex-col items-center gap-22 py-16 text-center nav:py-96"
     >
       <span class="flex items-center gap-8 text-15 font-medium text-ink-muted">
         <span class="h-6 w-6 rounded-full bg-lime" aria-hidden="true"></span>

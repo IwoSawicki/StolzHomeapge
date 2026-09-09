@@ -1,9 +1,24 @@
 ---
-/* Hero der beiden Leistungsseiten: dunkles Band, links Text und Buttons,
-   rechts eine Bildfläche. Beide Seiten teilen sich den Aufbau, nur die
-   Texte unterscheiden sich.
-   Vorlage: design/Kunden gewinnen.dc.html bzw. Mitarbeiter einstellen.dc.html */
+/* Hero der beiden Leistungsseiten — das ganze dunkle Band aus der Vorlage:
+   Kopfzeile, Hero und Logo-Marquee zusammen („Band 1: Hero + Marquee").
+
+   Die Vorlage gibt dem Hero `min-height: calc(100vh - 182px)` und lässt die
+   Bildspalte mit `margin-top: -92px` bis an den oberen und rechten
+   Bildschirmrand laufen — beides hatte ich beim ersten Bau übersehen. Statt
+   des festen Abzugs steht das Band hier auf `min-h-svh` und die Hero-Zeile
+   auf `flex-1`: dann füllt sie genau den Rest, egal wie hoch Kopfzeile und
+   Marquee tatsächlich sind, und auf dem Handy springt nichts, wenn die
+   Adressleiste ein- und ausfährt.
+
+   Das Bild liegt ab 1040px absolut in der rechten Hälfte des Bands — vom
+   oberen Rand bis zum Marquee, rechts randlos. Die Kopfzeile liegt mit
+   z-index darüber. Darunter steht dasselbe Bild als normale Fläche unter
+   dem Text, über die volle Breite.
+   Vorlage: design/Kunden gewinnen.dc.html, data-screen-label="Hero" */
+import { Image } from 'astro:assets';
+import Header from '../Header.astro';
 import Eyebrow from '../Eyebrow.astro';
+import MarqueeBand from './MarqueeBand.astro';
 import { erstgespraech, kontakt } from '../../data/navigation';
 
 interface Props {
@@ -15,8 +30,10 @@ interface Props {
   /** Text nach dem hervorgehobenen Wort */
   titelHinten: string;
   lead: string;
-  /** Beschriftung der Bild-Platzhalterfläche – Bild liegt noch nicht vor */
-  bildPlatzhalter: string;
+  bild: ImageMetadata;
+  bildAlt: string;
+  /** Bildausschnitt, falls die Mitte nicht die beste Stelle ist */
+  bildPosition?: string;
   /** Ziel des Haupt-CTA. Standard ist die Kontaktseite; Seiten mit eigenem
       Formular springen stattdessen dorthin. */
   ctaZiel?: string;
@@ -25,82 +42,121 @@ interface Props {
   /** Breitenbegrenzung der Überschrift – steuert den Zeilenumbruch */
   titelBreite?: string;
 }
+
 const {
   eyebrow,
   titelVorn,
   titelAkzent,
   titelHinten,
   lead,
-  bildPlatzhalter,
+  bild,
+  bildAlt,
+  bildPosition = '50% 50%',
   ctaZiel = erstgespraech.href,
   vertrauenText,
   titelBreite = 'max-w-720',
 } = Astro.props;
 ---
 
-<section
-  class="flex flex-wrap items-stretch gap-48 px-page-x pt-[clamp(40px,5vw,64px)]"
->
-  <div class="flex min-w-300 flex-[1.2] basis-520 flex-col justify-center gap-24">
-    <Eyebrow variante="lime" class="self-start">{eyebrow}</Eyebrow>
+<div class="flex min-h-svh flex-col bg-forest">
+  {/* Kopfzeile und Hero teilen sich den Bezugsrahmen für das Bild */}
+  <div class="relative flex flex-1 flex-col">
+    <Header />
+    <div class="relative z-2 border-b border-edge-soft"></div>
 
-    <h1
+    <section
       class:list={[
-        'm-0 text-h1-sub leading-hero font-bold tracking-faq text-paper',
-        titelBreite,
+        'relative z-1 flex flex-1 flex-col items-start justify-center gap-28',
+        'px-page-x pt-64 pb-96 nav:w-[54%] nav:pr-40',
       ]}
     >
-      {titelVorn}<span class="font-display font-semibold tracking-none italic"
-        >{titelAkzent}</span
-      >{titelHinten}
-    </h1>
+      <Eyebrow variante="lime">{eyebrow}</Eyebrow>
 
-    <p class="m-0 max-w-620 text-19 leading-body text-mint">{lead}</p>
-
-    <div class="flex flex-wrap gap-12">
-      <a
-        href={ctaZiel}
-        class="inline-flex h-56 items-center gap-10 rounded-8 bg-lime px-28 text-16 font-bold text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright"
+      <h1
+        class:list={[
+          'm-0 text-h1-sub leading-hero font-bold tracking-faq text-paper',
+          titelBreite,
+        ]}
       >
-        Kostenloses Erstgespräch<span class="text-18" aria-hidden="true">→</span>
-      </a>
-      <a
-        href="#system"
-        class="box-content inline-flex h-56 items-center rounded-8 border border-lime-edge bg-lime/7 px-26 text-16 font-medium text-cream no-underline transition-colors duration-200 hover:border-lime-edge-hover hover:bg-lime/14"
-      >
-        So funktioniert es
-      </a>
-    </div>
+        {titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{titelAkzent}</span
+        >{titelHinten}
+      </h1>
 
-    {/* Google-Bewertung – führt aufs Unternehmensprofil */}
-    <a
-      href={kontakt.googleProfil}
-      target="_blank"
-      rel="noopener"
-      class="group mt-12 flex flex-col gap-2 self-start no-underline"
+      <p class="m-0 max-w-620 text-19 leading-body text-mint">{lead}</p>
+
+      <div class="flex flex-wrap gap-12">
+        <a
+          href={ctaZiel}
+          class="inline-flex h-56 items-center gap-10 rounded-8 bg-lime px-28 text-16 font-bold text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright"
+        >
+          Kostenloses Erstgespräch<span class="text-18" aria-hidden="true">→</span>
+        </a>
+        <a
+          href="#system"
+          class="box-content inline-flex h-56 items-center rounded-8 border border-lime-edge bg-lime/7 px-26 text-16 font-medium text-cream no-underline transition-colors duration-200 hover:border-lime-edge-hover hover:bg-lime/14"
+        >
+          So funktioniert es
+        </a>
+      </div>
+
+      {/* Google-Bewertung – führt aufs Unternehmensprofil */}
+      <a
+        href={kontakt.googleProfil}
+        target="_blank"
+        rel="noopener"
+        class="group mt-12 flex flex-col gap-2 self-start no-underline"
+      >
+        <span
+          class="text-22 leading-none font-medium tracking-name text-cream transition-colors group-hover:text-lime"
+          >Google</span
+        >
+        <span
+          class="text-12 leading-none tracking-[3px] text-star-alt"
+          aria-label="5 von 5 Sternen">★★★★★</span
+        >
+        {
+          vertrauenText && (
+            <span class="text-15 leading-body text-mint transition-colors group-hover:text-mint-light">
+              {vertrauenText}
+            </span>
+          )
+        }
+      </a>
+    </section>
+
+    {/* Bild: unter 1040px als Fläche unter dem Text, darüber randlos rechts
+        über die ganze Bandhöhe */}
+    <div
+      class:list={[
+        'relative h-[clamp(340px,78vw,560px)] w-full',
+        'nav:absolute nav:inset-y-0 nav:right-0 nav:h-auto nav:w-[46%]',
+      ]}
     >
-      <span
-        class="text-22 leading-none font-medium tracking-name text-cream transition-colors group-hover:text-lime"
-        >Google</span
+      <Image
+        src={bild}
+        alt={bildAlt}
+        widths={[420, 640, 900, 1400]}
+        sizes="(min-width: 1040px) 46vw, 100vw"
+        {/* Größtes Motiv ist ein 5120px-Foto mit viel Beton- und Kiesstruktur;
+            ohne Deckel wiegt die größte Fassung mehrere Megabyte. 1400px
+            reichen für 46vw auch auf großen Bildschirmen mit doppelter
+            Pixeldichte. */}
+        quality={68}
+        loading="eager"
+        fetchpriority="high"
+        class="h-full w-full object-cover"
+        style={`object-position: ${bildPosition}`}
+      />
+      {/* Das Bild läuft hinter der Kopfzeile durch. Ohne diesen Verlauf
+          stünden die hellen Navigationslinks auf einem hellen Motiv. */}
+      <div
+        class="pointer-events-none absolute inset-x-0 top-0 hidden h-160 nav:block"
+        style="background: linear-gradient(to bottom, rgb(13 33 24 / 0.92) 0%, rgb(13 33 24 / 0.4) 55%, rgb(13 33 24 / 0) 100%)"
       >
-      <span class="text-12 leading-none tracking-[3px] text-star-alt" aria-label="5 von 5 Sternen"
-        >★★★★★</span
-      >
-      {
-        vertrauenText && (
-          <span class="text-15 leading-body text-mint transition-colors group-hover:text-mint-light">
-            {vertrauenText}
-          </span>
-        )
-      }
-    </a>
+      </div>
+    </div>
   </div>
 
-  {/* Bildfläche – Motiv liegt noch nicht vor */}
-  <div
-    class="-mt-[92px] flex min-h-[clamp(340px,48vw,520px)] min-w-300 flex-1 basis-520 items-center justify-center"
-    style="background: repeating-linear-gradient(45deg, var(--color-forest-card) 0 14px, var(--color-forest-card-alt) 14px 28px)"
-  >
-    <span class="font-mono text-13 text-mint-placeholder">{bildPlatzhalter}</span>
-  </div>
-</section>
+  <MarqueeBand />
+</div>

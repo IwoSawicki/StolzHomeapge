@@ -2,10 +2,9 @@
 /* Serviceseite Kundengewinnung. Sektionsreihenfolge aus
    design/Kunden gewinnen.dc.html */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeroLeistung from '../components/sections/HeroLeistung.astro';
-import MarqueeBand from '../components/sections/MarqueeBand.astro';
+import heroBild from '../assets/leistungen/kundengewinnung.JPG';
 import Ausgangslage from '../components/sections/kunden/Ausgangslage.astro';
 import SystemSchritte from '../components/sections/leistung/SystemSchritte.astro';
 import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
@@ -21,19 +20,16 @@ import { faqs, systemSchritte, leistungsumfang } from '../data/kunden-gewinnen';
   title="Kunden gewinnen | Stolz Marketing"
   description="Planbar Wunschaufträge gewinnen mit dem Platzhirsch-System — für Handwerksbetriebe an der Bergstraße und im Rhein-Neckar-Raum."
 >
-  {/* Hero und Marquee stehen zusammen im dunklen Band */}
-  <div class="bg-forest">
-    <Header />
-    <HeroLeistung
-      eyebrow="Neue Aufträge gewinnen"
-      titelVorn="Planbar "
-      titelAkzent="Wunschaufträge"
-      titelHinten=" gewinnen mit dem Platzhirsch-System"
-      lead="Für Handwerksbetriebe an der Bergstraße und im Rhein-Neckar-Raum, die nicht mehr auf Zufall und Empfehlung warten wollen — sondern selbst entscheiden, welche Projekte reinkommen."
-      bildPlatzhalter="BILD · Hero Kundengewinnung"
-    />
-    <MarqueeBand />
-  </div>
+  {/* Kopfzeile, Hero und Marquee bilden zusammen das erste Band */}
+  <HeroLeistung
+    eyebrow="Neue Aufträge gewinnen"
+    titelVorn="Planbar "
+    titelAkzent="Wunschaufträge"
+    titelHinten=" gewinnen mit dem Platzhirsch-System"
+    lead="Für Handwerksbetriebe an der Bergstraße und im Rhein-Neckar-Raum, die nicht mehr auf Zufall und Empfehlung warten wollen — sondern selbst entscheiden, welche Projekte reinkommen."
+    bild={heroBild}
+    bildAlt="Zwei Handwerker beim Abstützen einer Kellerdecke"
+  />
 
   <main>
     <Ausgangslage />

@@ -11,10 +11,9 @@
    Sektion 7 (Referenzfälle) ist im Handoff gesperrt und wird bewusst nicht
    angelegt — auch nicht als Platzhalter. */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeroLeistung from '../components/sections/HeroLeistung.astro';
-import MarqueeBand from '../components/sections/MarqueeBand.astro';
+import heroBild from '../assets/leistungen/mitarbeitergewinnung.jpg';
 import Ausgangslage from '../components/sections/mitarbeiter/Ausgangslage.astro';
 import SystemSchritte from '../components/sections/leistung/SystemSchritte.astro';
 import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
@@ -34,21 +33,18 @@ import {
   title="Mitarbeiter gewinnen | Stolz Marketing"
   description="Fachkräfte gewinnen, die zu Ihrem Betrieb passen — mit dem Meistermagnet-System für Handwerksbetriebe."
 >
-  {/* Hero und Logoleiste stehen zusammen im dunklen Band, ohne Kante dazwischen */}
-  <div class="bg-forest">
-    <Header />
-    <HeroLeistung
-      eyebrow="Neue Mitarbeiter einstellen"
-      titelVorn=""
-      titelAkzent="Fachkräfte"
-      titelHinten=" gewinnen, die zu Ihrem Betrieb passen — mit dem Meistermagnet-System"
-      lead="Für Handwerksbetriebe, die nicht auf die warten wollen, die gerade suchen — sondern Fachkräfte erreichen, die gerade nicht suchen."
-      bildPlatzhalter="BILD · Betrieb, Halle, Fahrzeug, Team"
-      ctaZiel="#anfrage"
-      vertrauenText="5,0 Sterne aus 20 Bewertungen"
-    />
-    <MarqueeBand />
-  </div>
+  {/* Kopfzeile, Hero und Logoleiste bilden zusammen das erste Band */}
+  <HeroLeistung
+    eyebrow="Neue Mitarbeiter einstellen"
+    titelVorn=""
+    titelAkzent="Fachkräfte"
+    titelHinten=" gewinnen, die zu Ihrem Betrieb passen — mit dem Meistermagnet-System"
+    lead="Für Handwerksbetriebe, die nicht auf die warten wollen, die gerade suchen — sondern Fachkräfte erreichen, die gerade nicht suchen."
+    bild={heroBild}
+    bildAlt="Drehtag im Betrieb: Kamera, Licht und Firmenfahrzeug in der Halle"
+    ctaZiel="#anfrage"
+    vertrauenText="5,0 Sterne aus 20 Bewertungen"
+  />
 
   <main>
     <Ausgangslage />

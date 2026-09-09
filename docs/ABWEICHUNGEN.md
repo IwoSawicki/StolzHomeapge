@@ -321,10 +321,8 @@ und Projekte-Seite dieselbe Sektion teilen.
 
 **Kunden gewinnen.** Alle neun Sektionen umgesetzt. Zwei Punkte:
 
-- **Das Hero-Bild fehlt.** Die Vorlage verweist auf
-  `screenshot-2026-09-01-at-13-18-02-mti7v13x-1hkw.png`, die Datei ist im
-  Export nicht enthalten. Bis dahin steht dort die schraffierte
-  Platzhalterfläche.
+- ~~**Das Hero-Bild fehlt.**~~ Beide Motive sind nachgereicht, siehe
+  Punkt 38.
 - **Pflichtfelder im Abschlussformular ergänzt.** Die Vorlage markiert kein
   Feld als Pflicht, ein leeres Formular wäre absendbar. Name und Telefonnummer
   sind jetzt Pflicht, Betrieb und Nachricht optional.
@@ -903,3 +901,62 @@ Team". Das ist Text der Vorlage und bleibt unverändert — mit der neuen
 Kennzeichnung liest es sich weiterhin stimmig, weil direkt danach steht
 „Ihr Ansprechpartner bleibt derselbe". Falls dort „unser Team" durch etwas
 Genaueres ersetzt werden soll, ist das eine Zeile.
+
+---
+
+## 38. Korrektur: Hero der Leistungsseiten war zu klein gebaut
+
+**Das war ein Fehler von mir, keine bewusste Abweichung.** Die Vorlage gibt
+dem Hero der Leistungsseiten
+
+```
+min-height: calc(100vh - 182px);
+```
+
+und lässt die Bildspalte mit `margin-top: -92px` bis an den **oberen** und —
+weil die Sektion rechts kein Padding hat — bis an den **rechten**
+Bildschirmrand laufen. Beides hatte ich beim ersten Bau übersehen: der Hero
+war nur so hoch wie sein Inhalt, und das Bild saß mit Seitenrand in der
+Spalte.
+
+**Jetzt umgesetzt**, mit zwei bewussten Unterschieden zur Vorlage:
+
+- Statt `calc(100vh - 182px)` steht das ganze Band (Kopfzeile, Hero,
+  Marquee) auf `min-h-svh`, die Hero-Zeile auf `flex-1`. Damit füllt sie
+  genau den Rest, egal wie hoch Kopfzeile und Marquee tatsächlich sind — der
+  feste Abzug von 182px stimmt in unserem Nachbau nicht, weil unsere
+  Kopfzeile andere Maße hat.
+- `svh` statt `vh`, damit auf dem Handy nichts springt, wenn die
+  Adressleiste ein- und ausfährt.
+
+Damit `HeroLeistung` das Bild über die volle Bandhöhe legen kann, rendert es
+jetzt selbst Kopfzeile und Marquee mit — also genau das, was die Vorlage als
+„Band 1: Hero + Marquee" zusammenfasst. Die beiden Seiten rufen nur noch
+`<HeroLeistung … />` auf.
+
+**Ergänzt:** ein Verlauf über die oberen 160px des Bildes. Das Bild läuft
+hinter der Kopfzeile durch; auf hellen Motiven wären die cremefarbenen
+Navigationslinks sonst nicht lesbar. Die Vorlage hat den nicht, ihr Motiv
+war dunkler.
+
+**Die Motive** liegen in `src/assets/leistungen/`. Größte ausgelieferte
+Fassung 1400px bei Qualität 68 — das reicht für 46vw auch auf großen
+Bildschirmen mit doppelter Pixeldichte und hält das Hero-Bild bei 111 KB
+statt 2,5 MB. Ohne Deckel wiegt das Kundenmotiv (5120px, viel Beton- und
+Kiesstruktur) ein Vielfaches.
+
+**[Rückfrage]** `kundengewinnung.JPG` ist **quer** (5120 × 3413), nicht
+hochkant — nur das Mitarbeitermotiv ist hochkant. Im Hero fällt das kaum
+auf, weil die beiden Personen mittig stehen und der Ausschnitt sie behält;
+seitlich gehen aber rund 45 Prozent des Bildes verloren. Falls es eine
+hochkante Fassung gibt, wird der Ausschnitt besser.
+
+---
+
+## 39. KI-Sektion: luftiger, mit den Leistungsmotiven
+
+Nachgeschärft auf Wunsch von Iwo: mehr Höhe und Innenabstand, die
+Bildkacheln weiter nach außen (bis leicht über die Inhaltsbreite hinaus),
+und die beiden Teamporträts durch die neuen Hero-Motive der Leistungsseiten
+ersetzt. Damit zeigen die Kacheln jetzt vier Projekte und zwei Aufnahmen von
+Drehtagen.
