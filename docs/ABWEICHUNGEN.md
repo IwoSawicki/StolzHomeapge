@@ -984,18 +984,22 @@ Drehtagen.
 ## 40. Footer: sechs Branchen, dazu eine Merkliste geplanter Landingpages
 
 **Branchen im Footer auf sechs gekürzt** (Auswahl Iwo): Bauunternehmen,
-Elektriker, SHK, Maler, Fliesenleger, Produktion & Fertigung.
-Bezeichnungen wie im Raster auf der Startseite, damit beide Listen dieselbe
-Sprache sprechen. Das vollständige Raster mit zwölf Gewerken bleibt dort.
+Elektriker, SHK, Maler, Sanierung & Renovierung, Produktion & Fertigung.
 
-**[Rückfrage]** „Bauunternehmen" trifft DMK Bau, aber nicht HePa Baut —
+„Bauunternehmen" trifft DMK Bau, aber nicht HePa Baut und nicht Jhoch2 —
 deren Geschäft sind Altbau- und Badsanierung, Renovierung und
-Wasserschaden. Ein eigener Eintrag **„Sanierung & Renovierung"** würde die
-genauer abholen und deckt sich mit den Aufnahmekriterien auf
-`/kunden-gewinnen`, die genau diese Wörter nennen („Sanierung, Renovierung,
-Innenausbau, Bad, Maler, Boden, Garten, Schreiner"). Er müsste einen der
-sechs verdrängen — mein Vorschlag wäre Fliesenleger, weil Bad und Boden
-darin ohnehin aufgehen.
+Wasserschaden. Deshalb steht **„Sanierung & Renovierung"** als eigener
+Eintrag anstelle von „Fliesenleger"; Bad und Boden gehen darin ohnehin auf.
+Die Wörter stehen so bereits in den Aufnahmekriterien auf
+`/kunden-gewinnen` („Sanierung, Renovierung, Innenausbau, Bad, Maler,
+Boden, Garten, Schreiner").
+
+**[Rückfrage] Das Raster auf der Startseite kennt diese Kategorie noch
+nicht.** Dort stehen zwölf Gewerke in drei vollen Reihen, „Sanierung &
+Renovierung" ist nicht darunter — obwohl zwei der vier gezeigten Projekte
+(HePa Baut, Jhoch2) genau dort hineingehören. Entweder verdrängt sie ein
+Gewerk (Fliesenleger oder Zimmerer wären meine Kandidaten) oder das Raster
+bekommt eine dreizehnte Kachel und damit eine angebrochene Reihe.
 
 **Neue Spalte „Leistungen vor Ort"** mit sechs geplanten Landingpages. Die
 Seiten gibt es noch nicht; die Einträge stehen ausgegraut da wie die

@@ -56,7 +56,11 @@ export const footerBranchen: NavLink[] = [
   { label: 'Elektriker', href: '/branchen/elektro', nochNicht: true },
   { label: 'SHK', href: '/branchen/shk', nochNicht: true },
   { label: 'Maler', href: '/branchen/maler', nochNicht: true },
-  { label: 'Fliesenleger', href: '/branchen/fliesenleger', nochNicht: true },
+  /* Statt Fliesenleger: „Bauunternehmen" trifft DMK Bau, aber nicht HePa
+     Baut oder Jhoch2 — deren Geschäft sind Sanierung, Renovierung und
+     Wasserschaden. Bad und Boden gehen darin ohnehin auf. Die Wörter
+     stehen so schon in den Aufnahmekriterien auf /kunden-gewinnen. */
+  { label: 'Sanierung & Renovierung', href: '/branchen/sanierung-renovierung', nochNicht: true },
   { label: 'Produktion & Fertigung', href: '/branchen/produktion-fertigung', nochNicht: true },
 ];
 
