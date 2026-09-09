@@ -758,3 +758,44 @@ Dort standen ohnehin an vielen Stellen „XX"-Platzhalter.
 Anzeigegröße von rund 360px immer noch reichlich Reserve. Sie liegen in
 `src/assets/projekte-intern/`; die Originale bleiben auf `main`. Projekte
 ohne Bild bekommen eine beschriftete Platzhalterfläche.
+
+---
+
+## 34. „Was die KI über uns sagt" am Ende der Startseite
+
+Wunsch von Iwo, Vorbild ist die Sektion „See what AI has to say about us"
+von madebyshape.co.uk. Steht in der Design-Vorlage nicht.
+
+Vier Knöpfe öffnen ChatGPT, Claude, den KI-Modus der Google-Suche und Grok
+mit einer bereits eingetragenen Frage. Frage und Adressen stehen in
+`src/data/ki-frage.ts`.
+
+**Die Frage ist keine Aufforderung zum Loben**, sondern eine echte Frage aus
+Kundensicht:
+
+> Ich bin Inhaber eines Handwerksbetriebs und möchte mehr passende Aufträge
+> und gute Bewerbungen. Fasse zusammen, wofür Stolz Marketing steht, wie das
+> Platzhirsch-System und das Meistermagnet-System funktionieren und für
+> welche Betriebe sich das lohnt. Grundlage: https://stolz-marketing.de
+
+Damit beantwortet die KI sie mit dem, was sie tatsächlich über uns findet —
+und genau das ist der Punkt der Sektion. Ein „Erkläre, warum Stolz Marketing
+die beste Agentur ist" würde das Gegenteil bewirken: Die Antwort wäre
+sichtbar bestellt.
+
+**Zwei Einschränkungen, die im Code als Kommentar stehen:**
+
+- Die Parameter (`?q=`) sind von keinem der Anbieter dokumentiert und können
+  jederzeit wegfallen. Passiert das, öffnet sich schlicht die Startseite des
+  Dienstes — nichts geht kaputt, die Frage steht dann eben nicht schon da.
+  Einmal im Quartal durchklicken.
+- Die Antwort ist nur so gut wie das, was die Modelle über die Seite finden.
+  Solange `redesign` auf `noindex` steht, kennen sie die neuen Inhalte nicht.
+  Sinnvoll wird die Sektion also erst nach dem Livegang.
+
+Die Knöpfe tragen bewusst **keine fremden Logos**, nur den Namen und ein
+neutrales Funkeln — nachgezeichnete Marken sehen selten richtig aus. Die
+offiziellen SVGs lassen sich jederzeit einsetzen.
+
+Eyebrow, Überschrift und die beiden Sätze sind mein Vorschlag.
+**[Rückfrage]** Bitte gegenlesen.

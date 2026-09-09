@@ -1,0 +1,60 @@
+---
+/* „Fragen Sie die KI": letzte Sektion der Startseite. Vier Knöpfe, die den
+   jeweiligen Dienst mit einer bereits eingetragenen Frage öffnen.
+
+   Steht nicht in der Design-Vorlage — Wunsch von Iwo, Vorbild ist die
+   Sektion „See what AI has to say about us" von madebyshape.co.uk. Texte
+   sind mein Vorschlag und noch nicht freigegeben. */
+import Eyebrow from '../Eyebrow.astro';
+import { kiFrage, kiDienste } from '../../data/ki-frage';
+
+const frage = encodeURIComponent(kiFrage);
+---
+
+<section class="bg-paper-soft px-20 py-section-y-lg">
+  <div class="mx-auto flex max-w-860 flex-col items-center gap-24 text-center">
+    <Eyebrow variante="hell">Nicht glauben, nachfragen</Eyebrow>
+
+    <h2
+      class="m-0 text-h2-system leading-system font-bold tracking-system text-ink"
+    >
+      Was die KI <span class="font-display font-semibold tracking-none italic"
+        >über uns sagt</span
+      >
+    </h2>
+
+    <p class="m-0 max-w-620 text-19 leading-body text-ink-muted">
+      Ein Klick öffnet die Frage schon fertig getippt. Die Antwort kommt nicht von uns.
+    </p>
+
+    <div class="mt-8 flex flex-wrap justify-center gap-10">
+      {
+        kiDienste.map((dienst) => (
+          <a
+            href={dienst.adresse(frage)}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex h-46 items-center gap-8 rounded-full bg-lime px-20 text-16 font-bold text-forest-deep no-underline transition-colors duration-200 hover:bg-lime-bright"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              class="flex-none"
+            >
+              <path d="M12 1.6l2.1 6.3 6.3 2.1-6.3 2.1-2.1 6.3-2.1-6.3-6.3-2.1 6.3-2.1z" />
+            </svg>
+            {dienst.name}
+          </a>
+        ))
+      }
+    </div>
+
+    <p class="m-0 max-w-560 text-15 leading-body text-ink-faint">
+      Öffnet sich in einem neuen Tab beim jeweiligen Anbieter. Was dort steht, ist deren
+      Antwort — wir haben keinen Einfluss darauf.
+    </p>
+  </div>
+</section>
