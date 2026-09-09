@@ -1,16 +1,22 @@
 ---
-/* Einwilligungsbanner für Google Analytics.
+/* Einwilligungsbanner für Google Analytics und Microsoft Clarity.
 
    Logik unverändert vom bisherigen Auftritt (Branch main), Gestaltung aus
    dem neuen Designsystem:
 
-   - GA wird NICHT automatisch geladen, sondern erst nach „Akzeptieren".
+   - Beide Dienste werden NICHT automatisch geladen, sondern erst nach
+     „Akzeptieren".
    - Die Wahl liegt in localStorage; danach erscheint das Banner nicht mehr.
    - Über „Cookie-Einstellungen" im Footer lässt sie sich neu treffen.
    - Getrackt wird nur auf der Produktionsdomain, nicht auf der Vorschau.
 
+   Clarity zeichnet Sitzungen auf (Mausweg, Klicks, Scrollen) und setzt
+   eigene Cookies. Es braucht damit dieselbe Einwilligung wie GA und darf
+   auf keinen Fall vorab laden.
+
    Umami braucht kein Banner: cookielos, läuft direkt im BaseLayout. */
 const GA_ID = 'G-ZK7F06197Z';
+const CLARITY_ID = 'yfldl5r8k0';
 ---
 
 <div
@@ -23,8 +29,9 @@ const GA_ID = 'G-ZK7F06197Z';
   >
     <p class="m-0 text-17 font-bold tracking-name text-ink">Cookies und Analyse</p>
     <p class="m-0 text-15 leading-body text-ink-muted">
-      Wir nutzen Google Analytics, um unsere Website zu verbessern. Sie entscheiden
-      selbst, ob wir das dürfen. Details stehen in der <a
+      Wir nutzen Google Analytics und Microsoft Clarity, um unsere Website zu
+      verbessern. Clarity zeichnet dabei anonymisiert auf, wie Sie sich auf der
+      Seite bewegen. Sie entscheiden selbst, ob wir das dürfen. Details stehen in der <a
         href="/datenschutz"
         class="underline underline-offset-2 hover:text-lime-link-hover"
         >Datenschutzerklärung</a
@@ -49,15 +56,19 @@ const GA_ID = 'G-ZK7F06197Z';
   </div>
 </div>
 
-<script define:vars={{ GA_ID }}>
+<script define:vars={{ GA_ID, CLARITY_ID }}>
   const SCHLUESSEL = 'stolz-consent';
   const banner = document.querySelector('[data-cookie-banner]');
 
+  // Nur auf der Produktionsdomain zählen, nicht auf Vorschau oder lokal
+  function istProduktion() {
+    const host = location.hostname;
+    return host === 'stolz-marketing.de' || host === 'www.stolz-marketing.de';
+  }
+
   function ladeGA() {
     if (window.__gaGeladen) return;
-    // Nur auf der Produktionsdomain zählen, nicht auf Vorschau oder lokal
-    const host = location.hostname;
-    if (host !== 'stolz-marketing.de' && host !== 'www.stolz-marketing.de') return;
+    if (!istProduktion()) return;
     window.__gaGeladen = true;
 
     const skript = document.createElement('script');
@@ -74,16 +85,42 @@ const GA_ID = 'G-ZK7F06197Z';
     gtag('config', GA_ID, { anonymize_ip: true });
   }
 
+  // Offizieller Clarity-Schnipsel, nur in eine Funktion gepackt, damit er
+  // erst nach der Einwilligung läuft.
+  function ladeClarity() {
+    if (window.__clarityGeladen) return;
+    if (!istProduktion()) return;
+    window.__clarityGeladen = true;
+
+    (function (c, l, a, r, i, t, y) {
+      c[a] =
+        c[a] ||
+        function () {
+          (c[a].q = c[a].q || []).push(arguments);
+        };
+      t = l.createElement(r);
+      t.async = 1;
+      t.src = 'https://www.clarity.ms/tag/' + i;
+      y = l.getElementsByTagName(r)[0];
+      y.parentNode.insertBefore(t, y);
+    })(window, document, 'clarity', 'script', CLARITY_ID);
+  }
+
+  function ladeDienste() {
+    ladeGA();
+    ladeClarity();
+  }
+
   const zeige = () => banner?.classList.remove('hidden');
   const verstecke = () => banner?.classList.add('hidden');
 
   const wahl = localStorage.getItem(SCHLUESSEL);
-  if (wahl === 'accepted') ladeGA();
+  if (wahl === 'accepted') ladeDienste();
   else if (wahl !== 'declined') zeige();
 
   document.querySelector('[data-cookie-accept]')?.addEventListener('click', () => {
     localStorage.setItem(SCHLUESSEL, 'accepted');
-    ladeGA();
+    ladeDienste();
     verstecke();
   });
 
