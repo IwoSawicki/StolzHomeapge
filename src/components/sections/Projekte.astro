@@ -15,12 +15,19 @@ interface Props {
   /* Die Hinweiszeile zu den Kampagnenzahlen steht nur auf der Startseite,
      die Projekte-Seite der Vorlage hat sie nicht. */
   mitHinweis?: boolean;
+  /* Vier weitere Projekte stehen nur auf /projekte — die Startseite bleibt
+     bei den vier der Vorlage. */
+  alleProjekte?: boolean;
 }
-const { grund = 'dunkel', mitHinweis = true } = Astro.props;
+const { grund = 'dunkel', mitHinweis = true, alleProjekte = false } = Astro.props;
 const istHell = grund === 'hell';
 
+const sichtbareProjekte = alleProjekte
+  ? projekte
+  : projekte.filter((p) => !p.nurProjekteseite);
+
 const bilder = import.meta.glob<{ default: ImageMetadata }>(
-  '../../assets/projekte/*.{png,jpg}',
+  '../../assets/projekte/*.{png,jpg,webp}',
   { eager: true },
 );
 const bild = (datei: string) => bilder[`../../assets/projekte/${datei}`]!.default;
@@ -70,7 +77,8 @@ const bild = (datei: string) => bilder[`../../assets/projekte/${datei}`]!.defaul
           Mitteln aufgebaut, mit denen wir für unsere Kunden arbeiten — Name, Logo,
           Webseite, Google-Profil. Die ersten Anfragen kamen über bezahlte Werbung.
         </p>
-        <Button href="/projekte" variante="dunkel">Zum Projekt</Button>
+        {/* „Zum Projekt" ist entfallen: Umzüge Bergstraße hat keine
+            Unterseite (Entscheidung Iwo). */}
       </div>
 
       <div class="relative min-w-280 flex-1 basis-380">
@@ -100,7 +108,7 @@ const bild = (datei: string) => bilder[`../../assets/projekte/${datei}`]!.defaul
       class="grid max-w-content grid-cols-[repeat(auto-fit,minmax(min(480px,100%),1fr))] gap-24"
     >
       {
-        projekte.map((projekt) => (
+        sichtbareProjekte.map((projekt) => (
           <article class="flex flex-col overflow-hidden rounded-16 border border-edge bg-forest-card">
             <div class="px-16 pt-16">
               {projekt.foto ? (
@@ -152,10 +160,17 @@ const bild = (datei: string) => bilder[`../../assets/projekte/${datei}`]!.defaul
               <h3 class="m-0 text-22 leading-card-wide font-bold text-cream">
                 {projekt.titel}
               </h3>
-              {/* „Projekt ansehen" ist entfallen: es gibt keine
-                  Projekt-Unterseiten, der Link zeigte auf die Seite, auf der
-                  die Karte ohnehin steht (Entscheidung Iwo). */}
               <p class="m-0 text-17 leading-body text-mint">{projekt.text}</p>
+              {/* Nur wo es eine Unterseite gibt — sonst zeigte der Link auf
+                  die Seite, auf der die Karte ohnehin steht. */}
+              {projekt.seite && (
+                <a
+                  href={projekt.seite}
+                  class="mt-auto pt-8 text-17 font-medium text-cream underline decoration-1 underline-offset-4 transition-colors hover:text-lime"
+                >
+                  Projekt ansehen →
+                </a>
+              )}
             </div>
           </article>
         ))

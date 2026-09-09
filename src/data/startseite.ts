@@ -38,17 +38,28 @@ export interface Projekt {
   /** Bildausschnitt für das Foto (object-position) */
   fotoPosition?: string;
   href: string;
+  /** Eigene Unterseite. Nur DMK Bau und HePa Baut haben eine — nur dort
+      steht deshalb „Projekt ansehen" unter der Karte. */
+  seite?: string;
+  /** Steht nur auf /projekte, nicht auf der Startseite. Dort bleiben es die
+      vier Projekte der Vorlage. */
+  nurProjekteseite?: boolean;
 }
 
 export const projekte: Projekt[] = [
   {
     eyebrow: 'HEPA Baut · Sanierung',
-    titel: 'Eine Webseite, die drei Geschäfte sauber trennt',
+    /* Der Titel nennt jetzt das Besondere statt der Absicht. Die Zahlen
+       decken sich mit dem Text darunter: rund 150 Städteseiten je Leistung,
+       über 450 insgesamt. „Leistungen" statt „Gewerke", weil Sanierung,
+       Renovierung und Wasserschaden Leistungen desselben Betriebs sind. */
+    titel: 'Webseite mit über 450 Ortsseiten für drei Leistungen',
     text: 'Altbau- und Badsanierung, Renovierung, Wasserschaden — vorher liefen die drei ineinander. Jetzt: eine eigene Startseite je Leistung plus rund 150 Städteseiten pro Leistung im 30-Kilometer-Umkreis, über 450 Seiten insgesamt. Kontaktformular, Rückruf und Click-to-Call auf jeder Seite.',
     domain: 'hepa-baut.de',
     screenshot: 'hepa-baut-startseite.png',
     screenshotAlt: 'Startseite von HePa Baut mit den drei getrennten Leistungsbereichen',
     href: '/projekte',
+    seite: '/projekte/hepa-baut',
   },
   {
     eyebrow: 'Jhoch2 · Wasserschadensanierung',
@@ -81,6 +92,52 @@ export const projekte: Projekt[] = [
     fotoAlt: 'Foto- und Videodreh im Betrieb von DMK Bau',
     fotoPosition: '50% 42%',
     href: '/projekte',
+    seite: '/projekte/dmk-bau',
+  },
+
+  /* --- Nur auf /projekte -------------------------------------------------
+     Texte unverändert aus dem bisherigen Auftritt (Branch main). Die
+     Screenshots liegen als verkleinerte WebP-Kopien bei; die Originale
+     bleiben auf main. */
+  {
+    eyebrow: 'Zehner Immobilien · Immobilienvermittlung',
+    titel: 'Neue Website mit klarer Positionierung',
+    text: 'Neue Website mit klarer Positionierung für mehr Verkäufer-Anfragen.',
+    domain: 'zehner-immobilien.de',
+    screenshot: 'zehner-immobilien-startseite.webp',
+    screenshotAlt: 'Startseite von Zehner Immobilien',
+    href: '/projekte',
+    nurProjekteseite: true,
+  },
+  {
+    eyebrow: 'Nieder-Ramstädter Weinmacher · Weinbau',
+    titel: 'Weine, Events und Verleih an einem Ort',
+    text: 'Neuer Auftritt für den Wein aus dem Frankensteiner Land — Weine, Events und Verleih an einem Ort.',
+    domain: 'weinmacher-muehltal.de',
+    screenshot: 'weinmacher-startseite.webp',
+    screenshotAlt: 'Startseite der Nieder-Ramstädter Weinmacher',
+    href: '/projekte',
+    nurProjekteseite: true,
+  },
+  {
+    eyebrow: 'Tierbestattung Memoria · Tierbestattung',
+    titel: 'Eine Website für einen würdevollen Abschied',
+    text: 'Website für einen würdevollen Abschied — Leistungen, Preise und Urnen ruhig und klar aufbereitet.',
+    domain: 'tierbestattung-memoria.de',
+    screenshot: 'tierbestattung-memoria-startseite.webp',
+    screenshotAlt: 'Startseite von Tierbestattung Memoria',
+    href: '/projekte',
+    nurProjekteseite: true,
+  },
+  {
+    eyebrow: 'Pulse Vending · Snackautomaten',
+    titel: 'Performance Marketing für den bundesweiten Verkauf',
+    text: 'Performance Marketing für den bundesweiten Verkauf von Snackautomaten.',
+    domain: 'pulse-vending.de',
+    screenshot: 'pulse-vending-startseite.webp',
+    screenshotAlt: 'Startseite von Pulse Vending',
+    href: '/projekte',
+    nurProjekteseite: true,
   },
 ];
 

@@ -1,0 +1,322 @@
+---
+/* Projekt-Unterseiten. Es gibt sie nur für die zwei Projekte, zu denen
+   genug Material vorliegt: DMK Bau (drei Kampagnenvideos) und HEPA Baut
+   (der Relaunch mit über 450 Seiten). Inhalte aus dem bisherigen Auftritt,
+   Gestaltung aus dem neuen Designsystem.
+
+   Die Adressen bleiben dieselben wie vorher — /projekte/dmk-bau steht laut
+   Search Console auf Position 8,7 und wäre sonst nur noch eine
+   Weiterleitung. */
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import Button from '../../components/Button.astro';
+import BrowserRahmen from '../../components/BrowserRahmen.astro';
+import Zusammenarbeit from '../../components/sections/Zusammenarbeit.astro';
+import { projektseiten } from '../../data/projektseiten';
+import type { Projektseite } from '../../data/projektseiten';
+
+export function getStaticPaths() {
+  return projektseiten.map((projekt) => ({
+    params: { slug: projekt.slug },
+    props: { projekt },
+  }));
+}
+
+interface Props {
+  projekt: Projektseite;
+}
+const { projekt } = Astro.props;
+
+const bilder = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/projekte/**/*.webp',
+  { eager: true },
+);
+const videos = import.meta.glob<{ default: string }>(
+  '../../assets/projekte/dmkbau/*.mp4',
+  { eager: true },
+);
+const bild = (ordner: string, datei: string) =>
+  bilder[`../../assets/projekte/${ordner}/${datei}`]!.default;
+
+/* **fett** aus den Texten von main in Markup übersetzen */
+const fett = (text: string) =>
+  text.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold text-ink">$1</strong>');
+---
+
+<BaseLayout
+  title={`${projekt.name} | Projekte | Stolz Marketing`}
+  description={projekt.einleitung.replace(/\*\*/g, '').slice(0, 155)}
+>
+  <div class="bg-paper">
+    <Header variante="hell" />
+    <div class="border-b border-line"></div>
+  </div>
+
+  <main class="bg-paper">
+    {/* --- Kopf ------------------------------------------------------- */}
+    <section class="px-20 pt-section-y-md pb-40">
+      <div class="mx-auto flex max-w-content flex-col items-start gap-20">
+        <a
+          href="/projekte"
+          class="text-15 font-medium text-ink-muted no-underline transition-colors hover:text-ink"
+          >← Alle Projekte</a
+        >
+        <Eyebrow variante="hell">{projekt.eyebrow}</Eyebrow>
+        <h1
+          class="m-0 max-w-860 text-h2-sub-lg leading-tightest font-bold tracking-system text-ink"
+        >
+          {projekt.name}: <span class="font-display font-semibold tracking-none italic"
+            >{projekt.titel}</span
+          >
+        </h1>
+        <p
+          class="m-0 max-w-720 text-19 leading-prose text-ink-quiet"
+          set:html={fett(projekt.einleitung)}
+        />
+
+        {
+          projekt.liveUrl && (
+            <Button href={projekt.liveUrl} variante="tinte" extern class="mt-6">
+              {projekt.domain} besuchen<span class="text-18" aria-hidden="true">
+                →
+              </span>
+            </Button>
+          )
+        }
+
+        <dl
+          class="m-0 mt-20 grid w-full grid-cols-2 gap-24 border-t border-line pt-28 btn:grid-cols-4"
+        >
+          {
+            projekt.keyfacts.map((fakt) => (
+              <div class="flex flex-col gap-6">
+                <dt class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+                  {fakt.label}
+                </dt>
+                <dd class="m-0 text-19 font-bold tracking-name text-ink">{fakt.wert}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </section>
+
+    {/* --- Medien ------------------------------------------------------ */}
+    <section class="px-20 py-40">
+      <div class="mx-auto max-w-content">
+        {
+          projekt.art === 'website' && projekt.screenshot && (
+            <BrowserRahmen domain={projekt.domain ?? ''} radius="r12">
+              <Image
+                src={bild('hepa', projekt.screenshot)}
+                alt={`Startseite von ${projekt.name}`}
+                widths={[720, 1160, 1600]}
+                sizes="(min-width: 1200px) 1160px, 92vw"
+                loading="eager"
+                class="block h-auto w-full"
+              />
+            </BrowserRahmen>
+          )
+        }
+
+        {
+          projekt.art === 'video' && projekt.videos && (
+            <div class="flex flex-col gap-24">
+              {/* Hochkant-Clips. preload="metadata" statt eines gemeinsamen
+                  Posters: so zeigt jeder Clip sein eigenes erstes Bild —
+                  mit einem Poster sähen alle drei gleich aus. Geladen wird
+                  dabei nur der Dateikopf, nicht das Video. */}
+              <div class="grid grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-20">
+                {projekt.videos.map((datei, i) => (
+                  <video
+                    class="aspect-[9/16] w-full rounded-16 border border-line bg-paper-warm object-cover"
+                    src={videos[`../../assets/projekte/dmkbau/${datei}`]!.default}
+                    controls
+                    playsinline
+                    preload="metadata"
+                    aria-label={`Kampagnenvideo ${i + 1} für ${projekt.name}`}
+                  />
+                ))}
+              </div>
+              <p class="m-0 text-15 leading-body text-ink-faint">
+                Drei Clips aus der laufenden Kampagne — gedreht an einem Tag im Betrieb.
+              </p>
+            </div>
+          )
+        }
+      </div>
+    </section>
+
+    {/* --- Was wir umgesetzt haben -------------------------------------- */}
+    <section class="bg-paper-soft px-20 py-section-y-md">
+      <div class="mx-auto flex max-w-content flex-col gap-40">
+        <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+          Was wir <span class="font-display font-semibold tracking-none italic"
+            >umgesetzt haben</span
+          >
+        </h2>
+        <ol
+          class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-x-24 gap-y-32 p-0"
+        >
+          {
+            projekt.leistungen.map((leistung, i) => (
+              <li class="flex flex-col items-start gap-10 border-t border-line pt-24">
+                <span class="font-mono text-12 text-sketch-light">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 class="m-0 text-21 leading-card font-bold tracking-heading text-ink">
+                  {leistung.titel}
+                </h3>
+                <p class="m-0 text-17 leading-quote text-ink-quiet">{leistung.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    {/* --- Nur Website: Funktionen -------------------------------------- */}
+    {
+      projekt.webFeatures && (
+        <section class="px-20 py-section-y-md">
+          <div class="mx-auto flex max-w-content flex-wrap items-start gap-x-64 gap-y-32">
+            <h2 class="m-0 max-w-420 flex-1 basis-340 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+              Was die Seite <span class="font-display font-semibold tracking-none italic">kann</span>
+            </h2>
+            <ul class="m-0 flex flex-[1.4] basis-420 list-none flex-col gap-12 p-0">
+              {projekt.webFeatures.map((punkt) => (
+                <li class="grid grid-cols-[20px_minmax(0,1fr)] gap-10 border-b border-line pb-12 text-17 leading-body text-ink-quiet last:border-b-0">
+                  <span class="text-ink" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{punkt}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
+
+    {/* --- Nur Website: die drei Leistungswelten ------------------------ */}
+    {
+      projekt.leistungsseiten && (
+        <section class="bg-paper-soft px-20 py-section-y-md">
+          <div class="mx-auto flex max-w-content flex-col gap-40">
+            <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+              Drei Welten, <span class="font-display font-semibold tracking-none italic">ein Auftritt</span>
+            </h2>
+            <div class="flex flex-col gap-24">
+              {projekt.leistungsseiten.map((seite) => (
+                <article class="flex flex-wrap items-start gap-x-40 gap-y-24 rounded-20 border border-line bg-paper p-card-x">
+                  <div class="min-w-280 flex-1 basis-380">
+                    <BrowserRahmen domain={seite.url.replace(/^https?:\/\//, '')} radius="r12">
+                      <Image
+                        src={bild('hepa', seite.bild)}
+                        alt={`Seite ${seite.name} von ${projekt.name}`}
+                        widths={[480, 760, 1200]}
+                        sizes="(min-width: 1200px) 520px, 90vw"
+                        loading="lazy"
+                        decoding="async"
+                        class="block h-auto w-full"
+                      />
+                    </BrowserRahmen>
+                  </div>
+                  <div class="flex min-w-280 flex-1 basis-380 flex-col items-start gap-14">
+                    <h3 class="m-0 text-23 leading-card font-bold tracking-heading text-ink">
+                      {seite.name}
+                    </h3>
+                    <p class="m-0 text-17 leading-quote text-ink-quiet">{seite.beschreibung}</p>
+                    <ul class="m-0 flex list-none flex-col gap-8 p-0">
+                      {seite.punkte.map((punkt) => (
+                        <li class="grid grid-cols-[18px_minmax(0,1fr)] gap-8 text-16 leading-body text-ink-quiet">
+                          <span class="text-ink" aria-hidden="true">
+                            ✓
+                          </span>
+                          <span>{punkt}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {seite.hinweis && (
+                      <div class="mt-6 w-full rounded-16 bg-paper-soft px-22 py-20">
+                        <p class="m-0 text-16 font-bold tracking-name text-ink">
+                          {seite.hinweis.titel}
+                        </p>
+                        <ol class="m-0 mt-10 flex list-none flex-col gap-6 p-0">
+                          {seite.hinweis.schritte.map((schritt, i) => (
+                            <li class="grid grid-cols-[22px_minmax(0,1fr)] gap-8 text-16 leading-body text-ink-quiet">
+                              <span class="font-mono text-13 text-ink-faint">
+                                {i + 1}.
+                              </span>
+                              <span>{schritt}</span>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    )}
+                    <a
+                      href={seite.url}
+                      target="_blank"
+                      rel="noopener"
+                      class="mt-auto pt-6 text-16 font-medium text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-lime-link-hover"
+                    >
+                      Seite ansehen →
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    {/* --- Nur Website: die Städtestruktur ------------------------------ */}
+    {
+      projekt.stadtStruktur && (
+        <section class="px-20 py-section-y-md">
+          <div class="mx-auto flex max-w-content flex-wrap items-start gap-x-64 gap-y-32">
+            <div class="flex min-w-280 flex-1 basis-380 flex-col items-start gap-16">
+              <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+                In jeder Stadt <span class="font-display font-semibold tracking-none italic">im Umkreis</span>
+              </h2>
+              <p class="m-0 max-w-520 text-18 leading-prose text-ink-quiet">
+                Für jede der drei Leistungen gibt es eigene Städteseiten im Umkreis von
+                {' '}{projekt.stadtStruktur.radiusKm} Kilometern um
+                {' '}{projekt.stadtStruktur.zentrum} — jede auf ihre Stadt zugeschnitten.
+              </p>
+              <div class="flex flex-wrap gap-8">
+                {[...projekt.stadtStruktur.staedte, `+ ${projekt.stadtStruktur.weitere} weitere`].map(
+                  (stadt) => (
+                    <span class="rounded-full border border-line bg-paper-soft px-14 py-8 text-15 font-medium text-ink-muted">
+                      {stadt}
+                    </span>
+                  ),
+                )}
+              </div>
+            </div>
+            <div class="min-w-280 flex-1 basis-380 rounded-20 border border-line bg-paper-soft px-card-x py-card-y">
+              <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+                So sehen die Seitentitel aus
+              </span>
+              <ul class="m-0 mt-16 flex list-none flex-col gap-10 p-0">
+                {projekt.stadtStruktur.keywords.map((wort) => (
+                  <li class="border-b border-line pb-10 text-17 leading-body text-ink last:border-b-0 last:pb-0">
+                    {wort}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <Zusammenarbeit />
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1234,3 +1234,36 @@ sich das Dokument wirklich seitlich scrollen lässt, statt nur `scrollWidth`
 mit `clientWidth` zu vergleichen.
 
 Ergebnis: **alle acht Seiten, Desktop und Handy, ohne seitlichen Überlauf.**
+
+---
+
+## 49. Zwei Projekt-Unterseiten und vier weitere Kacheln
+
+**`/projekte/dmk-bau` und `/projekte/hepa-baut`** sind aus dem bisherigen
+Auftritt übernommen, Wortlaut unverändert, Gestaltung neu. Die Adressen
+bleiben dieselben — `/projekte/dmk-bau` steht laut Search Console auf
+Position 8,7 und wäre sonst nur noch eine Weiterleitung.
+
+Der Abschnitt „Ergebnisse" ist **nicht** mitgenommen: dort standen auf
+`main` überall „XX"-Platzhalter. Sobald echte Zahlen vorliegen, lässt sich
+der Block ergänzen.
+
+Die drei DMK-Clips laden mit `preload="metadata"` statt mit einem
+gemeinsamen Poster — sonst sähen alle drei gleich aus. Geladen wird dabei
+nur der Dateikopf, nicht das Video.
+
+**„Projekt ansehen"** steht wieder unter den beiden Karten, die eine
+Unterseite haben. **„Zum Projekt"** in der Beweisfall-Karte (Umzüge
+Bergstraße) ist entfallen — dafür gibt es keine Unterseite.
+
+**Vier weitere Kacheln nur auf `/projekte`:** Zehner Immobilien,
+Nieder-Ramstädter Weinmacher, Tierbestattung Memoria und Pulse Vending.
+Texte unverändert aus `main`, Screenshots als verkleinerte WebP-Kopien
+(zusammen 400 KB statt 19 MB). Die Startseite bleibt bei den vier Projekten
+der Vorlage; gesteuert über `nurProjekteseite` in den Daten.
+
+**Kacheltitel HePa Baut** heißt jetzt „Webseite mit über 450 Ortsseiten für
+drei Leistungen" statt „Eine Webseite, die drei Geschäfte sauber trennt" —
+der Titel nennt damit das Besondere statt der Absicht. Die Zahlen decken
+sich mit dem Text darunter. „Leistungen" statt „Gewerke", weil Sanierung,
+Renovierung und Wasserschaden Leistungen desselben Betriebs sind.
