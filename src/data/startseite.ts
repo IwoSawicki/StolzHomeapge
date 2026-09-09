@@ -240,6 +240,10 @@ export const faqs: Faq[] = [
 export interface Teammitglied {
   name: string;
   rolle: string;
+  /** Art der Zusammenarbeit, steht vor der Rolle — z. B. „Freelancer".
+      Bewusst dabei: die drei sind keine Angestellten, und das soll auf der
+      Seite auch so stehen (Entscheidung Iwo). */
+  art?: string;
   /** Dateiname in src/assets/portraits – fehlt er, erscheint die Platzhalterfläche */
   portrait?: string;
   /** object-position wie in der Vorlage */
@@ -249,11 +253,23 @@ export interface Teammitglied {
 export const team: Teammitglied[] = [
   {
     name: 'Timon',
+    art: 'Freelancer',
     rolle: 'Foto- und Videoproduktion',
     portrait: 'timon.jpg',
     position: '55% 35%',
   },
-  { name: 'Gintas', rolle: 'Schnitt und Bearbeitung', portrait: 'gintas.jpg', position: '50% 25%' },
-  // Porträt fehlt noch (design/README.md, Offene Punkte Nr. 8)
-  { name: 'Moritz', rolle: 'Bezahlte Werbung' },
+  {
+    name: 'Gintas',
+    art: 'Freelancer',
+    rolle: 'Schnitt und Bearbeitung',
+    portrait: 'gintas.jpg',
+    position: '50% 25%',
+  },
+  {
+    name: 'Moritz',
+    art: 'Freelancer',
+    rolle: 'Bezahlte Werbung',
+    portrait: 'moritz.jpg',
+    position: '47% 50%',
+  },
 ];

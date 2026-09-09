@@ -38,10 +38,10 @@ Das ist der einzige strukturelle Unterschied zur Vorlage und erklärt die
 gesamte verbleibende Höhendifferenz (Desktop +118px, Tablet −502px, weil das
 Raster dort von vier auf drei Spalten wechselt).
 
-**[Rückfrage]** Soll die vierte Kachel rein (dann kommt sie zurück), oder gibt
-es eine vierte Person mit Name und Rolle? Moritz' Porträt fehlt ebenfalls noch
-(`design/README.md`, Offene Punkte Nr. 8) — bis dahin steht dort die
-schraffierte Platzhalterfläche der Vorlage.
+Moritz' Porträt ist inzwischen da, alle drei Kacheln sind gefüllt.
+
+**[Rückfrage]** Soll die vierte Kachel rein (dann kommt sie zurück), oder
+gibt es eine vierte Person mit Name und Rolle?
 
 ---
 
@@ -444,7 +444,7 @@ Platzhalterflächen der Vorlage:
 1. ~~**Hero-Video** fehlt~~ — erledigt, siehe Punkt 28
 2. **Bilder der 11 Branchen-Kacheln** fehlen — schraffierte Flächen mit
    „Bild SHK" usw.
-3. **Porträt Moritz** fehlt
+3. ~~**Porträt Moritz** fehlt~~ — nachgereicht, siehe Punkt 37
 4. ~~**Kundenfotos in den Bewertungen** fehlen~~ — entfallen, siehe Punkt 29
 5. **Screenshot DMK Bau** fehlt
 6. **FAQ-Texte sind Entwürfe** und laut Handoff nicht freigegeben — sie stehen
@@ -876,3 +876,30 @@ das SVG.
 `<meta name="theme-color">` bleibt bewusst auf Dunkelgrün. Die Farbe färbt
 die Browserleiste auf dem Handy; sie je Farbschema umzuschalten würde sie
 auf der dunkelgrünen Startseite falsch aussehen lassen.
+
+---
+
+## 37. Team: Porträt Moritz und „Freelancer" an jeder Rolle
+
+Das nachgereichte Porträt lag als `Henri-portrait.jpeg` im Ordner — die
+abgebildete Person ist Moritz. Datei umbenannt in `moritz.jpg`, damit
+Dateiname und Person zusammenpassen; die Endung musste ohnehin `.jpg` sein,
+weil das Bauteil nur danach sucht. Damit ist die letzte Platzhalterfläche im
+Team-Raster weg.
+
+**Unter jedem Namen steht jetzt „Freelancer".** Timon, Gintas und Moritz
+sind keine Angestellten, und das soll auf der Seite auch so stehen
+(Entscheidung Iwo). Umgesetzt als eigenes Feld `art` am Teammitglied, nicht
+in die Rolle geschrieben — so bleibt der `alt`-Text der Porträts sauber
+(„Timon, Foto- und Videoproduktion bei Stolz Marketing" statt „Timon,
+Freelancer · Foto- und Videoproduktion bei …").
+
+Gerendert wird `Freelancer · Foto- und Videoproduktion`. Iwo bleibt davon
+unberührt: er steht in einem eigenen Block darüber als „Inhaber · Stolz
+Marketing".
+
+**Offen:** Der Einleitungstext daneben sagt „Die Umsetzung macht unser
+Team". Das ist Text der Vorlage und bleibt unverändert — mit der neuen
+Kennzeichnung liest es sich weiterhin stimmig, weil direkt danach steht
+„Ihr Ansprechpartner bleibt derselbe". Falls dort „unser Team" durch etwas
+Genaueres ersetzt werden soll, ist das eine Zeile.
