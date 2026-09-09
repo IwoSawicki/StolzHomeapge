@@ -92,6 +92,18 @@ export interface Branche {
   platzhalter: string;
 }
 
+/* Auswahl der Gewerke, geprüft gegen die Aufnahmekriterien auf
+   /kunden-gewinnen: Privatkunde entscheidet allein oder zu zweit,
+   Auftragswert etwa 3.000 bis 30.000 €, wird lokal gesucht — und
+   Fachkräftemangel, damit auch der Meistermagnet greift.
+
+   Herausgeflogen: „Fliesenleger" (geht in Sanierung & Renovierung auf),
+   „Zimmerer" (kommt meist über Architekt oder Bauunternehmen, kaum lokale
+   Suche) und „Metallbau" (überwiegend B2B und Ausschreibung — genau das,
+   was die Aufnahmekriterien ausschließen).
+
+   Die beiden letzten Einträge stehen bewusst für den Meistermagneten:
+   Industrie sucht keine Kunden über Google, aber sehr wohl Leute. */
 export const branchen: Branche[] = [
   { name: 'SHK', sub: 'Sanitär, Heizung, Klima', href: '/branchen/shk', platzhalter: 'Bild SHK' },
   {
@@ -100,13 +112,6 @@ export const branchen: Branche[] = [
     href: '/branchen/elektro',
     platzhalter: 'Bild Elektro',
   },
-  { name: 'Maler', sub: 'Maler und Lackierer', href: '/branchen/maler', platzhalter: 'Bild Maler' },
-  {
-    name: 'Schreiner',
-    sub: 'Möbel und Innenausbau',
-    href: '/branchen/schreiner',
-    platzhalter: 'Bild Schreiner',
-  },
   {
     name: 'Dachdecker',
     sub: 'Dach, Abdichtung, Spengler',
@@ -114,16 +119,29 @@ export const branchen: Branche[] = [
     platzhalter: 'Bild Dachdecker',
   },
   {
-    name: 'Zimmerer',
-    sub: 'Holzbau und Konstruktion',
-    href: '/branchen/zimmerer',
-    platzhalter: 'Bild Zimmerer',
+    name: 'Sanierung und Renovierung',
+    sub: 'Altbau, Bad, Wasserschaden',
+    href: '/branchen/sanierung-renovierung',
+    platzhalter: 'Bild Sanierung',
+  },
+  { name: 'Maler', sub: 'Maler und Lackierer', href: '/branchen/maler', platzhalter: 'Bild Maler' },
+  {
+    name: 'Fenster und Türen',
+    sub: 'Einbau, Austausch, Rollläden',
+    href: '/branchen/fenster-tueren',
+    platzhalter: 'Bild Fenster und Türen',
   },
   {
-    name: 'Fliesenleger',
-    sub: 'Bad und Bodenbeläge',
-    href: '/branchen/fliesenleger',
-    platzhalter: 'Bild Fliesenleger',
+    name: 'Schreiner',
+    sub: 'Möbel und Innenausbau',
+    href: '/branchen/schreiner',
+    platzhalter: 'Bild Schreiner',
+  },
+  {
+    name: 'Fassade und Dämmung',
+    sub: 'Stuckateur und Wärmedämmung',
+    href: '/branchen/fassade-daemmung',
+    platzhalter: 'Bild Fassade',
   },
   {
     name: 'Garten- und Landschaftsbau',
@@ -132,21 +150,13 @@ export const branchen: Branche[] = [
     platzhalter: 'Bild GaLaBau',
   },
   {
+    /* Untertitel zeigt bewusst aufs Privatkundengeschäft: über
+       Ausschreibungen läuft nichts, was mit Suche zu gewinnen wäre. */
     name: 'Bauunternehmen',
-    sub: 'Roh- und Hochbau',
+    sub: 'Umbau, Anbau, Neubau',
     href: '/branchen/bau',
     platzhalter: 'Bild Bauunternehmen',
   },
-  {
-    name: 'Metallbau',
-    sub: 'Schlosserei und Stahlbau',
-    href: '/branchen/metallbau',
-    platzhalter: 'Bild Metallbau',
-  },
-  /* Zwei Gewerke Richtung Industrie ergänzt: dort sitzt das
-     Mitarbeiterthema am stärksten, und das Raster geht mit zwölf Kacheln
-     sauber auf (drei volle Reihen zu vier). Vorschlag von mir,
-     siehe docs/ABWEICHUNGEN.md. */
   {
     name: 'Industrie- und Anlagenbau',
     sub: 'Montage, Wartung, Instandhaltung',
