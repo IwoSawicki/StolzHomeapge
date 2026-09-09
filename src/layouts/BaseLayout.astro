@@ -2,7 +2,7 @@
 /* Basis-Layout: <head>, Meta, Schriften, JSON-LD.
    Wird von jeder Seite verwendet. */
 import '../styles/global.css';
-import ogBild from '../assets/og-image-stolz-marketing.png';
+import ogBild from '../assets/og-image.jpg';
 import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
@@ -73,6 +73,7 @@ const jsonLd = {
     <meta property="og:image" content={ogBildUrl} />
     <meta property="og:image:width" content={String(ogBild.width)} />
     <meta property="og:image:height" content={String(ogBild.height)} />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content="Stolz Marketing" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogBildUrl} />
