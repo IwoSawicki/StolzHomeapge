@@ -1,0 +1,47 @@
+---
+/* Kunden-Logowand: Raster aus gleich großen Kacheln, das Stück für Stück
+   mit Logos befüllt wird. Kacheln ohne hinterlegtes Logo zeigen den
+   Kundennamen als Wortmarke — die Wand ist dadurch von Anfang an
+   vollständig.
+
+   Übernommen vom bisherigen Auftritt (Branch main), Farben und Maße aus
+   dem neuen Designsystem. Wie dort steht die Wand bewusst ohne Überschrift
+   für sich. Logos laufen in Graustufen und werden beim Zeigen farbig,
+   damit die Wand ruhig bleibt. */
+import { Image } from 'astro:assets';
+import { kunden } from '../../data/kundenlogos';
+
+const logos = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/kunden/*.{png,jpg,jpeg,webp,svg}',
+  { eager: true },
+);
+---
+
+<section class="bg-paper-soft px-20 py-section-y-md">
+  <ul
+    class="mx-auto grid max-w-content list-none grid-cols-2 gap-10 p-0 btn:grid-cols-3 btn:gap-12 nav:grid-cols-5"
+    aria-label="Kunden von Stolz Marketing"
+  >
+    {
+      kunden.map((kunde) => (
+        <li class="group flex aspect-[3/2] items-center justify-center rounded-16 border border-line bg-paper px-16 transition-colors duration-300 hover:border-line-strong hover:bg-paper-warm">
+          {kunde.logo ? (
+            <Image
+              src={logos[`../../assets/kunden/${kunde.logo}`]!.default}
+              alt={`Logo ${kunde.name}`}
+              widths={[220, 440]}
+              sizes="200px"
+              loading="lazy"
+              decoding="async"
+              class="max-h-52 w-auto max-w-full object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+            />
+          ) : (
+            <span class="text-center text-14 leading-caption font-bold tracking-name text-balance text-ink-faint transition-colors duration-300 group-hover:text-ink btn:text-15">
+              {kunde.name}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</section>

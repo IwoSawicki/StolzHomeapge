@@ -14,7 +14,11 @@ export default defineConfig({
   // Bild-Cache in node_modules/.cache: Dokploy mountet den Pfad als
   // Build-Cache, optimierte Bilder überleben so den nächsten Deploy.
   cacheDir: './node_modules/.cache/astro',
-  integrations: [sitemap()],
+  integrations: [
+    // /alle-projekte ist eine interne Referenzmappe: noindex, nirgends
+    // verlinkt und deshalb auch nicht in der Sitemap.
+    sitemap({ filter: (seite) => !seite.includes('/alle-projekte') }),
+  ],
   vite: {
     plugins: [tailwindcss()],
     preview: {

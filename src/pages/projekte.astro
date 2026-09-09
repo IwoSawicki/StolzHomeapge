@@ -1,13 +1,17 @@
 ---
 /* Referenzenseite. Sektionsreihenfolge aus design/Projekte.dc.html:
    heller Kopf · Hero · Logo-Marquee · Projekte-Band (auf Weiß) ·
-   Bewertungen · Zusammenarbeit · Footer */
+   Bewertungen · Zusammenarbeit · Footer
+
+   Dazu die Kunden-Logowand aus dem bisherigen Auftritt, die Iwo Stück für
+   Stück mit Logos befüllt. Sie steht in der Design-Vorlage nicht. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeroProjekte from '../components/sections/HeroProjekte.astro';
 import LogoMarquee from '../components/sections/LogoMarquee.astro';
 import Projekte from '../components/sections/Projekte.astro';
+import LogoWand from '../components/sections/LogoWand.astro';
 import Bewertungen from '../components/sections/Bewertungen.astro';
 import Zusammenarbeit from '../components/sections/Zusammenarbeit.astro';
 ---
@@ -24,6 +28,7 @@ import Zusammenarbeit from '../components/sections/Zusammenarbeit.astro';
     <HeroProjekte />
     <LogoMarquee variante="hell" />
     <Projekte grund="hell" mitHinweis={false} />
+    <LogoWand />
     <Bewertungen />
     <Zusammenarbeit />
   </main>

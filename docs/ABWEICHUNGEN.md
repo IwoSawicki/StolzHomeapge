@@ -712,3 +712,49 @@ dem CTA unter den Bewertungen und führt direkt ins Bewertungsfenster des
 Google-Profils (`https://g.page/r/CQIarxwxo9MmEBM/review`). `Button` hat
 dafür die neue Eigenschaft `extern`, die `target="_blank"` und
 `rel="noopener"` setzt.
+
+---
+
+## 32. Kunden-Logowand auf /projekte
+
+Aus dem bisherigen Auftritt (Branch `main`) übernommen: ein Raster aus 40
+gleich großen Kacheln, eine je Kunde. Kacheln ohne hinterlegtes Logo zeigen
+den Namen als Wortmarke — die Wand ist dadurch von Anfang an vollständig und
+wird Stück für Stück besser, während Iwo die Logos nachliefert.
+
+Logo ergänzen: Datei nach `src/assets/kunden/` legen und den Dateinamen in
+`src/data/kundenlogos.ts` beim passenden Kunden als `logo` eintragen. Mehr
+ist nicht nötig.
+
+Wie auf `main` steht die Wand **ohne Überschrift** für sich. In der
+Design-Vorlage kommt sie nicht vor; sie steht auf `/projekte` zwischen den
+Projektkarten und den Bewertungen.
+
+Die Aufnahme-Regel von `main` gilt weiter und steht als Kommentar in der
+Datendatei: nur eigene Kunden, keine Aufträge, die über Dexsa Marketing oder
+100Marketing liefen.
+
+---
+
+## 33. Interne Referenzmappe /alle-projekte
+
+Aus `main` übernommen, weil Iwo im Kundentermin alle Projekte im
+Schnelldurchlauf zeigen will — auch die, mit denen nicht geworben werden
+darf. Aufbau wie dort: Kopf, Zahlen, zwei Gruppen als Raster („Auf der
+Website sichtbar" / „Nicht auf der Website"), darunter die kompakte Liste
+zum Durchgehen. Gestaltung aus dem neuen Designsystem.
+
+**Nicht öffentlich:** `noindex`, aus der Sitemap gefiltert
+(`astro.config.mjs`) und nirgends verlinkt.
+
+Mitgenommen sind 54 Projekte mit Name, Art, Domain, Beschreibung, Ziel und
+Leistungen. **Nicht** mitgenommen sind die ausführlichen
+Unterseiten-Inhalte von `main` (Keyfacts, Galerien, Ergebniszahlen) — die
+gehören zu den Projekt-Unterseiten, die es im neuen Auftritt nicht gibt.
+Dort standen ohnehin an vielen Stellen „XX"-Platzhalter.
+
+**Bilder verkleinert.** Die 16 Kachelbilder wiegen auf `main` zusammen
+57,8 MB. Als WebP mit höchstens 1400px Breite sind es 2,55 MB — bei einer
+Anzeigegröße von rund 360px immer noch reichlich Reserve. Sie liegen in
+`src/assets/projekte-intern/`; die Originale bleiben auf `main`. Projekte
+ohne Bild bekommen eine beschriftete Platzhalterfläche.

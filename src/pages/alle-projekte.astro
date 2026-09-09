@@ -1,0 +1,251 @@
+---
+/* INTERNE ÜBERSICHT — /alle-projekte
+
+   Zeigt ALLE Projekte, auch die, mit denen nicht geworben werden darf.
+   Gedacht als Referenzmappe für den Schnelldurchlauf im Kundentermin.
+
+   Deshalb: noindex, nicht in der Sitemap, nirgends verlinkt. Aufbau und
+   Inhalte vom bisherigen Auftritt (Branch main) übernommen, Gestaltung aus
+   dem neuen Designsystem. */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import BrowserRahmen from '../components/BrowserRahmen.astro';
+import { alleProjekte } from '../data/alle-projekte';
+
+const bilder = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/projekte-intern/*.webp',
+  { eager: true },
+);
+
+const sichtbar = alleProjekte.filter((p) => !p.versteckt);
+const ausgeblendet = alleProjekte.filter((p) => p.versteckt);
+
+const zahlen = [
+  { label: 'Projekte gesamt', wert: alleProjekte.length },
+  { label: 'Öffentlich', wert: sichtbar.length },
+  { label: 'Websites', wert: alleProjekte.filter((p) => p.art === 'website').length },
+  { label: 'Foto & Video', wert: alleProjekte.filter((p) => p.art === 'video').length },
+];
+
+const gruppen = [
+  {
+    titel: 'Auf der Website sichtbar',
+    text: 'Diese Projekte stehen öffentlich unter /projekte.',
+    projekte: sichtbar,
+  },
+  {
+    titel: 'Nicht auf der Website',
+    text: 'Ausgeblendet, aber vollständig gespeichert — jederzeit wieder einblendbar.',
+    projekte: ausgeblendet,
+  },
+];
+---
+
+<BaseLayout
+  title="Alle Projekte (intern) | Stolz Marketing"
+  description="Interne Referenzmappe. Nicht öffentlich."
+  noindex
+>
+  <div class="bg-paper">
+    <Header variante="hell" />
+    <div class="border-b border-line"></div>
+  </div>
+
+  <main class="bg-paper">
+    <section class="px-20 pt-section-y-md pb-section-y-lg">
+      <div class="mx-auto flex max-w-content flex-col gap-56">
+        {/* --- Kopf --- */}
+        <div class="flex max-w-720 flex-col items-start gap-16">
+          <Eyebrow variante="hell">Interne Übersicht</Eyebrow>
+          <h1 class="m-0 text-h2-sub-lg leading-tightest font-bold tracking-system text-ink">
+            Alle Projekte <span class="font-display font-semibold tracking-none italic"
+              >auf einen Blick</span
+            >
+          </h1>
+          <p class="m-0 max-w-620 text-18 leading-prose text-ink-quiet">
+            Vollständige Referenzmappe — auch die Projekte, die aktuell nicht öffentlich
+            auf der Website stehen. Diese Seite ist nicht verlinkt und für Google
+            gesperrt.
+          </p>
+        </div>
+
+        {/* --- Zahlen --- */}
+        <dl
+          class="m-0 grid grid-cols-2 gap-24 border-t border-line pt-32 btn:grid-cols-4"
+        >
+          {
+            zahlen.map((z) => (
+              <div class="flex flex-col gap-6">
+                <dt class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+                  {z.label}
+                </dt>
+                <dd class="m-0 text-28 leading-none font-bold tracking-system text-ink tabular-nums">
+                  {z.wert}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        {/* --- Zwei Gruppen als Raster --- */}
+        {
+          gruppen.map((gruppe) => (
+            <div class="flex flex-col gap-32">
+              <div class="flex flex-col gap-6 border-b border-line pb-20">
+                <h2 class="m-0 text-26 font-bold tracking-heading text-ink">
+                  {gruppe.titel}
+                  <span class="ml-8 align-middle text-19 font-medium text-ink-faint tabular-nums">
+                    {gruppe.projekte.length}
+                  </span>
+                </h2>
+                <p class="m-0 text-16 leading-body text-ink-quiet">{gruppe.text}</p>
+              </div>
+
+              <div class="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-start gap-24">
+                {gruppe.projekte.map((projekt) => (
+                  <article class="flex flex-col overflow-hidden rounded-16 border border-line bg-paper-soft">
+                    <div class="px-14 pt-14">
+                      {projekt.art === 'website' ? (
+                        <BrowserRahmen domain={projekt.domain ?? ''} radius="r12">
+                          {projekt.bild ? (
+                            <Image
+                              src={bilder[`../assets/projekte-intern/${projekt.bild}`]!.default}
+                              alt={`Website-Projekt ${projekt.name}`}
+                              widths={[420, 640]}
+                              sizes="(min-width: 1200px) 360px, 90vw"
+                              loading="lazy"
+                              decoding="async"
+                              class="block aspect-[16/10] w-full object-cover object-top"
+                            />
+                          ) : (
+                            <div
+                              class="flex aspect-[16/10] items-center justify-center"
+                              style="background: repeating-linear-gradient(45deg, var(--color-hatch-grey) 0 12px, var(--color-hatch-grey-alt) 12px 24px)"
+                            >
+                              <span class="px-12 text-center font-mono text-12 text-ink-placeholder">
+                                {projekt.name}
+                              </span>
+                            </div>
+                          )}
+                        </BrowserRahmen>
+                      ) : (
+                        <div class="overflow-hidden rounded-10 border border-line bg-paper-warm">
+                          {projekt.bild ? (
+                            <Image
+                              src={bilder[`../assets/projekte-intern/${projekt.bild}`]!.default}
+                              alt={`Foto- und Videoprojekt ${projekt.name}`}
+                              widths={[420, 640]}
+                              sizes="(min-width: 1200px) 360px, 90vw"
+                              loading="lazy"
+                              decoding="async"
+                              class="block aspect-[16/10] w-full object-cover"
+                              style="object-position: 50% 35%"
+                            />
+                          ) : (
+                            <div
+                              class="flex aspect-[16/10] items-center justify-center"
+                              style="background: repeating-linear-gradient(45deg, var(--color-hatch-light) 0 12px, var(--color-hatch-light-alt) 12px 24px)"
+                            >
+                              <span class="px-12 text-center font-mono text-12 text-ink-placeholder">
+                                {projekt.name}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    <div class="flex flex-1 flex-col items-start gap-10 px-20 pt-18 pb-22">
+                      <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
+                        <span class="text-13 font-bold tracking-name text-ink">
+                          {projekt.name}
+                        </span>
+                        <span class="text-13 text-ink-faint">
+                          · {projekt.ziel ?? (projekt.art === 'website' ? 'Website' : 'Foto & Video')}
+                        </span>
+                      </div>
+                      <p class="m-0 text-16 leading-body text-ink-quiet">
+                        {projekt.beschreibung}
+                      </p>
+                      <div class="mt-auto flex flex-wrap gap-6 pt-8">
+                        {projekt.kategorien.map((kategorie) => (
+                          <span class="rounded-full bg-paper-warm px-10 py-4 text-12 font-medium text-ink-quiet">
+                            {kategorie}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+
+        {/* --- Kompakte Liste zum Durchgehen --- */}
+        <div class="flex flex-col gap-24">
+          <h2 class="m-0 text-26 font-bold tracking-heading text-ink">
+            Liste zum Durchgehen
+          </h2>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-640 border-collapse text-left">
+              <thead>
+                <tr class="border-b border-line">
+                  {['Projekt', 'Leistungen', 'Website', 'Status'].map((kopf) => (
+                    <th class="py-12 pr-16 font-mono text-12 font-medium tracking-eyebrow uppercase text-ink-faint">
+                      {kopf}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  alleProjekte.map((projekt) => (
+                    <tr class="border-b border-line last:border-b-0">
+                      <td class="py-14 pr-16 text-16 font-bold tracking-name text-ink">
+                        {projekt.name}
+                      </td>
+                      <td class="py-14 pr-16 text-16 text-ink-quiet">
+                        {projekt.kategorien.join(' · ')}
+                      </td>
+                      <td class="py-14 pr-16 text-16">
+                        {projekt.domain ? (
+                          <a
+                            href={`https://${projekt.domain}`}
+                            target="_blank"
+                            rel="noopener"
+                            class="text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-lime-link-hover"
+                          >
+                            {projekt.domain}
+                          </a>
+                        ) : (
+                          <span class="text-ink-faint">—</span>
+                        )}
+                      </td>
+                      <td class="py-14 text-16">
+                        {projekt.versteckt ? (
+                          <span class="rounded-full bg-paper-warm px-12 py-4 text-13 font-medium text-ink-faint">
+                            nicht öffentlich
+                          </span>
+                        ) : (
+                          <span class="rounded-full bg-lime px-12 py-4 text-13 font-bold text-forest-deep">
+                            öffentlich
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
