@@ -723,9 +723,22 @@ Logo ergänzen: Datei nach `src/assets/kunden/` legen und den Dateinamen in
 `src/data/kundenlogos.ts` beim passenden Kunden als `logo` eintragen. Mehr
 ist nicht nötig.
 
-Wie auf `main` steht die Wand **ohne Überschrift** für sich. In der
-Design-Vorlage kommt sie nicht vor; sie steht auf `/projekte` zwischen den
-Projektkarten und den Bewertungen.
+Sie steht auf `/projekte` zwischen den Projektkarten und den Bewertungen.
+In der Design-Vorlage kommt sie nicht vor.
+
+**Überarbeitet:** Iwo lässt die Namen stehen, statt vierzig Logos
+zusammenzusuchen. Vierzig fast leere Kästen im Format 3:2 wirken dann aber
+wie ein Platzhalter, nicht wie eine Liste. Die Wand besteht deshalb jetzt
+aus **Pillen**: so breit wie der Name lang ist, zusammen ein dichter Block,
+in derselben Formensprache wie die Eyebrows und die 50+-Blase. Die Sektion
+ist damit auch nur noch 618px statt gut 1080px hoch.
+
+Kommt später doch ein Logo dazu, tritt es in der Pille an die Stelle des
+Namens — die Wand muss dafür nicht umgebaut werden.
+
+Dazu eine Überschrift, die vorher fehlte: Eyebrow „Kunden", darüber
+„Betriebe, mit denen wir *gearbeitet haben*". **[Rückfrage]** Der Wortlaut
+ist mein Vorschlag.
 
 Die Aufnahme-Regel von `main` gilt weiter und steht als Kommentar in der
 Datendatei: nur eigene Kunden, keine Aufträge, die über Dexsa Marketing oder

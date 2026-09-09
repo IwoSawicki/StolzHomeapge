@@ -1,14 +1,21 @@
 ---
-/* Kunden-Logowand: Raster aus gleich großen Kacheln, das Stück für Stück
-   mit Logos befüllt wird. Kacheln ohne hinterlegtes Logo zeigen den
-   Kundennamen als Wortmarke — die Wand ist dadurch von Anfang an
-   vollständig.
+/* Kundenwand: alle Betriebe, mit denen wir gearbeitet haben — als Pillen.
 
-   Übernommen vom bisherigen Auftritt (Branch main), Farben und Maße aus
-   dem neuen Designsystem. Wie dort steht die Wand bewusst ohne Überschrift
-   für sich. Logos laufen in Graustufen und werden beim Zeigen farbig,
-   damit die Wand ruhig bleibt. */
+   Der bisherige Auftritt (Branch main) zeigt dafür ein Raster aus 40 gleich
+   großen Kacheln im Format 3:2. Solange dort kein Logo hinterlegt ist,
+   steht in jeder Kachel nur ein kurzer Name in viel leerer Fläche; vierzig
+   fast leere Kästen wirken wie ein Platzhalter, nicht wie eine Liste.
+
+   Deshalb hier Pillen: Sie sind so breit wie der Name lang ist, ergeben
+   zusammen einen dichten Block und benutzen dieselbe Formensprache wie die
+   Eyebrows und die 50+-Blase. Kommt später ein Logo dazu, tritt es in der
+   Pille an die Stelle des Namens — die Wand muss dafür nicht umgebaut
+   werden.
+
+   Aufnahme-Regel aus main gilt weiter: nur eigene Kunden, keine Aufträge,
+   die über eine andere Agentur liefen. Siehe src/data/kundenlogos.ts */
 import { Image } from 'astro:assets';
+import Eyebrow from '../Eyebrow.astro';
 import { kunden } from '../../data/kundenlogos';
 
 const logos = import.meta.glob<{ default: ImageMetadata }>(
@@ -18,30 +25,43 @@ const logos = import.meta.glob<{ default: ImageMetadata }>(
 ---
 
 <section class="bg-paper-soft px-20 py-section-y-md">
-  <ul
-    class="mx-auto grid max-w-content list-none grid-cols-2 gap-10 p-0 btn:grid-cols-3 btn:gap-12 nav:grid-cols-5"
-    aria-label="Kunden von Stolz Marketing"
-  >
-    {
-      kunden.map((kunde) => (
-        <li class="group flex aspect-[3/2] items-center justify-center rounded-16 border border-line bg-paper px-16 transition-colors duration-300 hover:border-line-strong hover:bg-paper-warm">
-          {kunde.logo ? (
-            <Image
-              src={logos[`../../assets/kunden/${kunde.logo}`]!.default}
-              alt={`Logo ${kunde.name}`}
-              widths={[220, 440]}
-              sizes="200px"
-              loading="lazy"
-              decoding="async"
-              class="max-h-52 w-auto max-w-full object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
-            />
-          ) : (
-            <span class="text-center text-14 leading-caption font-bold tracking-name text-balance text-ink-faint transition-colors duration-300 group-hover:text-ink btn:text-15">
-              {kunde.name}
-            </span>
-          )}
-        </li>
-      ))
-    }
-  </ul>
+  <div class="mx-auto flex max-w-content flex-col items-center gap-40">
+    <div class="flex flex-col items-center gap-16 text-center">
+      <Eyebrow variante="hell">Kunden</Eyebrow>
+      <h2
+        class="m-0 max-w-860 text-h2-branchen leading-h2 font-bold tracking-heading text-ink"
+      >
+        Betriebe, mit denen wir <span
+          class="font-display font-semibold tracking-none italic">gearbeitet haben</span
+        >
+      </h2>
+    </div>
+
+    <ul
+      class="m-0 flex list-none flex-wrap justify-center gap-x-10 gap-y-10 p-0"
+      aria-label="Kunden von Stolz Marketing"
+    >
+      {
+        kunden.map((kunde) => (
+          <li
+            class="group inline-flex items-center rounded-full border border-line bg-paper px-16 py-9 text-15 font-medium text-ink-muted transition-colors duration-200 hover:border-line-strong hover:bg-paper-warm hover:text-ink"
+          >
+            {kunde.logo ? (
+              <Image
+                src={logos[`../../assets/kunden/${kunde.logo}`]!.default}
+                alt={`Logo ${kunde.name}`}
+                widths={[160, 320]}
+                sizes="120px"
+                loading="lazy"
+                decoding="async"
+                class="h-20 w-auto max-w-120 object-contain opacity-70 grayscale transition duration-200 group-hover:opacity-100 group-hover:grayscale-0"
+              />
+            ) : (
+              kunde.name
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </section>
