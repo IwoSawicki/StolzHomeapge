@@ -639,11 +639,17 @@ einmal `ffmpeg` im Build oder eine zweite, vorab komprimierte Datei.
 
 Zwei Rückmeldungen von Iwo:
 
-**Kundenfotos entfallen.** Die Vorlage zeigt in jeder Bewertungskarte neben
-dem Namen eine 48×48-Kachel mit „FOTO". Die Fotos gibt es nicht und sie
-kommen auch nicht mehr. Die Kachel ist deshalb ersatzlos raus — Name und
-Betrieb stehen jetzt für sich unter dem Zitat. Damit ist auch Punkt 26.4
-erledigt.
+**Kundenfotos.** Zwischenzeitlich waren sie raus, weil es sie nicht gab;
+Iwo hat sie dann nachgereicht. Die 48×48-Kachel der Vorlage ist damit
+wieder da und gefüllt. Damit ist Punkt 26.4 erledigt.
+
+Damit in der kleinen Kachel der Kopf sitzt und nicht das ganze Bild, liegt
+das Foto vergrößert und absolut positioniert darin; der Ausschnitt steht als
+drei Zahlen in `src/data/startseite.ts` (`ausschnitt: [x0, y0, Seitenlänge]`).
+So bleiben die hochgeladenen Originale unangetastet und der Ausschnitt lässt
+sich ohne Bildbearbeitung nachjustieren. Die Fotos tragen ein leeres
+`alt`-Attribut: der Name steht unmittelbar daneben, das Bild würde ihn für
+Screenreader nur wiederholen.
 
 **Leistungskarten unter 720px zurückgenommen.** Einspaltig füllte jede Karte
 fast den ganzen Bildschirm (342×650px bei 390px Breite), was die
@@ -685,3 +691,24 @@ Sticky-Pille, Aufklappmenü oben und Pille unten.
 
 Gepflegt wird sie über `badge` in `src/data/navigation.ts` — ein Feld, vier
 Menüs.
+
+---
+
+## 31. AGB, „Projekt ansehen" und der Bewertungs-Button
+
+**AGB entfallen.** Der Footer führte „AGB" als ausgegraute, künftige Seite.
+Es gibt keine, und für ein Dienstleistungsgeschäft sind sie auch nicht
+vorgeschrieben — der Eintrag ist deshalb ganz raus statt auf eine Seite zu
+warten, die nicht kommt (Entscheidung Iwo).
+
+**„Projekt ansehen" entfallen.** Jede Projektkarte trug unten einen Link
+„Projekt ansehen →". Projekt-Unterseiten gibt es nicht; der Link zeigte auf
+`/projekte`, auf der Projekte-Seite also auf sich selbst. Er ist raus. Der
+Knopf „Zum Projekt" in der Beweisfall-Karte darüber bleibt vorerst — auf der
+Startseite führt er sinnvoll auf die Projekte-Seite.
+
+**„Wir freuen uns auf Ihre Bewertung"** steht jetzt als Sekundärbutton neben
+dem CTA unter den Bewertungen und führt direkt ins Bewertungsfenster des
+Google-Profils (`https://g.page/r/CQIarxwxo9MmEBM/review`). `Button` hat
+dafür die neue Eigenschaft `extern`, die `target="_blank"` und
+`rel="noopener"` setzt.

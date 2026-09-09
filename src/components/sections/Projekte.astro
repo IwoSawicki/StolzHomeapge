@@ -152,13 +152,10 @@ const bild = (datei: string) => bilder[`../../assets/projekte/${datei}`]!.defaul
               <h3 class="m-0 text-22 leading-card-wide font-bold text-cream">
                 {projekt.titel}
               </h3>
+              {/* „Projekt ansehen" ist entfallen: es gibt keine
+                  Projekt-Unterseiten, der Link zeigte auf die Seite, auf der
+                  die Karte ohnehin steht (Entscheidung Iwo). */}
               <p class="m-0 text-17 leading-body text-mint">{projekt.text}</p>
-              <a
-                href={projekt.href}
-                class="mt-auto pt-8 text-17 font-medium text-cream underline decoration-1 underline-offset-4 transition-colors hover:text-lime"
-              >
-                Projekt ansehen →
-              </a>
             </div>
           </article>
         ))

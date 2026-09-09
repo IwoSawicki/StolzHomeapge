@@ -155,6 +155,16 @@ export interface Bewertung {
   text: string;
   name: string;
   betrieb: string;
+  /** Dateiname in src/assets/testimonials */
+  foto?: string;
+  /**
+   * Quadratischer Ausschnitt fürs Avatar, damit im 48er-Feld der Kopf steht
+   * und nicht das ganze Bild: [x0, y0, Seitenlänge].
+   * x0 und Seitenlänge sind Anteile der Bildbreite, y0 ein Anteil der Höhe.
+   * So bleiben die Originale unangetastet und der Ausschnitt lässt sich mit
+   * drei Zahlen nachjustieren.
+   */
+  ausschnitt?: [number, number, number];
 }
 
 /* Echte Google-Bewertungen aus der Vorlage – Wortlaut unverändert. */
@@ -163,16 +173,22 @@ export const bewertungen: Bewertung[] = [
     text: 'Von Anfang an war die Kommunikation klar, professionell und auf den Punkt. Meine Vorstellungen wurden nicht nur umgesetzt, sondern noch besser in Szene gesetzt als ich es mir vorgestellt hatte.\n\nWer eine Agentur sucht, die mitdenkt und liefert, ist hier genau richtig. Klare Empfehlung!',
     name: 'Janne Tom Klüppelholz',
     betrieb: 'Fight Society Clothing',
+    foto: 'JanneKlu.jpg',
+    ausschnitt: [0.27, 0.005, 0.42],
   },
   {
     text: 'Iwo hat eine beeindruckende Webseite für mich erstellt und hochwertige Werbefotos geschossen. Seine kreative Herangehensweise, professionelle Arbeit und effiziente Zusammenarbeit haben mich beeindruckt. Ich bin mit den Ergebnissen sehr zufrieden und kann Iwo wärmstens empfehlen!',
     name: 'Dariusz Krzyszton',
     betrieb: 'DMK Bau',
+    foto: 'DarekDMK.webp',
+    ausschnitt: [0.05, 0.04, 0.9],
   },
   {
     text: 'Sehr netter Kontakt! Die Design-Ideen und Lösungsvorschläge sind immer sehr gut.👍🏼\nMit so jemanden kann man gut zusammen arbeiten!',
     name: 'André Zehner',
     betrieb: 'Zehner Immobilien',
+    foto: 'AndreZehner.jpg',
+    ausschnitt: [0.155, 0.026, 0.55],
   },
 ];
 

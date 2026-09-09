@@ -63,11 +63,12 @@ export const footerBranchen: NavLink[] = [
   { label: 'Photovoltaik & Solar', href: '/branchen/photovoltaik', nochNicht: true },
 ];
 
-/** Footer-Spalte „Rechtliches" */
+/* Footer-Spalte „Rechtliches". AGB stehen bewusst nicht drin: es gibt
+   keine, und für ein Dienstleistungsgeschäft sind sie auch nicht
+   vorgeschrieben (Entscheidung Iwo). */
 export const footerRechtliches: NavLink[] = [
   { label: 'Impressum', href: '/impressum' },
   { label: 'Datenschutz', href: '/datenschutz' },
-  { label: 'AGB', href: '/agb', nochNicht: true },
   { label: 'Cookie-Einstellungen', href: '#', cookieSchalter: true },
 ];
 

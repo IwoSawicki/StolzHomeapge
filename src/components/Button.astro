@@ -16,11 +16,13 @@ interface Props {
   variante: 'lime' | 'lime-fest' | 'lime-klein' | 'dunkel' | 'hell' | 'tinte';
   /** Lichtschimmer wie bei den beiden Hero-Buttons */
   sheen?: boolean;
+  /** Ziel auf einer fremden Seite: öffnet in einem neuen Tab */
+  extern?: boolean;
   class?: string;
   id?: string;
 }
 
-const { href, variante, sheen = false, class: klasse, id } = Astro.props;
+const { href, variante, sheen = false, extern = false, class: klasse, id } = Astro.props;
 
 const basis =
   'inline-flex items-center justify-center no-underline transition-colors duration-200';
@@ -54,6 +56,8 @@ const varianten: Record<Props['variante'], string> = {
 <a
   href={href}
   id={id}
+  target={extern ? '_blank' : undefined}
+  rel={extern ? 'noopener' : undefined}
   class:list={[
     basis,
     varianten[variante],

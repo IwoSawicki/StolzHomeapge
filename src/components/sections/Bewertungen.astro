@@ -2,14 +2,36 @@
 /* „Bewertungen": drei Google-Bewertungen auf dunklem Grund, darunter ein
    gelber CTA.
 
-   Die Vorlage zeigt neben dem Namen eine schraffierte Platzhalterkachel für
-   ein Kundenfoto. Die Fotos gibt es nicht und sie kommen auch nicht mehr
-   (Entscheidung Iwo) — die Kachel ist deshalb entfallen, Name und Betrieb
-   stehen für sich.
+   Neben dem Namen steht das Kundenfoto in der 48er-Kachel der Vorlage.
+   Damit dort der Kopf sitzt und nicht das ganze Bild, liegt das Foto
+   absolut positioniert und vergrößert in der Kachel; der Ausschnitt kommt
+   als drei Zahlen aus den Daten. Die hochgeladenen Originale bleiben so
+   unangetastet und der Ausschnitt lässt sich ohne Bildbearbeitung ändern.
    Vorlage: design/STARTSEITE.dc.html, data-screen-label="Bewertungen" */
+import { Image } from 'astro:assets';
 import Eyebrow from '../Eyebrow.astro';
 import Button from '../Button.astro';
 import { bewertungen } from '../../data/startseite';
+
+const fotos = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/testimonials/*.{jpg,jpeg,png,webp}',
+  { eager: true },
+);
+
+/** Kantenlänge der Avatar-Kachel in der Vorlage */
+const KACHEL = 48;
+
+/* Rechnet den quadratischen Wunschausschnitt in konkrete Maße um: Breite und
+   Versatz in Prozent der Kachel für die Darstellung, dazu die tatsächliche
+   Anzeigebreite des Bildes — die ist beim engen Zuschnitt ein Vielfaches der
+   Kachel und bestimmt, wie scharf gerechnet werden muss. */
+function avatar(bild: ImageMetadata, [x0, y0, seite]: [number, number, number]) {
+  const breite = 100 / seite;
+  return {
+    stil: `width:${breite}%;left:${-x0 * breite}%;top:${-y0 * breite * (bild.height / bild.width)}%`,
+    anzeigeBreite: Math.round(KACHEL / seite),
+  };
+}
 ---
 
 <section class="bg-forest px-20 pt-section-y-lg pb-section-y-xl">
@@ -92,19 +114,46 @@ import { bewertungen } from '../../data/startseite';
               {bewertung.text}
             </blockquote>
 
-            <figcaption class="mt-auto flex flex-col gap-2">
-              <span class="text-17 font-bold text-paper">{bewertung.name}</span>
-              {bewertung.betrieb && (
-                <span class="text-15 text-mint">{bewertung.betrieb}</span>
-              )}
+            <figcaption class="mt-auto flex items-center gap-14">
+              {bewertung.foto && (() => {
+                const bild = fotos[`../../assets/testimonials/${bewertung.foto}`]!.default;
+                const { stil, anzeigeBreite } = avatar(bild, bewertung.ausschnitt ?? [0, 0, 1]);
+                return (
+                  <div class="relative h-48 w-48 flex-none overflow-hidden rounded-12 bg-forest-tint">
+                    <Image
+                      src={bild}
+                      /* Der Name steht direkt daneben – das Bild wiederholt ihn nur */
+                      alt=""
+                      width={anzeigeBreite}
+                      densities={[1, 2]}
+                      loading="lazy"
+                      decoding="async"
+                      class="absolute h-auto max-w-none"
+                      style={stil}
+                    />
+                  </div>
+                );
+              })()}
+              <div class="flex flex-col gap-2">
+                <span class="text-17 font-bold text-paper">{bewertung.name}</span>
+                {bewertung.betrieb && (
+                  <span class="text-15 text-mint">{bewertung.betrieb}</span>
+                )}
+              </div>
             </figcaption>
           </figure>
         ))
       }
     </div>
 
-    <Button href="/kontakt" variante="lime-fest">
-      <span class="text-18" aria-hidden="true">→</span>Zusammenarbeit anfragen
-    </Button>
+    <div class="flex flex-wrap items-center justify-center gap-14">
+      <Button href="/kontakt" variante="lime-fest">
+        <span class="text-18" aria-hidden="true">→</span>Zusammenarbeit anfragen
+      </Button>
+      {/* Führt direkt ins Bewertungsfenster des Google-Profils */}
+      <Button href="https://g.page/r/CQIarxwxo9MmEBM/review" variante="dunkel" extern>
+        Wir freuen uns auf Ihre Bewertung
+      </Button>
+    </div>
   </div>
 </section>
