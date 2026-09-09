@@ -1032,3 +1032,30 @@ noch mit Joomla — dafür zu ranken wäre eine Zusage, die wir nicht halten.
   Bewertungsanfrage nach abgeschlossenem Auftrag". Die Sofort-Antwort stand
   an zwei Stellen — im Leistungsumfang und im Text von Schritt 2 —, beide
   sind raus.
+
+---
+
+## 42. Hinweiskasten „Der Einstieg" um den zweiten Weg ergänzt
+
+Die Vorlage endet dort bei „Dann bringt Ihnen dieses System nichts." — eine
+ehrliche Absage ohne Ausweg. Auf Wunsch von Iwo steht jetzt dahinter, was
+in dem Fall möglich ist:
+
+> Kommt dabei heraus, dass in Ihrer Region zu wenig gesucht wird oder die
+> Suche fest in anderer Hand ist, sagen wir Ihnen das — vor dem ersten Euro.
+> Dann bringt Ihnen dieses System nichts. Anfragen bekommen Sie trotzdem:
+> über bezahlte Werbung dort, wo Ihre Kunden abends ohnehin unterwegs sind.
+
+Drei Dinge sind bewusst so gebaut:
+
+- **„oder die Suche fest in anderer Hand ist"** deckt den zweiten Fall ab,
+  den Iwo genannt hat: nicht zu wenig Suchvolumen, sondern zu umkämpft.
+- **„vor dem ersten Euro"** greift die Überschrift derselben Sektion auf
+  („Vor dem ersten Euro schauen wir uns Ihren Markt an") und macht aus der
+  Absage ein Versprechen.
+- **Die Aussage ist gedeckt.** Die FAQ derselben Seite sagt bereits: „Social
+  Media kann sinnvoll sein, wenn in Ihrer Region kaum gesucht wird. Das
+  sehen wir in der Marktanalyse und sprechen es dann an." Und das
+  DMK-Projekt auf der Startseite nennt bezahlte Kampagnen ausdrücklich für
+  Anfragen, nicht nur für Bewerbungen. Kasten und FAQ verstärken sich
+  jetzt gegenseitig statt nebeneinanderher zu laufen.
