@@ -19,6 +19,7 @@
    Der Papierflieger-CTA bleibt an allen drei Stellen derselbe. */
 import Logo from './Logo.astro';
 import PfeilIcon from './icons/Papierflieger.astro';
+import NavBadge from './NavBadge.astro';
 import { hauptnavigation, erstgespraech } from '../data/navigation';
 
 interface Props {
@@ -63,7 +64,10 @@ const navLink = istHell
             href={link.href}
             class="flex h-38 items-center rounded-10 px-14 text-15 font-medium text-ink no-underline transition-colors hover:bg-paper-warm"
           >
-            {link.label}
+            <span class="relative">
+              {link.label}
+              {link.badge && <NavBadge variante="schwebend">{link.badge}</NavBadge>}
+            </span>
           </a>
         ))
       }
@@ -99,7 +103,10 @@ const navLink = istHell
             navLink,
           ]}
         >
-          {link.label}
+          <span class="relative">
+            {link.label}
+            {link.badge && <NavBadge variante="schwebend">{link.badge}</NavBadge>}
+          </span>
         </a>
       ))
     }
@@ -164,6 +171,7 @@ const navLink = istHell
           ]}
         >
           {link.label}
+          {link.badge && <NavBadge>{link.badge}</NavBadge>}
         </a>
       ))
     }
@@ -204,6 +212,7 @@ const navLink = istHell
               ]}
             >
               {link.label}
+              {link.badge && <NavBadge>{link.badge}</NavBadge>}
             </a>
           ))
         }

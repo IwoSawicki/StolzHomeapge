@@ -608,7 +608,12 @@ jetzt dasselbe Showreel wie im bisherigen Auftritt (Branch `main`) —
   Auslöser: **die ganze Kachel** öffnet das Showreel groß.
 
 **Verhalten aus `main` übernommen:** In der Kachel läuft das Video stumm,
-automatisch und in Schleife. Ein Klick öffnet es im Overlay über der
+automatisch und in Schleife — ausdrücklich auch bei eingestellter
+Bewegungsreduzierung (Vorgabe Iwo). Weil Browser Autoplay trotz
+`autoplay`/`muted` nicht immer sofort starten (iOS im Stromsparmodus, oder
+beim Laden sind noch keine Daten da), wird an mehreren Stellen nachgefasst:
+bei `loadeddata`, bei `canplay`, beim Zurückwechseln auf den Tab und
+spätestens bei der ersten Nutzergeste. Ein Klick öffnet es im Overlay über der
 geblurrten Seite und spielt es **mit Ton von vorn**. Schließen über das X,
 Klick auf den Hintergrund oder Escape.
 
@@ -616,8 +621,6 @@ Ergänzt gegenüber `main`:
 
 - Beim Öffnen wandert der Fokus auf den Schließen-Knopf und beim Schließen
   zurück auf die Kachel.
-- Wer „weniger Bewegung" eingestellt hat (`prefers-reduced-motion`), bekommt
-  das Standbild statt der Endlosschleife. Das Overlay funktioniert weiter.
 - Das Overlay-Video trägt `width`/`height`, damit der Rahmen beim Öffnen
   nicht kurz von 300×150 aufspringt.
 
@@ -660,3 +663,25 @@ Ab 720px — wo die Karten nebeneinander stehen — gelten unverändert die Maß
 der Vorlage; auf dem Desktop hat sich nichts geändert (Kartenhöhe weiterhin
 571px). Die Verkleinerung läuft über `transform: scale`, die Illustrationen
 selbst sind unangetastet.
+
+---
+
+## 30. „50+" an „Projekte" in allen Menüs
+
+Der bisherige Auftritt (Branch `main`) zeigt am Menüpunkt „Projekte" eine
+kleine Blase mit der Anzahl der Projekte. Auf Wunsch von Iwo gibt es sie
+jetzt auch hier — in allen vier Menüs des Kopfbereichs: statische Navigation,
+Sticky-Pille, Aufklappmenü oben und Pille unten.
+
+- **Inhalt „50+"**, nicht die Anzahl der gezeigten Projektkacheln. Die Zahl
+  deckt sich mit der Zeile im Logo-Marquee („Über 50 Projekte für
+  Handwerksbetriebe seit 2022"), damit auf der Seite nicht zwei
+  unterschiedliche Zahlen stehen.
+- **Farbe:** `main` nutzt dort Blau, also seine Akzentfarbe. Hier ist es
+  entsprechend Lime — als Fläche mit dunkler Schrift, weil Lime laut Handoff
+  nie Schriftfarbe sein darf.
+- Auf dem Desktop schwebt die Blase wie bei `main` oben rechts am Wort, in
+  den beiden Mobil-Menüs steht sie hinter dem Wort.
+
+Gepflegt wird sie über `badge` in `src/data/navigation.ts` — ein Feld, vier
+Menüs.

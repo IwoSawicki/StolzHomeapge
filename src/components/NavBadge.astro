@@ -1,0 +1,22 @@
+---
+/* Kleine Zahlenblase an einem Navigationspunkt, z. B. „50+" bei Projekte.
+   Übernommen vom bisherigen Auftritt (Branch main), dort in Blau — hier in
+   Lime als Fläche mit dunkler Schrift, weil Lime laut Handoff nie
+   Schriftfarbe sein darf. */
+interface Props {
+  /** schwebend = oben rechts am Wort (Desktop), inline = hinter dem Wort */
+  variante?: 'schwebend' | 'inline';
+}
+const { variante = 'inline' } = Astro.props;
+---
+
+<span
+  class:list={[
+    'rounded-full bg-lime font-bold text-forest-deep tabular-nums',
+    variante === 'schwebend'
+      ? 'absolute -top-14 -right-16 px-5 py-2 text-11 leading-none'
+      : 'ml-8 inline-block px-8 py-3 text-12 leading-none',
+  ]}
+>
+  <slot />
+</span>

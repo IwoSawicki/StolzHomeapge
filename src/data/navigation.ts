@@ -10,11 +10,15 @@ export interface NavLink {
   nochNicht?: boolean;
   /** Kein Link, sondern öffnet das Einwilligungsbanner erneut */
   cookieSchalter?: boolean;
+  /** Kleine Blase am Menüpunkt, z. B. die Anzahl der Projekte */
+  badge?: string;
 }
 
 /** Hauptnavigation – Header (statisch, sticky und Burger-Menü) */
 export const hauptnavigation: NavLink[] = [
-  { label: 'Projekte', href: '/projekte' },
+  /* „50+" deckt sich mit der Zeile im Logo-Marquee („Über 50 Projekte für
+     Handwerksbetriebe seit 2022") — keine zweite, abweichende Zahl. */
+  { label: 'Projekte', href: '/projekte', badge: '50+' },
   { label: 'Kunden gewinnen', href: '/kunden-gewinnen' },
   { label: 'Mitarbeiter gewinnen', href: '/mitarbeiter-gewinnen' },
 ];

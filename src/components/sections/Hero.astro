@@ -208,22 +208,29 @@ const poster = await getImage({
     if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) schliesseModal();
   });
 
-  // Autoplay-Anstoß für die Kachel: mobile Browser starten Videos trotz
-  // autoplay/muted nicht immer (iOS im Stromsparmodus). Wer „weniger
-  // Bewegung" eingestellt hat, bekommt das Standbild statt der Schleife.
+  // Das Showreel soll laufen, sobald die Seite offen ist (Vorgabe Iwo) —
+  // auch bei eingestellter Bewegungsreduzierung. Browser starten Videos
+  // trotz autoplay/muted aber nicht immer zuverlässig: iOS im
+  // Stromsparmodus verweigert es, und wenn beim Laden noch keine Daten da
+  // sind, läuft der erste Versuch ins Leere. Deshalb wird an mehreren
+  // Stellen nachgefasst.
   const kachel = document.querySelector<HTMLVideoElement>('[data-hero-video]');
   if (kachel) {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      kachel.removeAttribute('autoplay');
-      kachel.pause();
-    } else {
-      const anspielen = () => {
-        if (kachel.paused) kachel.play().catch(() => {});
-      };
-      anspielen();
-      ['touchstart', 'scroll', 'click'].forEach((ev) =>
-        window.addEventListener(ev, anspielen, { once: true, passive: true }),
-      );
-    }
+    const anspielen = () => {
+      if (kachel.paused && !kachel.ended) kachel.play().catch(() => {});
+    };
+
+    anspielen();
+    // sobald genug Daten da sind
+    kachel.addEventListener('loadeddata', anspielen);
+    kachel.addEventListener('canplay', anspielen);
+    // beim Zurückwechseln auf den Tab
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) anspielen();
+    });
+    // spätestens bei der ersten Nutzergeste, falls der Browser blockt
+    ['pointerdown', 'touchstart', 'scroll', 'keydown'].forEach((ev) =>
+      window.addEventListener(ev, anspielen, { once: true, passive: true }),
+    );
   }
 </script>
