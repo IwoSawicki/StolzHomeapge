@@ -17,8 +17,13 @@ const iconPositionen = [
 ];
 ---
 
-<div class="flex h-280 w-full items-center justify-center">
-  <div class="relative h-220 w-220" aria-hidden="true">
+{/* Unter 720px auf 72 % verkleinert – die Karte soll dort nicht den ganzen
+    Bildschirm füllen. Die Höhe des Rahmens geht entsprechend mit. */}
+<div class="flex h-200 w-full items-center justify-center btn:h-280">
+  <div
+    class="relative h-220 w-220 scale-[0.72] btn:scale-100"
+    aria-hidden="true"
+  >
     <div class="absolute inset-0 animate-spin-orbit">
       {/* Ring */}
       <div class="absolute inset-0 rounded-full border-[1.5px] border-dashed border-sketch"></div>

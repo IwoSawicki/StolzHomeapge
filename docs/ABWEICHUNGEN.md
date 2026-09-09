@@ -445,7 +445,7 @@ Platzhalterflächen der Vorlage:
 2. **Bilder der 11 Branchen-Kacheln** fehlen — schraffierte Flächen mit
    „Bild SHK" usw.
 3. **Porträt Moritz** fehlt
-4. **Kundenfotos in den Bewertungen** fehlen — 48×48-Kachel mit „FOTO"
+4. ~~**Kundenfotos in den Bewertungen** fehlen~~ — entfallen, siehe Punkt 29
 5. **Screenshot DMK Bau** fehlt
 6. **FAQ-Texte sind Entwürfe** und laut Handoff nicht freigegeben — sie stehen
    trotzdem schon drin, damit die Sektion vollständig ist
@@ -629,3 +629,34 @@ Startseite. Die Videodatei ist 6,2 MB groß; sie lädt wie auf `main` mit
 **[Rückfrage]** Falls die 6,2 MB auf dem Handy zu viel sind, kann ich eine
 kleinere Fassung für schmale Bildschirme ausliefern — dafür bräuchte ich
 einmal `ffmpeg` im Build oder eine zweite, vorab komprimierte Datei.
+
+---
+
+## 29. Bewertungen ohne Kundenfoto, Leistungskarten auf Mobil kleiner
+
+Zwei Rückmeldungen von Iwo:
+
+**Kundenfotos entfallen.** Die Vorlage zeigt in jeder Bewertungskarte neben
+dem Namen eine 48×48-Kachel mit „FOTO". Die Fotos gibt es nicht und sie
+kommen auch nicht mehr. Die Kachel ist deshalb ersatzlos raus — Name und
+Betrieb stehen jetzt für sich unter dem Zitat. Damit ist auch Punkt 26.4
+erledigt.
+
+**Leistungskarten unter 720px zurückgenommen.** Einspaltig füllte jede Karte
+fast den ganzen Bildschirm (342×650px bei 390px Breite), was die
+Orientierung auf der Startseite erschwerte. Geändert nur unterhalb von
+720px, also dort, wo die Karten untereinander stehen:
+
+| | vorher | jetzt |
+| --- | --- | --- |
+| Innenabstand der Karte | 40px | 24px |
+| Höhe der Illustration | 280px | 200px (Inhalt auf 72 % skaliert) |
+| Abstand zwischen den Elementen | 20px | 16px |
+| Abstand über der Überschrift | 12px | 4px |
+
+Kartenhöhe damit 518px statt 650px, die Sektion 1613px statt 1877px.
+
+Ab 720px — wo die Karten nebeneinander stehen — gelten unverändert die Maße
+der Vorlage; auf dem Desktop hat sich nichts geändert (Kartenhöhe weiterhin
+571px). Die Verkleinerung läuft über `transform: scale`, die Illustrationen
+selbst sind unangetastet.

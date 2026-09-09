@@ -1,6 +1,11 @@
 ---
 /* „Unsere Leistungen": zwei Karten mit CSS-Illustration, Überschrift,
    Absatz und Sekundärbutton.
+
+   Unter 720px sind Innenabstand und Illustration zurückgenommen: einspaltig
+   füllte jede Karte sonst fast den ganzen Bildschirm, was die Orientierung
+   auf der Startseite erschwerte (Rückmeldung Iwo). Ab 720px, wo die Karten
+   nebeneinander stehen, gelten wieder die Maße der Vorlage.
    Vorlage: design/STARTSEITE.dc.html, data-screen-label="Leistungen" */
 import Eyebrow from '../Eyebrow.astro';
 import Button from '../Button.astro';
@@ -32,10 +37,10 @@ import Bewerbungsliste from '../illustrationen/Bewerbungsliste.astro';
       class="mt-32 grid w-full grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-24"
     >
       <div
-        class="flex flex-col items-center gap-20 rounded-16 bg-paper-grey p-40 text-center"
+        class="flex flex-col items-center gap-16 rounded-16 bg-paper-grey p-24 text-center btn:gap-20 btn:p-40"
       >
         <Orbit />
-        <h3 class="mt-12 mb-0 text-26 leading-card font-bold">
+        <h3 class="mt-4 mb-0 text-26 leading-card font-bold btn:mt-12">
           Neue Aufträge gewinnen
         </h3>
         <p class="m-0 text-17 leading-body text-ink-muted">
@@ -48,10 +53,10 @@ import Bewerbungsliste from '../illustrationen/Bewerbungsliste.astro';
       </div>
 
       <div
-        class="flex flex-col items-center gap-20 rounded-16 bg-paper-grey p-40 text-center"
+        class="flex flex-col items-center gap-16 rounded-16 bg-paper-grey p-24 text-center btn:gap-20 btn:p-40"
       >
         <Bewerbungsliste />
-        <h3 class="mt-12 mb-0 text-26 leading-card font-bold">
+        <h3 class="mt-4 mb-0 text-26 leading-card font-bold btn:mt-12">
           Neue Mitarbeiter einstellen
         </h3>
         <p class="m-0 text-17 leading-body text-ink-muted">

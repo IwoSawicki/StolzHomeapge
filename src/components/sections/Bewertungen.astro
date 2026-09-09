@@ -1,7 +1,11 @@
 ---
 /* „Bewertungen": drei Google-Bewertungen auf dunklem Grund, darunter ein
-   gelber CTA. Die Kundenfotos fehlen noch — die Vorlage zeigt dort eine
-   schraffierte Platzhalterkachel.
+   gelber CTA.
+
+   Die Vorlage zeigt neben dem Namen eine schraffierte Platzhalterkachel für
+   ein Kundenfoto. Die Fotos gibt es nicht und sie kommen auch nicht mehr
+   (Entscheidung Iwo) — die Kachel ist deshalb entfallen, Name und Betrieb
+   stehen für sich.
    Vorlage: design/STARTSEITE.dc.html, data-screen-label="Bewertungen" */
 import Eyebrow from '../Eyebrow.astro';
 import Button from '../Button.astro';
@@ -88,21 +92,11 @@ import { bewertungen } from '../../data/startseite';
               {bewertung.text}
             </blockquote>
 
-            <figcaption class="mt-auto flex items-center gap-14">
-              {/* Kundenfoto liegt noch nicht vor */}
-              <div
-                class="flex h-48 w-48 flex-none items-center justify-center rounded-12"
-                style="background: repeating-linear-gradient(45deg, var(--color-forest-tint) 0 8px, var(--color-forest-tint-alt) 8px 16px)"
-                aria-hidden="true"
-              >
-                <span class="font-mono text-9 text-mint-placeholder">FOTO</span>
-              </div>
-              <div class="flex flex-col gap-2">
-                <span class="text-17 font-bold text-paper">{bewertung.name}</span>
-                {bewertung.betrieb && (
-                  <span class="text-15 text-mint">{bewertung.betrieb}</span>
-                )}
-              </div>
+            <figcaption class="mt-auto flex flex-col gap-2">
+              <span class="text-17 font-bold text-paper">{bewertung.name}</span>
+              {bewertung.betrieb && (
+                <span class="text-15 text-mint">{bewertung.betrieb}</span>
+              )}
             </figcaption>
           </figure>
         ))
