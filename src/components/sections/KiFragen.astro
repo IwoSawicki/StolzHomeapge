@@ -84,10 +84,6 @@ const kacheln = [
         >
       </h2>
 
-      <p class="m-0 max-w-520 text-19 leading-body text-ink-muted">
-        Ein Klick öffnet die Frage schon fertig getippt. Die Antwort kommt nicht von uns.
-      </p>
-
       <div class="mt-6 flex flex-wrap justify-center gap-10">
         {
           kiDienste.map((dienst) => (
@@ -113,10 +109,21 @@ const kacheln = [
         }
       </div>
 
-      <p class="m-0 max-w-460 text-15 leading-body text-ink-faint">
-        Öffnet sich beim jeweiligen Anbieter. Was dort steht, ist deren Antwort — wir
-        haben keinen Einfluss darauf.
+      {/* Ehrlich und zugleich Positionierung: Die Antwort selbst ist nicht
+          steuerbar, das Fundament darunter schon — und genau das ist eine
+          unserer Leistungen („Sichtbarkeit in ChatGPT, Perplexity und
+          anderen KI-Antworten", /kunden-gewinnen). */}
+      <p class="m-0 mt-10 max-w-560 text-17 leading-body text-ink-muted">
+        Was die KI antwortet, entscheidet sie selbst. Beeinflussen lässt sich, was sie
+        über Sie findet — und genau daran arbeiten wir.
       </p>
+
+      <a
+        href="/kontakt"
+        class="text-17 font-medium text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-lime-link-hover"
+      >
+        Wissen, was die KI über Ihren Betrieb sagt? <span aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 </section>

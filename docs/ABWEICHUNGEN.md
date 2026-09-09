@@ -794,7 +794,25 @@ Die Knöpfe tragen bewusst **keine fremden Logos**, nur den Namen und ein
 neutrales Funkeln — nachgezeichnete Marken sehen selten richtig aus. Die
 offiziellen SVGs lassen sich jederzeit einsetzen.
 
-Eyebrow, Überschrift und die beiden Sätze sind mein Vorschlag.
+**Text unter den Knöpfen** (Wunsch von Iwo, Positionierung als
+KI-Kundiger):
+
+> Was die KI antwortet, entscheidet sie selbst. Beeinflussen lässt sich, was
+> sie über Sie findet — und genau daran arbeiten wir.
+>
+> Wissen, was die KI über Ihren Betrieb sagt? →
+
+Der erste Satz löst einen Widerspruch auf, der sonst entstünde: Man kann
+die Antwort einer KI nicht bestellen, aber sehr wohl beeinflussen, was sie
+über einen findet. Genau das steht als Leistung schon auf
+`/kunden-gewinnen` („Sichtbarkeit in ChatGPT, Perplexity und anderen
+KI-Antworten") — die Aussage ist also gedeckt und nicht neu erfunden. Der
+Link führt auf die Kontaktseite.
+
+Der frühere Satz „Ein Klick öffnet die Frage schon fertig getippt …" ist
+auf Wunsch entfallen.
+
+Eyebrow, Überschrift und die Sätze darunter sind mein Vorschlag.
 **[Rückfrage]** Bitte gegenlesen.
 
 ---
