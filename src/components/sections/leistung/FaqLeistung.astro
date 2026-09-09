@@ -9,7 +9,7 @@ interface Props {
   /** Erster Eintrag beim Laden offen */
   ersterOffen?: boolean;
 }
-const { eintraege, id, ersterOffen = true } = Astro.props;
+const { eintraege, id, ersterOffen = false } = Astro.props;
 ---
 
 <section class="bg-paper px-20 py-section-y-lg">

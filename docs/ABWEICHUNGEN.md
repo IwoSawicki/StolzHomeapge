@@ -470,10 +470,9 @@ Gegen den gerenderten Prototyp gemessen (Desktop 1440, Tablet 1024, Mobil 390):
   Hero-Buttons untereinander unter 390px
 - Branchen-Slider scrollt um exakt 350px (330px Karte + 20px Gap), gleiche
   Snap-Ausgangsposition wie die Vorlage
-- FAQ: höchstens einer offen, Zeichen wechselt +/−. Startseite und
-  „Kunden gewinnen" öffnen den ersten Eintrag wie die Vorlage;
-  „Mitarbeiter gewinnen" startet komplett geschlossen, so verlangt es das
-  eigene Handoff dieser Seite.
+- FAQ: höchstens einer offen, Zeichen wechselt +/−. **Alle** Akkordeons
+  starten geschlossen (Entscheidung Iwo); die Vorlage öffnet auf der
+  Startseite den ersten Eintrag.
 
 ---
 
@@ -832,3 +831,48 @@ Geprüft in beiden Schemata bei 96, 32 und 16 Pixeln.
 - `<meta name="theme-color">` steht fest auf `#0D2118`. Auch die lässt sich
   je Farbschema setzen; das betrifft die Browserleiste auf dem Handy, nicht
   das Favicon.
+
+---
+
+## 36. Nachgeschärft: Branchen, FAQ, Bildausschnitte, KI-Sektion, Icons
+
+**Branchenraster.** „Umzüge" ist raus. Dafür zwei Gewerke Richtung
+Industrie, weil dort das Mitarbeiterthema am stärksten sitzt:
+
+- **Industrie- und Anlagenbau** · Montage, Wartung, Instandhaltung
+- **Produktion und Fertigung** · Industriebetriebe und Zulieferer
+
+Damit sind es zwölf Kacheln, also drei volle Reihen zu vier — vorher blieb
+die letzte Reihe halb leer. Die beiden stehen auch in der Footer-Spalte,
+dort wie die übrigen ausgegraut. Namen und Untertitel sind mein Vorschlag.
+**[Rückfrage]** Bitte gegenlesen, falls andere Bezeichnungen üblicher sind.
+
+**FAQ.** Alle Akkordeons starten jetzt geschlossen, auch auf der Startseite
+und auf „Kunden gewinnen". Der Standard steckt in `Akkordeon.astro`, die
+Seiten müssen nichts mehr angeben.
+
+**Bildausschnitte der Bewertungen** weiter aufgezogen: Janne von 42 auf
+56 Prozent der Bildbreite, André von 55 auf 70 und zugleich höher gesetzt,
+Dariusz von 90 auf 98. Alles nur Zahlen in `src/data/startseite.ts`.
+
+**KI-Sektion** deutlich präsenter: weißer Grund statt grau, Überschrift auf
+der größten Stufe des Systems (`text-h2-claim`, bis 78px), leuchtende
+Knöpfe — und sechs verstreute, leicht gedrehte Bildkacheln links und rechts,
+wie im Vorbild bei madebyshape.co.uk.
+
+Die Bilder sind **echte Aufnahmen aus dem Bestand** (Projekt-Screenshots,
+Foto vom Dreh bei DMK, zwei Teamporträts), keine Platzhalter. Sie sind reine
+Dekoration, tragen deshalb ein leeres `alt`, und erscheinen erst ab 1040px —
+darunter würden sie der Überschrift den Platz nehmen. Jede Kachel hat einen
+eigenen Bildausschnitt, damit in den Porträts das Gesicht sitzt und nicht
+die Jacke.
+
+**Icons ergänzt.** Zusätzlich zum mitschaltenden SVG gibt es jetzt
+`favicon.ico` (16 bis 64 Pixel in einer Datei) und `apple-touch-icon.png`
+(180 Pixel) für Programme ohne SVG-Unterstützung, Windows-Kacheln und
+iOS-Lesezeichen. Beide zeigen fest die helle Fassung — mitschalten kann nur
+das SVG.
+
+`<meta name="theme-color">` bleibt bewusst auf Dunkelgrün. Die Farbe färbt
+die Browserleiste auf dem Handy; sie je Farbschema umzuschalten würde sie
+auf der dunkelgrünen Startseite falsch aussehen lassen.

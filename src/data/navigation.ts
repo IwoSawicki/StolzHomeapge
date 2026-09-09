@@ -61,6 +61,8 @@ export const footerBranchen: NavLink[] = [
   { label: 'Fliesen- & Bodenleger', href: '/branchen/fliesenleger', nochNicht: true },
   { label: 'Metall- & Schlosserbau', href: '/branchen/metallbau', nochNicht: true },
   { label: 'Photovoltaik & Solar', href: '/branchen/photovoltaik', nochNicht: true },
+  { label: 'Industrie- & Anlagenbau', href: '/branchen/industrie-anlagenbau', nochNicht: true },
+  { label: 'Produktion & Fertigung', href: '/branchen/produktion-fertigung', nochNicht: true },
 ];
 
 /* Footer-Spalte „Rechtliches". AGB stehen bewusst nicht drin: es gibt

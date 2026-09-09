@@ -17,8 +17,8 @@ interface Props {
   frageGroesse?: 'text-19' | 'text-20';
   /** Eindeutiges Präfix für die IDs, falls mehrere Akkordeons auf einer Seite */
   id?: string;
-  /** Erster Eintrag beim Laden offen. Auf /mitarbeiter-gewinnen laut Handoff
-      ausdrücklich aus: dort starten alle Einträge geschlossen. */
+  /** Erster Eintrag beim Laden offen. Standard ist aus: alle FAQs starten
+      geschlossen (Entscheidung Iwo). */
   ersterOffen?: boolean;
   class?: string;
 }
@@ -28,7 +28,7 @@ const {
   mitNummern = false,
   frageGroesse = 'text-20',
   id = 'faq',
-  ersterOffen = true,
+  ersterOffen = false,
   class: klasse,
 } = Astro.props;
 

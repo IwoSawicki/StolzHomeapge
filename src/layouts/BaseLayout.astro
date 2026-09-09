@@ -97,7 +97,12 @@ const jsonLd = {
       crossorigin
     />
 
+    {/* SVG zuerst: es wechselt mit dem Farbschema (siehe public/favicon.svg).
+        Die beiden Rasterbilder sind die Rückfallebene für Programme ohne
+        SVG-Unterstützung — sie zeigen immer die helle Fassung. */}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 

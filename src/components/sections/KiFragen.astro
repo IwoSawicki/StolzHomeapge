@@ -1,60 +1,122 @@
 ---
-/* „Fragen Sie die KI": letzte Sektion der Startseite. Vier Knöpfe, die den
-   jeweiligen Dienst mit einer bereits eingetragenen Frage öffnen.
+/* „Was die KI über uns sagt": letzte Sektion der Startseite. Vier Knöpfe
+   öffnen den jeweiligen Dienst mit einer bereits eingetragenen Frage.
 
    Steht nicht in der Design-Vorlage — Wunsch von Iwo, Vorbild ist die
-   Sektion „See what AI has to say about us" von madebyshape.co.uk. Texte
-   sind mein Vorschlag und noch nicht freigegeben. */
-import Eyebrow from '../Eyebrow.astro';
+   Sektion „See what AI has to say about us" von madebyshape.co.uk, dort mit
+   verstreuten Bildern um die Überschrift herum.
+
+   Die Bilder sind echte Aufnahmen aus dem Bestand (Projekte, Team, Dreh) —
+   keine Platzhalter, keine Stockfotos. Sie sind reine Dekoration, tragen
+   deshalb ein leeres alt und liegen erst ab 1040px im Layout: darunter
+   würden sie der Überschrift den Platz nehmen. */
+import { Image } from 'astro:assets';
 import { kiFrage, kiDienste } from '../../data/ki-frage';
 
 const frage = encodeURIComponent(kiFrage);
+
+const projekte = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/projekte/*.{png,jpg}',
+  { eager: true },
+);
+const portraits = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/portraits/*.jpg',
+  { eager: true },
+);
+
+/* Position, Größe und leichte Drehung je Kachel — von Hand gesetzt, damit
+   es gestreut wirkt und nicht wie ein Raster. */
+const kacheln = [
+  { bild: projekte['../../assets/projekte/hepa-baut-startseite.png']!.default,
+    stil: 'left:0%; top:4%;   width:clamp(150px,15vw,250px)', dreh: '-3deg', schnitt: '50% 0%' },
+  { bild: portraits['../../assets/portraits/timon.jpg']!.default,
+    stil: 'left:7%; top:48%;  width:clamp(110px,10vw,165px)', dreh: '4deg', schnitt: '50% 20%' },
+  { bild: projekte['../../assets/projekte/nkn-pv-elektrik-startseite.png']!.default,
+    stil: 'left:1%; top:79%;  width:clamp(140px,13vw,215px)', dreh: '2deg', schnitt: '50% 0%' },
+  { bild: projekte['../../assets/projekte/dmk-fotoshooting-platzhalter.jpg']!.default,
+    stil: 'right:0%; top:0%;  width:clamp(120px,11vw,180px)', dreh: '3deg', schnitt: '50% 35%' },
+  { bild: projekte['../../assets/projekte/jhoch2-startseite.png']!.default,
+    stil: 'right:6%; top:44%; width:clamp(150px,15vw,250px)', dreh: '-4deg', schnitt: '50% 0%' },
+  { bild: portraits['../../assets/portraits/gintas.jpg']!.default,
+    stil: 'right:1%; top:82%; width:clamp(110px,10vw,165px)', dreh: '-2deg', schnitt: '50% 8%' },
+];
 ---
 
-<section class="bg-paper-soft px-20 py-section-y-lg">
-  <div class="mx-auto flex max-w-860 flex-col items-center gap-24 text-center">
-    <Eyebrow variante="hell">Nicht glauben, nachfragen</Eyebrow>
-
-    <h2
-      class="m-0 text-h2-system leading-system font-bold tracking-system text-ink"
-    >
-      Was die KI <span class="font-display font-semibold tracking-none italic"
-        >über uns sagt</span
-      >
-    </h2>
-
-    <p class="m-0 max-w-620 text-19 leading-body text-ink-muted">
-      Ein Klick öffnet die Frage schon fertig getippt. Die Antwort kommt nicht von uns.
-    </p>
-
-    <div class="mt-8 flex flex-wrap justify-center gap-10">
+<section class="overflow-hidden bg-paper px-20 py-section-y-xl">
+  <div class="relative mx-auto max-w-content-wide nav:min-h-560">
+    {/* --- verstreute Bilder, erst ab 1040px --- */}
+    <div class="pointer-events-none absolute inset-0 hidden nav:block" aria-hidden="true">
       {
-        kiDienste.map((dienst) => (
-          <a
-            href={dienst.adresse(frage)}
-            target="_blank"
-            rel="noopener"
-            class="inline-flex h-46 items-center gap-8 rounded-full bg-lime px-20 text-16 font-bold text-forest-deep no-underline transition-colors duration-200 hover:bg-lime-bright"
+        kacheln.map((kachel) => (
+          <div
+            class="absolute overflow-hidden rounded-16 border border-line bg-paper-warm shadow-card-light"
+            style={`${kachel.stil}; rotate:${kachel.dreh}`}
           >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-              class="flex-none"
-            >
-              <path d="M12 1.6l2.1 6.3 6.3 2.1-6.3 2.1-2.1 6.3-2.1-6.3-6.3-2.1 6.3-2.1z" />
-            </svg>
-            {dienst.name}
-          </a>
+            <Image
+              src={kachel.bild}
+              alt=""
+              widths={[260, 520]}
+              sizes="250px"
+              loading="lazy"
+              decoding="async"
+              class="block aspect-[4/3] w-full object-cover"
+              style={`object-position:${kachel.schnitt}`}
+            />
+          </div>
         ))
       }
     </div>
 
-    <p class="m-0 max-w-560 text-15 leading-body text-ink-faint">
-      Öffnet sich in einem neuen Tab beim jeweiligen Anbieter. Was dort steht, ist deren
-      Antwort — wir haben keinen Einfluss darauf.
-    </p>
+    {/* --- Mitte --- */}
+    <div
+      class="relative mx-auto flex max-w-680 flex-col items-center gap-22 py-16 text-center nav:py-64"
+    >
+      <span class="flex items-center gap-8 text-15 font-medium text-ink-muted">
+        <span class="h-6 w-6 rounded-full bg-lime" aria-hidden="true"></span>
+        Nicht glauben, nachfragen
+      </span>
+
+      <h2
+        class="m-0 text-h2-claim leading-claim font-bold tracking-claim text-balance text-ink"
+      >
+        Was die KI <span class="font-display font-semibold tracking-none italic"
+          >über uns sagt</span
+        >
+      </h2>
+
+      <p class="m-0 max-w-520 text-19 leading-body text-ink-muted">
+        Ein Klick öffnet die Frage schon fertig getippt. Die Antwort kommt nicht von uns.
+      </p>
+
+      <div class="mt-6 flex flex-wrap justify-center gap-10">
+        {
+          kiDienste.map((dienst) => (
+            <a
+              href={dienst.adresse(frage)}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex h-50 items-center gap-8 rounded-full bg-lime px-22 text-17 font-bold text-forest-deep no-underline shadow-glow transition-transform duration-200 hover:scale-[1.04] hover:bg-lime-bright"
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+                class="flex-none"
+              >
+                <path d="M12 1.6l2.1 6.3 6.3 2.1-6.3 2.1-2.1 6.3-2.1-6.3-6.3-2.1 6.3-2.1z" />
+              </svg>
+              {dienst.name}
+            </a>
+          ))
+        }
+      </div>
+
+      <p class="m-0 max-w-460 text-15 leading-body text-ink-faint">
+        Öffnet sich beim jeweiligen Anbieter. Was dort steht, ist deren Antwort — wir
+        haben keinen Einfluss darauf.
+      </p>
+    </div>
   </div>
 </section>

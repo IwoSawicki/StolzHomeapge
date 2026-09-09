@@ -143,11 +143,21 @@ export const branchen: Branche[] = [
     href: '/branchen/metallbau',
     platzhalter: 'Bild Metallbau',
   },
+  /* Zwei Gewerke Richtung Industrie ergänzt: dort sitzt das
+     Mitarbeiterthema am stärksten, und das Raster geht mit zwölf Kacheln
+     sauber auf (drei volle Reihen zu vier). Vorschlag von mir,
+     siehe docs/ABWEICHUNGEN.md. */
   {
-    name: 'Umzüge',
-    sub: 'Umzug und Entrümpelung',
-    href: '/branchen/umzuege',
-    platzhalter: 'Bild Umzüge',
+    name: 'Industrie- und Anlagenbau',
+    sub: 'Montage, Wartung, Instandhaltung',
+    href: '/branchen/industrie-anlagenbau',
+    platzhalter: 'Bild Industrie- und Anlagenbau',
+  },
+  {
+    name: 'Produktion und Fertigung',
+    sub: 'Industriebetriebe und Zulieferer',
+    href: '/branchen/produktion-fertigung',
+    platzhalter: 'Bild Produktion und Fertigung',
   },
 ];
 
@@ -174,21 +184,21 @@ export const bewertungen: Bewertung[] = [
     name: 'Janne Tom Klüppelholz',
     betrieb: 'Fight Society Clothing',
     foto: 'JanneKlu.jpg',
-    ausschnitt: [0.27, 0.005, 0.42],
+    ausschnitt: [0.185, 0.0, 0.56],
   },
   {
     text: 'Iwo hat eine beeindruckende Webseite für mich erstellt und hochwertige Werbefotos geschossen. Seine kreative Herangehensweise, professionelle Arbeit und effiziente Zusammenarbeit haben mich beeindruckt. Ich bin mit den Ergebnissen sehr zufrieden und kann Iwo wärmstens empfehlen!',
     name: 'Dariusz Krzyszton',
     betrieb: 'DMK Bau',
     foto: 'DarekDMK.webp',
-    ausschnitt: [0.05, 0.04, 0.9],
+    ausschnitt: [0.01, 0.03, 0.98],
   },
   {
     text: 'Sehr netter Kontakt! Die Design-Ideen und Lösungsvorschläge sind immer sehr gut.👍🏼\nMit so jemanden kann man gut zusammen arbeiten!',
     name: 'André Zehner',
     betrieb: 'Zehner Immobilien',
     foto: 'AndreZehner.jpg',
-    ausschnitt: [0.155, 0.026, 0.55],
+    ausschnitt: [0.09, 0.03, 0.7],
   },
 ];
 
