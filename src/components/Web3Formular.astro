@@ -4,7 +4,12 @@
    verwendet — die Absendelogik liegt deshalb nur hier.
 
    Der Access-Key ist ein öffentlicher Formularschlüssel, kein Geheimnis;
-   er gehört laut Web3Forms in das Formular. */
+   er gehört laut Web3Forms in das Formular.
+
+   Adressfelder tragen bewusst NICHT type="url": der Browser verlangt dort
+   „https://" und weist „stolz-marketing.de" als ungültig ab. Stattdessen
+   type="text" mit inputmode="url" — und beim Absenden wird das fehlende
+   „https://" ergänzt, damit im Postfach ein klickbarer Link ankommt. */
 
 export interface Feld {
   name: string;
@@ -16,6 +21,8 @@ export interface Feld {
   breit?: boolean;
   mehrzeilig?: boolean;
   autocomplete?: string;
+  /** Tastaturbelegung auf dem Handy, ohne die strenge Prüfung von type="url" */
+  inputmode?: 'url' | 'email' | 'tel' | 'numeric';
 }
 
 interface Props {
@@ -96,6 +103,7 @@ const feldKlasse = istHell
               placeholder={feld.platzhalter}
               required={feld.pflicht}
               autocomplete={feld.autocomplete}
+              inputmode={feld.inputmode}
               class={feldKlasse}
             />
           )}
@@ -181,11 +189,22 @@ const feldKlasse = istHell
         knopf.textContent = 'Wird gesendet …';
       }
 
+      // Adressfelder: „stolz-marketing.de" wird zu „https://stolz-marketing.de",
+      // damit im Postfach ein klickbarer Link ankommt. Wer schon ein Schema
+      // getippt hat, bleibt unangetastet.
+      const daten = new FormData(formular);
+      formular.querySelectorAll<HTMLInputElement>('input[inputmode="url"]').forEach((feld) => {
+        const wert = feld.value.trim();
+        if (wert && !/^[a-z][a-z0-9+.-]*:\/\//i.test(wert)) {
+          daten.set(feld.name, 'https://' + wert);
+        }
+      });
+
       try {
         const antwort = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { Accept: 'application/json' },
-          body: new FormData(formular),
+          body: daten,
         });
         const ergebnis = await antwort.json();
 

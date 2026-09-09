@@ -1153,3 +1153,50 @@ die Liste eine Zielmarkt-Angabe — für „Fenster und Türen" oder „Fassade 
 Dämmung" gibt es (noch) keinen Kunden. Entweder bleibt es dabei, oder der
 Satz wird zu etwas wie „Auf diese Gewerke sind wir eingestellt." Der
 Wortlaut stammt aus der Vorlage, deshalb frage ich lieber nach.
+
+---
+
+## 45. Kopfzeile: Unterstrich statt Hintergrundfläche
+
+Die Vorlage markiert den Menüpunkt der aktuellen Seite mit einer
+Hintergrundfläche (`#143026`) und nutzt dieselbe Fläche als Hover. Iwo
+gefiel das nicht.
+
+**Jetzt:** beim Zeigen ein feiner Unterstrich in der Textfarbe, auf der
+aktuellen Seite ein kräftigerer Unterstrich in Lime. In allen vier Menüs.
+Die Klassen sitzen auf einem inneren `<span>`, damit die 50+-Blase nicht
+mit unterstrichen wird. Dazu trägt der aktive Link `aria-current="page"` —
+Screenreader sagen jetzt an, auf welcher Seite man ist.
+
+---
+
+## 46. Abschluss: Marker auf „richtigen Agentur"
+
+Auf beiden Leistungsseiten trägt jetzt „richtigen Agentur" den gelben
+Marker, der Schlussteil steht in Serifen-Kursive **ohne** Marker. Der
+gemeinsame Teil ist damit hervorgehoben, der unterschiedliche kursiv:
+
+- `/kunden-gewinnen`: … wie die Suche nach *guten Aufträgen*.
+- `/mitarbeiter-gewinnen`: … wie die Suche nach *den richtigen Leuten*.
+
+Auf `/mitarbeiter-gewinnen` heißt es dafür „der richtigen Agentur" statt
+„einem Dienstleister, dem man vertraut" (so der Handoff). Wunsch von Iwo;
+der Rest des Satzes ist unverändert.
+
+---
+
+## 47. Fehler behoben: Kontaktformular ließ sich nicht absenden
+
+Das Feld „Aktuelle Webseite" trug `type="url"`. Browser verlangen dort ein
+vollständiges Schema — „stolz-marketing.de" wurde mit „Please enter a URL"
+abgewiesen, und weil die Prüfung das ganze Formular blockiert, kam gar
+nichts an. Niemand tippt „https://" von Hand.
+
+**Behoben:** Das Feld ist jetzt ein normales Textfeld mit
+`inputmode="url"` (auf dem Handy weiterhin die passende Tastatur). Beim
+Absenden ergänzt das Formular ein fehlendes „https://", damit im Postfach
+trotzdem ein klickbarer Link ankommt.
+
+Gegengeprüft mit abgefangenem Absenden: Eingabe „stolz-marketing.de" ist
+gültig, an Web3Forms geht „https://stolz-marketing.de", die Bestätigung
+erscheint.

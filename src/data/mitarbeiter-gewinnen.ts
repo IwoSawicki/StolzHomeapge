@@ -219,13 +219,15 @@ export const faqs = [
 
 /* --- Sektion 9 · Abschluss ----------------------------------------------- */
 
-/* Wortlaut unverändert aus dem Handoff, nur für die Auszeichnung zerlegt:
-   Der letzte Teil steht als Serifen-Kursive auf dem Textmarker — genauso
-   wie auf /kunden-gewinnen, damit beide Abschlüsse gleich aussehen. */
+/* Der Handoff schreibt „die Suche nach einem Dienstleister, dem man
+   vertraut". Auf Wunsch von Iwo steht dort jetzt „der richtigen Agentur" —
+   derselbe Anfang wie auf /kunden-gewinnen, damit beide Abschlüsse als Paar
+   lesbar sind. Der Rest des Satzes ist unverändert. */
 export const abschluss = {
-  titelVorn:
-    'Wir wissen zu gut, dass die Suche nach einem Dienstleister, dem man vertraut, mindestens genauso schwer ist wie die Suche nach ',
-  titelAkzent: 'den richtigen Leuten',
+  titelVorn: 'Wir wissen zu gut, dass die Suche nach der ',
+  titelMarker: 'richtigen Agentur',
+  titelMitte: ' mindestens genauso schwer ist wie die Suche nach ',
+  titelKursiv: 'den richtigen Leuten',
   titelHinten: '.',
   lead: 'Im Erstgespräch finden wir gemeinsam heraus, ob wir Ihre Aufgabe annehmen können.',
 };

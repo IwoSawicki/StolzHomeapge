@@ -16,7 +16,9 @@ const felder: Feld[] = [
   {
     name: 'webseite',
     label: 'Aktuelle Webseite',
-    type: 'url',
+    /* Kein type="url": der Browser verlangt dort „https://" und wies
+       „stolz-marketing.de" als ungültig ab. */
+    inputmode: 'url',
     platzhalter: 'www.unternehmen.de',
     breit: true,
     autocomplete: 'url',

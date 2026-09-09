@@ -3,21 +3,25 @@
    Vertrauens-Baustein und die Telefonnummer, rechts das Anfrageformular als
    abgesetzte Karte. Steht im selben Band wie der Footer.
 
-   Beide Seiten teilen sich jetzt dieses Bauteil — vorher waren es zwei
-   Dateien mit unterschiedlicher Typografie (einmal Serifen-Kursive, einmal
-   nicht). Der hervorgehobene Teil der Überschrift trägt auf beiden Seiten
-   den Textmarker, damit auch hier Farbe im Bild ist.
+   Beide Seiten teilen sich dieses Bauteil. Die Überschrift ist auf beiden
+   gleich gebaut: „richtigen Agentur" trägt den gelben Textmarker — das ist
+   der gemeinsame Nenner —, der Schlussteil steht in Serifen-Kursive ohne
+   Marker und unterscheidet die beiden Seiten.
    Vorlage: data-screen-label="9 Abschluss" */
 import Web3Formular from '../../Web3Formular.astro';
 import type { Feld } from '../../Web3Formular.astro';
 import { kontakt } from '../../../data/navigation';
 
 interface Props {
-  /** Text vor dem hervorgehobenen Teil der Überschrift */
+  /** Text vor dem markierten Teil */
   titelVorn: string;
-  /** Hervorgehoben: Serifen-Kursive auf Textmarker */
-  titelAkzent: string;
-  /** Text nach dem hervorgehobenen Teil, meist der Schlusspunkt */
+  /** Gelb markiert — auf beiden Seiten „richtigen Agentur" */
+  titelMarker: string;
+  /** Text zwischen Marker und Serifen-Kursive */
+  titelMitte: string;
+  /** Serifen-Kursive, ohne Marker — der Teil, der die Seiten unterscheidet */
+  titelKursiv: string;
+  /** Text danach, meist der Schlusspunkt */
   titelHinten: string;
   lead: string;
   felder: Feld[];
@@ -28,8 +32,17 @@ interface Props {
   ortZeile?: string;
 }
 
-const { titelVorn, titelAkzent, titelHinten, lead, felder, betreff, ortZeile } =
-  Astro.props;
+const {
+  titelVorn,
+  titelMarker,
+  titelMitte,
+  titelKursiv,
+  titelHinten,
+  lead,
+  felder,
+  betreff,
+  ortZeile,
+} = Astro.props;
 ---
 
 <section id="anfrage" class="bg-forest-deep px-20 py-[clamp(64px,9vw,104px)]">
@@ -40,8 +53,8 @@ const { titelVorn, titelAkzent, titelHinten, lead, felder, betreff, ortZeile } =
       </span>
 
       <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
-        {titelVorn}<span class="marker font-display font-semibold tracking-none italic"
-          >{titelAkzent}</span
+        {titelVorn}<span class="marker">{titelMarker}</span>{titelMitte}<span
+          class="font-display font-semibold tracking-none italic">{titelKursiv}</span
         >{titelHinten}
       </h2>
 
