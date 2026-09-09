@@ -8,6 +8,13 @@
    wieder ein <a> mit Pfeilkreis. */
 import Eyebrow from '../Eyebrow.astro';
 import { branchen } from '../../data/startseite';
+
+/* Auf der Startseite stehen sechs Gewerke — Auswahl und Reihenfolge von
+   Iwo. Sechs lesen sich als Fokus, zwölf lasen sich wie „wir nehmen
+   jeden". Die übrigen bleiben in den Daten; zum Erweitern reicht es,
+   diese Zahl zu erhöhen. */
+const SICHTBARE_BRANCHEN = 6;
+const sichtbar = branchen.slice(0, SICHTBARE_BRANCHEN);
 ---
 
 <section class="bg-paper px-20 py-section-y-branchen">
@@ -24,9 +31,11 @@ import { branchen } from '../../data/startseite';
     </div>
 
     {/* Die Spaltenzahl ergibt sich intrinsisch: eine Spur ist mindestens
-        240px breit, passen zwei davon nicht nebeneinander, wird die Liste
-        einspaltig. Auf dem Handy heißt das eine Spalte über die volle
-        Breite — zwei Spalten ergäben dort Kacheln von rund 150px, in die
+        340px breit, passen zwei davon nicht nebeneinander, wird die Liste
+        einspaltig. Bei sechs Kacheln ergibt das 3+3 auf dem Desktop,
+        2+2+2 auf dem Tablet und eine Spalte auf dem Handy — nirgends
+        eine angebrochene Reihe. Auf dem Handy heißt das volle Breite;
+        zwei Spalten ergäben dort Kacheln von rund 150px, in die
         „Landschaftsbau" oder „Renovierung" nicht hineinpassen.
 
         Kein overflow-wrap: break-word mehr. Es hat Wörter ohne weiches
@@ -34,10 +43,10 @@ import { branchen } from '../../data/startseite';
         („Dachdec/ker", „Sanierun/g"). Getrennt wird jetzt ausschließlich
         an den Stellen, die in den Daten als U+00AD hinterlegt sind —
         dort erscheint auch ein Trennstrich. */}
-    <ul class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(240px,100%),1fr))] gap-16 p-0">
+    <ul class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(340px,100%),1fr))] gap-16 p-0">
       {
-        branchen.map((branche) => (
-          <li class="flex flex-col gap-4 rounded-16 border border-line bg-paper-warm px-24 py-22">
+        sichtbar.map((branche) => (
+          <li class="flex flex-col gap-4 rounded-16 border border-line bg-paper-warm px-24 py-22 btn:px-30 btn:py-30">
             <span class="text-22 leading-card font-bold tracking-heading text-ink hyphens-auto">
               {branche.name}
             </span>

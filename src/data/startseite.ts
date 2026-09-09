@@ -166,31 +166,49 @@ export interface Branche {
    Die beiden letzten Einträge stehen bewusst für den Meistermagneten:
    Industrie sucht keine Kunden über Google, aber sehr wohl Leute. */
 export const branchen: Branche[] = [
-  { name: 'SHK', sub: 'Sanitär, Heizung, Klima', href: '/branchen/shk', platzhalter: 'Bild SHK' },
+  /* Reihenfolge der ersten sechs von Iwo vorgegeben — das sind die
+     Gewerke, die auf der Startseite gezeigt werden (siehe
+     SICHTBARE_BRANCHEN in BranchenGrid.astro). Die übrigen stehen
+     bewusst weiter hier: sie beschreiben ebenfalls Zielkunden, und die
+     Zahl lässt sich damit ohne Datenpflege wieder erhöhen. */
   {
-    name: 'Elektro',
+    name: 'Sanierung & Renovierung',
+    sub: 'Altbau, Bad, Wasserschaden',
+    href: '/branchen/sanierung-renovierung',
+    platzhalter: 'Bild Sanierung',
+  },
+  {
+    name: 'Elektriker',
     sub: 'Elektroinstallation und PV',
     href: '/branchen/elektro',
     platzhalter: 'Bild Elektro',
   },
+  { name: 'Maler', sub: 'Maler und Lackierer', href: '/branchen/maler', platzhalter: 'Bild Maler' },
+  {
+    name: 'SHK & Heizungsbau',
+    sub: 'Sanitär, Heizung, Klima',
+    href: '/branchen/shk',
+    platzhalter: 'Bild SHK',
+  },
+  {
+    name: 'Fenster & Türen',
+    sub: 'Einbau, Austausch, Rollläden',
+    href: '/branchen/fenster-tueren',
+    platzhalter: 'Bild Fenster und Türen',
+  },
+  {
+    name: 'Garten- und Landschaftsbau',
+    sub: 'Außenanlagen und Pflege',
+    href: '/branchen/galabau',
+    platzhalter: 'Bild GaLaBau',
+  },
+
+  /* --- ab hier nicht auf der Startseite sichtbar --------------------- */
   {
     name: 'Dachdecker',
     sub: 'Dach, Abdichtung, Spengler',
     href: '/branchen/dachdecker',
     platzhalter: 'Bild Dachdecker',
-  },
-  {
-    name: 'Sanierung und Renovierung',
-    sub: 'Altbau, Bad, Wasserschaden',
-    href: '/branchen/sanierung-renovierung',
-    platzhalter: 'Bild Sanierung',
-  },
-  { name: 'Maler', sub: 'Maler und Lackierer', href: '/branchen/maler', platzhalter: 'Bild Maler' },
-  {
-    name: 'Fenster und Türen',
-    sub: 'Einbau, Austausch, Rollläden',
-    href: '/branchen/fenster-tueren',
-    platzhalter: 'Bild Fenster und Türen',
   },
   {
     name: 'Schreiner',
@@ -199,16 +217,10 @@ export const branchen: Branche[] = [
     platzhalter: 'Bild Schreiner',
   },
   {
-    name: 'Fassade und Dämmung',
+    name: 'Fassade & Dämmung',
     sub: 'Stuckateur und Wärmedämmung',
     href: '/branchen/fassade-daemmung',
     platzhalter: 'Bild Fassade',
-  },
-  {
-    name: 'Garten- und Landschaftsbau',
-    sub: 'Außenanlagen und Pflege',
-    href: '/branchen/galabau',
-    platzhalter: 'Bild GaLaBau',
   },
   {
     /* Untertitel zeigt bewusst aufs Privatkundengeschäft: über
@@ -225,7 +237,7 @@ export const branchen: Branche[] = [
     platzhalter: 'Bild Industrie- und Anlagenbau',
   },
   {
-    name: 'Produktion und Fertigung',
+    name: 'Produktion & Fertigung',
     sub: 'Industriebetriebe und Zulieferer',
     href: '/branchen/produktion-fertigung',
     platzhalter: 'Bild Produktion und Fertigung',
