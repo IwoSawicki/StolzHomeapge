@@ -799,3 +799,36 @@ offiziellen SVGs lassen sich jederzeit einsetzen.
 
 Eyebrow, Überschrift und die beiden Sätze sind mein Vorschlag.
 **[Rückfrage]** Bitte gegenlesen.
+
+---
+
+## 35. Favicon wechselt mit dem Farbschema
+
+Das dunkelgrüne Kachel-Favicon verschwand in dunklen Browserleisten fast.
+Es gibt jetzt zwei Fassungen — aber weiterhin **eine Datei**:
+`public/favicon.svg` schaltet die Farben selbst um.
+
+| | Kachel | Icon |
+| --- | --- | --- |
+| Heller Modus | Dunkelgrün `#0D2118` | Lime `#E4F53F` |
+| Dunkler Modus | Lime `#E4F53F` | Dunkelgrün `#0D2118` |
+
+Technisch über einen `<style>`-Block im SVG mit
+`@media (prefers-color-scheme: dark)`. Der zweite `<link rel="icon">` mit
+`media`-Attribut, den man dafür oft liest, funktioniert nicht zuverlässig —
+die meisten Browser ignorieren `media` an Icon-Links.
+
+Die `fill`-Attribute stehen zusätzlich an den Elementen: Programme, die den
+Style-Block ignorieren, zeigen dann die helle Fassung statt gar nichts.
+
+Geprüft in beiden Schemata bei 96, 32 und 16 Pixeln.
+
+**Noch offen (bewusst nicht gemacht):**
+
+- Es gibt **keine `favicon.ico` und kein `apple-touch-icon.png`**. Ältere
+  Browser, Windows-Kacheln, iOS-Lesezeichen und teilweise die Google-Suche
+  greifen darauf zurück. Wenn gewünscht, lege ich beide als PNG-Fallback an —
+  die schalten dann allerdings nicht mit dem Farbschema um, das kann nur SVG.
+- `<meta name="theme-color">` steht fest auf `#0D2118`. Auch die lässt sich
+  je Farbschema setzen; das betrifft die Browserleiste auf dem Handy, nicht
+  das Favicon.
