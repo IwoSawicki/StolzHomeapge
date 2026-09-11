@@ -1,0 +1,81 @@
+---
+/* /korbaktion — Ziel des QR-Codes auf dem Flyer der Door-to-Door-Aktion.
+
+   Diese Adresse steht gedruckt und lässt sich nicht mehr ändern. Sie darf
+   deshalb nicht davon abhängen, ob eine nginx-Regel korrekt im Container
+   ankommt. Als echte Seite im Build wird sie ausgeliefert, solange
+   überhaupt etwas ausgeliefert wird — selbst mit der Standardkonfiguration
+   von nginx, die für einen Ordner ohne Schrägstrich von sich aus die
+   index.html findet.
+
+   Drei Wege zum Ziel, absichtlich übereinander:
+     1. meta refresh  — greift ohne JavaScript
+     2. location.replace — greift sofort und hinterlässt keinen Eintrag im
+        Verlauf, sodass „Zurück" nicht in einer Schleife endet
+     3. ein sichtbarer Link — falls beides scheitert, etwa in einem
+        eingeschränkten In-App-Browser
+
+   Die UTM-Parameter müssen erhalten bleiben: ohne sie tauchen die Scans in
+   der Statistik nicht mehr als eigene Kampagne auf, und genau dafür gibt es
+   die Adresse. Gezählt wird auf der Startseite, nicht hier — diese Seite
+   bindet bewusst keine Zähler ein, sonst entstünde ein zusätzlicher
+   Seitenaufruf ohne Kampagnenkennzeichnung davor.
+
+   Kein BaseLayout: kein Cookie-Banner, keine Schriften, keine Skripte.
+   Die Seite soll in wenigen Millisekundenerledigt sein. */
+const ziel = '/?utm_source=flyer&utm_medium=qr&utm_campaign=korbaktion';
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0; url=${ziel}`} />
+    <link rel="canonical" href="https://stolz-marketing.de/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Weiterleitung … | Stolz Marketing</title>
+    <script is:inline define:vars={{ ziel }}>
+      /* replace statt href: der Zurück-Knopf soll nicht auf diese Seite
+         zurückführen und die Weiterleitung erneut auslösen. */
+      window.location.replace(ziel);
+    </script>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: #0d2118;
+        color: #f3f6f1;
+        font-family:
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          sans-serif;
+        text-align: center;
+      }
+      p {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.6;
+      }
+      a {
+        color: #e4f53f;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Sie werden weitergeleitet …<br />
+      <a href={ziel}>Hier geht es zu Stolz Marketing</a>
+    </p>
+  </body>
+</html>

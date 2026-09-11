@@ -15,9 +15,13 @@ export default defineConfig({
   // Build-Cache, optimierte Bilder überleben so den nächsten Deploy.
   cacheDir: './node_modules/.cache/astro',
   integrations: [
-    // /alle-projekte ist eine interne Referenzmappe: noindex, nirgends
-    // verlinkt und deshalb auch nicht in der Sitemap.
-    sitemap({ filter: (seite) => !seite.includes('/alle-projekte') }),
+    // Nicht in die Sitemap: /alle-projekte ist eine interne Referenzmappe
+    // (noindex, nirgends verlinkt), /korbaktion ist nur die Weiterleitung
+    // hinter dem QR-Code auf dem Flyer und trägt ebenfalls noindex.
+    sitemap({
+      filter: (seite) =>
+        !seite.includes('/alle-projekte') && !seite.includes('/korbaktion'),
+    }),
   ],
   vite: {
     plugins: [tailwindcss()],
