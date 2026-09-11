@@ -40,6 +40,10 @@ export interface Projektseite {
   titel: string;
   /** Fett gesetzte Stellen stehen in **Sternchen**, wie auf main */
   einleitung: string;
+  /** Meta-Beschreibung für die Suchergebnisse. Eigenes Feld, weil die
+      Einleitung vorher hart nach 155 Zeichen abgeschnitten wurde und
+      dabei mitten im Wort endete. */
+  metaBeschreibung: string;
   keyfacts: Keyfact[];
   leistungen: Leistung[];
   domain?: string;
@@ -68,6 +72,8 @@ export const projektseiten: Projektseite[] = [
     art: 'video',
     eyebrow: 'Kundengewinnung & Recruiting',
     titel: 'Kampagnen für Kundengewinnung und neue Fachkräfte im Bau',
+    metaBeschreibung:
+      'DMK Bau wollte beides: neue Aufträge und neue Fachkräfte. Eine Kampagnen-Strecke aus drei Videos, über 100.000 Aufrufe in den ersten Wochen.',
     einleitung:
       'DMK Bau wollte beides: **neue Aufträge** und **neue Leute**. Wir haben eine Kampagnen-Strecke aufgebaut, die Bauherren überzeugt und gleichzeitig zeigt, warum sich eine Bewerbung bei DMK lohnt.',
     keyfacts: [
@@ -107,6 +113,8 @@ export const projektseiten: Projektseite[] = [
     art: 'website',
     eyebrow: 'Kundengewinnung',
     titel: 'Eine Webseite, die drei Geschäfte sauber trennt',
+    metaBeschreibung:
+      'HePa Baut aus Weinheim: eine eigene Startseite je Leistung und über 150 Ortsseiten im Umkreis. So trennen Sanierung, Renovierung und Wasserschaden sauber.',
     einleitung:
       'HEPA Baut aus Weinheim saniert, renoviert und beseitigt Wasserschäden. Wir haben einen kompletten Website-Relaunch gebaut, der die drei Leistungen klar trennt — und über **hunderte lokale Landingpages** dafür sorgt, dass HEPA **in jeder Stadt im Umkreis** gefunden wird.',
     keyfacts: [
