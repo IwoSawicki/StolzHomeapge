@@ -209,17 +209,15 @@ export const faqs = [
   },
 ];
 
-/** Abschlussblock. Aufbau wie auf den Leistungsseiten: „richtigen Agentur"
-    trägt den Marker, der kursive Teil unterscheidet die Seite. */
+/** Abschlussblock. Wortgleich mit /kunden-gewinnen und /mitarbeiter-gewinnen
+    bis auf das kursive Schlusswort: „richtigen Agentur" trägt den Marker,
+    der kursive Teil unterscheidet die Seite. Hier „guten Aufträgen", weil
+    Webdesign auf dieser Seite als Kundengewinnung verkauft wird. */
 export const abschluss = {
-  titelVorn: 'Die Suche nach einer ',
-  /* Auf den beiden Leistungsseiten trägt „richtigen Agentur" den Marker.
-     Hier steht „vertrauenswürdigen" (Wunsch Iwo): wer über eine
-     Google-Suche kommt, kennt uns nicht — bei dem entscheidet Vertrauen,
-     nicht die Frage, ob wir fachlich die Richtigen sind. */
-  titelMarker: 'vertrauenswürdigen Agentur',
-  titelMitte: ' ist anstrengender als sie sein müsste. Fangen wir mit ',
-  titelKursiv: 'einem Gespräch',
-  titelHinten: ' an.',
+  titelVorn: 'Wir wissen zu gut, dass die Suche nach der ',
+  titelMarker: 'richtigen Agentur',
+  titelMitte: ' mindestens genauso schwer ist wie die Suche nach ',
+  titelKursiv: 'guten Aufträgen',
+  titelHinten: '.',
   lead: 'Eine Stunde, kostenlos, ohne Verpflichtung. Danach wissen Sie, wie Sie in Ihrer Region dastehen — auch wenn Sie sich gegen uns entscheiden.',
 };
