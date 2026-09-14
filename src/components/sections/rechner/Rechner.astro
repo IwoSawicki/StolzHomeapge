@@ -29,6 +29,7 @@
    (siehe CLAUDE.md). */
 import Eyebrow from '../../Eyebrow.astro';
 import Button from '../../Button.astro';
+import Signet from '../../Signet.astro';
 import {
   gewerke,
   GEWERK_STANDARD,
@@ -54,27 +55,30 @@ const konfiguration = {
 };
 
 const feldKlasse =
-  'w-full rounded-10 border border-line bg-paper px-16 py-13 text-17 font-bold text-ink outline-none transition-colors focus:border-line-strong';
-const labelKlasse = 'text-14 font-medium text-ink-muted';
-const gruppeKlasse = 'flex flex-col gap-16 rounded-20 border border-line bg-paper-soft p-24';
-/* Auf schmalen Geräten ist die Zusammenfassung ein Knopf mit Rahmen und
-   viel Fläche — sonst erkennt niemand, dass sich die Gruppe aufklappen
-   lässt. Ab 720px genügt die Zeile, und der Rahmen verschwindet wieder.
-   Deshalb bekommt die zugeklappte Gruppe dort auch weniger Innenabstand:
-   sonst steht ein Knopf in einem Kasten in einem Kasten. */
+  'w-full rounded-10 border border-edge bg-forest px-16 py-13 text-17 font-bold text-cream outline-none transition-colors focus:border-lime-edge';
+const labelKlasse = 'text-14 font-medium text-mint-dim';
+const gruppeKlasse = 'flex flex-col gap-16 rounded-20 border border-edge bg-forest-card p-24';
+/* Die zugeklappten Gruppen: auf schmalen Geräten ist die Zusammenfassung
+   ein Knopf mit Rahmen und 52px Höhe — sonst erkennt niemand, dass sich
+   da etwas aufklappen lässt. Ab 720px genügt wieder die reine Zeile, und
+   die Gruppe bekommt denselben Innenabstand wie die festen Gruppen. */
 const aufklappKlasse =
-  'flex flex-col gap-16 rounded-20 border border-line bg-paper-soft p-12 btn:p-24';
+  'flex flex-col gap-16 rounded-20 border border-edge bg-forest-card p-12 btn:p-24';
 const summaryKlasse =
-  'flex cursor-pointer list-none items-center justify-between gap-16 rounded-12 border border-line bg-paper px-16 py-14 font-mono text-12 tracking-eyebrow uppercase text-ink-label btn:border-0 btn:bg-transparent btn:p-0';
+  'flex cursor-pointer list-none items-center justify-between gap-16 rounded-12 border border-edge bg-forest px-16 py-14 font-mono text-12 tracking-eyebrow uppercase text-lime transition-colors hover:border-lime-edge btn:border-0 btn:bg-transparent btn:p-0 btn:hover:border-0';
 ---
 
-<section id="rechner" class="bg-paper px-page-x pt-8 pb-section-y-lg">
+<section id="rechner" class="bg-forest px-page-x pt-8 pb-section-y-lg">
   <div class="mx-auto flex max-w-content flex-wrap items-start gap-x-40 gap-y-32">
     {/* ==================== Eingaben ==================== */}
-    <form id="vk-form" class="flex flex-1 basis-[min(520px,100%)] flex-col gap-16" novalidate>
+    <form
+      id="vk-form"
+      class="flex flex-1 basis-[min(520px,100%)] flex-col gap-16"
+      novalidate
+    >
       {/* --- 1 · Ihre Situation --- */}
       <fieldset class={gruppeKlasse}>
-        <legend class="font-mono text-12 tracking-eyebrow uppercase text-ink-label">
+        <legend class="font-mono text-12 tracking-eyebrow uppercase text-lime">
           1 · Ihre Situation
         </legend>
 
@@ -95,7 +99,9 @@ const summaryKlasse =
           </div>
 
           <div class="flex flex-col gap-8">
-            <label class={labelKlasse} for="vk-monate">Seit wie vielen Monaten offen?</label>
+            <label class={labelKlasse} for="vk-monate">
+              Seit wie vielen Monaten offen?
+            </label>
             <input
               class={feldKlasse}
               id="vk-monate"
@@ -124,7 +130,7 @@ const summaryKlasse =
 
       {/* --- 2 · Ihr Gewerk --- */}
       <fieldset class={gruppeKlasse}>
-        <legend class="font-mono text-12 tracking-eyebrow uppercase text-ink-label">
+        <legend class="font-mono text-12 tracking-eyebrow uppercase text-lime">
           2 · Ihr Gewerk
         </legend>
         <div class="flex flex-col gap-8">
@@ -148,14 +154,14 @@ const summaryKlasse =
       <details class={aufklappKlasse} data-vk-gruppe>
         <summary class={summaryKlasse}>
           3 · Feinjustierung
-          <span class="vk-pfeil text-19 text-ink-muted" aria-hidden="true">▾</span>
+          <span class="vk-pfeil text-19 text-mint-dim" aria-hidden="true">▾</span>
         </summary>
 
-        <div class="flex flex-col gap-20 pt-16">
+        <div class="flex flex-col gap-20 pt-16 btn:pt-4">
           <div class="flex flex-col gap-8">
             <div class="flex items-baseline justify-between gap-12">
               <label class={labelKlasse} for="vk-satz">Netto-Verrechnungssatz je Stunde</label>
-              <output class="text-19 font-bold text-ink" id="vk-satz-wert" for="vk-satz"
+              <output class="text-19 font-bold text-lime" id="vk-satz-wert" for="vk-satz"
               ></output>
             </div>
             <input
@@ -171,7 +177,7 @@ const summaryKlasse =
           <div class="flex flex-col gap-8">
             <div class="flex items-baseline justify-between gap-12">
               <label class={labelKlasse} for="vk-stunden">Produktive Stunden je Monat</label>
-              <output class="text-19 font-bold text-ink" id="vk-stunden-wert" for="vk-stunden"
+              <output class="text-19 font-bold text-lime" id="vk-stunden-wert" for="vk-stunden"
               ></output>
             </div>
             <input
@@ -187,7 +193,7 @@ const summaryKlasse =
           <div class="flex flex-col gap-8">
             <div class="flex items-baseline justify-between gap-12">
               <label class={labelKlasse} for="vk-db">Deckungsbeitrag</label>
-              <output class="text-19 font-bold text-ink" id="vk-db-wert" for="vk-db"></output>
+              <output class="text-19 font-bold text-lime" id="vk-db-wert" for="vk-db"></output>
             </div>
             <input
               class="vk-regler"
@@ -199,12 +205,12 @@ const summaryKlasse =
             />
           </div>
 
-          <p class="m-0 border-l-2 border-line-strong pl-16 text-15 leading-body text-ink-quiet">
-            <strong class="font-bold text-ink">Produktive Stunden</strong> sind die Stunden, die
-            Sie tatsächlich abrechnen — nach Abzug von Fahrtzeit, Rüstzeit, Werkstatt und
-            Dokumentation. Von rund 165 Arbeitsstunden im Monat bleiben im Handwerk realistisch
-            120 bis 135 übrig.<br /><br />
-            <strong class="font-bold text-ink">Deckungsbeitrag</strong> ist, was nach Abzug von
+          <p class="m-0 border-l-2 border-lime-edge pl-16 text-15 leading-body text-mint-dim">
+            <strong class="font-bold text-mint">Produktive Stunden</strong> sind die Stunden,
+            die Sie tatsächlich abrechnen — nach Abzug von Fahrtzeit, Rüstzeit, Werkstatt und
+            Dokumentation. Von rund 165 Arbeitsstunden im Monat bleiben im Handwerk
+            realistisch 120 bis 135 übrig.<br /><br />
+            <strong class="font-bold text-mint">Deckungsbeitrag</strong> ist, was nach Abzug von
             Material und Lohn vom Umsatz übrig bleibt.
           </p>
         </div>
@@ -213,12 +219,12 @@ const summaryKlasse =
       {/* --- 4 · Zusatzkosten --- */}
       <details class={aufklappKlasse} data-vk-gruppe>
         <summary class={summaryKlasse}>
-          <span>4 · Zusatzkosten <span class="normal-case">(optional)</span></span>
-          <span class="vk-pfeil text-19 text-ink-muted" aria-hidden="true">▾</span>
+          <span>4 · Zusatzkosten <span class="text-mint-dim normal-case">(optional)</span></span>
+          <span class="vk-pfeil text-19 text-mint-dim" aria-hidden="true">▾</span>
         </summary>
 
-        <div class="flex flex-col gap-16 pt-16">
-          <label class="flex cursor-pointer items-start gap-12 text-16 text-ink-body">
+        <div class="flex flex-col gap-16 pt-16 btn:pt-4">
+          <label class="flex cursor-pointer items-start gap-12 text-16 text-mint">
             <input
               class="mt-2 h-18 w-18 flex-none accent-lime"
               id="vk-kfz-aktiv"
@@ -283,79 +289,94 @@ const summaryKlasse =
             />
           </div>
 
-          <p class="m-0 border-l-2 border-line-strong pl-16 text-15 leading-body text-ink-quiet">
+          <p class="m-0 border-l-2 border-lime-edge pl-16 text-15 leading-body text-mint-dim">
             Überstunden zählen mit dem Zuschlag von 25 % plus 21 % Lohnnebenkosten darauf —
-            nicht mit dem vollen Lohn. Die Arbeit hätte der fehlende Mitarbeiter sonst gemacht,
-            und gekostet hätte sie auch.
+            nicht mit dem vollen Lohn. Die Arbeit hätte der fehlende Mitarbeiter sonst
+            gemacht, und gekostet hätte sie auch.
           </p>
         </div>
       </details>
 
-      <p class="m-0 px-4 text-14 leading-body text-ink-quiet">{hero.hinweisDaten}</p>
+      <p class="m-0 px-4 text-14 leading-body text-mint-dim">{hero.hinweisDaten}</p>
     </form>
 
     {/* ==================== Ergebnis ==================== */}
     <div class="flex flex-1 basis-[min(420px,100%)] flex-col nav:sticky nav:top-24">
-      <div class="flex flex-col gap-24 rounded-20 border border-line bg-paper-soft p-24">
+      <div
+        class="vk-tafel relative isolate flex flex-col gap-24 overflow-hidden rounded-20 border border-lime-edge bg-forest-card p-24"
+      >
+        {/* Signet als leiser Wasserzeichen-Akzent, wie in „Die Lücken“ */}
+        <Signet
+          class="pointer-events-none absolute -right-56 -bottom-40 -z-10 w-260 text-lime opacity-[0.045]"
+        />
+
         {/* Schadenssumme — die dominanteste Zahl der Seite */}
         <div class="flex flex-col gap-6" aria-live="polite">
-          <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-label">
+          <span class="font-mono text-12 tracking-eyebrow uppercase text-mint-dim">
             Schaden am Betriebsergebnis
           </span>
           <span
-            class="text-h1-sub leading-tightest font-bold tracking-system text-schaden"
+            class="vk-zahl text-h1-sub leading-tightest font-bold tracking-system text-schaden"
             id="vk-gesamt">0 €</span
           >
-          <span class="text-18 leading-body text-ink-muted" id="vk-zeitraum"></span>
+          <span class="text-18 leading-body text-mint" id="vk-zeitraum"></span>
         </div>
 
-        <div class="h-px w-full bg-line"></div>
+        <div class="h-px w-full bg-edge"></div>
 
         <div class="flex flex-col gap-14">
           <div class="flex items-baseline justify-between gap-12">
-            <span class="text-16 text-ink-body">Kosten je Arbeitstag</span>
-            <span class="text-26 font-bold tracking-name text-schaden" id="vk-pro-tag">0 €</span>
+            <span class="text-16 text-mint">Kosten je Arbeitstag</span>
+            <span class="vk-zahl text-26 font-bold tracking-name text-schaden" id="vk-pro-tag"
+              >0 €</span
+            >
           </div>
           <div class="flex items-baseline justify-between gap-12">
-            <span class="text-15 text-ink-quiet">Entgangener Umsatz</span>
-            <span class="text-17 font-bold text-ink-muted" id="vk-umsatz">0 €</span>
+            <span class="text-15 text-mint-dim">Entgangener Umsatz</span>
+            <span class="vk-zahl text-17 font-bold text-mint" id="vk-umsatz">0 €</span>
           </div>
         </div>
 
         {/* Aufschlüsselung — gestapelte Balken, keine Diagrammbibliothek */}
         <div class="flex flex-col gap-12" id="vk-aufschluesselung">
-          <div class="flex h-8 w-full overflow-hidden rounded-full bg-paper-grey" id="vk-balken">
-            <span class="h-full bg-schaden transition-all duration-300" data-balken="db"></span>
-            <span class="h-full bg-schaden-soft transition-all duration-300" data-balken="kfz"
+          <div
+            class="flex h-10 w-full gap-2 overflow-hidden rounded-full border border-edge bg-forest"
+            id="vk-balken"
+          >
+            <span class="h-full rounded-full bg-schaden transition-all duration-300" data-balken="db"
             ></span>
-            <span class="h-full bg-line-strong transition-all duration-300" data-balken="ueber"
-            ></span>
+            <span
+              class="h-full rounded-full bg-schaden-soft transition-all duration-300"
+              data-balken="kfz"></span>
+            <span
+              class="h-full rounded-full bg-mint-dim transition-all duration-300"
+              data-balken="ueber"></span>
           </div>
           <ul class="m-0 flex list-none flex-col gap-8 p-0" id="vk-posten"></ul>
         </div>
 
         {/* Recruiting steht abgesetzt, nicht in der Summe */}
         <div
-          class="hidden flex-col gap-6 rounded-12 border border-dashed border-line-strong p-16"
+          class="hidden flex-col gap-6 rounded-12 border border-dashed border-edge p-16"
           id="vk-recruiting-block"
         >
           <div class="flex items-baseline justify-between gap-12">
-            <span class="text-15 text-ink-body">Ihre bisherigen Recruitingkosten</span>
-            <span class="text-17 font-bold text-ink-muted" id="vk-recruiting-wert">0 €</span>
+            <span class="text-15 text-mint">Ihre bisherigen Recruitingkosten</span>
+            <span class="text-17 font-bold text-mint" id="vk-recruiting-wert">0 €</span>
           </div>
-          <p class="m-0 text-13 leading-body text-ink-quiet">
+          <p class="m-0 text-13 leading-body text-mint-dim">
             {ergebnisTexte.recruitingHinweis}
           </p>
         </div>
 
-        <div class="h-px w-full bg-line"></div>
+        <div class="h-px w-full bg-edge"></div>
 
         {/* Break-even statt Druck */}
         <div class="flex flex-col gap-10">
-          <span class="text-16 leading-body text-ink-body">
-            Wenn Sie die Suche um <strong class="font-bold text-ink" id="vk-wochen">6</strong>{' '}
+          <span class="text-16 leading-body text-mint">
+            Wenn Sie die Suche um <strong class="font-bold text-paper" id="vk-wochen">6</strong>{' '}
             Wochen verkürzen, sparen Sie{' '}
-            <strong class="font-bold text-ink" id="vk-ersparnis">0 €</strong>.
+            <strong class="vk-zahl font-bold text-lime" id="vk-ersparnis">0 €</strong>.
           </span>
           <input
             class="vk-regler"
@@ -369,11 +390,11 @@ const summaryKlasse =
           />
         </div>
 
-        <p class="m-0 text-13 leading-body text-ink-quiet">{ergebnisTexte.konservativ}</p>
+        <p class="m-0 text-13 leading-body text-mint-dim">{ergebnisTexte.konservativ}</p>
 
         <div class="flex flex-col gap-12">
-          <span class="text-16 leading-body text-ink">{ergebnisTexte.ctaTitel}</span>
-          <Button href="/kontakt" variante="dunkel">
+          <span class="text-16 leading-body text-paper">{ergebnisTexte.ctaTitel}</span>
+          <Button href="/kontakt" variante="lime">
             {ergebnisTexte.ctaKnopf}<span class="text-18" aria-hidden="true">→</span>
           </Button>
         </div>
@@ -383,18 +404,18 @@ const summaryKlasse =
 
   {/* ==================== Leiste auf schmalen Geräten ==================== */}
   <div
-    class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper px-page-x py-12 shadow-card-light nav:hidden"
+    class="fixed inset-x-0 bottom-0 z-40 border-t border-lime-edge bg-forest-card px-page-x py-12 nav:hidden"
     id="vk-leiste"
     hidden
   >
     <div class="mx-auto flex max-w-content items-center justify-between gap-16">
-      <span class="text-14 leading-caption text-ink-quiet">
+      <span class="text-14 leading-caption text-mint-dim">
         Schaden am Betriebsergebnis<br />
-        <strong class="text-22 font-bold text-schaden" id="vk-leiste-wert">0 €</strong>
+        <strong class="vk-zahl text-22 font-bold text-schaden" id="vk-leiste-wert">0 €</strong>
       </span>
       <a
-        href="#rechner"
-        class="rounded-full border border-line-strong px-16 py-10 text-14 font-bold text-ink"
+        href="#rechner-ergebnis"
+        class="rounded-full border border-lime-edge px-16 py-10 text-14 font-bold text-lime"
         id="vk-leiste-knopf">Ergebnis ansehen</a
       >
     </div>
@@ -414,8 +435,8 @@ const summaryKlasse =
     width: 100%;
     height: 6px;
     border-radius: 999px;
-    background: var(--color-paper-grey);
-    border: 1px solid var(--color-line);
+    background: var(--color-forest);
+    border: 1px solid var(--color-edge);
     outline: none;
     cursor: pointer;
   }
@@ -441,7 +462,31 @@ const summaryKlasse =
   }
 
   .vk-regler:focus-visible {
-    border-color: var(--color-line-strong);
+    border-color: var(--color-lime);
+  }
+
+  /* Die Ergebniszahlen zählen hoch. Ohne feste Ziffernbreite zappelt die
+     Zahl dabei hin und her, weil die 1 schmaler ist als die 8. */
+  .vk-zahl {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  /* Die Ergebnistafel bekommt einen weichen Schein hinter der großen
+     Zahl — sie ist der Grund, warum jemand hier ist. */
+  .vk-tafel::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    left: -10%;
+    z-index: -1;
+    width: 70%;
+    aspect-ratio: 1;
+    max-width: 100%;
+    border-radius: 999px;
+    background: radial-gradient(circle, var(--color-schaden) 0%, transparent 70%);
+    opacity: 0.14;
+    pointer-events: none;
   }
 
   /* Aufklappbare Gruppen: Pfeil dreht sich mit */
@@ -579,7 +624,6 @@ const summaryKlasse =
         feld.kfzAktiv.checked = true;
         setze(feld.kfz, 'kfzkosten');
       }
-      feld.monateRegler.value = String(zahl(feld.monate, 'monate'));
     };
 
     let adresseTimer = 0;
@@ -634,8 +678,8 @@ const summaryKlasse =
       const ersparnis = proTag * verkuerzung * 5;
 
       /* --- Anzeige --- */
-      setzeZahl(hole('vk-gesamt'), Math.round(gesamt));
       setzeZahl(hole('vk-pro-tag'), Math.round(proTag));
+      setzeZahl(hole('vk-gesamt'), Math.round(gesamt));
       setzeZahl(hole('vk-umsatz'), Math.round(umsatz));
       setzeZahl(hole('vk-leiste-wert'), Math.round(gesamt));
       setzeZahl(hole('vk-ersparnis'), Math.round(ersparnis));
@@ -664,11 +708,11 @@ const summaryKlasse =
         .filter((p) => p.wert > 0)
         .forEach((p) => {
           const li = document.createElement('li');
-          li.className = 'flex items-baseline justify-between gap-12 text-15 text-ink-quiet';
+          li.className = 'flex items-baseline justify-between gap-12 text-15 text-mint-dim';
           const name = document.createElement('span');
           name.textContent = p.name;
           const wert = document.createElement('span');
-          wert.className = 'font-bold text-ink-muted';
+          wert.className = 'font-bold text-mint';
           wert.textContent = euro.format(Math.round(p.wert)) + ' €';
           li.append(name, wert);
           liste.append(li);
@@ -738,21 +782,21 @@ const summaryKlasse =
     ausAdresse();
     rechnen();
 
-    /* Feste Leiste erst zeigen, wenn die Schadenssumme aus dem Bild ist. */
+    /* Feste Leiste erst zeigen, wenn das Ergebnis aus dem Bild ist. */
     const leiste = hole('vk-leiste');
-    const summe = document.getElementById('vk-gesamt');
-    if (summe && 'IntersectionObserver' in window) {
+    const panel = document.getElementById('vk-gesamt');
+    if (panel && 'IntersectionObserver' in window) {
       const beobachter = new IntersectionObserver(
         ([eintrag]) => {
           leiste.hidden = eintrag.isIntersecting;
         },
         { threshold: 0 },
       );
-      beobachter.observe(summe);
+      beobachter.observe(panel);
     }
     hole('vk-leiste-knopf').addEventListener('click', (e) => {
       e.preventDefault();
-      summe?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      panel?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
 </script>

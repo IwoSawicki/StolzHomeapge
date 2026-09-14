@@ -151,8 +151,8 @@
   --color-google-blue: #4285f4;
   --color-google-green: #34a853;
   --color-google-red: #ea4335;
-  --color-schaden: #c0293c;
-  --color-schaden-soft: #e8a6ad;
+  --color-schaden: #ff6b6b; /* Schadenszahlen im Vakanzkostenrechner (auf dunkelgrün) */
+  --color-schaden-soft: #a8514c; /* zweiter Abschnitt im Schadensbalken */
 
   /* --- Dunkle Buttons auf hell -------------------------------------------- */
   --color-ink-btn-hover: #2a3a2c;
