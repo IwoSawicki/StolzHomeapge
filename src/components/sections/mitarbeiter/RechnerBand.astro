@@ -1,0 +1,127 @@
+---
+/* Grünes Band zwischen Ausgangslage und Prozess: Verweis auf den
+   Vakanzkosten-Rechner.
+
+   Steht bewusst vor dem Prozess und nicht dahinter. Wer bis hierhin
+   gelesen hat, weiß, dass er ein Problem hat — die Zahl dazu macht aus
+   dem „müsste man mal" ein „das kostet mich gerade". Danach liest sich
+   der Prozess anders.
+
+   Die Grafik ist ein Kalenderblatt: die vergangenen Tage sind rot
+   abgehakt, die kommenden noch offen. Sie zählt nicht mit und ist nicht
+   interaktiv — sie ist ein Bild, kein zweiter Rechner. */
+import Eyebrow from '../../Eyebrow.astro';
+import Button from '../../Button.astro';
+
+/* 3 × 7 Tage. Die ersten 13 sind vorbei — genug, dass die Fläche kippt,
+   aber nicht so viel, dass das Blatt voll aussieht. Unter der letzten
+   Reihe bleibt Platz für das Etikett. */
+const TAGE = 21;
+const VERGANGEN = 13;
+const tage = Array.from({ length: TAGE }, (_, i) => ({
+  x: 30 + (i % 7) * 24,
+  y: 74 + Math.floor(i / 7) * 26,
+  vorbei: i < VERGANGEN,
+}));
+---
+
+<section class="bg-forest px-page-x py-section-y-lg">
+  <div
+    class="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-56 gap-y-40 rounded-24 border border-edge bg-forest-card px-innen-block py-innen-block"
+  >
+    {/* --- Text --- */}
+    <div class="flex flex-1 basis-[min(460px,100%)] flex-col items-start gap-20">
+      <Eyebrow variante="lime">Vakanzkosten</Eyebrow>
+
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
+        Was kostet Sie die offene Stelle, <span
+          class="font-display font-semibold tracking-none italic">während Sie suchen</span
+        >?
+      </h2>
+
+      <p class="m-0 max-w-560 text-18 leading-quote text-mint">
+        Eine unbesetzte Stelle kostet nicht erst, wenn jemand kündigt. Sie kostet jeden
+        Arbeitstag, an dem die Arbeit liegen bleibt oder das Team sie mitmacht. Im Rechner
+        sehen Sie die Zahl für Ihr Gewerk — in unter einer Minute, ohne Eingabe von
+        Kontaktdaten.
+      </p>
+
+      <Button href="/vakanzkostenrechner" variante="lime" sheen class="mt-4">
+        Zum Vakanzkosten-Rechner<span class="text-18" aria-hidden="true">→</span>
+      </Button>
+    </div>
+
+    {/* --- Kalenderblatt --- */}
+    <div class="flex flex-1 basis-[min(320px,100%)] justify-center">
+      <svg
+        viewBox="0 0 224 196"
+        fill="none"
+        aria-hidden="true"
+        class="w-[min(320px,100%)]"
+      >
+        {/* Aufhängung */}
+        <path class="stroke-edge-soft" stroke-width="3" stroke-linecap="round" d="M70 10 V28" />
+        <path
+          class="stroke-edge-soft"
+          stroke-width="3"
+          stroke-linecap="round"
+          d="M154 10 V28"
+        />
+
+        {/* Blatt */}
+        <rect
+          class="fill-forest stroke-edge"
+          stroke-width="2"
+          x="14"
+          y="20"
+          width="196"
+          height="162"
+          rx="16"
+        />
+
+        {/* Kopfleiste */}
+        <path
+          class="fill-lime"
+          d="M14 36 A16 16 0 0 1 30 20 H194 A16 16 0 0 1 210 36 V54 H14 Z"
+        />
+        <rect class="fill-forest-deep" x="32" y="32" width="56" height="10" rx="5" />
+        <rect class="fill-forest-deep" opacity="0.45" x="150" y="32" width="42" height="10" rx="5" />
+
+        {/* Tage: vorbei in Rot, kommend noch offen */}
+        {
+          tage.map((tag) =>
+            tag.vorbei ? (
+              <circle class="fill-schaden" cx={tag.x} cy={tag.y} r="7" />
+            ) : (
+              <circle class="stroke-edge-soft" stroke-width="2" cx={tag.x} cy={tag.y} r="7" />
+            ),
+          )
+        }
+
+        {/* Der laufende Betrag als Etikett, das unten rechts über die
+            Blattkante hinausragt. Die Zahl ist der Standardfall des
+            Rechners (SHK, eine Stelle) und kein erfundener Wert. */}
+        <g>
+          <rect
+            class="fill-forest-deep stroke-schaden"
+            stroke-width="2"
+            x="88"
+            y="150"
+            width="128"
+            height="40"
+            rx="12"
+          />
+          <text
+            class="fill-schaden"
+            x="152"
+            y="171"
+            text-anchor="middle"
+            font-size="18"
+            font-weight="700"
+            font-family="Inter, system-ui, sans-serif">150 € / Tag</text
+          >
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,36 @@
+---
+/* Icon „Arbeit unter Druck": ein Manometer, dessen Zeiger im oberen
+   Bereich der Skala steht.
+
+   Das Messgerät statt eines abstrakten Symbols, weil es im Handwerk an
+   jeder Heizung und jedem Kompressor hängt — es wird ohne Bildunterschrift
+   verstanden. Der obere Skalenbereich ist der Lime-Akzent. */
+interface Props {
+  class?: string;
+}
+const { class: klasse } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 64 64"
+  fill="none"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  class:list={['block', klasse]}
+>
+  {/* Stutzen unter dem Gehäuse — steht bewusst unter dem Kreis,
+      sonst sieht das Messgerät aus wie ein Ballon */}
+  <path class="stroke-ink" d="M27 48 V58 H37 V48" />
+
+  {/* Gehäuse */}
+  <circle class="stroke-ink" cx="32" cy="28" r="20" />
+
+  {/* Der obere Bereich der Skala */}
+  <path class="stroke-lime" stroke-width="4" d="M42 10.7 A20 20 0 0 1 52 28" />
+
+  {/* Zeiger */}
+  <path class="stroke-ink" d="M32 28 L45.4 18.6" />
+  <circle class="fill-ink stroke-ink" cx="32" cy="28" r="2.5" />
+</svg>

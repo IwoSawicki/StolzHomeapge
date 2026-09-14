@@ -1,44 +1,63 @@
 ---
-/* „Was der Rechner nicht zeigt".
+/* „Was in dieser Zahl nicht drinsteht".
 
    Die Grenzen der eigenen Zahl zu benennen kostet nichts und wirkt
    glaubwürdiger als ein Ergebnis, das alles zu wissen behauptet. Die drei
    Punkte sind zugleich die Posten, die im Erstgespräch den Ausschlag
-   geben — sie stehen hier, damit sie im Kopf sind, wenn der Chef anruft. */
+   geben — sie stehen hier, damit sie im Kopf sind, wenn der Chef anruft.
+
+   Aufbau und Maße wie die Leistungskarten auf der Startseite: heller
+   Grund, mittig gesetzter Kopf, Kacheln in einem auto-fit-Raster, je
+   Kachel ein Icon darüber. Dass die Kacheln hier zu dritt stehen und
+   nicht zu zweit, erledigt das Raster von selbst.
+   Vorlage: src/components/sections/Leistungen.astro */
 import Eyebrow from '../../Eyebrow.astro';
-import Signet from '../../Signet.astro';
+import IconAbgesprungen from '../../icons/IconAbgesprungen.astro';
+import IconUeberlastung from '../../icons/IconUeberlastung.astro';
+import IconKuendigung from '../../icons/IconKuendigung.astro';
 import { luecken } from '../../../data/vakanzkostenrechner';
+
+/* Zuordnung Schlüssel → Icon. Die Daten tragen nur den Schlüssel, das
+   Markup bleibt hier. */
+const icons = {
+  abgesprungen: IconAbgesprungen,
+  ueberlastung: IconUeberlastung,
+  kuendigung: IconKuendigung,
+};
 ---
 
-<section class="relative overflow-hidden bg-forest px-page-x py-section-y-lg">
-  <Signet
-    class="pointer-events-none absolute -right-80 -bottom-56 w-[min(520px,80vw)] text-paper opacity-[0.05]"
-  />
+<section class="bg-paper py-section-y">
+  <div class="mx-auto flex max-w-content flex-col items-center gap-24 px-page-x">
+    <Eyebrow variante="hell">Die Lücken</Eyebrow>
 
-  <div class="relative mx-auto flex max-w-content flex-col gap-40">
-    <div class="flex max-w-760 flex-col items-start gap-18">
-      <Eyebrow variante="lime">Die Lücken</Eyebrow>
-      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
-        Was in dieser Zahl <span
-          class="font-display font-semibold tracking-none italic">nicht drinsteht</span
-        >
-      </h2>
-      <p class="m-0 max-w-660 text-18 leading-quote text-mint">
-        Drei Posten lassen sich nicht seriös beziffern. Sie fallen trotzdem an — und sind in
-        den meisten Betrieben größer als alles, was oben steht.
-      </p>
-    </div>
+    <h2 class="m-0 text-center text-h2-leistungen leading-h2 font-bold tracking-name">
+      Was in dieser Zahl <span class="marker font-display font-semibold italic"
+        >nicht drinsteht</span
+      >.
+    </h2>
 
-    <div class="grid grid-cols-1 gap-16 btn:grid-cols-3">
+    <p class="m-0 max-w-640 text-center text-19 leading-body text-ink-muted">
+      Drei Posten lassen sich nicht seriös beziffern. Sie fallen trotzdem an — und sind in
+      den meisten Betrieben größer als alles, was oben steht.
+    </p>
+
+    {/* min(280px, 100%) statt 280px: auf einem 320px breiten Gerät bleiben
+        nach dem Seitenrand nur 272px übrig — eine harte Untergrenze hätte
+        die Seite dort seitlich verschiebbar gemacht. */}
+    <div
+      class="mt-32 grid w-full grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-24"
+    >
       {
-        luecken.map((luecke) => (
-          <div class="flex flex-col gap-12 rounded-20 border border-edge bg-forest-card px-28 py-26">
-            <span class="text-21 leading-card font-bold tracking-heading text-paper">
-              {luecke.titel}
-            </span>
-            <p class="m-0 text-17 leading-body text-mint">{luecke.text}</p>
-          </div>
-        ))
+        luecken.map((luecke) => {
+          const Icon = icons[luecke.schluessel];
+          return (
+            <div class="flex flex-col items-center gap-16 rounded-16 bg-paper-grey p-24 text-center btn:gap-20 btn:p-40">
+              <Icon class="h-72 w-72 text-ink" />
+              <h3 class="mt-4 mb-0 text-26 leading-card font-bold">{luecke.titel}</h3>
+              <p class="m-0 text-17 leading-body text-ink-muted">{luecke.text}</p>
+            </div>
+          );
+        })
       }
     </div>
   </div>

@@ -5,11 +5,14 @@
    Aufbau nach der Build-Spec:
      1. Kopf       H1 und drei Sätze, dann sofort der Rechner
      2. Rechner    rechnet im Browser, ohne Übertragung und ohne Lead-Gate
-     3. Rechenweg  die Formel offen, inklusive der drei konservativen
-                   Entscheidungen
-     4. Die Lücken was die Zahl nicht zeigt
-     5. FAQ        mit FAQPage-Auszeichnung
-     6. Abschluss
+     3. Die Lücken was die Zahl nicht zeigt
+     4. FAQ        mit FAQPage-Auszeichnung
+     5. Abschluss
+
+   Die Sektion mit der offengelegten Formel ist auf Wunsch von Iwo raus.
+   Die Annahmen bleiben trotzdem einsehbar: Verrechnungssatz, produktive
+   Stunden und Deckungsbeitrag stehen als Regler im Rechner selbst, die
+   Sonderfälle als Hinweistexte daneben und in der FAQ.
 
    ┌──────────────────────────────────────────────────────────────────┐
    │  Solange WERTE_BESTAETIGT in src/data/vakanzkostenrechner.ts auf  │
@@ -23,7 +26,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
 import RechnerKopf from '../components/sections/rechner/RechnerKopf.astro';
 import Rechner from '../components/sections/rechner/Rechner.astro';
-import WieWirRechnen from '../components/sections/rechner/WieWirRechnen.astro';
 import WasFehlt from '../components/sections/rechner/WasFehlt.astro';
 import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
 import Abschluss from '../components/sections/leistung/Abschluss.astro';
@@ -73,7 +75,7 @@ const anwendungJsonLd = {
 
 <BaseLayout
   title="Vakanzkosten-Rechner Handwerk — was eine offene Stelle wirklich kostet"
-  description="Rechnen Sie aus, was Sie eine unbesetzte Stelle pro Tag kostet. Für Handwerksbetriebe, mit Werten aus Ihrem Gewerk. Konservativ gerechnet, Formel offengelegt."
+  description="Rechnen Sie aus, was Sie eine unbesetzte Stelle pro Tag kostet. Für Handwerksbetriebe, mit Werten aus Ihrem Gewerk. Konservativ gerechnet, jeder Wert überschreibbar."
   noindex={!WERTE_BESTAETIGT}
 >
   <RechnerKopf />
@@ -83,8 +85,6 @@ const anwendungJsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(anwendungJsonLd)} />
 
     <Rechner />
-
-    <WieWirRechnen />
 
     <WasFehlt />
 

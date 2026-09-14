@@ -4,9 +4,18 @@
    nicht flächig in Akzentfarbe.
 
    Vier Spalten brauchen Platz: erst ab der Nav-Schwelle (1040px) steht die
-   Tabelle, darunter stehen dieselben Inhalte als drei Karten untereinander,
-   Meistermagnet zuerst. Immer nur eine der beiden Darstellungen ist sichtbar
-   — die andere ist per display:none auch für Screenreader weg.
+   Tabelle, darunter stehen dieselben Inhalte als Karten. Immer nur eine der
+   beiden Darstellungen ist sichtbar — die andere ist per display:none auch
+   für Screenreader weg.
+
+   Die Karten standen zunächst untereinander. Drei Karten mit je fünf
+   Zeilen ergeben auf dem Handy eine sehr lange Strecke, und wer unten
+   ankommt, hat oben schon vergessen (Rückmeldung Iwo). Sie liegen deshalb
+   jetzt nebeneinander in einer Schiene mit Scroll-Snap: eine Karte füllt
+   86 % der Breite, der Rest der nächsten schaut heraus, darunter zeigen
+   Punkte, wo man ist. Das ist reines CSS-Scrollen — kein Karussell, das
+   von selbst weiterspringt, und mit Tastatur und Screenreader nutzbar.
+   Meistermagnet steht vorn.
    Handoff: BUILDmitarbeitergewinnen.md, Sektion 5 */
 import { vergleichZeilen, vergleichWege } from '../../../data/mitarbeiter-gewinnen';
 
@@ -102,13 +111,22 @@ const zelle =
       </tbody>
     </table>
 
-    {/* --- unter 720px: Karten, Meistermagnet zuerst --------------------- */}
+    {/* --- unter 1040px: Karten in einer Schiene, Meistermagnet zuerst --- */}
     <div class="flex flex-col gap-20 nav:hidden">
-      {
-        kartenReihenfolge.map((weg) => (
+      {/* -mx-20/px-20 hebt den Seitenrand innerhalb der Schiene auf: die
+          erste Karte bleibt bündig, die letzte kann trotzdem bis an den
+          Rand scrollen. */}
+      <div
+        class="vergleich-schiene -mx-20 flex snap-x snap-mandatory gap-16 overflow-x-auto px-20 pb-4"
+        id="vergleich-schiene"
+        role="group"
+        aria-label="Drei Wege im Vergleich — seitlich scrollbar"
+        tabindex="0"
+      >
+        {kartenReihenfolge.map((weg) => (
           <div
             class:list={[
-              'flex flex-col gap-16 rounded-16 px-card-x pt-card-y pb-card-b',
+              'flex w-[min(86%,380px)] flex-none snap-center flex-col gap-16 rounded-16 px-card-x pt-card-y pb-card-b',
               weg.hervorgehoben
                 ? 'border-t-3 border-lime bg-paper-soft'
                 : 'border border-line bg-paper',
@@ -140,8 +158,93 @@ const zelle =
               ))}
             </dl>
           </div>
-        ))
-      }
+        ))}
+      </div>
+
+      {/* Punkte: zeigen die Position und springen auf Klick zur Karte */}
+      <div class="flex justify-center gap-8" id="vergleich-punkte">
+        {kartenReihenfolge.map((weg, i) => (
+          <button
+            type="button"
+            class="h-8 rounded-full bg-line-strong transition-all duration-200 w-8"
+            data-punkt={i}
+            aria-label={`Zu „${weg.name}“`}
+          />
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* Die Bildlaufleiste würde unter den Karten als grauer Balken stehen und
+     die Punkte doppeln. */
+  .vergleich-schiene {
+    scrollbar-width: none;
+  }
+
+  .vergleich-schiene::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  /* Punkte unter der Schiene: zeigen, bei welcher Karte man ist, und
+     springen auf Klick dorthin. Die Schiene selbst scrollt ohne JS — das
+     hier ist nur die Anzeige. */
+  const schiene = document.getElementById('vergleich-schiene');
+  const punkte = [...document.querySelectorAll<HTMLButtonElement>('[data-punkt]')];
+  const karten = schiene ? [...schiene.children] : [];
+
+  if (schiene && punkte.length && karten.length) {
+    const AKTIV = ['w-24', 'bg-ink'];
+    const RUHE = ['w-8', 'bg-line-strong'];
+
+    const markieren = (index: number) => {
+      punkte.forEach((punkt, i) => {
+        punkt.classList.remove(...(i === index ? RUHE : AKTIV));
+        punkt.classList.add(...(i === index ? AKTIV : RUHE));
+        if (i === index) punkt.setAttribute('aria-current', 'true');
+        else punkt.removeAttribute('aria-current');
+      });
+    };
+
+    /* Welche Karte steht der Mitte der Schiene am nächsten? */
+    const naechste = () => {
+      const mitte = schiene.scrollLeft + schiene.clientWidth / 2;
+      let beste = 0;
+      let abstand = Infinity;
+      karten.forEach((karte, i) => {
+        const el = karte as HTMLElement;
+        const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mitte);
+        if (d < abstand) {
+          abstand = d;
+          beste = i;
+        }
+      });
+      return beste;
+    };
+
+    let wartet = false;
+    schiene.addEventListener('scroll', () => {
+      if (wartet) return;
+      wartet = true;
+      requestAnimationFrame(() => {
+        markieren(naechste());
+        wartet = false;
+      });
+    });
+
+    punkte.forEach((punkt, i) => {
+      punkt.addEventListener('click', () => {
+        const el = karten[i] as HTMLElement;
+        schiene.scrollTo({
+          left: el.offsetLeft + el.offsetWidth / 2 - schiene.clientWidth / 2,
+          behavior: 'smooth',
+        });
+      });
+    });
+
+    markieren(0);
+  }
+</script>

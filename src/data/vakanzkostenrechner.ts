@@ -88,48 +88,11 @@ export const ergebnisTexte = {
   ctaKnopf: 'Kostenloses Erstgespräch',
 };
 
-export interface Rechenschritt {
-  titel: string;
-  formel: string;
-  text: string;
-}
-
-/* Die Formel offen darlegen ist hier kein Betriebsgeheimnis, sondern das
-   eigentliche Argument: Wer nachrechnen kann, glaubt das Ergebnis. */
-export const rechenschritte: Rechenschritt[] = [
-  {
-    titel: 'Entgangener Umsatz',
-    formel: 'Stellen × Monate × produktive Stunden × Verrechnungssatz',
-    text: 'Die Arbeit, die in dieser Zeit niemand abgerechnet hat. Das ist noch kein Schaden — vom Umsatz wäre auch Material und Lohn abgegangen.',
-  },
-  {
-    titel: 'Verlorener Deckungsbeitrag',
-    formel: 'entgangener Umsatz × Deckungsbeitrag in %',
-    text: 'Was von diesem Umsatz übrig geblieben wäre. Das ist der Teil, der Ihrem Betriebsergebnis tatsächlich fehlt.',
-  },
-  {
-    titel: 'Fixkosten für ein stillstehendes Fahrzeug',
-    formel: 'Fixkosten je Monat × Monate',
-    text: 'Nur wenn Sie angeben, dass ein Fahrzeug ungenutzt steht. Leasing, Versicherung und Steuer laufen weiter, die Kolonne fährt nicht.',
-  },
-  {
-    titel: 'Mehrkosten durch Überstunden',
-    formel: 'Stunden × Monate × Bruttolohn × 25 % Zuschlag × 1,21',
-    text: 'Gerechnet wird nur der Zuschlag, nicht der volle Lohn — die Überstunden ersetzen Arbeit, die der fehlende Mitarbeiter sonst gemacht und gekostet hätte. Die 21 % sind Ihr Anteil an den Lohnnebenkosten, der auf den Zuschlag anfällt.',
-  },
-  {
-    titel: 'Schaden am Betriebsergebnis',
-    formel: 'Deckungsbeitrag + Fixkosten + Überstunden-Mehrkosten',
-    text: 'Recruitingkosten stehen bewusst nicht in dieser Summe. Sie fallen an, sobald Sie suchen — egal wie lange die Stelle offen bleibt.',
-  },
-  {
-    titel: 'Kosten je Arbeitstag',
-    formel: 'Schaden ÷ (Monate × 21 Arbeitstage)',
-    text: 'Die Zahl, die hängen bleibt. 21 Arbeitstage im Monat sind der übliche Ansatz nach Abzug von Wochenenden und Feiertagen.',
-  },
-];
 
 export interface Luecke {
+  /* Verbindet den Eintrag mit seinem Icon in WasFehlt.astro. Das Icon
+     selbst ist Markup und steht deshalb nicht hier. */
+  schluessel: 'abgesprungen' | 'ueberlastung' | 'kuendigung';
   titel: string;
   text: string;
 }
@@ -138,14 +101,17 @@ export interface Luecke {
    glaubwürdiger als eine Zahl, die alles behauptet. */
 export const luecken: Luecke[] = [
   {
+    schluessel: 'abgesprungen',
     titel: 'Kunden, die nicht wiederkommen',
     text: 'Wer vier Wochen auf einen Termin wartet, ruft beim nächsten Mal jemand anderen an. Dieser Verlust taucht in keiner Rechnung auf, weil die Anfrage nie gestellt wurde.',
   },
   {
+    schluessel: 'ueberlastung',
     titel: 'Arbeit unter Druck',
     text: 'Wenn zu wenige zu viel schaffen müssen, leidet die Ausführung. Nacharbeit, Reklamationen und ein Ruf, der Jahre gebraucht hat, stehen hier nicht drin.',
   },
   {
+    schluessel: 'kuendigung',
     titel: 'Die nächste Kündigung',
     text: 'Dauerhafte Überlastung ist der häufigste Grund, warum gute Leute gehen. Aus einer offenen Stelle werden dann zwei.',
   },
@@ -185,7 +151,7 @@ export const faqs: Faq[] = [
   {
     frage: 'Wie genau ist diese Berechnung?',
     antwort:
-      'Sie ist eine Näherung, und sie ist bewusst vorsichtig gerechnet. Alle Annahmen stehen offen auf dieser Seite, und Sie können jeden Wert überschreiben. Für eine belastbare Zahl brauchen Sie Ihre echten Werte aus der Nachkalkulation — dafür ist der Rechner der Einstieg, nicht der Ersatz.',
+      'Sie ist eine Näherung, und sie ist bewusst vorsichtig gerechnet. Jeder Wert, mit dem wir rechnen, steht im Rechner selbst und lässt sich überschreiben. Für eine belastbare Zahl brauchen Sie Ihre echten Werte aus der Nachkalkulation — dafür ist der Rechner der Einstieg, nicht der Ersatz.',
   },
   {
     frage: 'Ab wann lohnt es sich, etwas zu ändern?',
@@ -194,11 +160,16 @@ export const faqs: Faq[] = [
   },
 ];
 
+/* Dieselbe Überschrift wie auf /mitarbeiter-gewinnen. Der vorherige Text
+   („Die Stelle kostet jeden Tag") hat den Druck aus dem Rechner in den
+   Abschluss verlängert — nach einer vierstelligen Schadenssumme ist das
+   zu viel. Hier soll stattdessen jemand sitzen, dem man die Sache
+   zutraut. */
 export const abschluss = {
-  titelVorn: 'Die Stelle kostet jeden Tag. Reden wir darüber, wie sie ',
-  titelMarker: 'schneller besetzt',
-  titelMitte: ' wird — in einem ',
-  titelKursiv: 'kostenlosen Erstgespräch',
+  titelVorn: 'Wir wissen zu gut, dass die Suche nach der ',
+  titelMarker: 'richtigen Agentur',
+  titelMitte: ' mindestens genauso schwer ist wie die Suche nach ',
+  titelKursiv: 'den richtigen Leuten',
   titelHinten: '.',
-  lead: 'Wir schauen uns an, wie Ihre Stellenausschreibung aussieht, wo sie ausgespielt wird und warum sich die Falschen oder gar niemand meldet.',
+  lead: 'Eine Stunde, kostenlos, ohne Verpflichtung. Wir schauen uns Ihre Stellenausschreibung an und sagen Ihnen, woran es liegt — auch wenn Sie sich am Ende gegen uns entscheiden.',
 };

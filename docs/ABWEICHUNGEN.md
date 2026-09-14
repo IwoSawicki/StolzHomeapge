@@ -1289,3 +1289,21 @@ schwächer), das Streichen von „Freelancer" bei den Teamrollen
 (dokumentierte Entscheidung Iwo, siehe `src/data/startseite.ts`) und die
 Footer-Einträge ohne Ziel (keine toten Links, sondern bewusst
 ausgegraute Platzhalter mit `nochNicht: true`).
+
+## Vakanzkostenrechner und Meistermagnet-Seite (14.09.2026)
+
+Der Rechner ist nach dem Handoff entstanden und hat keine Vorlage in
+`design/`. Was hier steht, sind Entscheidungen gegen die Build-Spec aus
+Claude Cowork bzw. gegen den Handoff `BUILDmitarbeitergewinnen.md`.
+
+| Stelle | Spec / Handoff | Jetzt | Grund |
+|---|---|---|---|
+| Rechner, Ergebnistafel | Tageszahl ist die große Zahl | Schaden am Betriebsergebnis ist die große Zahl, Tageszahl eine Stufe kleiner darunter | Entscheidung Iwo. Die Summe trifft härter; das Argument „jeden Tag" bleibt durch die zweite Zahl erhalten. |
+| Rechner, Farbe | Ergebniszahl in Lime | Schadenszahlen in Rot (`--color-schaden`, `#ff6b6b`) | Entscheidung Iwo. Auf dunkelgrün braucht Rot einen hellen Ton — `#c0293c` war dort nicht mehr lesbar (Kontrast 5,11:1 auf `forest-card`, 6,06:1 auf `forest`). |
+| Rechner, Gruppen 3 und 4 | zugeklappt | ab 1040px aufgeklappt, darunter zugeklappt mit Knopf (52px hoch, Rahmen) | Entscheidung Iwo. Auf dem Desktop ist Platz, und sichtbare Annahmen sind glaubwürdiger. Auf dem Handy war als reine Textzeile nicht erkennbar, dass sich etwas aufklappen lässt. |
+| Rechner, Sektion „Der Rechenweg" | Formel offen in eigener Sektion | entfernt | Entscheidung Iwo. Die Annahmen bleiben sichtbar: Verrechnungssatz, produktive Stunden und Deckungsbeitrag stehen als Regler im Rechner, die Sonderfälle als Hinweistexte daneben und in der FAQ. Meta-Description und eine FAQ-Antwort mussten mit, weil beide „Formel offengelegt" behaupteten. |
+| Rechner, Sektion „Die Lücken" | dunkles Band, Karten ohne Bild | heller Grund, drei Kacheln im Design der Leistungssektion der Startseite, je Kachel ein eigenes Icon | Entscheidung Iwo. Icons als SVG in `src/components/icons/`, Strichstärke und Lime-Akzent wie die beiden CSS-Illustrationen der Startseite. |
+| Rechner, Abschluss | „Die Stelle kostet jeden Tag. Reden wir darüber, wie sie schneller besetzt wird." | Überschrift von `/mitarbeiter-gewinnen`: „Wir wissen zu gut, dass die Suche nach der richtigen Agentur …" | Entscheidung Iwo. Der alte Text hat den Druck aus dem Rechner in den Abschluss verlängert. Nach einer vierstelligen Schadenssumme soll dort jemand sitzen, dem man die Sache zutraut. |
+| `/mitarbeiter-gewinnen`, Sektion 3 | „Drei Schritte, immer in dieser Reihenfolge" | „Unser Prozess" | Entscheidung Iwo. Kursiv gesetzt ist „Prozess", damit die Überschrift die Typografie der übrigen Sektionen behält. |
+| `/mitarbeiter-gewinnen` | — | neues grünes Band zum Vakanzkosten-Rechner zwischen Ausgangslage und Prozess | Entscheidung Iwo. Steht vor dem Prozess, nicht dahinter: wer die Zahl kennt, liest die drei Schritte anders. Die 150 €/Tag in der Grafik sind der Standardfall des Rechners (SHK, eine Stelle, drei Monate), kein erfundener Wert. |
+| `/mitarbeiter-gewinnen`, Sektion 5 | unter 1040px drei Karten untereinander | Karten nebeneinander in einer Schiene mit Scroll-Snap, Punkte darunter | Rückmeldung Iwo: drei Karten mit je fünf Zeilen sind auf dem Handy unübersichtlich. Kein Karussell, das von selbst weiterspringt — reines CSS-Scrollen, mit Tastatur und Screenreader nutzbar. |
