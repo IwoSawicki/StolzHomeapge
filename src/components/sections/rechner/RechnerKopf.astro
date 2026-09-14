@@ -10,22 +10,22 @@ import Eyebrow from '../../Eyebrow.astro';
 import { hero } from '../../../data/vakanzkostenrechner';
 ---
 
-<div class="bg-forest">
-  <Header />
+<div class="bg-paper">
+  <Header variante="hell" />
 
   <section class="px-page-x pt-40 pb-section-y-sm">
     <div class="mx-auto flex max-w-content flex-col items-start gap-20">
-      <Eyebrow variante="lime">Vakanzkosten</Eyebrow>
+      <Eyebrow variante="hell">Vakanzkosten</Eyebrow>
 
       <h1
-        class="m-0 max-w-860 text-h1-sub leading-tightest font-bold tracking-system text-paper"
+        class="m-0 max-w-860 text-h1-sub leading-tightest font-bold tracking-system text-ink"
       >
         {hero.titelVorn}<span class="font-display font-semibold tracking-none italic"
           >{hero.titelKursiv}</span
         >{hero.titelHinten}
       </h1>
 
-      <p class="m-0 max-w-760 text-19 leading-body text-mint">{hero.lead}</p>
+      <p class="m-0 max-w-760 text-19 leading-body text-ink-muted">{hero.lead}</p>
     </div>
   </section>
 </div>
