@@ -195,6 +195,7 @@
   --text-23: 23px;
   --text-26: 26px;
   --text-28: 28px;
+  --text-44: 44px;
 
   /* Fluide Überschriften – je Rolle, exakt wie in der Vorlage */
   --text-h1: clamp(38px, 5vw, 60px); /* Hero Startseite */

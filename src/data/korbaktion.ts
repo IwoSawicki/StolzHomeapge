@@ -56,46 +56,30 @@ export const checkPunkte: CheckPunkt[] = [
 export const checkNachsatz =
   'Eine Stunde, kostenlos, ohne Verpflichtung. Danach wissen Sie, was in Ihrer Region zu holen ist — unabhängig davon, wie Sie sich entscheiden.';
 
-/* Die Erklärung der Aktion. Sie steht hier, weil die Frage „warum steht
-   morgens jemand mit einem Körbchen vor meiner Tür?" sonst im Raum bleibt
-   — und weil die Antwort zufällig genau das ist, was wir verkaufen. */
+/* Die Erklärung der Aktion — als Gegenüberstellung statt als Fließtext.
+
+   Die beiden Tafeln zeigen dasselbe Argument, das der Flyer macht: der
+   eine Weg wird vergessen, der andere nicht. Weil der Leser den zweiten
+   Weg gerade selbst gegangen ist, braucht die Sektion keine Behauptung —
+   sie muss den Vorgang nur benennen. */
 export const warum = {
-  titelVorn: 'Warum wir mit einem Körbchen ',
-  titelKursiv: 'vorbeikommen',
+  titelVorn: 'Zwei Wege, Ihnen etwas zu ',
+  titelKursiv: 'schicken',
   titelHinten: '',
-  absaetze: [
-    'Wir hätten Ihnen eine E-Mail schreiben können. Die wäre zwischen elf anderen gelandet, und Sie hätten sie heute Abend nicht mehr gewusst.',
-    'Also sind wir hingegangen. Das ist aufwendiger, langsamer und lässt sich nicht automatisieren — und genau deshalb funktioniert es. Sie haben den Code gescannt, Sie lesen das hier. Der Beweis lag in Ihrer Küche.',
+  lead: 'Einer davon hat funktioniert. Sie lesen das hier.',
+  emailTafel: {
+    label: 'Die E-Mail',
+    titel: 'Wäre heute Abend vergessen',
+    text: 'Sie wäre zwischen elf anderen gelandet. Vielleicht geöffnet, wahrscheinlich nicht. Morgen wüssten Sie unseren Namen nicht mehr.',
+  },
+  koerbchenTafel: {
+    label: 'Das Körbchen',
+    titel: 'Lag in Ihrer Küche',
+    text: 'Aufwendiger, langsamer, nicht automatisierbar. Und Sie haben den Code gescannt. Genau das ist der Unterschied, den wir für Ihren Betrieb bauen.',
+  },
+  nachsatz:
     'Und nein, wir sind kein Catering. Wir sorgen dafür, dass Betriebe an der Bergstraße gefunden werden — von Kunden, die einen Auftrag zu vergeben haben, und von Leuten, die einen neuen Arbeitgeber suchen.',
-  ],
 };
-
-export interface Weg {
-  eyebrow: string;
-  titel: string;
-  text: string;
-  href: string;
-  linkText: string;
-}
-
-/* Zwei Wege statt einer Leistungsliste: der Chef soll in einem Blick
-   erkennen, welche der beiden Fragen seine ist. */
-export const wege: Weg[] = [
-  {
-    eyebrow: 'Kunden gewinnen',
-    titel: 'Ihnen fehlen die richtigen Aufträge',
-    text: 'Eine Webseite, die bei Google gefunden wird, und eine Positionierung, die Sie aus dem Preisvergleich holt. Damit Anfragen von Leuten kommen, die schon kaufen wollen.',
-    href: '/kunden-gewinnen',
-    linkText: 'Zum Platzhirsch-System',
-  },
-  {
-    eyebrow: 'Mitarbeiter gewinnen',
-    titel: 'Ihnen fehlen die richtigen Leute',
-    text: 'Ein Drehtag bei Ihnen im Betrieb, Anzeigen dort, wo Ihre Leute abends unterwegs sind, und ein Bewerbungsformular, das aussortiert, bevor es auf Ihrem Schreibtisch landet.',
-    href: '/mitarbeiter-gewinnen',
-    linkText: 'Zum Meistermagnet-System',
-  },
-];
 
 export const ansprechpartner = {
   titelVorn: 'Sie sprechen mit ',

@@ -15,7 +15,7 @@
      2. Logo-Marquee      Beleg, direkt unter dem Formular
      3. Der Check         was drinsteht, und dass es wirklich nichts kostet
      4. Die Aktion        warum jemand mit einem Körbchen vorbeikommt
-     5. Zwei Wege         Aufträge oder Leute — welche Frage ist seine?
+     5. Leistungen        die beiden Systeme, bebildert wie auf der Startseite
      6. Ansprechpartner
      7. Abschluss         für die, denen ein Anruf lieber ist
 
@@ -32,7 +32,7 @@ import HeroKorbaktion from '../components/sections/korbaktion/HeroKorbaktion.ast
 import LogoMarquee from '../components/sections/LogoMarquee.astro';
 import CheckInhalt from '../components/sections/korbaktion/CheckInhalt.astro';
 import WarumKoerbchen from '../components/sections/korbaktion/WarumKoerbchen.astro';
-import ZweiWege from '../components/sections/korbaktion/ZweiWege.astro';
+import Leistungen from '../components/sections/Leistungen.astro';
 import Ansprechpartner from '../components/sections/webdesign/Ansprechpartner.astro';
 import Abschluss from '../components/sections/leistung/Abschluss.astro';
 import type { Feld } from '../components/Web3Formular.astro';
@@ -69,7 +69,7 @@ const anfrageFelder: Feld[] = [
 
     <WarumKoerbchen />
 
-    <ZweiWege />
+    <Leistungen />
 
     <Ansprechpartner
       titelVorn={ansprechpartner.titelVorn}

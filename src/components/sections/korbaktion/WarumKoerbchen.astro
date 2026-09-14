@@ -1,30 +1,103 @@
 ---
-/* Die Erklärung der Aktion.
+/* Die Erklärung der Aktion — als Gegenüberstellung.
 
-   Steht bewusst nach dem Formular und nicht davor: wer den Check will,
-   soll ihn anfordern können, ohne erst eine Geschichte zu lesen. Wer
-   dagegen wissen will, warum morgens jemand mit einem Brötchenkörbchen
-   vor der Tür stand, findet die Antwort hier — und die Antwort ist
-   zufällig genau die Leistung, die wir verkaufen. */
+   Statt drei Absätzen stehen hier zwei Tafeln nebeneinander: der Weg, der
+   vergessen worden wäre, und der Weg, den der Leser gerade selbst gegangen
+   ist. Die linke Tafel ist bewusst zurückgenommen (gestrichelte Kante,
+   gedämpfte Schrift), die rechte trägt Lime und das Signet.
+
+   Damit macht die Sektion das Argument sichtbar, statt es zu behaupten —
+   und die Seite hat an dieser Stelle endlich Farbe.
+
+   Die helle Tafel bekommt einen langsamen Puls. Endlosanimationen werden
+   in global.css bei prefers-reduced-motion angehalten. */
 import Eyebrow from '../../Eyebrow.astro';
+import Signet from '../../Signet.astro';
+import Papierflieger from '../../icons/Papierflieger.astro';
 import { warum } from '../../../data/korbaktion';
 ---
 
-<section class="bg-forest px-page-x py-section-y-lg">
-  <div class="mx-auto flex max-w-content flex-wrap items-start gap-x-64 gap-y-32">
-    <div class="flex flex-1 basis-[min(380px,100%)] flex-col items-start gap-18">
-      <Eyebrow variante="lime">Die Aktion</Eyebrow>
-      <h2
-        class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper"
-      >
+<section class="bg-paper-soft px-page-x py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-40">
+    <div class="flex max-w-760 flex-col items-start gap-18">
+      <Eyebrow variante="hell">Die Aktion</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
         {warum.titelVorn}<span
           class="font-display font-semibold tracking-none italic">{warum.titelKursiv}</span
         >{warum.titelHinten}
       </h2>
+      <p class="m-0 max-w-660 text-19 leading-quote text-ink-muted">{warum.lead}</p>
     </div>
 
-    <div class="flex flex-1 basis-[min(440px,100%)] flex-col gap-16">
-      {warum.absaetze.map((absatz) => <p class="m-0 text-19 leading-body text-mint">{absatz}</p>)}
+    <div class="grid grid-cols-1 items-stretch gap-20 btn:grid-cols-2">
+      {/* --- der Weg, der nicht funktioniert hätte --- */}
+      <article
+        class="flex flex-col gap-14 rounded-20 border border-dashed border-line-strong bg-paper px-28 py-26 opacity-70"
+      >
+        <div class="flex items-center gap-12">
+          <span
+            class="flex h-40 w-40 flex-none items-center justify-center rounded-12 bg-paper-grey text-ink-faint"
+          >
+            <Papierflieger groesse={18} />
+          </span>
+          <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-label">
+            {warum.emailTafel.label}
+          </span>
+        </div>
+        <span
+          class="text-21 leading-card font-bold tracking-heading text-ink-muted line-through decoration-line-strong decoration-2"
+        >
+          {warum.emailTafel.titel}
+        </span>
+        <p class="m-0 text-17 leading-body text-ink-quiet">{warum.emailTafel.text}</p>
+      </article>
+
+      {/* --- der Weg, den er gerade gegangen ist --- */}
+      <article
+        class="relative flex flex-col gap-14 overflow-hidden rounded-20 border-2 border-lime bg-forest px-28 py-26"
+      >
+        <Signet
+          class="pointer-events-none absolute -right-24 -bottom-16 w-[220px] text-lime opacity-[0.09]"
+        />
+        <div class="relative flex items-center gap-12">
+          <span
+            class="puls flex h-40 w-40 flex-none items-center justify-center rounded-12 bg-lime text-forest-deep"
+          >
+            <Signet class="w-20" />
+          </span>
+          <span class="font-mono text-12 tracking-eyebrow uppercase text-lime">
+            {warum.koerbchenTafel.label}
+          </span>
+        </div>
+        <span
+          class="relative text-21 leading-card font-bold tracking-heading text-paper"
+        >
+          {warum.koerbchenTafel.titel}
+        </span>
+        <p class="relative m-0 text-17 leading-body text-mint">
+          {warum.koerbchenTafel.text}
+        </p>
+      </article>
     </div>
+
+    <p class="m-0 max-w-760 text-18 leading-quote text-ink-muted">{warum.nachsatz}</p>
   </div>
 </section>
+
+<style>
+  /* Ruhiger Puls auf dem Lime-Feld: gerade genug, dass das Auge die
+     rechte Tafel zuerst nimmt. */
+  @keyframes puls-lime {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgb(228 245 63 / 0.45);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgb(228 245 63 / 0);
+    }
+  }
+
+  .puls {
+    animation: puls-lime 2.8s ease-out infinite;
+  }
+</style>

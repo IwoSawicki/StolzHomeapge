@@ -1,40 +1,134 @@
 ---
-/* Was im kostenlosen Check steht — drei Punkte auf hellem Grund, direkt
-   unter dem Formular.
+/* Was im kostenlosen Check steht.
 
-   Der Abschnitt hat eine Aufgabe: die Angst nehmen, dass „kostenlos" hier
-   ein Verkaufsgespräch mit anderem Namen ist. Deshalb steht im dritten
-   Punkt ausdrücklich, dass der Schritt auch ohne uns gegangen werden kann,
-   und im Nachsatz, dass die Stunde auch dann etwas bringt, wenn man sich
-   gegen uns entscheidet. */
+   Der Abschnitt hat zwei Aufgaben: zeigen, dass „kostenlos" hier kein
+   Verkaufsgespräch mit anderem Namen ist — und optisch etwas hergeben.
+   Deshalb tragen die drei Karten große Ziffern in der Auszeichnungsschrift,
+   sitzen auf Dunkelgrün und blenden beim Hereinscrollen versetzt ein.
+
+   Die Animation läuft über eine Klasse, die ein IntersectionObserver
+   setzt. Ohne JavaScript sind die Karten sofort sichtbar (die Startwerte
+   stehen erst im Script), und `prefers-reduced-motion` wird global in
+   global.css abgefangen. */
 import Eyebrow from '../../Eyebrow.astro';
+import Signet from '../../Signet.astro';
 import { checkPunkte, checkNachsatz } from '../../../data/korbaktion';
 ---
 
-<section class="bg-paper-soft px-page-x py-section-y-lg">
-  <div class="mx-auto flex max-w-content flex-col gap-40">
-    <div class="flex max-w-760 flex-col items-start gap-18">
-      <Eyebrow variante="hell">Der Check</Eyebrow>
-      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
-        Drei Antworten, die Sie <span
-          class="font-display font-semibold tracking-none italic">vorher nicht hatten</span
+<section class="relative overflow-hidden bg-forest px-page-x py-section-y-lg">
+  {/* Signet als große, blasse Fläche — füllt die Sektion, ohne zu stören */}
+  <Signet
+    class="pointer-events-none absolute -right-80 -bottom-56 w-[min(560px,80vw)] text-paper opacity-[0.05]"
+  />
+
+  <div class="relative mx-auto flex max-w-content flex-col gap-44">
+    <div class="flex flex-wrap items-end justify-between gap-x-40 gap-y-20">
+      <div class="flex max-w-660 flex-col items-start gap-18">
+        <Eyebrow variante="lime">Der Check</Eyebrow>
+        <h2
+          class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper"
         >
-      </h2>
+          Drei Antworten, die Sie <span
+            class="font-display font-semibold tracking-none italic">vorher nicht hatten</span
+          >
+        </h2>
+      </div>
+
+      <span
+        class="inline-flex items-baseline gap-8 rounded-full bg-lime px-20 py-10 text-16 font-bold tracking-heading text-forest-deep"
+      >
+        <span class="text-22">0 €</span>
+        <span class="text-14 font-medium">und keine Verpflichtung</span>
+      </span>
     </div>
 
     <div class="grid grid-cols-1 gap-16 btn:grid-cols-3">
       {
-        checkPunkte.map((punkt) => (
-          <div class="flex flex-col gap-12 rounded-20 border border-line bg-paper px-28 py-26">
-            <span class="text-21 leading-card font-bold tracking-heading text-ink">
+        checkPunkte.map((punkt, i) => (
+          <article
+            class="einblenden group flex flex-col gap-16 rounded-20 border border-edge bg-forest-card px-28 py-26 transition-colors duration-200 hover:border-lime-edge"
+            style={`--verzoegerung:${i * 90}ms`}
+          >
+            <span
+              class="font-display text-44 leading-none font-semibold italic text-lime"
+              aria-hidden="true"
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+
+            {/* Wächst beim Überfahren von der Ziffer zur Überschrift */}
+            <span class="block h-2 w-32 rounded-full bg-lime-edge transition-all duration-300 group-hover:w-56 group-hover:bg-lime" />
+
+            <span class="text-21 leading-card font-bold tracking-heading text-paper">
               {punkt.titel}
             </span>
-            <p class="m-0 text-17 leading-body text-ink-quiet">{punkt.text}</p>
-          </div>
+            <p class="m-0 text-17 leading-body text-mint">{punkt.text}</p>
+          </article>
         ))
       }
     </div>
 
-    <p class="m-0 max-w-660 text-18 leading-quote text-ink-muted">{checkNachsatz}</p>
+    <p class="m-0 max-w-660 text-18 leading-quote text-mint-dim">{checkNachsatz}</p>
   </div>
 </section>
+
+<style>
+  /* Startwerte bewusst nur für Geräte mit aktivem Script: die Klasse
+     „vorbereitet" setzt das Script selbst, bevor es beobachtet. Ohne
+     JavaScript bleiben die Karten unangetastet sichtbar. */
+  .einblenden.vorbereitet {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  .einblenden.vorbereitet.sichtbar {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.5s ease-out var(--verzoegerung, 0ms),
+      transform 0.5s ease-out var(--verzoegerung, 0ms);
+  }
+</style>
+
+<script>
+  /* Einblenden mit doppeltem Boden.
+
+     Eine Karte, die das Script versteckt hat und die niemand wieder
+     einblendet, ist auf einer Landingpage ein Totalausfall. Deshalb:
+
+       1. Versteckt wird nur, was beim Start ausserhalb des Sichtfelds liegt.
+          Was schon zu sehen ist, bleibt unangetastet.
+       2. Ein Zeitschloss blendet nach 1,2 s alles ein, egal was der
+          Observer meldet — falls er gar nicht erst ausloest.
+
+     Ohne JavaScript passiert nichts, und die Karten sind sowieso sichtbar. */
+  const karten = Array.from(document.querySelectorAll<HTMLElement>('.einblenden'));
+
+  if (karten.length) {
+    const zeigen = (el: HTMLElement) => {
+      el.classList.add('sichtbar');
+    };
+
+    if ('IntersectionObserver' in window) {
+      const wartende = karten.filter((k) => k.getBoundingClientRect().top > window.innerHeight);
+      wartende.forEach((k) => k.classList.add('vorbereitet'));
+
+      const beobachter = new IntersectionObserver(
+        (eintraege) => {
+          eintraege.forEach((eintrag) => {
+            if (!eintrag.isIntersecting) return;
+            zeigen(eintrag.target as HTMLElement);
+            beobachter.unobserve(eintrag.target);
+          });
+        },
+        { rootMargin: '0px 0px -12% 0px' },
+      );
+      wartende.forEach((k) => beobachter.observe(k));
+
+      window.setTimeout(() => {
+        wartende.forEach(zeigen);
+        beobachter.disconnect();
+      }, 1200);
+    }
+  }
+</script>
