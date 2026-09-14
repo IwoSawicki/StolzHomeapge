@@ -12,22 +12,10 @@
 export const hero = {
   eyebrow: 'Korbaktion',
   titelVorn: 'Wir hoffen, die Brötchen haben ',
-  titelKursiv: 'geschmeckt',
+  titelAkzent: 'geschmeckt',
   titelHinten: '.',
   lead: 'Sie haben den Code auf der Rückseite gescannt — und damit gerade selbst bewiesen, was darauf stand. Genau das ist unsere Arbeit: Marketing, an das man sich erinnert. Für Ihre Kunden und für Ihre künftigen Mitarbeiter.',
   vertrauen: 'Über 50 Projekte seit 2022',
-};
-
-/* Das Formular ist der eigentliche Zweck der Seite: ein Angebot, das
-   nichts kostet und bei dem der Chef nur ein Feld ausfüllen muss, das er
-   im Kopf hat. Name und Telefon stehen darunter, weil das Ergebnis im
-   Gespräch kommt — nicht als automatische PDF-Auswertung, die wir nicht
-   liefern. */
-export const formular = {
-  titel: 'Kostenloser Sichtbarkeits-Check',
-  lead: 'Tragen Sie Ihre Webseite ein. Wir schauen nach, wonach Ihre Kunden in Ihrer Region suchen und wo Sie dabei stehen.',
-  knopf: 'Check anfordern',
-  nachsatz: 'Antwort in der Regel am selben Tag.',
 };
 
 export interface CheckPunkt {
@@ -82,17 +70,17 @@ export const warum = {
 };
 
 export const ansprechpartner = {
-  titelVorn: 'Sie sprechen mit ',
-  titelMarker: 'mir',
-  text: 'Das Körbchen habe ich selbst vorbeigebracht, und den Check mache ich auch selbst. Mein Büro liegt im Gewerbegebiet Bensheim — nah genug, um für Fotos und Videos in Ihren Betrieb zu kommen. Was Ihr Betrieb besser kann als die anderen im Ort und woran wir messen, ob es funktioniert, besprechen Sie mit mir, nicht mit einem Kundenberater.',
+  titelVorn: 'Hallo, ich bin ',
+  titelMarker: 'Iwo',
+  text: 'Wahrscheinlich haben wir uns heute Morgen kurz gesehen — das Körbchen habe ich selbst vorbeigebracht. Mein Büro liegt im Gewerbegebiet Bensheim, nah genug, um für Fotos und Videos in Ihren Betrieb zu kommen. Was Ihr Betrieb besser kann als die anderen im Ort und woran wir messen, ob es funktioniert, besprechen Sie mit mir, nicht mit einem Kundenberater.',
   rolle: 'Inhaber · Stolz Marketing, Bensheim',
 };
 
 export const abschluss = {
-  titelVorn: 'Wenn Sie es ',
-  titelMarker: 'kurz machen',
-  titelMitte: ' wollen: rufen Sie an. Sonst schreiben Sie ',
-  titelKursiv: 'hier drüben',
+  titelVorn: 'Tragen Sie Ihre Webseite ein — den ',
+  titelMarker: 'Check',
+  titelMitte: ' bekommen Sie ',
+  titelKursiv: 'kostenlos',
   titelHinten: '.',
-  lead: 'Zehn Minuten am Telefon reichen, um zu klären, ob sich der Check für Ihren Betrieb überhaupt lohnt. Wenn nicht, sagen wir das auch.',
+  lead: 'Wenn Ihnen ein Anruf lieber ist: Die Nummer steht daneben. Zehn Minuten reichen, um zu klären, ob sich der Check für Ihren Betrieb überhaupt lohnt.',
 };

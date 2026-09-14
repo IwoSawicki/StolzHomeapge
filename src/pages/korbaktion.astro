@@ -3,44 +3,51 @@
    Door-to-Door-Aktion.
 
    Diese Adresse steht gedruckt und lässt sich nicht mehr ändern. Sie war
-   bis hierher eine reine Weiterleitung auf die Startseite; jetzt ist sie
-   die Seite, auf der der Lead landet.
+   bis vor kurzem eine reine Weiterleitung auf die Startseite; jetzt ist
+   sie die Seite, auf der der Lead landet.
 
-   Wer hier ankommt, hat gerade ein Brötchenkörbchen bekommen, den Flyer
-   umgedreht und den Code gescannt. Er kennt uns seit zwei Minuten und hat
-   keine Frage — deshalb bekommt er eine Sache angeboten, die ihn nichts
-   kostet, und zwar sofort:
+   Wer hier ankommt, hat ein Brötchenkörbchen bekommen, den Flyer
+   umgedreht und den Code gescannt — und in der Regel vorher mit Iwo an
+   der Tür gesprochen. Deshalb kommt direkt nach dem Hero die Begrüßung
+   und nicht ein Formular: die Person kennt bereits ein Gesicht.
 
-     1. Hero + Formular   der Anschluss an den Flyer, daneben der Check
-     2. Logo-Marquee      Beleg, direkt unter dem Formular
-     3. Der Check         was drinsteht, und dass es wirklich nichts kostet
-     4. Die Aktion        warum jemand mit einem Körbchen vorbeikommt
-     5. Leistungen        die beiden Systeme, bebildert wie auf der Startseite
-     6. Ansprechpartner
-     7. Abschluss         für die, denen ein Anruf lieber ist
+     1. Hero             wie auf den Leistungsseiten, Bild rechts
+     2. Hallo, ich bin Iwo   das Gesicht von heute Morgen
+     3. Der Check        was drinsteht, und dass es nichts kostet
+     4. Die Aktion       warum jemand mit einem Körbchen vorbeikommt
+     5. Leistungen       die beiden Systeme, bebildert wie auf der Startseite
+     6. Abschluss        das einzige Formular der Seite
 
-   Kein Header und kein Menü: die Seite hat ein Ziel. Das Logo im Hero
-   führt trotzdem auf die Startseite, und der Footer trägt Impressum und
-   Datenschutz — beides ist Pflicht.
+   Die Seite trägt seit dem Umbau die normale Kopfzeile: sie steckt in
+   HeroLeistung mit drin. Das ist der Preis für diese Hero — wer vom
+   Flyer kommt, hat damit auch ein Menü.
 
    noindex und nicht in der Sitemap (Filter in astro.config.mjs): die Seite
    ist das Ziel einer Kampagne, kein organischer Einstieg. Sie träte sonst
    gegen die Startseite an, die auf dieselben Begriffe optimiert ist. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
-import HeroKorbaktion from '../components/sections/korbaktion/HeroKorbaktion.astro';
-import LogoMarquee from '../components/sections/LogoMarquee.astro';
+import HeroLeistung from '../components/sections/HeroLeistung.astro';
+import heroBild from '../assets/leistungen/kundengewinnung.JPG';
+import Ansprechpartner from '../components/sections/webdesign/Ansprechpartner.astro';
 import CheckInhalt from '../components/sections/korbaktion/CheckInhalt.astro';
 import WarumKoerbchen from '../components/sections/korbaktion/WarumKoerbchen.astro';
 import Leistungen from '../components/sections/Leistungen.astro';
-import Ansprechpartner from '../components/sections/webdesign/Ansprechpartner.astro';
 import Abschluss from '../components/sections/leistung/Abschluss.astro';
 import type { Feld } from '../components/Web3Formular.astro';
-import { ansprechpartner, abschluss } from '../data/korbaktion';
+import { hero, ansprechpartner, abschluss } from '../data/korbaktion';
 
-/* Kürzer als im Hero: wer bis hier unten gescrollt hat und trotzdem nicht
-   angefragt hat, soll nicht noch einmal dasselbe Formular sehen. */
+/* Das Adressfeld steht bewusst obenan und ist nicht Pflicht: Wer gar
+   keine Webseite hat, ist genau der Betrieb, den wir sprechen wollen —
+   ein Pflichtfeld würde ihn wegschicken. */
 const anfrageFelder: Feld[] = [
+  {
+    name: 'webseite',
+    label: 'Ihre Webseite',
+    breit: true,
+    inputmode: 'url',
+    platzhalter: 'ihre-webseite.de',
+  },
   { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
   {
     name: 'telefon',
@@ -51,7 +58,6 @@ const anfrageFelder: Feld[] = [
     autocomplete: 'tel',
   },
   { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
-  { name: 'nachricht', label: 'Worum es geht', mehrzeilig: true },
 ];
 ---
 
@@ -60,23 +66,32 @@ const anfrageFelder: Feld[] = [
   description="Sie haben den Code auf unserem Flyer gescannt. Hier gibt es den kostenlosen Sichtbarkeits-Check für Ihren Betrieb."
   noindex={true}
 >
-  <HeroKorbaktion />
+  <HeroLeistung
+    eyebrow={hero.eyebrow}
+    titelVorn={hero.titelVorn}
+    titelAkzent={hero.titelAkzent}
+    titelHinten={hero.titelHinten}
+    lead={hero.lead}
+    bild={heroBild}
+    bildAlt="Zwei Handwerker bei der Arbeit auf einer Baustelle an der Bergstraße"
+    ctaZiel="#anfrage"
+    vertrauenText={hero.vertrauen}
+    titelBreite="max-w-760"
+  />
 
   <main>
-    <LogoMarquee variante="hell" />
-
-    <CheckInhalt />
-
-    <WarumKoerbchen />
-
-    <Leistungen />
-
     <Ansprechpartner
       titelVorn={ansprechpartner.titelVorn}
       titelMarker={ansprechpartner.titelMarker}
       text={ansprechpartner.text}
       rolle={ansprechpartner.rolle}
     />
+
+    <CheckInhalt />
+
+    <WarumKoerbchen />
+
+    <Leistungen />
 
     <Abschluss
       titelVorn={abschluss.titelVorn}
@@ -86,7 +101,7 @@ const anfrageFelder: Feld[] = [
       titelHinten={abschluss.titelHinten}
       lead={abschluss.lead}
       felder={anfrageFelder}
-      betreff="Anfrage über /korbaktion"
+      betreff="Sichtbarkeits-Check über /korbaktion"
       ortZeile="Bergstraße und Odenwald"
     />
   </main>
