@@ -79,6 +79,7 @@
   --color-forest-card: #143026; /* Karten auf dunkel */
   --color-forest-card-alt: #0f281e; /* Browser-Chrome, Karten-Alternative */
   --color-forest-well: #0b1712; /* Bildfläche hinter Screenshots */
+  --color-forest-black: #060f0a; /* freistehende Karte auf forest, deutlich dunkler */
   --color-forest-review: #123122; /* Bewertungskarten */
   --color-forest-tint: #17392a; /* Foto-Platzhalter Bewertungen */
   --color-forest-tint-alt: #143224; /* Foto-Platzhalter Bewertungen, 2. Streifen */
@@ -311,6 +312,9 @@
   --radius-18: 18px;
   --radius-20: 20px;
   --radius-24: 24px;
+  /* Sehr weiche Kante für breite, freistehende Bänder — skaliert mit, damit
+     der Radius auf dem Handy nicht die halbe Karte auffrisst. */
+  --radius-band: clamp(28px, 6vw, 72px);
   --radius-full: 999px;
 
   /* =========================================================================
@@ -323,6 +327,7 @@
   --shadow-card: 0 1px 2px rgb(13 33 24 / 0.08);
   --shadow-card-light: 0 10px 28px rgb(20 26 21 / 0.05);
   --shadow-badge: 0 2px 12px rgb(0 0 0 / 0.35);
+  --shadow-ring-lime: 0 0 0 1px rgb(228 245 63 / 0.28), 0 0 40px rgb(228 245 63 / 0.18);
 
   /* =========================================================================
      BREAKPOINTS
