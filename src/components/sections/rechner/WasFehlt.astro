@@ -1,0 +1,45 @@
+---
+/* „Was der Rechner nicht zeigt".
+
+   Die Grenzen der eigenen Zahl zu benennen kostet nichts und wirkt
+   glaubwürdiger als ein Ergebnis, das alles zu wissen behauptet. Die drei
+   Punkte sind zugleich die Posten, die im Erstgespräch den Ausschlag
+   geben — sie stehen hier, damit sie im Kopf sind, wenn der Chef anruft. */
+import Eyebrow from '../../Eyebrow.astro';
+import Signet from '../../Signet.astro';
+import { luecken } from '../../../data/vakanzkostenrechner';
+---
+
+<section class="relative overflow-hidden bg-forest px-page-x py-section-y-lg">
+  <Signet
+    class="pointer-events-none absolute -right-80 -bottom-56 w-[min(520px,80vw)] text-paper opacity-[0.05]"
+  />
+
+  <div class="relative mx-auto flex max-w-content flex-col gap-40">
+    <div class="flex max-w-760 flex-col items-start gap-18">
+      <Eyebrow variante="lime">Die Lücken</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
+        Was in dieser Zahl <span
+          class="font-display font-semibold tracking-none italic">nicht drinsteht</span
+        >
+      </h2>
+      <p class="m-0 max-w-660 text-18 leading-quote text-mint">
+        Drei Posten lassen sich nicht seriös beziffern. Sie fallen trotzdem an — und sind in
+        den meisten Betrieben größer als alles, was oben steht.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-16 btn:grid-cols-3">
+      {
+        luecken.map((luecke) => (
+          <div class="flex flex-col gap-12 rounded-20 border border-edge bg-forest-card px-28 py-26">
+            <span class="text-21 leading-card font-bold tracking-heading text-paper">
+              {luecke.titel}
+            </span>
+            <p class="m-0 text-17 leading-body text-mint">{luecke.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
