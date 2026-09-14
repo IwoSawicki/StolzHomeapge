@@ -1267,3 +1267,25 @@ drei Leistungen" statt „Eine Webseite, die drei Geschäfte sauber trennt" —
 der Titel nennt damit das Besondere statt der Absicht. Die Zahlen decken
 sich mit dem Text darunter. „Leistungen" statt „Gewerke", weil Sanierung,
 Renovierung und Wasserschaden Leistungen desselben Betriebs sind.
+
+## Startseite: Copy-Korrekturen nach externem Review (14.09.2026)
+
+Ein Review der Startseite hat sechs Stellen benannt, an denen der Text
+der Vorlage gegen sich selbst arbeitet. Iwo hat die Umsetzung freigegeben.
+Damit weicht die Startseite an diesen Stellen bewusst von
+`design/STARTSEITE.dc.html` ab:
+
+| Sektion | Vorlage | Jetzt | Grund |
+|---|---|---|---|
+| Projekte, Fußnote | „Konkrete Kampagnenzahlen teilen wir aus Datenschutzgründen nicht auf der Homepage" | „Zahlen unserer Kunden zeigen wir nur mit deren Freigabe" | Stand direkt unter Karten, die Zahlen nennen. „Datenschutz" ist zudem sachlich falsch — Kampagnenzahlen sind keine personenbezogenen Daten. |
+| Zusammenarbeit, Schritt 2 | „Jede Woche halten wir uns ein begrenztes Kontigent an Terminen frei. Wählen Sie sich jetzt Ihren Termin!" | „Wir melden uns und finden einen Zeitpunkt, der Ihnen passt — auch abends nach der Baustelle." | Drei Fehler auf einmal: Tippfehler („Kontigent"), künstliche Verknappung als einziger Funnel-Move der Seite, und ein Kalender, den es nicht gibt — der Knopf führt auf das Formular unter `/kontakt`. |
+| Leistungen, Intro | „… So stellen wir Ihren Betrieb zukunftssicher auf." | Satz gestrichen | Inhaltsleer. |
+| Leistungen, beide Karten | — | Zeile mit den Bausteinen über dem Knopf | Die Systemnamen sind gut merkbar, sagen aber nicht, was drinsteckt. Wortlaut aus den Schritten der jeweiligen Leistungsseite, nichts neu erfunden. |
+| Unser System, Intro | „Wir haben das Rad nicht neu erfunden, aber wir haben es für das Handwerk perfektioniert. Unser System gibt Ihnen die Kontrolle zurück:" | „Drei Dinge entscheiden, ob Marketing im Handwerk etwas bringt:" | Floskel, und „Kontrolle worüber?" blieb offen. Der neue Satz führt die drei Karten darunter tatsächlich ein. |
+
+Nicht übernommen wurden aus demselben Review: die Entfernung von zwei
+Kundenstimmen (echte Google-Bewertungen, ohne Ersatz wäre die Sektion
+schwächer), das Streichen von „Freelancer" bei den Teamrollen
+(dokumentierte Entscheidung Iwo, siehe `src/data/startseite.ts`) und die
+Footer-Einträge ohne Ziel (keine toten Links, sondern bewusst
+ausgegraute Platzhalter mit `nochNicht: true`).
