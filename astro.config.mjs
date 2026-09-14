@@ -20,8 +20,19 @@ export default defineConfig({
     // dem QR-Code auf dem Flyer: ein Kampagnenziel, kein organischer
     // Einstieg, und trägt deshalb ebenfalls noindex.
     sitemap({
+      /* Seiten mit noindex gehören nicht in die Sitemap — sonst steht in
+         der Search Console beides gegeneinander.
+
+         /alle-projekte und /korbaktion bleiben dauerhaft draußen.
+         /vakanzkostenrechner und /ueber-uns sind nur vorläufig draußen:
+         sobald WERTE_BESTAETIGT in src/data/vakanzkostenrechner.ts auf
+         true steht bzw. Iwo den Über-uns-Text freigegeben hat, müssen
+         das noindex auf der Seite UND die Zeile hier zusammen raus. */
       filter: (seite) =>
-        !seite.includes('/alle-projekte') && !seite.includes('/korbaktion'),
+        !seite.includes('/alle-projekte') &&
+        !seite.includes('/korbaktion') &&
+        !seite.includes('/vakanzkostenrechner') &&
+        !seite.includes('/ueber-uns'),
     }),
   ],
   vite: {

@@ -1,0 +1,70 @@
+---
+/* Das Team auf /ueber-uns: Iwo und die drei Freelancer.
+
+   Dasselbe Raster wie in der Über-uns-Sektion der Startseite, nur mit
+   eigener Überschrift und mit Iwo als erster Kachel. Die Daten kommen aus
+   derselben Quelle wie dort — es gibt keine zweite Teamliste.
+
+   Dass die drei keine Angestellten sind, steht auch hier dran (Entscheidung
+   Iwo, siehe src/data/startseite.ts). */
+import { Image } from 'astro:assets';
+import Eyebrow from '../../Eyebrow.astro';
+import { team } from '../../../data/startseite';
+import { teamKopf } from '../../../data/ueber-uns';
+
+const portraits = import.meta.glob<{ default: ImageMetadata }>(
+  '../../../assets/portraits/*.jpg',
+  { eager: true },
+);
+
+/* Iwo steht vorn und trägt keine „Art", weil er der Betrieb ist. */
+const alle = [
+  { name: 'Iwo Sawicki', rolle: 'Inhaber', portrait: 'iwo-sawicki.jpg', position: '50% 18%' },
+  ...team,
+];
+---
+
+<section class="bg-paper px-page-x py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-40">
+    <div class="flex max-w-760 flex-col items-start gap-18">
+      <Eyebrow variante="hell">{teamKopf.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        {teamKopf.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{teamKopf.titelAkzent}</span
+        >{teamKopf.titelHinten}
+      </h2>
+      <p class="m-0 max-w-660 text-18 leading-quote text-ink-muted">{teamKopf.lead}</p>
+    </div>
+
+    <div
+      class="grid grid-cols-[repeat(auto-fit,minmax(min(240px,calc(50%-10px)),1fr))] gap-20"
+    >
+      {
+        alle.map((person) => (
+          <div class="flex flex-col gap-0">
+            <div class="relative aspect-[4/5] overflow-hidden rounded-16 bg-photo-bg">
+              <Image
+                src={portraits[`../../../assets/portraits/${person.portrait}`]!.default}
+                alt={`${person.name}, ${person.rolle} bei Stolz Marketing`}
+                widths={[280, 480, 700]}
+                sizes="(min-width: 1160px) 275px, 45vw"
+                loading="lazy"
+                decoding="async"
+                class="block h-full w-full object-cover"
+                style={`object-position: ${person.position}`}
+              />
+            </div>
+            <div class="mt-18 flex flex-col gap-4 border-t border-rule pt-18">
+              <span class="text-19 font-bold tracking-name text-ink">{person.name}</span>
+              <span class="text-15 text-ink-muted">
+                {'art' in person && person.art
+                  ? `${person.art} · ${person.rolle}`
+                  : person.rolle}
+              </span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

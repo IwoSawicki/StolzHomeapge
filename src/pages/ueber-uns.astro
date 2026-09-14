@@ -1,0 +1,99 @@
+---
+/* /ueber-uns — erster Entwurf.
+
+   Aufbau:
+     1. Hero        dunkles Band mit Porträt, wie auf den Leistungsseiten
+     2. Zeitstrahl  fünf Stationen von 2018 bis heute
+     3. Handwerke   Webseite und Kamera aus einer Hand (dunkel)
+     4. Haltung     warum Handwerk, und warum aus der Region (hell)
+     5. Team        Iwo und die drei Freelancer
+     6. Abschluss   Formular, ein Band mit dem Footer
+
+   ┌──────────────────────────────────────────────────────────────────┐
+   │  Die Seite trägt noindex, bis Iwo den Text freigegeben hat. Die  │
+   │  offenen Punkte stehen am Ende von src/data/ueber-uns.ts. Nach   │
+   │  der Freigabe: noindex raus und den Footer-Eintrag in            │
+   │  src/data/navigation.ts entgrauen.                               │
+   └──────────────────────────────────────────────────────────────────┘ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import HeroLeistung from '../components/sections/HeroLeistung.astro';
+import Zeitstrahl from '../components/sections/ueber-uns/Zeitstrahl.astro';
+import DreiBloecke from '../components/sections/ueber-uns/DreiBloecke.astro';
+import Team from '../components/sections/ueber-uns/Team.astro';
+import Abschluss from '../components/sections/leistung/Abschluss.astro';
+import type { Feld } from '../components/Web3Formular.astro';
+import portraitIwo from '../assets/portraits/iwo-sawicki.jpg';
+import { hero, handwerke, haltung, abschluss } from '../data/ueber-uns';
+
+const anfrageFelder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  {
+    name: 'telefon',
+    label: 'Telefonnummer',
+    type: 'tel',
+    pflicht: true,
+    breit: true,
+    autocomplete: 'tel',
+  },
+  { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
+  { name: 'nachricht', label: 'Worum es geht', mehrzeilig: true },
+];
+---
+
+<BaseLayout
+  title="Über uns | Stolz Marketing"
+  description="Stolz Marketing ist der Betrieb von Iwo Sawicki an der Bergstraße. Webseiten seit 2018, Kamera seit 2019, seit Januar 2022 hauptberuflich — über 50 abgeschlossene Projekte."
+  noindex={true}
+>
+  <HeroLeistung
+    eyebrow={hero.eyebrow}
+    titelVorn={hero.titelVorn}
+    titelAkzent={hero.titelAkzent}
+    titelHinten={hero.titelHinten}
+    lead={hero.lead}
+    bild={portraitIwo}
+    bildAlt={hero.bildAlt}
+    bildPosition="50% 18%"
+    titelBreite="max-w-760"
+  />
+
+  <main>
+    <Zeitstrahl />
+
+    <DreiBloecke
+      variante="dunkel"
+      eyebrow={handwerke.eyebrow}
+      titelVorn={handwerke.titelVorn}
+      titelAkzent={handwerke.titelAkzent}
+      titelHinten={handwerke.titelHinten}
+      lead={handwerke.lead}
+      bloecke={handwerke.bloecke}
+    />
+
+    <DreiBloecke
+      variante="hell"
+      eyebrow={haltung.eyebrow}
+      titelVorn={haltung.titelVorn}
+      titelAkzent={haltung.titelAkzent}
+      titelHinten={haltung.titelHinten}
+      bloecke={haltung.bloecke}
+    />
+
+    <Team />
+
+    <Abschluss
+      titelVorn={abschluss.titelVorn}
+      titelMarker={abschluss.titelMarker}
+      titelMitte={abschluss.titelMitte}
+      titelKursiv={abschluss.titelKursiv}
+      titelHinten={abschluss.titelHinten}
+      lead={abschluss.lead}
+      felder={anfrageFelder}
+      betreff="Anfrage über die Über-uns-Seite"
+      ortZeile="Bergstraße und Odenwald"
+    />
+  </main>
+
+  <Footer />
+</BaseLayout>

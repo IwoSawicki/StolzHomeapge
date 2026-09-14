@@ -1,0 +1,100 @@
+---
+/* Drei Textblöcke unter einer Überschrift — einmal auf dunklem Grund
+   („Webseite und Kamera"), einmal auf hellem („Warum Handwerk").
+
+   Bewusst dieselbe Komponente für beide Sektionen: die Inhalte sind gleich
+   gebaut, und zwei fast identische Dateien wären nur eine Stelle mehr, an
+   der etwas auseinanderläuft. Die Variante steuert ausschließlich Farben. */
+import Eyebrow from '../../Eyebrow.astro';
+
+interface Block {
+  titel: string;
+  text: string;
+}
+
+interface Props {
+  variante: 'hell' | 'dunkel';
+  eyebrow: string;
+  titelVorn: string;
+  titelAkzent: string;
+  titelHinten?: string;
+  lead?: string;
+  bloecke: Block[];
+}
+
+const {
+  variante,
+  eyebrow,
+  titelVorn,
+  titelAkzent,
+  titelHinten = '',
+  lead,
+  bloecke,
+} = Astro.props;
+
+const dunkel = variante === 'dunkel';
+---
+
+<section
+  class:list={['px-page-x py-section-y-lg', dunkel ? 'bg-forest' : 'bg-paper-soft']}
+>
+  <div class="mx-auto flex max-w-content flex-col gap-40">
+    <div class="flex max-w-760 flex-col items-start gap-18">
+      <Eyebrow variante={dunkel ? 'lime' : 'hell'}>{eyebrow}</Eyebrow>
+      <h2
+        class:list={[
+          'm-0 text-h2-sub leading-tightest font-bold tracking-system',
+          dunkel ? 'text-paper' : 'text-ink',
+        ]}
+      >
+        {titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{titelAkzent}</span
+        >{titelHinten}
+      </h2>
+      {
+        lead && (
+          <p
+            class:list={[
+              'm-0 max-w-660 text-18 leading-quote',
+              dunkel ? 'text-mint' : 'text-ink-muted',
+            ]}
+          >
+            {lead}
+          </p>
+        )
+      }
+    </div>
+
+    {/* min(min(280px,100%)) statt fester 280px – sonst schiebt sich das
+        Raster auf 320px breiten Geräten über den Rand hinaus. */}
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-16">
+      {
+        bloecke.map((block) => (
+          <div
+            class:list={[
+              'flex flex-col gap-12 rounded-20 border px-28 py-26',
+              dunkel ? 'border-edge bg-forest-card' : 'border-line bg-paper',
+            ]}
+          >
+            <h3
+              class:list={[
+                'm-0 text-21 leading-card font-bold tracking-heading',
+                dunkel ? 'text-paper' : 'text-ink',
+              ]}
+            >
+              {block.titel}
+            </h3>
+            <p
+              class:list={[
+                'm-0 text-17 leading-body',
+                dunkel ? 'text-mint' : 'text-ink-quiet',
+              ]}
+            >
+              {block.text}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
