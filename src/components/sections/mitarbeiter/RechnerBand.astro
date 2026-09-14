@@ -7,10 +7,13 @@
    dem „müsste man mal" ein „das kostet mich gerade". Danach liest sich
    der Prozess anders.
 
-   Aufbau nach Vorgabe von Iwo: eine sehr weich gerundete, fast schwarze
-   Karte, links ein Zeichen in einem leuchtenden Ring, rechts Überschrift
-   und Text. Der Schein hinter dem Ring liegt außerhalb der Karte und wird
-   deshalb nicht abgeschnitten — die Karte trägt kein overflow-hidden.
+   Aufbau nach Vorgabe von Iwo: eine sehr weich gerundete grüne Karte auf
+   hellem Grund, links ein Zeichen in einem leuchtenden Ring, rechts
+   Überschrift und Text.
+
+   Der Schein liegt jetzt INNERHALB der Karte und wird an ihrer Kante
+   abgeschnitten. Auf dem vorherigen dunklen Grund durfte er hinausragen;
+   auf Weiß wäre daraus ein gelber Fleck neben der Karte geworden.
 
    Das Zeichen ist ein Kalenderblatt: die vergangenen Tage sind rot
    abgehakt, die kommenden noch offen. Es zählt nicht mit und ist nicht
@@ -29,37 +32,38 @@ const tage = Array.from({ length: TAGE }, (_, i) => ({
 }));
 ---
 
-<section class="bg-forest px-page-x py-section-y-lg">
+{/* Oben ohne eigenen Abstand: die Ausgangslage darüber steht auf demselben
+    weißen Grund und bringt ihren Fußabstand schon mit. Beides zusammen
+    ergab eine leere Fläche von rund 200px über der Karte. */}
+<section class="bg-paper px-page-x pt-0 pb-section-y-sm">
   <div class="relative mx-auto max-w-content">
-    {/* Schein hinter dem Ring. Liegt unter der Karte und ragt links über
-        sie hinaus, deshalb kein overflow-hidden an der Karte. */}
     <div
-      class="pointer-events-none absolute top-1/2 left-[max(-40px,-6%)] -z-10 hidden h-320 w-320 -translate-y-1/2 rounded-full opacity-45 blur-[70px] btn:block"
-      style="background: radial-gradient(circle, var(--color-lime) 0%, transparent 68%)"
-      aria-hidden="true"
+      class="relative flex flex-wrap items-center gap-x-48 gap-y-28 overflow-hidden rounded-band bg-forest px-innen-block py-32 btn:py-40"
     >
-    </div>
-
-    <div
-      class="relative flex flex-wrap items-center gap-x-64 gap-y-32 rounded-band bg-forest-black px-innen-block py-innen-block"
-    >
+      {/* Schein hinter dem Ring, an der Kartenkante abgeschnitten */}
+      <div
+        class="pointer-events-none absolute top-1/2 left-0 hidden h-260 w-260 -translate-x-1/3 -translate-y-1/2 rounded-full opacity-40 blur-[60px] btn:block"
+        style="background: radial-gradient(circle, var(--color-lime) 0%, transparent 68%)"
+        aria-hidden="true"
+      >
+      </div>
       {/* --- Zeichen im Ring --- */}
       {/* Der Kasten ist so groß wie der Ring, damit der Abstand zum Text vom
           Ring aus gemessen wird und nicht vom Zeichen darin. */}
       <div
-        class="relative flex h-[min(280px,72vw)] w-[min(280px,72vw)] flex-none items-center justify-center"
+        class="relative flex h-[min(196px,58vw)] w-[min(196px,58vw)] flex-none items-center justify-center"
         aria-hidden="true"
       >
         <span class="absolute inset-0 rounded-full border border-lime/25 shadow-ring-lime"></span>
 
-        <svg viewBox="0 0 160 160" fill="none" class="relative w-[min(180px,46vw)]">
+        <svg viewBox="0 0 160 160" fill="none" class="relative w-[min(150px,44vw)]">
           {/* Aufhängung */}
           <path class="stroke-edge-soft" stroke-width="3" stroke-linecap="round" d="M56 22 V36" />
           <path class="stroke-edge-soft" stroke-width="3" stroke-linecap="round" d="M104 22 V36" />
 
           {/* Blatt */}
           <rect
-            class="fill-forest stroke-edge"
+            class="fill-forest-deep stroke-edge"
             stroke-width="2"
             x="18"
             y="30"
@@ -83,7 +87,7 @@ const tage = Array.from({ length: TAGE }, (_, i) => ({
           }
 
           {/* Zeichen am unteren Rand: hier entsteht die Zahl */}
-          <circle class="fill-forest-black stroke-schaden" stroke-width="2" cx="122" cy="122" r="22" />
+          <circle class="fill-forest-deep stroke-schaden" stroke-width="2" cx="122" cy="122" r="22" />
           <text
             class="fill-schaden"
             x="122"
