@@ -1,0 +1,30 @@
+---
+/* Die Erklärung der Aktion.
+
+   Steht bewusst nach dem Formular und nicht davor: wer den Check will,
+   soll ihn anfordern können, ohne erst eine Geschichte zu lesen. Wer
+   dagegen wissen will, warum morgens jemand mit einem Brötchenkörbchen
+   vor der Tür stand, findet die Antwort hier — und die Antwort ist
+   zufällig genau die Leistung, die wir verkaufen. */
+import Eyebrow from '../../Eyebrow.astro';
+import { warum } from '../../../data/korbaktion';
+---
+
+<section class="bg-forest px-page-x py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-wrap items-start gap-x-64 gap-y-32">
+    <div class="flex flex-1 basis-[min(380px,100%)] flex-col items-start gap-18">
+      <Eyebrow variante="lime">Die Aktion</Eyebrow>
+      <h2
+        class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper"
+      >
+        {warum.titelVorn}<span
+          class="font-display font-semibold tracking-none italic">{warum.titelKursiv}</span
+        >{warum.titelHinten}
+      </h2>
+    </div>
+
+    <div class="flex flex-1 basis-[min(440px,100%)] flex-col gap-16">
+      {warum.absaetze.map((absatz) => <p class="m-0 text-19 leading-body text-mint">{absatz}</p>)}
+    </div>
+  </div>
+</section>

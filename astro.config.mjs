@@ -16,8 +16,9 @@ export default defineConfig({
   cacheDir: './node_modules/.cache/astro',
   integrations: [
     // Nicht in die Sitemap: /alle-projekte ist eine interne Referenzmappe
-    // (noindex, nirgends verlinkt), /korbaktion ist nur die Weiterleitung
-    // hinter dem QR-Code auf dem Flyer und trägt ebenfalls noindex.
+    // (noindex, nirgends verlinkt), /korbaktion ist die Landingpage hinter
+    // dem QR-Code auf dem Flyer: ein Kampagnenziel, kein organischer
+    // Einstieg, und trägt deshalb ebenfalls noindex.
     sitemap({
       filter: (seite) =>
         !seite.includes('/alle-projekte') && !seite.includes('/korbaktion'),

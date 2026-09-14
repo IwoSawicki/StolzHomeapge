@@ -1,0 +1,91 @@
+---
+/* Hero der Korbaktion-Seite: links der Anschluss an den Flyer, rechts
+   sofort das Formular.
+
+   Anders als auf den Leistungsseiten steht hier kein Bild. Wer gerade
+   einen QR-Code gescannt hat, ist mit einer Absicht hier — das Formular
+   gehört deshalb in den ersten Bildschirm und nicht ans Seitenende.
+
+   Kein <Header>: die Seite hat kein Menü. Wer vom Flyer kommt, soll eine
+   Sache tun können, nicht sieben. Das Logo oben links führt trotzdem auf
+   die Startseite, falls jemand doch stöbern will. */
+import Logo from '../../Logo.astro';
+import Eyebrow from '../../Eyebrow.astro';
+import Web3Formular from '../../Web3Formular.astro';
+import type { Feld } from '../../Web3Formular.astro';
+import { hero, formular } from '../../../data/korbaktion';
+
+const felder: Feld[] = [
+  {
+    name: 'webseite',
+    label: 'Ihre Webseite',
+    breit: true,
+    inputmode: 'url',
+    platzhalter: 'ihre-webseite.de',
+  },
+  { name: 'name', label: 'Name', pflicht: true, autocomplete: 'name' },
+  {
+    name: 'telefon',
+    label: 'Telefon',
+    type: 'tel',
+    pflicht: true,
+    autocomplete: 'tel',
+  },
+  { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
+];
+---
+
+<section class="bg-forest px-page-x pt-32 pb-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-48">
+    <a
+      href="/"
+      class="inline-flex w-fit items-center transition-opacity hover:opacity-80"
+      aria-label="Stolz Marketing – zur Startseite"
+    >
+      <Logo variante="hell" hoehe={26} />
+    </a>
+
+    <div class="flex flex-wrap items-start gap-x-64 gap-y-48">
+      {/* --- Anschluss an den Flyer --- */}
+      <div class="flex flex-1 basis-[min(460px,100%)] flex-col items-start gap-24">
+        <Eyebrow variante="lime">{hero.eyebrow}</Eyebrow>
+
+        <h1
+          class="m-0 max-w-560 text-h1-sub leading-tightest font-bold tracking-system text-paper"
+        >
+          {hero.titelVorn}<span
+            class="font-display font-semibold tracking-none italic">{hero.titelKursiv}</span
+          >{hero.titelHinten}
+        </h1>
+
+        <p class="m-0 max-w-520 text-19 leading-body text-mint">{hero.lead}</p>
+
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-mint-dim">
+          {hero.vertrauen}
+        </span>
+      </div>
+
+      {/* --- Formular als abgesetzte Karte --- */}
+      <div
+        id="check"
+        class="flex flex-1 basis-[min(440px,100%)] flex-col gap-20 rounded-20 border border-edge bg-forest-card p-panel"
+      >
+        <div class="flex flex-col gap-10">
+          <h2 class="m-0 text-22 leading-card font-bold tracking-heading text-paper">
+            {formular.titel}
+          </h2>
+          <p class="m-0 text-16 leading-body text-mint-dim">{formular.lead}</p>
+        </div>
+
+        <Web3Formular
+          felder={felder}
+          betreff="Sichtbarkeits-Check über /korbaktion"
+          knopfText={formular.knopf}
+          variante="dunkel"
+        />
+
+        <p class="m-0 text-13 leading-body text-mint-dim">{formular.nachsatz}</p>
+      </div>
+    </div>
+  </div>
+</section>

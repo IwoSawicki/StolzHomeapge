@@ -1,0 +1,40 @@
+---
+/* Was im kostenlosen Check steht — drei Punkte auf hellem Grund, direkt
+   unter dem Formular.
+
+   Der Abschnitt hat eine Aufgabe: die Angst nehmen, dass „kostenlos" hier
+   ein Verkaufsgespräch mit anderem Namen ist. Deshalb steht im dritten
+   Punkt ausdrücklich, dass der Schritt auch ohne uns gegangen werden kann,
+   und im Nachsatz, dass die Stunde auch dann etwas bringt, wenn man sich
+   gegen uns entscheidet. */
+import Eyebrow from '../../Eyebrow.astro';
+import { checkPunkte, checkNachsatz } from '../../../data/korbaktion';
+---
+
+<section class="bg-paper-soft px-page-x py-section-y-lg">
+  <div class="mx-auto flex max-w-content flex-col gap-40">
+    <div class="flex max-w-760 flex-col items-start gap-18">
+      <Eyebrow variante="hell">Der Check</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        Drei Antworten, die Sie <span
+          class="font-display font-semibold tracking-none italic">vorher nicht hatten</span
+        >
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-16 btn:grid-cols-3">
+      {
+        checkPunkte.map((punkt) => (
+          <div class="flex flex-col gap-12 rounded-20 border border-line bg-paper px-28 py-26">
+            <span class="text-21 leading-card font-bold tracking-heading text-ink">
+              {punkt.titel}
+            </span>
+            <p class="m-0 text-17 leading-body text-ink-quiet">{punkt.text}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="m-0 max-w-660 text-18 leading-quote text-ink-muted">{checkNachsatz}</p>
+  </div>
+</section>
