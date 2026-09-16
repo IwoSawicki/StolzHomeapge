@@ -1321,16 +1321,21 @@ Screenshot gebaut, den Iwo geliefert hat: madebyshape.co.uk/about.
 Die Bilder liegen auf einem Kreis, dessen Mittelpunkt weit unterhalb der
 Sektion sitzt. Jede Karte steht auf `rotate(θ) translateY(-r)` — erst um
 ihren Winkel gedreht, dann auf dem gedrehten Radius nach außen — und kippt
-dadurch mit dem Bogen. Das Rad dreht sich als Ganzes, 360° in 200s.
+dadurch mit dem Bogen.
+
+Der Radius ist größer als der Bildschirm breit ist (110vw, gedeckelt bei
+1700px): je größer der Kreis, desto flacher seine Kuppe. Das Rad dreht
+gegen den Uhrzeigersinn, die Karten wandern also nach links, 360° in 360s
+— gemessen rund 27px je Sekunde.
 
 Kein Karussell-Skript und keine Bibliothek, nur eine CSS-Animation.
 `prefers-reduced-motion` greift global und hält das Rad an; dann steht ein
 ruhender Fächer, der genauso funktioniert.
 
-16 Plätze, acht Bilder, jedes also zweimal auf dem Rad. Die beiden Kopien
-liegen sich mit 180° gegenüber und sind nie gleichzeitig zu sehen. Nur die
-erste Kopie trägt einen `alt`-Text, die zweite ist für Screenreader
-Dekoration.
+30 Plätze auf 360°, acht Bilder. Auf dem flachen Bogen sind nur rund fünf
+Karten gleichzeitig zu sehen; die nächste Wiederholung eines Bildes liegt
+96° weiter und damit weit außerhalb des Sichtbaren. Nur die erste Kopie
+trägt einen `alt`-Text, die weiteren sind für Screenreader Dekoration.
 
 `HeroLeistung` hat dafür die Eigenschaft `ohneHeader` bekommen: das
 Bilderrad trägt jetzt die Kopfzeile der Seite, und zwei Navigationen

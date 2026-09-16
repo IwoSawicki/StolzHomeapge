@@ -17,6 +17,10 @@
    Rest ab. Der Kreis ist um eine halbe Kartenhöhe nach unten gerückt, damit
    die oberste Karte nicht am oberen Rand abgeschnitten wird.
 
+   Der Radius ist bewusst größer als der Bildschirm breit ist (110vw): je
+   größer der Kreis, desto flacher seine Kuppe. Die Karten laufen nach
+   links, deshalb dreht das Rad gegen den Uhrzeigersinn.
+
    Kein Karussell-Skript und keine Bibliothek: eine CSS-Animation, sonst
    nichts. `prefers-reduced-motion` greift global (src/styles/global.css)
    und hält das Rad an — dann steht ein stehender Fächer, was ebenfalls
@@ -24,10 +28,11 @@
 
    Bilder
    ------
-   16 Plätze, acht Bilder, jedes also zweimal auf dem Rad. Die beiden
-   Kopien liegen sich mit 180° gegenüber und sind deshalb nie gleichzeitig
-   zu sehen. Wer Bilder ergänzt, trägt sie unten in `bilder` ein; die
-   Plätze verteilen sich von selbst. */
+   30 Plätze auf 360°, acht Bilder. Auf dem flachen Bogen sind nur rund
+   fünf Karten gleichzeitig zu sehen; die nächste Wiederholung eines Bildes
+   liegt 96° weiter und ist damit weit außerhalb des Sichtbaren. Wer Bilder
+   ergänzt, trägt sie unten in `bilder` ein; die Plätze verteilen sich von
+   selbst. */
 import { Image } from 'astro:assets';
 import Header from '../../Header.astro';
 import Eyebrow from '../../Eyebrow.astro';
@@ -55,7 +60,7 @@ const bilder = [
   { quelle: showreel, alt: 'Standbild aus dem Showreel' },
 ];
 
-const PLAETZE = 16;
+const PLAETZE = 30;
 const plaetze = Array.from({ length: PLAETZE }, (_, i) => ({
   bild: bilder[i % bilder.length],
   /* Startwinkel: um 0° herum verteilt, damit die Mitte besetzt ist */
@@ -110,10 +115,13 @@ const plaetze = Array.from({ length: PLAETZE }, (_, i) => ({
   .rad-hero {
     /* Radius des Kreises und Maße einer Karte. Alles andere rechnet sich
        daraus, damit es genau eine Stelle zum Schrauben gibt. */
-    --rad-radius: clamp(380px, 60vw, 880px);
+    --rad-radius: clamp(700px, 110vw, 1700px);
     --rad-breite: clamp(128px, 18vw, 264px);
     --rad-hoehe: calc(var(--rad-breite) * 1.08);
-    --rad-dauer: 200s;
+    /* Auf dem größeren Kreis legt dieselbe Winkelgeschwindigkeit eine
+       längere Strecke zurück. Die Dauer ist deshalb mitgewachsen, damit
+       die Karten weiterhin mit rund 27px je Sekunde wandern. */
+    --rad-dauer: 360s;
   }
 
   .rad-buehne {
@@ -121,7 +129,7 @@ const plaetze = Array.from({ length: PLAETZE }, (_, i) => ({
     /* Knapper als der Bogen tief ist: die äußeren Karten laufen seitlich
        aus dem Bild, bevor sie ihren tiefsten Punkt erreichen — sonst steht
        unten eine leere Fläche. */
-    height: clamp(230px, 40vw, 580px);
+    height: clamp(180px, 32vw, 470px);
     overflow: hidden;
     /* Etwas Luft zur Überschrift; die Karten sollen sie nicht überdecken. */
     margin-top: 28px;
@@ -150,12 +158,14 @@ const plaetze = Array.from({ length: PLAETZE }, (_, i) => ({
     transform: rotate(var(--winkel)) translateY(calc(var(--rad-radius) * -1));
   }
 
+  /* Gegen den Uhrzeigersinn: auf der Kuppe wandern die Karten dadurch
+     nach links. */
   @keyframes rad-drehen {
     from {
       transform: rotate(0deg);
     }
     to {
-      transform: rotate(360deg);
+      transform: rotate(-360deg);
     }
   }
 </style>
