@@ -1312,3 +1312,26 @@ Claude Cowork bzw. gegen den Handoff `BUILDmitarbeitergewinnen.md`.
 | `/mitarbeiter-gewinnen`, Sektion 3 | „Drei Schritte, immer in dieser Reihenfolge" | „Unser Prozess" | Entscheidung Iwo. Kursiv gesetzt ist „Prozess", damit die Überschrift die Typografie der übrigen Sektionen behält. |
 | `/mitarbeiter-gewinnen` | — | neues Band zum Vakanzkosten-Rechner zwischen Ausgangslage und Prozess: grüne Karte mit sehr weicher Kante auf weißem Grund, links ein Kalenderzeichen in einem leuchtenden Ring, rechts Text und CTA (Vorbild von Iwo geliefert) | Entscheidung Iwo. Steht vor dem Prozess, nicht dahinter: wer die Zahl kennt, liest die drei Schritte anders. Die 150 €/Tag in der Grafik sind der Standardfall des Rechners (SHK, eine Stelle, drei Monate), kein erfundener Wert. |
 | `/mitarbeiter-gewinnen`, Sektion 5 | unter 1040px drei Karten untereinander | Karten nebeneinander in einer Schiene mit Scroll-Snap, Punkte darunter | Rückmeldung Iwo: drei Karten mit je fünf Zeilen sind auf dem Handy unübersichtlich. Kein Karussell, das von selbst weiterspringt — reines CSS-Scrollen, mit Tastatur und Screenreader nutzbar. |
+
+## Über uns: Bilderrad im Hero (16.09.2026)
+
+Die Seite hat keine Vorlage in `design/`. Das Hero ist nach einem
+Screenshot gebaut, den Iwo geliefert hat: madebyshape.co.uk/about.
+
+Die Bilder liegen auf einem Kreis, dessen Mittelpunkt weit unterhalb der
+Sektion sitzt. Jede Karte steht auf `rotate(θ) translateY(-r)` — erst um
+ihren Winkel gedreht, dann auf dem gedrehten Radius nach außen — und kippt
+dadurch mit dem Bogen. Das Rad dreht sich als Ganzes, 360° in 200s.
+
+Kein Karussell-Skript und keine Bibliothek, nur eine CSS-Animation.
+`prefers-reduced-motion` greift global und hält das Rad an; dann steht ein
+ruhender Fächer, der genauso funktioniert.
+
+16 Plätze, acht Bilder, jedes also zweimal auf dem Rad. Die beiden Kopien
+liegen sich mit 180° gegenüber und sind nie gleichzeitig zu sehen. Nur die
+erste Kopie trägt einen `alt`-Text, die zweite ist für Screenreader
+Dekoration.
+
+`HeroLeistung` hat dafür die Eigenschaft `ohneHeader` bekommen: das
+Bilderrad trägt jetzt die Kopfzeile der Seite, und zwei Navigationen
+untereinander wären sonst die Folge.

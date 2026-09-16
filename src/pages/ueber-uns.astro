@@ -2,7 +2,12 @@
 /* /ueber-uns — erster Entwurf.
 
    Aufbau:
-     1. Hero        dunkles Band mit Porträt, wie auf den Leistungsseiten
+     0. Bilderrad   Überschrift auf Weiß, darunter die Bilder auf einem
+                   langsam drehenden Kreisbogen (Vorbild madebyshape.co.uk).
+                   Trägt die Kopfzeile der Seite.
+     1. Hero        dunkles Band mit Porträt, wie auf den Leistungsseiten.
+                   Steht nur noch da, weil der Umbau Sektion für Sektion
+                   kommt — deshalb ohne eigene Kopfzeile.
      2. Zeitstrahl  fünf Stationen von 2018 bis heute
      3. Handwerke   Webseite und Kamera aus einer Hand (dunkel)
      4. Haltung     warum Handwerk, und warum aus der Region (hell)
@@ -18,6 +23,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
 import HeroLeistung from '../components/sections/HeroLeistung.astro';
+import HeroRad from '../components/sections/ueber-uns/HeroRad.astro';
 import Zeitstrahl from '../components/sections/ueber-uns/Zeitstrahl.astro';
 import DreiBloecke from '../components/sections/ueber-uns/DreiBloecke.astro';
 import Team from '../components/sections/ueber-uns/Team.astro';
@@ -46,7 +52,10 @@ const anfrageFelder: Feld[] = [
   description="Stolz Marketing ist der Betrieb von Iwo Sawicki an der Bergstraße. Webseiten seit 2018, Kamera seit 2019, seit Januar 2022 hauptberuflich — über 50 abgeschlossene Projekte."
   noindex={true}
 >
+  <HeroRad />
+
   <HeroLeistung
+    ohneHeader
     eyebrow={hero.eyebrow}
     titelVorn={hero.titelVorn}
     titelAkzent={hero.titelAkzent}

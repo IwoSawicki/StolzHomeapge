@@ -39,7 +39,7 @@ export const footerMenue: NavLink[] = [
   { label: 'Kunden gewinnen', href: '/kunden-gewinnen' },
   { label: 'Mitarbeiter gewinnen', href: '/mitarbeiter-gewinnen' },
   { label: 'Projekte', href: '/projekte' },
-  { label: 'Über uns', href: '/ueber-uns', nochNicht: true },
+  { label: 'Über uns', href: '/ueber-uns' },
   { label: 'Kontakt', href: '/kontakt' },
 ];
 

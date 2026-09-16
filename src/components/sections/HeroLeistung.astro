@@ -41,6 +41,10 @@ interface Props {
   vertrauenText?: string;
   /** Breitenbegrenzung der Überschrift – steuert den Zeilenumbruch */
   titelBreite?: string;
+  /** Kopfzeile weglassen: für Seiten, die schon weiter oben eine haben
+      (z. B. /ueber-uns mit dem Bilderrad davor). Zwei Navigationen auf
+      einer Seite wären sonst die Folge. */
+  ohneHeader?: boolean;
 }
 
 const {
@@ -55,13 +59,14 @@ const {
   ctaZiel = erstgespraech.href,
   vertrauenText,
   titelBreite = 'max-w-720',
+  ohneHeader = false,
 } = Astro.props;
 ---
 
 <div class="flex min-h-svh flex-col bg-forest">
   {/* Kopfzeile und Hero teilen sich den Bezugsrahmen für das Bild */}
   <div class="relative flex flex-1 flex-col">
-    <Header />
+    {!ohneHeader && <Header />}
     <div class="relative z-2 border-b border-edge-soft"></div>
 
     <section

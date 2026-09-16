@@ -1,0 +1,161 @@
+---
+/* Hero der Über-uns-Seite: Überschrift auf Weiß, darunter die Bilder auf
+   einem sehr großen Kreisbogen, der sich langsam dreht.
+
+   Vorbild: madebyshape.co.uk/about (Screenshot von Iwo).
+
+   Wie es funktioniert
+   -------------------
+   Die Karten liegen auf einem Kreis, dessen Mittelpunkt weit unterhalb der
+   Sektion sitzt. Jede Karte steht auf `rotate(θ) translateY(-r)`: erst um
+   ihren Winkel gedreht, dann auf dem gedrehten Radius nach außen geschoben.
+   Dadurch kippt sie automatisch mit dem Bogen — genau das ist der Effekt in
+   der Vorlage. Das Rad dreht sich als Ganzes, die Karten wandern also über
+   den Bogen.
+
+   Sichtbar ist nur die Kuppe des Kreises; die Bühne darunter schneidet den
+   Rest ab. Der Kreis ist um eine halbe Kartenhöhe nach unten gerückt, damit
+   die oberste Karte nicht am oberen Rand abgeschnitten wird.
+
+   Kein Karussell-Skript und keine Bibliothek: eine CSS-Animation, sonst
+   nichts. `prefers-reduced-motion` greift global (src/styles/global.css)
+   und hält das Rad an — dann steht ein stehender Fächer, was ebenfalls
+   funktioniert.
+
+   Bilder
+   ------
+   16 Plätze, acht Bilder, jedes also zweimal auf dem Rad. Die beiden
+   Kopien liegen sich mit 180° gegenüber und sind deshalb nie gleichzeitig
+   zu sehen. Wer Bilder ergänzt, trägt sie unten in `bilder` ein; die
+   Plätze verteilen sich von selbst. */
+import { Image } from 'astro:assets';
+import Header from '../../Header.astro';
+import Eyebrow from '../../Eyebrow.astro';
+import Button from '../../Button.astro';
+
+import timon from '../../../assets/portraits/timon.jpg';
+import drehtag from '../../../assets/leistungen/mitarbeitergewinnung.jpg';
+import fotoshooting from '../../../assets/projekte/dmk-fotoshooting-platzhalter.jpg';
+import moritz from '../../../assets/portraits/moritz.jpg';
+import iwo from '../../../assets/portraits/iwo-sawicki.jpg';
+import kundengewinnung from '../../../assets/leistungen/kundengewinnung.JPG';
+import gintas from '../../../assets/portraits/gintas.jpg';
+import showreel from '../../../assets/startseite/hero-videopreview.png';
+
+/* Reihenfolge bestimmt, was nebeneinander liegt. Menschen und Situationen
+   wechseln sich ab, damit nicht zwei Porträts nebeneinander stehen. */
+const bilder = [
+  { quelle: timon, alt: 'Timon mit der Kamera bei einem Dreh' },
+  { quelle: drehtag, alt: 'Drehtag im Betrieb: Kamera, Licht und Firmenfahrzeug' },
+  { quelle: iwo, alt: 'Iwo Sawicki' },
+  { quelle: fotoshooting, alt: 'Fotoshooting auf der Baustelle' },
+  { quelle: moritz, alt: 'Moritz' },
+  { quelle: kundengewinnung, alt: 'Aufnahme aus einem Kundenprojekt' },
+  { quelle: gintas, alt: 'Gintas' },
+  { quelle: showreel, alt: 'Standbild aus dem Showreel' },
+];
+
+const PLAETZE = 16;
+const plaetze = Array.from({ length: PLAETZE }, (_, i) => ({
+  bild: bilder[i % bilder.length],
+  /* Startwinkel: um 0° herum verteilt, damit die Mitte besetzt ist */
+  winkel: (i - Math.floor(PLAETZE / 2)) * (360 / PLAETZE),
+  /* Nur das erste Bild trägt einen alt-Text; die Wiederholungen sind für
+     Screenreader Dekoration und bleiben stumm. */
+  stumm: i >= bilder.length,
+}));
+---
+
+<section class="rad-hero relative overflow-hidden bg-paper">
+  <Header variante="hell" />
+
+  <div class="relative z-2 flex flex-col items-center gap-20 px-page-x pt-32 text-center">
+    <Eyebrow variante="hell">Über uns</Eyebrow>
+
+    <h1 class="m-0 max-w-880 text-h1-sub leading-tightest font-bold tracking-system text-ink">
+      Mit <span class="font-display font-semibold tracking-none italic">Leidenschaft</span> zum
+      Marketing.
+    </h1>
+  </div>
+
+  {/* Bühne: schneidet den Kreis ab, der weit darüber hinausreicht */}
+  <div class="rad-buehne">
+    <div class="rad">
+      {
+        plaetze.map((platz) => (
+          <div class="rad-karte" style={`--winkel:${platz.winkel}deg`}>
+            <Image
+              src={platz.bild.quelle}
+              alt={platz.stumm ? '' : platz.bild.alt}
+              widths={[300, 560]}
+              sizes="(min-width: 1040px) 264px, 40vw"
+              loading="eager"
+              decoding="async"
+              class="block h-full w-full rounded-24 object-cover"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="relative z-2 flex justify-center px-page-x pb-section-y-sm">
+    <Button href="#weg" variante="tinte" sheen>
+      Mehr über mich<span class="text-18" aria-hidden="true">↓</span>
+    </Button>
+  </div>
+</section>
+
+<style>
+  .rad-hero {
+    /* Radius des Kreises und Maße einer Karte. Alles andere rechnet sich
+       daraus, damit es genau eine Stelle zum Schrauben gibt. */
+    --rad-radius: clamp(380px, 60vw, 880px);
+    --rad-breite: clamp(128px, 18vw, 264px);
+    --rad-hoehe: calc(var(--rad-breite) * 1.08);
+    --rad-dauer: 200s;
+  }
+
+  .rad-buehne {
+    position: relative;
+    /* Knapper als der Bogen tief ist: die äußeren Karten laufen seitlich
+       aus dem Bild, bevor sie ihren tiefsten Punkt erreichen — sonst steht
+       unten eine leere Fläche. */
+    height: clamp(230px, 40vw, 580px);
+    overflow: hidden;
+    /* Etwas Luft zur Überschrift; die Karten sollen sie nicht überdecken. */
+    margin-top: 28px;
+  }
+
+  .rad {
+    position: absolute;
+    top: calc(var(--rad-hoehe) / 2);
+    left: 50%;
+    width: calc(var(--rad-radius) * 2);
+    height: calc(var(--rad-radius) * 2);
+    margin-left: calc(var(--rad-radius) * -1);
+    animation: rad-drehen var(--rad-dauer) linear infinite;
+  }
+
+  .rad-karte {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--rad-breite);
+    height: var(--rad-hoehe);
+    margin-top: calc(var(--rad-hoehe) / -2);
+    margin-left: calc(var(--rad-breite) / -2);
+    /* Erst auf den Winkel drehen, dann auf dem gedrehten Radius nach außen:
+       so kippt die Karte mit dem Bogen. */
+    transform: rotate(var(--winkel)) translateY(calc(var(--rad-radius) * -1));
+  }
+
+  @keyframes rad-drehen {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
