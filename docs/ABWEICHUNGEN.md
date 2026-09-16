@@ -927,6 +927,11 @@ Gerendert wird `Freelancer · Foto- und Videoproduktion`. Iwo bleibt davon
 unberührt: er steht in einem eigenen Block darüber als „Inhaber · Stolz
 Marketing".
 
+**Nachtrag 16.09.2026: wieder zurückgenommen.** „Freelancer" steht auf
+Wunsch von Iwo unter keinem der drei Namen mehr — unter jedem steht jetzt
+nur noch die Rolle. Das Feld `art` bleibt im Typ, weil die Unterscheidung
+wiederkommen kann; belegt ist es zurzeit bei niemandem.
+
 **Offen:** Der Einleitungstext daneben sagt „Die Umsetzung macht unser
 Team". Das ist Text der Vorlage und bleibt unverändert — mit der neuen
 Kennzeichnung liest es sich weiterhin stimmig, weil direkt danach steht
