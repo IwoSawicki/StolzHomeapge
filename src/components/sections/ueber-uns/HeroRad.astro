@@ -21,6 +21,14 @@
    größer der Kreis, desto flacher seine Kuppe. Die Karten laufen nach
    links, deshalb dreht das Rad gegen den Uhrzeigersinn.
 
+   Die Höhe der Bühne ist nicht geschätzt, sondern aus der Geometrie
+   gerechnet: gesucht ist der größte Winkel, bei dem eine Karte den
+   Bildrand noch berührt, und wie tief ihr gedrehtes Rechteck an dieser
+   Stelle reicht. `calc(180px + 32vw)` deckt das von 320px bis über 2560px
+   ab. Deshalb hat der Radius auch keinen oberen Deckel mehr: sobald er
+   nicht mehr mit der Breite wächst, wird der sichtbare Bogen tiefer als
+   die Formel — und genau dann würden unten wieder Karten abgeschnitten.
+
    Die Kopfzeile steht bewusst AUSSERHALB der Sektion, und Überschrift und
    Knopf tragen kein z-index. Beides hatte das Menü zerlegt: die Kopfzeile
    stapelt ihr aufklappendes Menü innerhalb eines eigenen z-2-Kontexts, und
@@ -36,7 +44,7 @@
 
    Bilder
    ------
-   26 Plätze auf 360°, acht Bilder. Auf dem flachen Bogen sind nur rund
+   30 Plätze auf 360°, acht Bilder. Auf dem flachen Bogen sind nur rund
    fünf Karten gleichzeitig zu sehen; die nächste Wiederholung eines Bildes
    liegt 96° weiter und ist damit weit außerhalb des Sichtbaren. Wer Bilder
    ergänzt, trägt sie unten in `bilder` ein; die Plätze verteilen sich von
@@ -68,7 +76,7 @@ const bilder = [
   { quelle: showreel, alt: 'Standbild aus dem Showreel' },
 ];
 
-const PLAETZE = 26;
+const PLAETZE = 30;
 const plaetze = Array.from({ length: PLAETZE }, (_, i) => ({
   bild: bilder[i % bilder.length],
   /* Startwinkel: um 0° herum verteilt, damit die Mitte besetzt ist */
@@ -100,8 +108,8 @@ const plaetze = Array.from({ length: PLAETZE }, (_, i) => ({
             <Image
               src={platz.bild.quelle}
               alt={platz.stumm ? '' : platz.bild.alt}
-              widths={[400, 720]}
-              sizes="(min-width: 1040px) 340px, 50vw"
+              widths={[380, 560]}
+              sizes="(min-width: 1040px) 264px, 50vw"
               loading="eager"
               decoding="async"
               class="block h-full w-full rounded-24 object-cover"
@@ -123,8 +131,8 @@ const plaetze = Array.from({ length: PLAETZE }, (_, i) => ({
   .rad-hero {
     /* Radius des Kreises und Maße einer Karte. Alles andere rechnet sich
        daraus, damit es genau eine Stelle zum Schrauben gibt. */
-    --rad-radius: clamp(820px, 110vw, 1700px);
-    --rad-breite: clamp(180px, 24vw, 340px);
+    --rad-radius: max(1000px, 110vw);
+    --rad-breite: clamp(180px, 20vw, 264px);
     --rad-hoehe: calc(var(--rad-breite) * 1.08);
     /* Auf dem größeren Kreis legt dieselbe Winkelgeschwindigkeit eine
        längere Strecke zurück. Die Dauer ist deshalb mitgewachsen, damit
@@ -137,7 +145,7 @@ const plaetze = Array.from({ length: PLAETZE }, (_, i) => ({
     /* Knapper als der Bogen tief ist: die äußeren Karten laufen seitlich
        aus dem Bild, bevor sie ihren tiefsten Punkt erreichen — sonst steht
        unten eine leere Fläche. */
-    height: clamp(220px, 38vw, 545px);
+    height: calc(180px + 32vw);
     overflow: hidden;
     /* Etwas Luft zur Überschrift; die Karten sollen sie nicht überdecken. */
     margin-top: 28px;

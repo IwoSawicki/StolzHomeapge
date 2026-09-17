@@ -1323,8 +1323,14 @@ Sektion sitzt. Jede Karte steht auf `rotate(θ) translateY(-r)` — erst um
 ihren Winkel gedreht, dann auf dem gedrehten Radius nach außen — und kippt
 dadurch mit dem Bogen.
 
-Der Radius ist größer als der Bildschirm breit ist (110vw, gedeckelt bei
-1700px): je größer der Kreis, desto flacher seine Kuppe. Das Rad dreht
+Der Radius ist größer als der Bildschirm breit ist (110vw, mindestens
+1000px, ohne oberen Deckel): je größer der Kreis, desto flacher seine
+Kuppe. Die Höhe der Bühne ist aus der Geometrie gerechnet, nicht
+geschätzt — `calc(180px + 32vw)` hält von 320px bis über 2560px jede
+sichtbare Karte vollständig im Bild. Einen Deckel für den Radius darf es
+deshalb nicht geben: sobald er nicht mehr mit der Breite wächst, wird der
+sichtbare Bogen tiefer als die Formel und unten würden wieder Karten
+abgeschnitten. Das Rad dreht
 gegen den Uhrzeigersinn, die Karten wandern also nach links, 360° in 360s
 — gemessen rund 27px je Sekunde.
 
@@ -1332,7 +1338,7 @@ Kein Karussell-Skript und keine Bibliothek, nur eine CSS-Animation.
 `prefers-reduced-motion` greift global und hält das Rad an; dann steht ein
 ruhender Fächer, der genauso funktioniert.
 
-26 Plätze auf 360°, acht Bilder. Auf dem flachen Bogen sind nur rund fünf
+30 Plätze auf 360°, acht Bilder. Auf dem flachen Bogen sind nur rund fünf
 Karten gleichzeitig zu sehen; die nächste Wiederholung eines Bildes liegt
 96° weiter und damit weit außerhalb des Sichtbaren. Nur die erste Kopie
 trägt einen `alt`-Text, die weiteren sind für Screenreader Dekoration.
