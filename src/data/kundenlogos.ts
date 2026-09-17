@@ -11,11 +11,13 @@
    Wortmarke — die Wand wirkt also schon vollständig und wird Stück für
    Stück besser.
 
-   AUFNAHME-REGEL (aus main übernommen): Hier stehen nur eigene Kunden.
-   Aufträge, die über eine andere Agentur liefen (Dexsa Marketing,
-   100Marketing), sind bewusst NICHT dabei — dort gehört die
-   Kundenbeziehung nicht uns. Falls eine dieser Agenturen die Nennung
-   freigibt, kann der Kunde ergänzt werden. */
+   AUFNAHME-REGEL (Stand 17.09.2026): Eigene Kunden, dazu die Betriebe,
+   die als Freelancer für Dexsa Marketing betreut wurden — die Nennung
+   hat Iwo am 17.09.2026 freigegeben. Sie stehen unten als eigener Block.
+
+   NICHT dabei ist weiterhin, was über 100Marketing lief (Wundprofis):
+   dafür liegt keine Freigabe vor. Wer den Eintrag ergänzen will, holt
+   sie vorher ein. */
 
 export interface Kunde {
   name: string;
@@ -68,4 +70,17 @@ export const kunden: Kunde[] = [
   { name: 'CDU Mühltal' },
   { name: 'FDP Baden-Württemberg' },
   { name: 'TEDx Paradeplatz' },
+
+  /* Als Freelancer für Dexsa Marketing betreut. Hier stehen die Namen der
+     Betriebe, nicht die der Projekte: aus „ESN Messevideo" wird ESN, aus
+     „Die Grünen — Bundeskongress" werden Die Grünen. */
+  { name: 'Gauls Catering' },
+  { name: 'Lareh Küchen' },
+  { name: 'TeMo Service' },
+  { name: 'Bianconero' },
+  { name: 'Göhler Anlagentechnik' },
+  { name: 'Zeller Present' },
+  { name: 'Protektis' },
+  { name: 'ESN' },
+  { name: 'Die Grünen' },
 ];
