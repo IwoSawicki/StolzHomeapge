@@ -1332,7 +1332,7 @@ Kein Karussell-Skript und keine Bibliothek, nur eine CSS-Animation.
 `prefers-reduced-motion` greift global und hält das Rad an; dann steht ein
 ruhender Fächer, der genauso funktioniert.
 
-30 Plätze auf 360°, acht Bilder. Auf dem flachen Bogen sind nur rund fünf
+26 Plätze auf 360°, acht Bilder. Auf dem flachen Bogen sind nur rund fünf
 Karten gleichzeitig zu sehen; die nächste Wiederholung eines Bildes liegt
 96° weiter und damit weit außerhalb des Sichtbaren. Nur die erste Kopie
 trägt einen `alt`-Text, die weiteren sind für Screenreader Dekoration.
@@ -1340,3 +1340,10 @@ trägt einen `alt`-Text, die weiteren sind für Screenreader Dekoration.
 `HeroLeistung` hat dafür die Eigenschaft `ohneHeader` bekommen: das
 Bilderrad trägt jetzt die Kopfzeile der Seite, und zwei Navigationen
 untereinander wären sonst die Folge.
+
+Die Kopfzeile steht außerhalb der Sektion, und Überschrift und Knopf tragen
+kein `z-index`. Beides war nötig, weil das aufgeklappte Mobilmenü sonst
+überlagert wurde: die Kopfzeile stapelt ihr Menü innerhalb eines eigenen
+`z-2`-Kontexts, und ein späteres Geschwister mit demselben z-index legt sich
+darüber. Da sich Überschrift und Karten nicht überlappen, braucht dort auch
+nichts eine Stapelangabe.
