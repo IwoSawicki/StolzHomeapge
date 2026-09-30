@@ -1272,3 +1272,29 @@ drei Leistungen" statt „Eine Webseite, die drei Geschäfte sauber trennt" —
 der Titel nennt damit das Besondere statt der Absicht. Die Zahlen decken
 sich mit dem Text darunter. „Leistungen" statt „Gewerke", weil Sanierung,
 Renovierung und Wasserschaden Leistungen desselben Betriebs sind.
+
+---
+
+## Projekte: „Webseite ansehen" unter jeder Karte (30.09.2026)
+
+Die Vorlage kennt unter den Projektkarten keinen Link auf die Kundenseite.
+Auf `/projekte` steht er jetzt unter jeder der acht Karten und unter dem
+Beweisfall — neun Außenlinks, dazu weiterhin „Projekt ansehen" bei den
+beiden Projekten mit eigener Unterseite.
+
+Die Startseite bleibt unverändert. Das Band dort führt bewusst weiter auf
+die Referenzenseite und nicht aus der Seite heraus; deshalb schaltet die
+neue Eigenschaft `mitWebseitenLink` den Link nur auf `/projekte` ein.
+
+**Follow, kein `nofollow`.** Die Links sind echte redaktionelle Hinweise auf
+eigene Arbeiten. Googles Regel zu Linkspam verlangt `nofollow` oder
+`sponsored` nur für gekaufte oder getauschte Links — das trifft hier nicht
+zu. `rel="noopener"` steht nur wegen `target="_blank"` dabei und hat mit der
+Bewertung nichts zu tun.
+
+Der Ankertext ist absichtlich für alle Karten gleich und nennt keine
+Keywords. Die Marke steht direkt darüber in der Zeile über der Überschrift
+und in der Adressleiste des Browser-Rahmens.
+
+Mehrfach derselbe Linktext auf einer Seite ist für Screenreader unklar,
+deshalb trägt jeder Link ein `aria-label` mit seiner Domain.

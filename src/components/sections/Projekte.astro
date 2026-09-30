@@ -18,8 +18,23 @@ interface Props {
   /* Vier weitere Projekte stehen nur auf /projekte — die Startseite bleibt
      bei den vier der Vorlage. */
   alleProjekte?: boolean;
+  /* „Webseite ansehen" unter jeder Karte. Steht nur auf /projekte: die
+     Startseite folgt der Vorlage, und dort führt das Band bewusst weiter
+     auf die Referenzenseite statt aus der Seite heraus. */
+  mitWebseitenLink?: boolean;
 }
-const { grund = 'dunkel', mitHinweis = true, alleProjekte = false } = Astro.props;
+const {
+  grund = 'dunkel',
+  mitHinweis = true,
+  alleProjekte = false,
+  mitWebseitenLink = false,
+} = Astro.props;
+
+/* Außenlinks auf Kundenseiten sind echte redaktionelle Empfehlungen und
+   tragen deshalb kein nofollow. `rel="noopener"` ist reine Absicherung des
+   neuen Tabs und hat mit der Bewertung nichts zu tun. */
+const linkKlasse =
+  'text-17 font-medium text-cream underline decoration-1 underline-offset-4 transition-colors hover:text-lime';
 const istHell = grund === 'hell';
 
 const sichtbareProjekte = alleProjekte
@@ -78,7 +93,20 @@ const bild = (datei: string) => bilder[`../../assets/projekte/${datei}`]!.defaul
           Webseite, Google-Profil. Die ersten Anfragen kamen über bezahlte Werbung.
         </p>
         {/* „Zum Projekt" ist entfallen: Umzüge Bergstraße hat keine
-            Unterseite (Entscheidung Iwo). */}
+            Unterseite (Entscheidung Iwo). Der Webseiten-Link steht auch
+            hier, damit auf /projekte keine Karte ohne Beleg bleibt. */}
+        {mitWebseitenLink && (
+          <a
+            href="https://umzuege-bergstrasse.de"
+            target="_blank"
+            rel="noopener"
+            aria-label="Webseite ansehen: umzuege-bergstrasse.de"
+            class={linkKlasse}
+          >
+            Webseite ansehen
+            <span aria-hidden="true"> ↗</span>
+          </a>
+        )}
       </div>
 
       <div class="relative min-w-[min(280px,100%)] flex-1 basis-380">
@@ -161,15 +189,29 @@ const bild = (datei: string) => bilder[`../../assets/projekte/${datei}`]!.defaul
                 {projekt.titel}
               </h3>
               <p class="m-0 text-17 leading-body text-mint">{projekt.text}</p>
-              {/* Nur wo es eine Unterseite gibt — sonst zeigte der Link auf
-                  die Seite, auf der die Karte ohnehin steht. */}
-              {projekt.seite && (
-                <a
-                  href={projekt.seite}
-                  class="mt-auto pt-8 text-17 font-medium text-cream underline decoration-1 underline-offset-4 transition-colors hover:text-lime"
-                >
-                  Projekt ansehen →
-                </a>
+              {/* „Projekt ansehen" nur, wo es eine Unterseite gibt — sonst
+                  zeigte der Link auf die Seite, auf der die Karte ohnehin
+                  steht. „Webseite ansehen" führt auf die Seite des Kunden. */}
+              {(projekt.seite || mitWebseitenLink) && (
+                <div class="mt-auto flex w-full flex-wrap items-center gap-x-24 gap-y-8 pt-8">
+                  {projekt.seite && (
+                    <a href={projekt.seite} class={linkKlasse}>
+                      Projekt ansehen →
+                    </a>
+                  )}
+                  {mitWebseitenLink && (
+                    <a
+                      href={`https://${projekt.domain}`}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={`Webseite ansehen: ${projekt.domain}`}
+                      class={linkKlasse}
+                    >
+                      Webseite ansehen
+                      <span aria-hidden="true"> ↗</span>
+                    </a>
+                  )}
+                </div>
               )}
             </div>
           </article>
