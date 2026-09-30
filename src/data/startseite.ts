@@ -57,7 +57,7 @@ export const projekte: Projekt[] = [
        Wasserschaden Leistungen desselben Betriebs sind. */
     titel: 'Webseite mit über 150 Ortsseiten für drei Leistungen',
     text: 'Altbau- und Badsanierung, Renovierung, Wasserschaden — vorher liefen die drei ineinander. Jetzt: eine eigene Startseite je Leistung plus über 150 Städteseiten im 30-Kilometer-Umkreis, jede auf ihre Stadt ausgerichtet. Kontaktformular, Rückruf und Click-to-Call auf jeder Seite.',
-    domain: 'hepa-baut.de',
+    domain: 'hepabaut.de',
     screenshot: 'hepa-baut-startseite.png',
     screenshotAlt: 'Startseite von HePa Baut mit den drei getrennten Leistungsbereichen',
     href: '/projekte',
