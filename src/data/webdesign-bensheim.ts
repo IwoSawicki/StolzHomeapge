@@ -50,7 +50,7 @@ export const regionaleProjekte = [
     branche: 'Sanierung und Renovierung',
     kunde: 'HePa Baut',
     text: 'Eine eigene Startseite je Leistung, dazu über 150 Ortsseiten im Umkreis — jede auf ihre Stadt ausgerichtet.',
-    domain: 'hepa-baut.de',
+    domain: 'hepabaut.de',
     screenshot: 'hepa-baut-startseite.png',
     screenshotAlt: 'Startseite von HePa Baut mit den drei getrennten Leistungsbereichen',
     href: '/projekte/hepa-baut',
