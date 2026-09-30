@@ -1359,9 +1359,12 @@ nichts eine Stapelangabe.
 ## Projekte: „Webseite ansehen" unter jeder Karte (30.09.2026)
 
 Die Vorlage kennt unter den Projektkarten keinen Link auf die Kundenseite.
-Auf `/projekte` steht er jetzt unter jeder der acht Karten und unter dem
-Beweisfall — neun Außenlinks, dazu weiterhin „Projekt ansehen" bei den
-beiden Projekten mit eigener Unterseite.
+Auf `/projekte` trägt jetzt jede Karte genau einen Link. Gibt es eine
+eigene Unterseite (HePa Baut, DMK Bau), führt er weiterhin dorthin — der
+Link auf die Kundenseite steht dort ohnehin als Knopf, zweimal aus
+derselben Karte hinaus wäre eine Weggabelung ohne Gewinn. Alle übrigen
+sechs Karten und der Beweisfall führen direkt auf die Seite des Kunden,
+macht sieben Außenlinks.
 
 Die Startseite bleibt unverändert. Das Band dort führt bewusst weiter auf
 die Referenzenseite und nicht aus der Seite heraus; deshalb schaltet die
