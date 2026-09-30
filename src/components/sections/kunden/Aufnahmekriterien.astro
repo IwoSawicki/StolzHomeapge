@@ -1,11 +1,19 @@
 ---
 /* „Aufnahmekriterien": zwei Karten — passt / passt nicht.
    Vorlage: data-screen-label="6 Aufnahmekriterien" */
-import { passt, passtNicht } from '../../../data/kunden-gewinnen';
+import { passt, passtNicht, passtNichtHinweis } from '../../../data/kunden-gewinnen';
 
 const karten = [
   { titel: 'Passt', zeichen: '✓', punkte: passt, positiv: true },
-  { titel: 'Passt nicht', zeichen: '—', punkte: passtNicht, positiv: false },
+  {
+    titel: 'Passt nicht',
+    zeichen: '—',
+    punkte: passtNicht,
+    positiv: false,
+    /* Verweis auf den zweiten Weg, damit die Karte niemanden ganz
+       wegschickt, den wir über Social Media erreichen können. */
+    hinweis: passtNichtHinweis,
+  },
 ];
 ---
 
@@ -60,6 +68,11 @@ const karten = [
                 </li>
               ))}
             </ul>
+            {karte.hinweis && (
+              <p class="m-0 border-t border-line pt-16 text-15 leading-body text-ink-muted">
+                {karte.hinweis}
+              </p>
+            )}
           </div>
         ))
       }

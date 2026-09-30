@@ -94,11 +94,19 @@ export const passt = [
   'Sie können mehr Anfragen auch annehmen und zeitnah zurückrufen',
 ];
 
+/* Bewusst ohne Gewerke-Namen. Die Liste sagt, wann das Platzhirsch-System
+   nicht greift — nicht, mit wem wir nicht arbeiten. KFZ zum Beispiel fällt
+   hier heraus, weil die Portale die Suche unter sich aufteilen; über
+   Social-Media-Werbung ist derselbe Betrieb sehr wohl erreichbar. Genau
+   das sagt der Hinweis unter der Karte. */
 export const passtNicht = [
-  'Werkstätten und KFZ: Auftragswerte zu niedrig, Portale beherrschen die Suche',
-  'Industrie und Ausschreibungsgeschäft: Dort läuft der Einkauf nicht über die Suche',
+  'Branchen, in denen große Portale die Suche unter sich aufteilen',
+  'Einkauf über Ausschreibung oder ein Gremium statt über die Suche',
   'Betriebe, bei denen Anfragen heute schon drei Tage liegenbleiben',
 ];
+
+export const passtNichtHinweis =
+  'Das heißt nicht, dass wir nicht helfen können: Wo die Suche nicht trägt, läuft die Gewinnung über Social-Media-Werbung statt über Google.';
 
 export const ausbau = [
   {
