@@ -189,29 +189,26 @@ const bild = (datei: string) => bilder[`../../assets/projekte/${datei}`]!.defaul
                 {projekt.titel}
               </h3>
               <p class="m-0 text-17 leading-body text-mint">{projekt.text}</p>
-              {/* „Projekt ansehen" nur, wo es eine Unterseite gibt — sonst
-                  zeigte der Link auf die Seite, auf der die Karte ohnehin
-                  steht. „Webseite ansehen" führt auf die Seite des Kunden. */}
-              {(projekt.seite || mitWebseitenLink) && (
-                <div class="mt-auto flex w-full flex-wrap items-center gap-x-24 gap-y-8 pt-8">
-                  {projekt.seite && (
-                    <a href={projekt.seite} class={linkKlasse}>
-                      Projekt ansehen →
-                    </a>
-                  )}
-                  {mitWebseitenLink && (
-                    <a
-                      href={`https://${projekt.domain}`}
-                      target="_blank"
-                      rel="noopener"
-                      aria-label={`Webseite ansehen: ${projekt.domain}`}
-                      class={linkKlasse}
-                    >
-                      Webseite ansehen
-                      <span aria-hidden="true"> ↗</span>
-                    </a>
-                  )}
-                </div>
+              {/* Genau ein Link je Karte. Gibt es eine eigene Unterseite,
+                  führt er dorthin — der Link auf die Kundenseite steht dort
+                  ohnehin als Knopf. Sonst direkt auf die Seite des Kunden. */}
+              {projekt.seite ? (
+                <a href={projekt.seite} class:list={['mt-auto pt-8', linkKlasse]}>
+                  Projekt ansehen →
+                </a>
+              ) : (
+                mitWebseitenLink && (
+                  <a
+                    href={`https://${projekt.domain}`}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={`Webseite ansehen: ${projekt.domain}`}
+                    class:list={['mt-auto pt-8', linkKlasse]}
+                  >
+                    Webseite ansehen
+                    <span aria-hidden="true"> ↗</span>
+                  </a>
+                )
               )}
             </div>
           </article>
