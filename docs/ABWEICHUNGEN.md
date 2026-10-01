@@ -1382,3 +1382,33 @@ und in der Adressleiste des Browser-Rahmens.
 
 Mehrfach derselbe Linktext auf einer Seite ist für Screenreader unklar,
 deshalb trägt jeder Link ein `aria-label` mit seiner Domain.
+
+---
+
+## Meistermagnet: Sektion „Vorauswahl" (01.10.2026)
+
+Neu, nicht aus der Vorlage. Steht direkt nach „Unser Prozess" und
+vertieft dessen dritten Schritt („ein Bewerbungsformular, das unpassende
+Bewerbungen aussortiert"). Aufbau nach einem Beispiel, das Iwo geliefert
+hat: links der Ablauf als Bild, rechts Überschrift, Text, drei Punkte.
+
+Die Grafik zeigt eine Frage mit Ja und Nein. Bei Nein folgt die Absage,
+bei Ja die nächste Frage. Im Wechsel ist einer der beiden Wege aktiv. Ohne
+Bewegung stehen beide gleich hell da. Unter 720px kommt der Ja-Weg
+zuerst, und die Zweige heißen ausdrücklich „Führerschein: ja/nein", weil
+untereinander sonst „Ja" wie eine Antwort auf die Absage darüber wirkte.
+
+Die Aussagen stützen sich auf das, was die Seite schon sagt
+(Leistungsumfang, FAQ). Neu sind nur zwei: dass Bewerber ohne
+Muss-Kriterium „gleich eine freundliche Absage" bekommen und dass „wir
+die Fragen mit Ihnen festlegen". **[Rückfrage]** Beides bitte bestätigen.
+
+---
+
+## Website-Check unter /website-check (01.10.2026)
+
+Neue Seite, nicht aus der Vorlage. Vorher stand der Eintrag ausgegraut im
+Footer. Gemessen wird mit der PageSpeed-Insights-API von Google, direkt
+aus dem Browser. Der Schlüssel kommt als Build-Argument
+`PUBLIC_PAGESPEED_KEY` aus Dokploy. Datenschutzerklärung um einen eigenen
+Abschnitt ergänzt.

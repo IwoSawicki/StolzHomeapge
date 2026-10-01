@@ -69,6 +69,41 @@ export const systemSchritte = [
   },
 ];
 
+/* --- Sektion 3b · Vorauswahl -------------------------------------------
+   Vertieft Schritt 3 („ein Bewerbungsformular, das unpassende Bewerbungen
+   aussortiert"). Neu, nicht aus der Vorlage — Aufbau nach einem Beispiel,
+   das Iwo geliefert hat (Ablaufgrafik links, Text rechts). Die Aussagen
+   stützen sich auf das, was die Seite schon sagt: Leistungsumfang
+   („unter einer Minute, ohne Anschreiben, ohne Lebenslauf", „Vorauswahl
+   nach Erfahrung, Führerschein, Wohnort und Verfügbarkeit") und FAQ. */
+
+export const vorauswahl = {
+  eyebrow: 'Vorauswahl',
+  titelVorn: 'Aussortiert wird, ',
+  titelKursiv: 'bevor Sie zum Hörer greifen',
+  titelHinten: '.',
+  absaetze: [
+    'Ein voller Posteingang hilft Ihnen nicht, wenn die Hälfte nicht passt. Deshalb beantwortet jeder Bewerber zuerst ein paar kurze Fragen — auf dem Handy, ohne Anschreiben und ohne Lebenslauf.',
+    'Gefragt wird nach dem, was für Sie zählt: Erfahrung, Führerschein, Wohnort, Verfügbarkeit. Wer ein Muss-Kriterium nicht erfüllt, bekommt gleich eine freundliche Absage. Bei Ihnen landen nur die, mit denen sich ein Gespräch lohnt.',
+  ],
+  punkte: [
+    'In unter einer Minute auf dem Handy ausgefüllt',
+    'Ohne Anschreiben, ohne Lebenslauf',
+    'Die Fragen legen wir mit Ihnen fest',
+  ],
+  /* Beispielfragen in der Grafik. Du-Form, weil Bewerberformulare im
+     Handwerk so angesprochen werden — die Seite selbst siezt. */
+  frage1: 'Hast du einen Führerschein Klasse B?',
+  /* Zweig-Beschriftung auf dem Handy, wo die Wege untereinander stehen
+     und „Ja"/„Nein" allein nicht mehr zeigen, worauf sie antworten */
+  zweigJa: 'Führerschein: ja',
+  zweigNein: 'Führerschein: nein',
+  absageTitel: 'Schade!',
+  absageText: 'Für diese Stelle ist der Führerschein Pflicht. Danke trotzdem für dein Interesse.',
+  frage2: 'Wie viele Jahre Berufserfahrung hast du?',
+  antworten2: ['unter 3 Jahre', '3 bis 5 Jahre', '5 bis 10 Jahre', 'über 10 Jahre'],
+};
+
 export const systemNachsatz =
   'Die Reihenfolge ist kein Vorschlag. Einen Drehtag macht man einmal — wer ohne Schritt 1 filmt, bekommt schöne Bilder und kein Argument.';
 

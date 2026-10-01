@@ -1,0 +1,161 @@
+---
+/* „Vorauswahl": wie das Bewerbungsformular aussortiert.
+
+   Links der Ablauf als Bild: eine Frage mit Ja und Nein, bei Nein die
+   Absage, bei Ja die nächste Frage. Im Wechsel ist einer der beiden Wege
+   aktiv, der andere tritt zurück — so liest sich die Verzweigung, ohne
+   dass man etwas anklicken muss. Ohne Bewegung (prefers-reduced-motion)
+   stehen beide Wege gleich hell da.
+
+   Rechts Überschrift, Text und drei Punkte. Hell gesetzt, weil davor
+   „Unser Prozess" auf hellgrauem und danach der Leistungsumfang auf
+   dunkelgrünem Grund steht.
+
+   Unter 720px stehen die Teile untereinander. Dann kommt der Ja-Weg
+   zuerst, und beide Zweige sagen ausdrücklich, worauf sie antworten —
+   in DOM-Reihenfolge hätte „Ja" sonst wie eine Antwort auf die Absage
+   darüber gewirkt. Ab 720px stellt order-none die Rasterfolge wieder her.
+
+   Die Grafik ist ein Bild, kein Formular: nichts davon ist bedienbar,
+   deshalb aria-hidden. Was sie zeigt, steht auch im Text. */
+import Eyebrow from '../../Eyebrow.astro';
+import { vorauswahl as v } from '../../../data/mitarbeiter-gewinnen';
+
+const kartenKlasse = 'rounded-16 border border-line bg-paper shadow-card-light';
+const kachelKlasse = 'relative overflow-hidden rounded-12 border border-line bg-paper-soft';
+const knopfKlasse = 'bg-lime text-center font-bold text-forest-deep';
+---
+
+<section class="bg-paper px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-wrap items-center gap-x-64 gap-y-48">
+    {/* --- Ablauf --- */}
+    <div
+      class="flex-1 basis-[min(560px,100%)] rounded-band bg-paper-soft p-[clamp(20px,4vw,40px)]"
+      aria-hidden="true"
+    >
+      <div
+        class="grid grid-cols-1 items-center gap-16 btn:grid-cols-[minmax(0,1.15fr)_52px_minmax(0,1fr)] btn:gap-x-8 btn:gap-y-24"
+      >
+        {/* Frage 1: steht links über beide Zeilen */}
+        <div class:list={[kartenKlasse, 'order-1 flex flex-col gap-14 p-16 btn:order-none btn:row-span-2 btn:p-20']}>
+          <p class="m-0 text-center text-17 leading-card font-bold text-ink">{v.frage1}</p>
+          <div class="grid grid-cols-2 gap-10">
+            <div class={kachelKlasse}>
+              <div class="flex h-64 items-center justify-center">
+                <svg viewBox="0 0 24 24" fill="none" class="w-28 stroke-ink-faint" stroke-width="2.4">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class:list={[knopfKlasse, 'py-8 text-15']}>Ja</div>
+              {/* Auswahlrahmen, wenn der Ja-Weg aktiv ist */}
+              <span class="animate-pfad-ja pointer-events-none absolute inset-0 rounded-12 border-2 border-forest"></span>
+            </div>
+            <div class={kachelKlasse}>
+              <div class="flex h-64 items-center justify-center">
+                <svg viewBox="0 0 24 24" fill="none" class="w-28 stroke-ink-faint" stroke-width="2.4">
+                  <path d="M7 7l10 10M17 7L7 17" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class:list={[knopfKlasse, 'py-8 text-15']}>Nein</div>
+              <span class="animate-pfad-nein pointer-events-none absolute inset-0 rounded-12 border-2 border-forest"></span>
+            </div>
+          </div>
+        </div>
+
+        {/* Pfeil „Nein" */}
+        <div class="animate-pfad-nein order-4 flex items-center gap-8 btn:order-none btn:flex-col btn:gap-4">
+          <svg viewBox="0 0 48 16" fill="none" class="w-40 rotate-90 btn:rotate-0">
+            <path
+              class="animate-fluss stroke-ink-faint"
+              d="M2 8H40"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="4 8"
+            />
+            <path class="stroke-ink-faint" d="M36 3l6 5-6 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+            <span class="btn:hidden">{v.zweigNein}</span><span class="hidden btn:inline">Nein</span>
+          </span>
+        </div>
+
+        {/* Absage */}
+        <div class:list={[kartenKlasse, 'animate-pfad-nein order-5 flex flex-col gap-6 p-16 text-center btn:order-none']}>
+          <p class="m-0 text-15 font-bold text-ink">{v.absageTitel}</p>
+          <p class="m-0 text-14 leading-body text-ink-muted">{v.absageText}</p>
+        </div>
+
+        {/* Pfeil „Ja" */}
+        <div class="animate-pfad-ja order-2 flex items-center gap-8 btn:order-none btn:flex-col btn:gap-4">
+          <svg viewBox="0 0 48 16" fill="none" class="w-40 rotate-90 btn:rotate-0">
+            <path
+              class="animate-fluss stroke-ink-faint"
+              d="M2 8H40"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="4 8"
+            />
+            <path class="stroke-ink-faint" d="M36 3l6 5-6 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">
+            <span class="btn:hidden">{v.zweigJa}</span><span class="hidden btn:inline">Ja</span>
+          </span>
+        </div>
+
+        {/* Frage 2 */}
+        <div class:list={[kartenKlasse, 'animate-pfad-ja order-3 flex flex-col gap-12 p-16 btn:order-none']}>
+          <p class="m-0 text-center text-15 leading-card font-bold text-ink">{v.frage2}</p>
+          <div class="grid grid-cols-2 gap-8">
+            {
+              v.antworten2.map((antwort, i) => (
+                <div class={kachelKlasse}>
+                  {/* Treppe aus ein bis vier Stufen für die Jahre */}
+                  <div class="flex h-40 items-end justify-center gap-3 pb-8">
+                    {[0, 1, 2, 3].map((stufe) => (
+                      <span
+                        class:list={[
+                          'w-5 rounded-full',
+                          stufe <= i ? 'bg-ink-faint' : 'bg-line',
+                        ]}
+                        style={`height:${8 + stufe * 5}px`}
+                      />
+                    ))}
+                  </div>
+                  <div class:list={[knopfKlasse, 'px-4 py-6 text-12']}>{antwort}</div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* --- Text --- */}
+    <div class="flex flex-1 basis-[min(420px,100%)] flex-col items-start gap-20">
+      <Eyebrow variante="hell">{v.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        {v.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{v.titelKursiv}</span
+        >{v.titelHinten}
+      </h2>
+      {v.absaetze.map((absatz) => <p class="m-0 text-18 leading-prose text-ink-quiet">{absatz}</p>)}
+      <ul class="m-0 mt-4 flex list-none flex-col gap-12 p-0">
+        {
+          v.punkte.map((punkt) => (
+            <li class="flex items-start gap-12 text-17 leading-body text-ink">
+              <span
+                class="mt-2 flex h-22 w-22 flex-none items-center justify-center rounded-full bg-lime"
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 24 24" fill="none" class="w-14 stroke-forest-deep" stroke-width="3">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              {punkt}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

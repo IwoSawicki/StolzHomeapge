@@ -377,6 +377,13 @@
   --animate-luecke: luecke 2.4s ease-in-out infinite;
   --animate-mehrarbeit: mehrarbeit 6s ease-in-out infinite;
 
+  /* Vorauswahl-Grafik: abwechselnd ist der Ja- und der Nein-Weg aktiv,
+     der andere tritt zurück. Beide teilen sich einen Takt. Die Pfeile
+     laufen als gestrichelte Linie. */
+  --animate-pfad-ja: pfad-ja 8s ease-in-out infinite;
+  --animate-pfad-nein: pfad-nein 8s ease-in-out infinite;
+  --animate-fluss: fluss 0.9s linear infinite;
+
   @keyframes marquee {
     from {
       transform: translateX(0);
@@ -500,6 +507,37 @@
     }
     100% {
       transform: scaleX(0);
+    }
+  }
+  @keyframes pfad-ja {
+    0%,
+    44% {
+      opacity: 1;
+    }
+    50%,
+    94% {
+      opacity: 0.3;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes pfad-nein {
+    0%,
+    44% {
+      opacity: 0.3;
+    }
+    50%,
+    94% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }
+  @keyframes fluss {
+    to {
+      stroke-dashoffset: -12;
     }
   }
   @keyframes floaty {

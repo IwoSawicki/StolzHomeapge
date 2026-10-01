@@ -24,6 +24,7 @@ import RechnerBandUhr from '../components/sections/mitarbeiter/RechnerBandUhr.as
 import RechnerBandTeam from '../components/sections/mitarbeiter/RechnerBandTeam.astro';
 import SystemSchritte from '../components/sections/leistung/SystemSchritte.astro';
 import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
+import Vorauswahl from '../components/sections/mitarbeiter/Vorauswahl.astro';
 import Vergleich from '../components/sections/mitarbeiter/Vergleich.astro';
 import Stellen from '../components/sections/mitarbeiter/Stellen.astro';
 import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
@@ -88,6 +89,8 @@ const anfrageFelder: Feld[] = [
       schritte={systemSchritte}
       nachsatz={systemNachsatz}
     />
+    {/* Vertieft Schritt 3 des Prozesses: wie das Formular aussortiert */}
+    <Vorauswahl />
     <Leistungsumfang
       eyebrow="Leistungsumfang"
       titelVorn="Was am Ende "
