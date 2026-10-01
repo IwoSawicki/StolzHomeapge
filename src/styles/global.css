@@ -347,7 +347,10 @@
   --animate-marquee: marquee 38s linear infinite;
   --animate-spin-orbit: spin-orbit 48s linear infinite;
   --animate-spin-orbit-rev: spin-orbit-rev 48s linear infinite;
-  --animate-sheen: sheen 7.8s ease-in-out 0.6s infinite;
+  /* Takt des Lichtschimmers: 6,5s je Durchlauf, davon 24,8 % der Lauf
+     selbst (1,61s), der Rest Pause (4,89s). Vorher 7,8s mit 1,79s Lauf
+     — auf Wunsch Iwo 20 % häufiger und der Lauf 10 % schneller. */
+  --animate-sheen: sheen 6.5s ease-in-out 0.6s infinite;
   --animate-floaty: floaty 4s ease-in-out infinite;
   --animate-pulse-line: pulse-line 1.8s ease-in-out infinite;
 
@@ -373,7 +376,7 @@
     0% {
       transform: translateX(-130%) skewX(-12deg);
     }
-    23%,
+    24.8%,
     100% {
       transform: translateX(260%) skewX(-12deg);
     }
