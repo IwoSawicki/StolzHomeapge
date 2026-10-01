@@ -1,8 +1,7 @@
 /* SEO & KI-Sichtbarkeit — Texte und Daten.
 
-   ENTWURF (01.10.2026). Iwo will SEO und die Sichtbarkeit in KI-Antworten
-   als eigene Leistung ausbauen und dafür seine Keyword-Analysen zeigen.
-   Bis zur Freigabe noindex, nicht in der Sitemap, im Footer ausgegraut.
+   Iwo will SEO und die Sichtbarkeit in KI-Antworten als eigene Leistung
+   ausbauen und dafür seine Keyword-Analysen zeigen. Live seit 01.10.2026.
 
    Alle Zahlen im Report-Auszug stammen aus Iwos Keyword-Analyse für einen
    Malerbetrieb an der Bergstraße (Stand 1. Oktober 2026, Datenbasis

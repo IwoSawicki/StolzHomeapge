@@ -1,18 +1,16 @@
 ---
 /* SEO & KI-Sichtbarkeit — /seo-ki-sichtbarkeit
 
-   ENTWURF (01.10.2026), Texte zur Abstimmung mit Iwo.
+   Seit 01.10.2026 live (Freigabe Iwo).
 
    Sektionsreihenfolge:
-     1. Kopf (dunkel) mit angedeutetem Suchergebnis
+     1. Kopf (dunkel) mit angedeutetem KI-Chat
      2. Langfristig unabhängig von Klickpreisen (hell)
      3. Auszug aus einer echten Keyword-Analyse (hellgrau, drei Reiter)
      4. Was wir konkret machen (hell)
      5. KI-Suche (dunkel)
      6. FAQ
-     7. Abschluss mit Anfrageformular
-
-   Bis zur Freigabe noindex, nicht in der Sitemap, im Footer ausgegraut. */
+     7. Abschluss mit Anfrageformular  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
 import SeoKopf from '../components/sections/seo/SeoKopf.astro';
@@ -36,7 +34,6 @@ const anfrageFelder: Feld[] = [
 <BaseLayout
   title="SEO & KI-Sichtbarkeit für Handwerk und Dienstleister | Stolz Marketing"
   description="Bei Google und in KI-Antworten gefunden werden, ohne für jeden Klick zu zahlen. Webseiten nach echten Suchdaten aus Ihrer Region aufgebaut."
-  noindex={true}
 >
   <SeoKopf />
 

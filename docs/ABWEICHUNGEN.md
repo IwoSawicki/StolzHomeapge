@@ -1424,11 +1424,11 @@ Ab 720px bleibt der Text der Vorlage.
 
 ---
 
-## Zwei neue Leistungsseiten als Entwurf (01.10.2026)
+## Zwei neue Leistungsseiten (01.10.2026)
 
-Beide sind nicht aus der Vorlage. Bis zur Freigabe tragen sie `noindex`,
-stehen nicht in der Sitemap und sind im Footer ausgegraut. Im Footer
-stehen sie jetzt in der Menü-Spalte statt unter „Leistungen vor Ort".
+Beide sind nicht aus der Vorlage. Im Footer stehen sie unter „Leistungen
+vor Ort" (Wunsch Iwo). Die SEO-Seite ist live; Social-Media-Marketing
+ist noch Entwurf: `noindex`, nicht in der Sitemap, nur auf dev verlinkt.
 
 **/social-media-marketing**: bisher nur Hero und Abschluss. Der Hero folgt
 Iwos Vorbild createable.si: große Überschrift, darunter vier
@@ -1436,12 +1436,20 @@ Hochkant-Videos mit einer Ergebnis-Marke darüber, die beiden mittleren
 tiefer. Jedes Video läuft nur, solange es zu sehen ist, und hat ein
 Standbild als Poster. Die übrigen Inhalte liefert Iwo.
 
-**/seo-ki-sichtbarkeit**: Kopf mit angedeutetem Suchergebnis, ein
-schematischer Verlauf zu „unabhängig von Klickpreisen", ein Auszug aus
+**/seo-ki-sichtbarkeit** (live seit 01.10.2026, indexiert, in der
+Sitemap, im Footer unter „Leistungen vor Ort"): Kopf mit angedeutetem
+KI-Chat — drei Gespräche aus drei Branchen, der Chat startet leer, die
+Kopfzeile heißt „ChatGPT, Gemini & Co.", genannt wird immer nur „Ihr
+Betrieb". Danach ein schematischer Verlauf zu „unabhängig von Klickpreisen", ein Auszug aus
 Iwos Keyword-Analyse für einen Malerbetrieb an der Bergstraße
 (Kennzahlen, Klickpreis-Balken, Keyword-Tabelle, Seitenstruktur als
 Reiter), das Vorgehen, die KI-Suche, FAQ und Abschluss. Aus dem Report
 sind nur Marktdaten aus dem Keyword-Planer und die Seitenstruktur
 übernommen. Kundenname, Budget und Strategie stehen nicht drin.
-**[Rückfrage]** Darf der Kunde genannt werden? Die Texte sind ein
-Entwurf zur Abstimmung.
+Die Klickpreis-Balken zeigen nur Begriffe rund um Maler und Fassade;
+„schimmel entfernen lassen" und „wasserschaden sanierung" hat Iwo
+herausgenommen. Die Hinweise „keine Zusage" unter Chat und Suchergebnis
+sind auf Iwos Wunsch entfallen: Der Platzhalter „Ihr Betrieb" macht das
+Beispiel kenntlich, und die FAQ sagt offen, dass niemand Platz 1
+garantieren kann.
+**[Rückfrage]** Darf der Kunde genannt werden?

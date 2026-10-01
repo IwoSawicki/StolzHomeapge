@@ -101,12 +101,11 @@ export const footerStandorte: NavLink[] = [
   { label: 'Online-Marketing Bensheim', href: '/online-marketing-bensheim', nochNicht: true },
   { label: 'Website-Betreuung Bensheim', href: '/website-betreuung-bensheim', nochNicht: true },
 
-  /* Zwei Leistungsseiten im Entwurf (Stand 01.10.2026), hier auf Wunsch
-     von Iwo. Die Namen tragen die Suchbegriffe, weil der Linktext im
-     Footer für Google mitzählt. Auf dev verlinkt, damit Iwo sie
-     anklicken kann; die Seiten selbst tragen noch noindex.
-     ACHTUNG beim Live-Gang dieser Datei: nur mit den Seiten zusammen,
-     sonst zeigen die Links auf 404. */
+  /* Zwei Leistungsseiten, hier auf Wunsch von Iwo. Die Namen tragen die
+     Suchbegriffe, weil der Linktext im Footer für Google mitzählt.
+     SEO & KI-Sichtbarkeit ist seit 01.10.2026 live. Social-Media-Marketing
+     ist noch Entwurf mit noindex und nur auf dev verlinkt — beim Live-Gang
+     dieser Datei nur mit der Seite zusammen, sonst zeigt der Link auf 404. */
   { label: 'Social-Media-Marketing', href: '/social-media-marketing' },
   { label: 'SEO & KI-Sichtbarkeit', href: '/seo-ki-sichtbarkeit' },
 ];
