@@ -354,6 +354,17 @@
   --animate-floaty: floaty 4s ease-in-out infinite;
   --animate-pulse-line: pulse-line 1.8s ease-in-out infinite;
 
+  /* Rechner-Band, Entwurf „Sanduhr": oben läuft der Sand aus, unten
+     sammelt er sich. Beide Hälften teilen sich denselben Takt, sonst
+     würden sie auseinanderlaufen. */
+  --animate-sand-oben: sand-oben 7s linear infinite;
+  --animate-sand-unten: sand-unten 7s linear infinite;
+  --animate-sand-strahl: sand-strahl 0.9s linear infinite;
+
+  /* Rechner-Band, Entwurf „Tagesbalken": jeder Balken wächst einzeln,
+     die Verzögerung steht als Inline-Stil am Balken. */
+  --animate-tagesbalken: tagesbalken 7s ease-in-out infinite;
+
   @keyframes marquee {
     from {
       transform: translateX(0);
@@ -379,6 +390,54 @@
     24.8%,
     100% {
       transform: translateX(260%) skewX(-12deg);
+    }
+  }
+  /* Der Sand oben rutscht nach unten aus dem Dreieck heraus. 0 bis 86 %
+     läuft er, danach steht die Uhr kurz still, bevor der Takt neu
+     beginnt — ohne diese Pause wirkte der Sprung wie ein Ruckler. */
+  @keyframes sand-oben {
+    0% {
+      transform: translateY(0);
+    }
+    86%,
+    100% {
+      transform: translateY(46px);
+    }
+  }
+  @keyframes sand-unten {
+    0% {
+      transform: translateY(46px);
+    }
+    86%,
+    100% {
+      transform: translateY(0);
+    }
+  }
+  /* Der Strahl ist eine gestrichelte Linie, deren Muster nach unten
+     wandert — das liest sich als rieselnder Sand. */
+  @keyframes sand-strahl {
+    from {
+      stroke-dashoffset: 0;
+    }
+    to {
+      stroke-dashoffset: -12;
+    }
+  }
+  /* Balken wächst, bleibt lange stehen, fällt am Ende des Takts zurück.
+     Der Versatz zwischen den Balken ist bewusst kurz (gut eine Sekunde
+     über alle zwanzig): Läuft er länger, steht immer irgendwo in der
+     Reihe ein Balken unten, während seine Nachbarn oben stehen — das
+     sieht aus wie eine Lücke, nicht wie eine Welle. */
+  @keyframes tagesbalken {
+    0% {
+      transform: scaleY(0.08);
+    }
+    14%,
+    88% {
+      transform: scaleY(1);
+    }
+    100% {
+      transform: scaleY(0.08);
     }
   }
   @keyframes floaty {
