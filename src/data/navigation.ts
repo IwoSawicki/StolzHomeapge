@@ -97,6 +97,12 @@ export const footerStandorte: NavLink[] = [
   { label: 'SEO Bergstraße', href: '/seo-bergstrasse', nochNicht: true },
   { label: 'Online-Marketing Bensheim', href: '/online-marketing-bensheim', nochNicht: true },
   { label: 'Website-Betreuung Bensheim', href: '/website-betreuung-bensheim', nochNicht: true },
+
+  /* Die beiden folgenden stammen NICHT aus dem Search-Console-Export,
+     sondern sind Iwos eigene Merkposten für zwei Seiten, die er noch
+     bauen will. Sie tragen deshalb auch keinen Ort im Namen. */
+  { label: 'Social Media Agentur', href: '/social-media-agentur', nochNicht: true },
+  { label: 'KI Ranking', href: '/ki-ranking', nochNicht: true },
 ];
 
 /* Footer-Spalte „Rechtliches". AGB stehen bewusst nicht drin: es gibt
