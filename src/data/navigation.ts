@@ -38,6 +38,14 @@ export const footerMenue: NavLink[] = [
   { label: 'Startseite', href: '/' },
   { label: 'Kunden gewinnen', href: '/kunden-gewinnen' },
   { label: 'Mitarbeiter gewinnen', href: '/mitarbeiter-gewinnen' },
+  /* Zwei weitere Leistungen, die im Aufbau sind (Stand 01.10.2026).
+     Sie standen zuerst als „Social Media Agentur" und „KI Ranking" unter
+     „Leistungen vor Ort" — dort gehören sie nicht hin, es sind keine
+     Ortsseiten. Die Namen tragen bewusst die Suchbegriffe, weil der
+     Linktext im Footer für Google mitzählt. Ausgegraut, bis Iwo die
+     Seiten freigibt. */
+  { label: 'Social-Media-Marketing', href: '/social-media-marketing', nochNicht: true },
+  { label: 'SEO & KI-Sichtbarkeit', href: '/seo-ki-sichtbarkeit', nochNicht: true },
   { label: 'Projekte', href: '/projekte' },
   { label: 'Über uns', href: '/ueber-uns' },
   { label: 'Kontakt', href: '/kontakt' },
@@ -97,12 +105,6 @@ export const footerStandorte: NavLink[] = [
   { label: 'SEO Bergstraße', href: '/seo-bergstrasse', nochNicht: true },
   { label: 'Online-Marketing Bensheim', href: '/online-marketing-bensheim', nochNicht: true },
   { label: 'Website-Betreuung Bensheim', href: '/website-betreuung-bensheim', nochNicht: true },
-
-  /* Die beiden folgenden stammen NICHT aus dem Search-Console-Export,
-     sondern sind Iwos eigene Merkposten für zwei Seiten, die er noch
-     bauen will. Sie tragen deshalb auch keinen Ort im Namen. */
-  { label: 'Social Media Agentur', href: '/social-media-agentur', nochNicht: true },
-  { label: 'KI Ranking', href: '/ki-ranking', nochNicht: true },
 ];
 
 /* Footer-Spalte „Rechtliches". AGB stehen bewusst nicht drin: es gibt
