@@ -1,0 +1,57 @@
+---
+/* Kopf der SEO-Seite: dunkles Band mit Kopfzeile, links Überschrift und
+   Text, rechts ein KI-Chat, in dem nacheinander drei Fragen aus drei
+   Branchen beantwortet werden — jedes Mal mit „Ihr Betrieb" (Wunsch Iwo).
+
+   Hier stand zuerst ein angedeutetes Google-Ergebnis; das steht jetzt in
+   der KI-Sektion weiter unten, damit keine Grafik doppelt vorkommt. */
+import Header from '../../Header.astro';
+import Eyebrow from '../../Eyebrow.astro';
+import KiChat from './KiChat.astro';
+import { hero } from '../../../data/seo-ki-sichtbarkeit';
+import { erstgespraech } from '../../../data/navigation';
+---
+
+<div class="relative overflow-hidden bg-forest">
+  {/* Schein rechts hinter dem Chat */}
+  <div
+    class="pointer-events-none absolute top-1/2 right-0 hidden h-520 w-520 translate-x-1/4 -translate-y-1/3 rounded-full opacity-35 blur-[90px] nav:block"
+    style="background: radial-gradient(circle, var(--color-lime) 0%, transparent 70%)"
+    aria-hidden="true"
+  >
+  </div>
+
+  <Header />
+
+  <section class="relative px-page-x pt-40 pb-section-y-sm">
+    <div class="mx-auto flex max-w-content flex-wrap items-center gap-x-64 gap-y-48">
+      <div class="flex flex-1 basis-[min(520px,100%)] flex-col items-start gap-20">
+        <Eyebrow variante="lime">{hero.eyebrow}</Eyebrow>
+        <h1 class="m-0 text-h1-sub leading-tightest font-bold tracking-system text-paper">
+          {hero.titelVorn}<span class="font-display font-semibold tracking-none italic"
+            >{hero.titelKursiv}</span
+          >{hero.titelHinten}
+        </h1>
+        <p class="m-0 max-w-620 text-19 leading-body text-mint">{hero.lead}</p>
+        <div class="mt-8 flex flex-wrap gap-12">
+          <a
+            href={erstgespraech.href}
+            class="inline-flex h-56 items-center gap-10 rounded-8 bg-lime px-28 text-16 font-bold text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright"
+          >
+            {erstgespraech.label}<span class="text-18" aria-hidden="true">→</span>
+          </a>
+          <a
+            href="#analyse"
+            class="box-content inline-flex h-56 items-center rounded-8 border border-lime-edge bg-lime/7 px-26 text-16 font-medium text-cream no-underline transition-colors duration-200 hover:border-lime-edge-hover hover:bg-lime/14"
+          >
+            Beispiel-Analyse ansehen
+          </a>
+        </div>
+      </div>
+
+      <div class="flex-1 basis-[min(440px,100%)]">
+        <KiChat />
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,35 @@
+---
+/* „Was wir konkret machen": sechs Schritte als Kacheln, abgeleitet aus
+   dem, was Iwos Analysen tatsächlich empfehlen — Keyword-Analyse, eine
+   Seite pro Leistung, Kosten-Ratgeber, Ortsseiten mit Substanz,
+   Google-Profil, saubere Technik. */
+import Eyebrow from '../../Eyebrow.astro';
+import { vorgehen as v } from '../../../data/seo-ki-sichtbarkeit';
+---
+
+<section class="bg-paper px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-40">
+    <div class="flex flex-col items-start gap-16">
+      <Eyebrow variante="hell">{v.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        {v.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{v.titelKursiv}</span
+        >{v.titelHinten}
+      </h2>
+    </div>
+
+    <ol class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-16 p-0">
+      {
+        v.schritte.map((schritt, i) => (
+          <li class="flex flex-col gap-12 rounded-20 bg-paper-soft p-24 ring-1 ring-line">
+            <span class="flex h-40 w-40 items-center justify-center rounded-full bg-lime font-mono text-14 font-bold text-forest-deep">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="m-0 text-19 leading-card font-bold text-ink">{schritt.titel}</h3>
+            <p class="m-0 text-16 leading-body text-ink-muted">{schritt.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

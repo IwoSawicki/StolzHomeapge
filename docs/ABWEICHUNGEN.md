@@ -1348,3 +1348,31 @@ zuerst, und die Zweige heißen „Führerschein: ja/nein".
 
 Die Texte hat Iwo mit dem Live-Gang freigegeben, darunter die „freundliche
 Absage" und „Die Fragen legen wir mit Ihnen fest".
+
+---
+
+## SEO & KI-Sichtbarkeit unter /seo-ki-sichtbarkeit (01.10.2026, live)
+
+Neue Leistungsseite, nicht aus der Vorlage. Im Footer unter „Leistungen
+vor Ort" verlinkt, indexiert und in der Sitemap.
+
+Aufbau: Kopf mit angedeutetem KI-Chat — drei Gespräche aus drei
+Branchen, der Chat startet leer, die Kopfzeile heißt „ChatGPT, Gemini &
+Co.", genannt wird immer nur „Ihr Betrieb". Danach ein schematischer
+Verlauf zu „unabhängig von Klickpreisen", ein Auszug aus Iwos
+Keyword-Analyse für einen Malerbetrieb an der Bergstraße (Kennzahlen,
+Klickpreis-Balken, Keyword-Tabelle, Seitenstruktur als Reiter), das
+Vorgehen, die KI-Suche, FAQ und Abschluss.
+
+Aus dem Report sind nur Marktdaten aus dem Keyword-Planer und die
+Seitenstruktur übernommen; Kundenname, Budget und Strategie stehen nicht
+drin. Die Klickpreis-Balken zeigen nur Begriffe rund um Maler und
+Fassade — „schimmel entfernen lassen" und „wasserschaden sanierung" hat
+Iwo herausgenommen. Hinweise „keine Zusage" unter Chat und Suchergebnis
+gibt es auf Iwos Wunsch nicht: Der Platzhalter „Ihr Betrieb" macht das
+Beispiel kenntlich, und die FAQ sagt offen, dass niemand Platz 1
+garantieren kann.
+
+Der Textmarker im Chat ist auf `main` der volle Lime-Kasten; der
+auslaufende Marker von dev ist noch nicht freigegeben.
+**[Rückfrage]** Darf der Kunde aus der Analyse genannt werden?

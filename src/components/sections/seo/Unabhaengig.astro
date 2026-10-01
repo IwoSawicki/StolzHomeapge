@@ -1,0 +1,129 @@
+---
+/* „Langfristig unabhängig von Klickpreisen": links der Text, rechts ein
+   schematischer Verlauf der Anfragen über die Zeit.
+
+   Anzeigen springen sofort hoch, bleiben flach und fallen am Tag der
+   Budgetpause auf null. SEO startet bei null, wächst langsam und bleibt.
+   Ausdrücklich schematisch — keine Achsenwerte, keine Messpunkte, damit
+   niemand eine Zahl daraus liest, die es nicht gibt.
+
+   Die Grafik ist von sich aus vollständig sichtbar. Erst das Skript misst
+   die echten Linienlängen, blendet die Linien aus und zeichnet sie, sobald
+   die Grafik ins Bild kommt. Scheitert irgendetwas davon, steht der
+   Verlauf einfach fertig da.
+
+   Zuerst war es umgekehrt — unsichtbar, bis eine Klasse ihn zeigte. Das
+   Skript suchte die Grafik über [data-verlauf], und dieses Attribut trägt
+   auch der KI-Chat im Kopf, der weiter oben steht: Beobachtet wurde der
+   Chat, die Linien blieben für immer verborgen. Deshalb heißt die Grafik
+   jetzt [data-zeitverlauf], und sie ist von sich aus sichtbar. */
+import Eyebrow from '../../Eyebrow.astro';
+import { klickpreise as k } from '../../../data/seo-ki-sichtbarkeit';
+
+/* Kurven im Raster 560 × 300, Grundlinie bei y = 250 */
+const anzeigen = 'M48 250 L96 250 L96 128 L372 128 L372 250 L536 250';
+const seo = 'M48 249 C 150 247, 210 220, 280 172 S 430 92, 536 70';
+const seoFlaeche = `${seo} L536 250 L48 250 Z`;
+---
+
+<section class="bg-paper px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-wrap items-center gap-x-64 gap-y-40">
+    <div class="flex flex-1 basis-[min(420px,100%)] flex-col items-start gap-20">
+      <Eyebrow variante="hell">{k.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        {k.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{k.titelKursiv}</span
+        >{k.titelHinten}
+      </h2>
+      {k.absaetze.map((a) => <p class="m-0 text-18 leading-prose text-ink-quiet">{a}</p>)}
+    </div>
+
+    <figure class="m-0 flex flex-1 basis-[min(520px,100%)] flex-col gap-14" data-zeitverlauf>
+      <div class="rounded-20 bg-paper-soft p-[clamp(14px,3vw,28px)] ring-1 ring-line">
+        <svg viewBox="0 0 560 300" class="block h-auto w-full" role="img" aria-labelledby="verlauf-titel">
+          <title id="verlauf-titel">
+            Schematischer Verlauf: Anfragen über Anzeigen bleiben flach und fallen bei
+            pausiertem Budget auf null, Anfragen über SEO wachsen langsam und bleiben.
+          </title>
+
+          {/* Achsen */}
+          <path class="stroke-line-strong" d="M48 24 V250 H540" fill="none" stroke-width="1.5" />
+          <text class="fill-ink-faint" x="48" y="16" font-size="12" font-family="ui-monospace, monospace">ANFRAGEN</text>
+          <text class="fill-ink-faint" x="540" y="272" font-size="12" font-family="ui-monospace, monospace" text-anchor="end">ZEIT</text>
+
+          {/* Budgetpause */}
+          <path class="stroke-ink-faint" d="M372 40 V250" stroke-width="1.5" stroke-dasharray="4 5" fill="none" />
+          <text class="fill-ink-muted" x="380" y="52" font-size="13" font-weight="600" font-family="Inter, system-ui, sans-serif">{k.markeBudget}</text>
+
+          {/* SEO: Fläche und Linie */}
+          <path class="verlauf-flaeche fill-lime opacity-40" d={seoFlaeche} />
+          <path class="verlauf-linie stroke-forest" d={seo} fill="none" stroke-width="4" stroke-linecap="round" />
+
+          {/* Anzeigen */}
+          <path class="verlauf-linie stroke-schaden-soft" d={anzeigen} fill="none" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+        </svg>
+      </div>
+
+      <figcaption class="flex flex-wrap items-center gap-x-20 gap-y-8 text-14 text-ink-muted">
+        <span class="flex items-center gap-8">
+          <span class="h-4 w-20 rounded-full bg-forest" aria-hidden="true"></span>{k.legendeSeo}
+        </span>
+        <span class="flex items-center gap-8">
+          <span class="h-4 w-20 rounded-full bg-schaden-soft" aria-hidden="true"></span>{k.legendeAnzeigen}
+        </span>
+        <span class="text-13 text-ink-faint">{k.hinweis}</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  /* Zeichnen beim Hinscrollen — nur als Zugabe. Die Linien werden erst
+     hier ausgeblendet, mit ihrer gemessenen Länge in Bildpunkten des
+     Rasters. Ohne Skript, ohne IntersectionObserver oder bei reduzierter
+     Bewegung bleibt alles sichtbar wie gebaut. */
+  const verlauf = document.querySelector<HTMLElement>('[data-zeitverlauf]');
+  const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (verlauf && !ruhig && 'IntersectionObserver' in window) {
+    const linien = [...verlauf.querySelectorAll<SVGPathElement>('.verlauf-linie')];
+    const flaeche = verlauf.querySelector<SVGPathElement>('.verlauf-flaeche');
+
+    try {
+      for (const linie of linien) {
+        const laenge = Math.ceil(linie.getTotalLength());
+        linie.style.strokeDasharray = `${laenge}`;
+        linie.style.strokeDashoffset = `${laenge}`;
+      }
+      if (flaeche) flaeche.style.opacity = '0';
+
+      const zeichnen = () => {
+        for (const linie of linien) {
+          linie.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1)';
+          linie.style.strokeDashoffset = '0';
+        }
+        if (flaeche) {
+          flaeche.style.transition = 'opacity 1.2s ease-out 0.6s';
+          flaeche.style.opacity = '';
+        }
+      };
+
+      /* Schon ein Drittel im Bild genügt — sonst konnte schnelles
+         Scrollen die Schwelle überspringen. */
+      const beobachter = new IntersectionObserver(
+        (eintraege) => {
+          if (eintraege.some((e) => e.isIntersecting)) {
+            requestAnimationFrame(zeichnen);
+            beobachter.disconnect();
+          }
+        },
+        { threshold: 0.3 },
+      );
+      beobachter.observe(verlauf);
+    } catch {
+      /* Messen nicht möglich: Linien wieder sichtbar machen */
+      for (const linie of linien) linie.style.strokeDasharray = linie.style.strokeDashoffset = '';
+      if (flaeche) flaeche.style.opacity = '';
+    }
+  }
+</script>

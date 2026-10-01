@@ -1,0 +1,151 @@
+---
+/* „Auch ChatGPT & Co. empfehlen Betriebe": dunkles Band, links Text und
+   drei Punkte, rechts ein angedeutetes Google-Ergebnis mit KI-Übersicht
+   und „Ihr Betrieb" auf Platz eins.
+
+   Hier stand zuerst ein KI-Chat; der läuft jetzt im Kopf der Seite (als
+   Schleife über drei Branchen). Das Suchergebnis passt hierher zum Satz
+   über Googles KI-Übersichten.
+
+   Keine Namen anderer Betriebe, die übrigen Treffer sind Platzhalter.
+   Sobald die Grafik ins Bild kommt, bauen sich die Zeilen der
+   KI-Übersicht nacheinander auf und „Ihr Betrieb" leuchtet kurz auf.
+   Ohne Skript oder ohne Bewegung steht alles fertig da. */
+import Eyebrow from '../../Eyebrow.astro';
+import { ki } from '../../../data/seo-ki-sichtbarkeit';
+
+const zeile = 'block h-8 rounded-full bg-edge';
+---
+
+<section class="relative overflow-hidden bg-forest px-page-x py-section-y-md">
+  <div
+    class="pointer-events-none absolute right-0 bottom-0 h-420 w-420 translate-x-1/3 translate-y-1/3 rounded-full opacity-30 blur-[90px]"
+    style="background: radial-gradient(circle, var(--color-lime) 0%, transparent 70%)"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto flex max-w-content flex-wrap items-center gap-x-64 gap-y-48">
+    <div class="flex flex-1 basis-[min(440px,100%)] flex-col items-start gap-20">
+      <Eyebrow variante="lime">{ki.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
+        {ki.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{ki.titelKursiv}</span
+        >{ki.titelHinten}
+      </h2>
+      {ki.absaetze.map((a) => <p class="m-0 text-18 leading-prose text-mint">{a}</p>)}
+      <ul class="m-0 mt-4 flex list-none flex-col gap-12 p-0">
+        {
+          ki.punkte.map((punkt) => (
+            <li class="flex items-start gap-12 text-17 leading-body text-cream">
+              <span class="mt-2 flex h-22 w-22 flex-none items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="w-12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+              </span>
+              {punkt}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {/* --- angedeutetes Suchergebnis --- */}
+    <figure class="m-0 flex flex-1 basis-[min(420px,100%)] flex-col gap-12" data-suche>
+      <div class="flex flex-col gap-12" aria-hidden="true">
+        {/* Suchfeld */}
+        <div class="flex items-center gap-12 rounded-full bg-paper px-20 py-14 shadow-card-light">
+          <svg viewBox="0 0 24 24" class="w-18 flex-none text-ink-faint" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" />
+          </svg>
+          <span class="truncate text-16 text-ink">{ki.suche.begriff}</span>
+        </div>
+
+        {/* KI-Übersicht */}
+        <div class="flex flex-col gap-10 rounded-20 border border-edge bg-forest-card p-18">
+          <span class="flex items-center gap-8 font-mono text-11 tracking-eyebrow uppercase text-lime">
+            <svg viewBox="0 0 24 24" class="w-14" fill="currentColor">
+              <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" />
+            </svg>
+            KI-Übersicht
+          </span>
+          <span class:list={[zeile, 'seo-zeile w-[92%]']} style="--verzug: 0s"></span>
+          <span class:list={[zeile, 'seo-zeile w-[78%]']} style="--verzug: 0.25s"></span>
+          <span class="seo-zeile flex flex-wrap items-center gap-8" style="--verzug: 0.5s">
+            <span class:list={[zeile, 'w-[24%]']}></span>
+            <span class="seo-betrieb rounded-6 bg-lime px-8 py-2 text-13 font-bold text-forest-deep">Ihr Betrieb</span>
+            <span class:list={[zeile, 'w-[30%]']}></span>
+          </span>
+          <span class:list={[zeile, 'seo-zeile w-[64%]']} style="--verzug: 0.75s"></span>
+        </div>
+
+        {/* Treffer */}
+        <div class="flex flex-col gap-8 rounded-20 bg-paper p-18 shadow-card-light">
+          <div class="flex items-center gap-12 rounded-12 bg-lime/25 px-12 py-10">
+            <span class="flex h-26 w-26 flex-none items-center justify-center rounded-full bg-forest text-12 font-bold text-lime">1</span>
+            <span class="flex min-w-0 flex-col gap-2">
+              <span class="truncate text-15 font-bold text-ink">{ki.suche.treffer}</span>
+              <span class="truncate text-12 text-ink-muted">{ki.suche.adresse}</span>
+            </span>
+          </div>
+          {[2, 3].map((platz) => (
+            <div class="flex items-center gap-12 px-12 py-10">
+              <span class="flex h-26 w-26 flex-none items-center justify-center rounded-full bg-paper-grey text-12 font-bold text-ink-faint">{platz}</span>
+              <span class="flex flex-1 flex-col gap-6">
+                <span class="block h-8 w-[70%] rounded-full bg-line"></span>
+                <span class="block h-6 w-[40%] rounded-full bg-paper-grey"></span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<style>
+  /* Grundzustand: alles sichtbar. Erst die Klasse „spielt" startet den
+     Aufbau — einmalig, sobald die Grafik ins Bild kommt. */
+  [data-suche].spielt .seo-zeile {
+    animation: seo-zeile-auf 0.6s ease-out both;
+    animation-delay: calc(0.2s + var(--verzug));
+    transform-origin: left center;
+  }
+  [data-suche].spielt .seo-betrieb {
+    animation: seo-betrieb-leuchten 1.2s ease-out 1.3s both;
+  }
+  @keyframes seo-zeile-auf {
+    from {
+      opacity: 0;
+      transform: scaleX(0.4);
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+  @keyframes seo-betrieb-leuchten {
+    0% {
+      box-shadow: 0 0 0 0 rgb(228 245 63 / 0.7);
+    }
+    100% {
+      box-shadow: 0 0 0 14px rgb(228 245 63 / 0);
+    }
+  }
+</style>
+
+<script>
+  const suche = document.querySelector<HTMLElement>('[data-suche]');
+  if (suche && 'IntersectionObserver' in window) {
+    const beobachter = new IntersectionObserver(
+      (eintraege) => {
+        if (eintraege.some((e) => e.isIntersecting)) {
+          suche.classList.add('spielt');
+          beobachter.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    beobachter.observe(suche);
+  }
+</script>

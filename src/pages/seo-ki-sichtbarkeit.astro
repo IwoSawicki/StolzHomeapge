@@ -1,0 +1,60 @@
+---
+/* SEO & KI-Sichtbarkeit — /seo-ki-sichtbarkeit
+
+   Seit 01.10.2026 live (Freigabe Iwo).
+
+   Sektionsreihenfolge:
+     1. Kopf (dunkel) mit angedeutetem KI-Chat
+     2. Langfristig unabhängig von Klickpreisen (hell)
+     3. Auszug aus einer echten Keyword-Analyse (hellgrau, drei Reiter)
+     4. Was wir konkret machen (hell)
+     5. KI-Suche (dunkel)
+     6. FAQ
+     7. Abschluss mit Anfrageformular  */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import SeoKopf from '../components/sections/seo/SeoKopf.astro';
+import Unabhaengig from '../components/sections/seo/Unabhaengig.astro';
+import Analyse from '../components/sections/seo/Analyse.astro';
+import Vorgehen from '../components/sections/seo/Vorgehen.astro';
+import KiSuche from '../components/sections/seo/KiSuche.astro';
+import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
+import Abschluss from '../components/sections/leistung/Abschluss.astro';
+import type { Feld } from '../components/Web3Formular.astro';
+import { faqs, abschluss } from '../data/seo-ki-sichtbarkeit';
+
+const anfrageFelder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  { name: 'telefon', label: 'Telefonnummer', type: 'tel', pflicht: true, breit: true, autocomplete: 'tel' },
+  { name: 'webseite', label: 'Ihre Webseite', breit: true, autocomplete: 'url', inputmode: 'url' },
+  { name: 'nachricht', label: 'Worum es geht', mehrzeilig: true },
+];
+---
+
+<BaseLayout
+  title="SEO & KI-Sichtbarkeit für Handwerk und Dienstleister | Stolz Marketing"
+  description="Bei Google und in KI-Antworten gefunden werden, ohne für jeden Klick zu zahlen. Webseiten nach echten Suchdaten aus Ihrer Region aufgebaut."
+>
+  <SeoKopf />
+
+  <main>
+    <Unabhaengig />
+    <Analyse />
+    <Vorgehen />
+    <KiSuche />
+    <FaqLeistung eintraege={faqs} id="faq-seo" />
+    <Abschluss
+      titelVorn={abschluss.titelVorn}
+      titelMarker={abschluss.titelMarker}
+      titelMitte={abschluss.titelMitte}
+      titelKursiv={abschluss.titelKursiv}
+      titelHinten={abschluss.titelHinten}
+      lead={abschluss.lead}
+      felder={anfrageFelder}
+      betreff="Anfrage über SEO & KI-Sichtbarkeit"
+      ortZeile="Bergstraße und Odenwald"
+    />
+  </main>
+
+  <Footer />
+</BaseLayout>

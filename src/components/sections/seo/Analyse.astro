@@ -1,0 +1,276 @@
+---
+/* „So sieht eine Keyword-Analyse bei uns aus": Auszug aus Iwos Analyse
+   für einen Malerbetrieb an der Bergstraße, gestaltet wie der Report
+   selbst. Oben drei Kennzahlen, darunter drei Reiter:
+
+     Klickpreise    — Spannen als Balken, Fassaden-Begriffe dunkel
+     Suchbegriffe   — Tabellenauszug mit Suchvolumen und Empfehlung
+     Seitenstruktur — die Seiten, die aus den Keyword-Clustern folgen
+
+   Kundenname, Budget und Strategie des Kunden stehen bewusst nicht da,
+   nur Marktdaten aus dem Keyword-Planer und die Seitenstruktur.
+
+   Reiter nach dem WAI-ARIA-Muster „Tabs": Pfeiltasten wechseln, nur der
+   aktive Reiter ist per Tab erreichbar. Ohne JavaScript stehen alle drei
+   Bereiche untereinander. */
+import Eyebrow from '../../Eyebrow.astro';
+import {
+  analyse as a,
+  klickpreisBalken,
+  klickpreisLesebeispiel,
+  suchbegriffe,
+  empfehlungErklaerung,
+  seitenstruktur,
+  strukturHinweis,
+  type Empfehlung,
+} from '../../../data/seo-ki-sichtbarkeit';
+
+/* Skala der Klickpreis-Balken: 10 €, damit rechts neben dem längsten
+   Balken (7,98 €) auch auf 320px noch Platz für den Wert bleibt. */
+const SKALA = 10;
+/* Unter 720px steht der Begriff über dem Balken — nebeneinander blieben
+   für den Balken sonst nur rund 80px. */
+const balkenRaster = 'grid grid-cols-1 gap-4 btn:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] btn:items-center btn:gap-12';
+const euro = (wert: number) => wert.toLocaleString('de-DE', { minimumFractionDigits: 2 }) + ' €';
+
+const badge: Record<Empfehlung, string> = {
+  'Ads + SEO': 'bg-lime text-forest-deep',
+  Ads: 'bg-forest text-paper',
+  SEO: 'bg-paper-band text-ink',
+  Ratgeber: 'bg-paper text-ink ring-1 ring-line-strong',
+};
+const stufenBadge: Record<1 | 2 | 3, string> = {
+  1: 'bg-lime text-forest-deep',
+  2: 'bg-forest text-paper',
+  3: 'bg-paper-band text-ink-muted',
+};
+
+const kachel = ['bg-forest text-paper', 'bg-paper-grey text-ink', 'bg-lime text-forest-deep'];
+---
+
+<section id="analyse" class="bg-paper-soft px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-40">
+    <div class="flex max-w-760 flex-col items-start gap-16">
+      <Eyebrow variante="hell">{a.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        {a.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{a.titelKursiv}</span
+        >{a.titelHinten}
+      </h2>
+      <p class="m-0 text-18 leading-prose text-ink-quiet">{a.lead}</p>
+    </div>
+
+    {/* Kennzahlen */}
+    <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-16 p-0">
+      {
+        a.kennzahlen.map((k, i) => (
+          <li class:list={['flex flex-col gap-8 rounded-20 p-24', kachel[i]]}>
+            <span class="text-44 leading-tightest font-bold tracking-system">{k.wert}</span>
+            <span class="text-15 leading-body opacity-80">{k.text}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    {/* Report-Karte mit Reitern */}
+    <div class="flex flex-col gap-24 rounded-20 bg-paper p-[clamp(18px,3.4vw,36px)] shadow-card-light ring-1 ring-line">
+      <div class="flex flex-wrap items-center justify-between gap-x-24 gap-y-12">
+        <div class="flex flex-wrap gap-6 rounded-full bg-paper-soft p-4" role="tablist" aria-label="Auszug aus der Analyse" data-reiterleiste>
+          {
+            a.reiter.map((name, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={`reiter-${i}`}
+                aria-controls={`bereich-${i}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                tabindex={i === 0 ? 0 : -1}
+                class="cursor-pointer rounded-full border-0 bg-transparent px-16 py-8 text-15 font-medium text-ink-muted transition-colors aria-selected:bg-forest aria-selected:text-paper"
+                data-reiter
+              >
+                {name}
+              </button>
+            ))
+          }
+        </div>
+        <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{a.quelle}</span>
+      </div>
+
+      {/* --- Klickpreise --- */}
+      <div role="tabpanel" id="bereich-0" aria-labelledby="reiter-0" class="flex flex-col gap-16" data-bereich>
+        <ul class="m-0 flex list-none flex-col gap-10 p-0">
+          {
+            klickpreisBalken.map((z) => (
+              <li class={balkenRaster}>
+                <span class:list={['text-13 leading-card btn:text-right btn:text-14', z.fassade ? 'font-bold text-ink' : 'text-ink-muted']}>
+                  {z.begriff}
+                </span>
+                <span class="relative block h-14">
+                  <span
+                    class:list={['absolute inset-y-0 rounded-full', z.fassade ? 'bg-forest' : 'bg-sketch-light']}
+                    style={`left:${((z.von / SKALA) * 100).toFixed(2)}%; width:${(((z.bis - z.von) / SKALA) * 100).toFixed(2)}%`}
+                  />
+                  <span
+                    class="absolute top-1/2 -translate-y-1/2 pl-6 text-12 whitespace-nowrap text-ink-muted"
+                    style={`left:${((z.bis / SKALA) * 100).toFixed(2)}%`}
+                  >
+                    {euro(z.bis)}
+                  </span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        {/* Achse */}
+        <div class={balkenRaster} aria-hidden="true">
+          <span class="hidden btn:block"></span>
+          <span class="relative block h-16 border-t border-line text-11 text-ink-faint">
+            {[0, 2, 4, 6, 8].map((w) => (
+              /* „0 €" steht bündig am Nullpunkt — mittig gesetzt ragte es links aus dem Raster */
+              <span class:list={['absolute top-4', w > 0 && '-translate-x-1/2']} style={`left:${(w / SKALA) * 100}%`}>{w} €</span>
+            ))}
+          </span>
+        </div>
+        <p class="m-0 border-l-3 border-lime pl-14 text-14 leading-body text-ink-muted">{klickpreisLesebeispiel}</p>
+      </div>
+
+      {/* --- Suchbegriffe --- */}
+      <div role="tabpanel" id="bereich-1" aria-labelledby="reiter-1" class="flex flex-col gap-16" data-bereich>
+        {/* Eigener Scrollbereich als Sicherheitsnetz: passt die Tabelle auf
+            einem sehr schmalen Gerät doch nicht, scrollt sie in sich und
+            nicht die ganze Seite. */}
+        <div class="no-scrollbar -mx-4 overflow-x-auto px-4">
+        <table class="w-full border-collapse text-left">
+          <thead>
+            <tr class="bg-forest text-12 font-bold text-paper">
+              <th class="rounded-l-10 px-8 py-10 btn:px-12 font-bold">Suchbegriff</th>
+              <th class="rounded-r-10 px-8 py-10 btn:rounded-r-none btn:px-12 font-bold">Suchen/Monat</th>
+              <th class="hidden px-8 py-10 btn:px-12 font-bold btn:table-cell">Wettbewerb</th>
+              <th class="hidden px-8 py-10 btn:px-12 font-bold btn:table-cell">Klickpreis</th>
+              <th class="hidden rounded-r-10 px-8 py-10 btn:table-cell btn:px-12 font-bold">Empfehlung</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              suchbegriffe.map((s) => (
+                <tr class="border-b border-line text-14">
+                  <td class="px-8 py-10 btn:px-12 align-top">
+                    <span class="block font-bold text-ink">{s.begriff}</span>
+                    {/* Unter 720px stehen Klickpreis und Empfehlung hier unter
+                        dem Begriff — als eigene Spalten passten sie auf 320px
+                        nicht mehr nebeneinander. */}
+                    <span class="block text-12 text-ink-faint btn:hidden">Klick: {s.klickpreis}</span>
+                    <span class:list={['mt-6 inline-block rounded-full px-10 py-3 text-12 font-bold whitespace-nowrap btn:hidden', badge[s.empfehlung]]}>
+                      {s.empfehlung}
+                    </span>
+                  </td>
+                  <td class="px-8 py-10 btn:px-12 align-top whitespace-nowrap text-ink">
+                    <span class="inline-flex items-center gap-8">
+                      <span class="hidden items-end gap-2 btn:inline-flex" aria-hidden="true">
+                        {[1, 2, 3, 4].map((n) => (
+                          <span class:list={['w-3 rounded-full', n <= s.stufe ? 'bg-forest' : 'bg-line']} style={`height:${4 + n * 2}px`} />
+                        ))}
+                      </span>
+                      {s.suchen}
+                    </span>
+                  </td>
+                  <td class="hidden px-8 py-10 btn:px-12 align-top text-ink-muted btn:table-cell">{s.wettbewerb}</td>
+                  <td class="hidden px-8 py-10 btn:px-12 align-top whitespace-nowrap text-ink-muted btn:table-cell">{s.klickpreis}</td>
+                  <td class="hidden px-8 py-10 btn:table-cell btn:px-12 align-top">
+                    <span class:list={['inline-block rounded-full px-10 py-3 text-12 font-bold whitespace-nowrap', badge[s.empfehlung]]}>
+                      {s.empfehlung}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        </div>
+        <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-x-20 gap-y-8 p-0">
+          {
+            (Object.keys(empfehlungErklaerung) as Empfehlung[]).map((e) => (
+              <li class="flex items-start gap-8 text-13 leading-body text-ink-muted">
+                <span class:list={['flex-none rounded-full px-8 py-1 text-11 font-bold whitespace-nowrap', badge[e]]}>{e}</span>
+                {empfehlungErklaerung[e]}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      {/* --- Seitenstruktur --- */}
+      <div role="tabpanel" id="bereich-2" aria-labelledby="reiter-2" class="flex flex-col gap-16" data-bereich>
+        <ul class="m-0 flex list-none flex-col gap-8 p-0">
+          {
+            seitenstruktur.map((s) => (
+              <li class="flex flex-col gap-8">
+                <div class="flex flex-wrap items-center gap-x-12 gap-y-4 rounded-12 bg-paper-soft px-14 py-10">
+                  <span class="text-15 font-bold text-ink">{s.seite}</span>
+                  {s.begriff && <span class="font-mono text-12 text-ink-faint">{s.begriff}</span>}
+                  <span class:list={['ml-auto rounded-full px-10 py-2 text-11 font-bold whitespace-nowrap', stufenBadge[s.stufe]]}>
+                    Stufe {s.stufe}
+                  </span>
+                </div>
+                {s.unter && (
+                  <ul class="m-0 ml-14 flex list-none flex-col gap-6 border-l-2 border-line py-0 pr-0 pl-14">
+                    {s.unter.map((u) => (
+                      <li class="flex flex-wrap items-center gap-x-12 gap-y-4 rounded-12 px-12 py-8 ring-1 ring-line">
+                        <span class="text-14 font-medium text-ink">{u.seite}</span>
+                        {u.begriff && <span class="font-mono text-12 text-ink-faint">{u.begriff}</span>}
+                        <span class:list={['ml-auto rounded-full px-10 py-2 text-11 font-bold whitespace-nowrap', stufenBadge[u.stufe]]}>
+                          Stufe {u.stufe}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="m-0 border-l-3 border-lime pl-14 text-14 leading-body text-ink-muted">{strukturHinweis}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Reiter: Klick oder Pfeiltasten wechseln den Bereich. Erst das Skript
+     blendet die nicht gewählten Bereiche aus — ohne JavaScript bleibt
+     alles lesbar untereinander stehen. */
+  const leiste = document.querySelector<HTMLElement>('[data-reiterleiste]');
+  if (leiste) {
+    const reiter = [...leiste.querySelectorAll<HTMLButtonElement>('[data-reiter]')];
+    const bereiche = [...document.querySelectorAll<HTMLElement>('[data-bereich]')];
+
+    const waehle = (index: number, fokus = false) => {
+      reiter.forEach((r, i) => {
+        const aktiv = i === index;
+        r.setAttribute('aria-selected', String(aktiv));
+        r.tabIndex = aktiv ? 0 : -1;
+        bereiche[i]!.hidden = !aktiv;
+      });
+      if (fokus) reiter[index]!.focus();
+    };
+
+    reiter.forEach((r, i) => {
+      r.addEventListener('click', () => waehle(i));
+      r.addEventListener('keydown', (e) => {
+        const weiter = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        if (weiter) {
+          e.preventDefault();
+          waehle((i + weiter + reiter.length) % reiter.length, true);
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          waehle(0, true);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          waehle(reiter.length - 1, true);
+        }
+      });
+    });
+
+    waehle(0);
+  }
+</script>

@@ -97,6 +97,11 @@ export const footerStandorte: NavLink[] = [
   { label: 'SEO Bergstraße', href: '/seo-bergstrasse', nochNicht: true },
   { label: 'Online-Marketing Bensheim', href: '/online-marketing-bensheim', nochNicht: true },
   { label: 'Website-Betreuung Bensheim', href: '/website-betreuung-bensheim', nochNicht: true },
+
+  /* Leistungsseite auf Wunsch von Iwo (live seit 01.10.2026). Der Name
+     trägt die Suchbegriffe, weil der Linktext im Footer für Google
+     mitzählt. */
+  { label: 'SEO & KI-Sichtbarkeit', href: '/seo-ki-sichtbarkeit' },
 ];
 
 /* Footer-Spalte „Rechtliches". AGB stehen bewusst nicht drin: es gibt
