@@ -1,0 +1,32 @@
+---
+/* Icon „Die nächste Kündigung": jemand verlässt den Betrieb durch die Tür.
+
+   Die Figur steht rechts außerhalb der Tür und ist bereits abgewandt; der
+   Winkel dazwischen gibt die Richtung. Der Kopf in Lime ist der eine
+   farbige Akzent, wie in den beiden anderen Icons. */
+interface Props {
+  class?: string;
+}
+const { class: klasse } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 64 64"
+  fill="none"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  class:list={['block', klasse]}
+>
+  {/* Tür */}
+  <path class="stroke-ink" d="M6 57 V13 A5 5 0 0 1 11 8 H25 A5 5 0 0 1 30 13 V57" />
+  <circle class="fill-ink stroke-ink" cx="25" cy="34" r="1.6" />
+
+  {/* Richtung */}
+  <path class="stroke-sketch" d="M35 28 L39 33 L35 38" />
+
+  {/* Die Person, schon draußen */}
+  <circle class="fill-lime stroke-ink" cx="52" cy="21" r="6.5" />
+  <path class="stroke-ink" d="M43 57 V43 A9 9 0 0 1 61 43 V57" />
+</svg>

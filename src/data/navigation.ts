@@ -45,7 +45,7 @@ export const footerMenue: NavLink[] = [
 
 /** Footer-Spalte „Tools" */
 export const footerTools: NavLink[] = [
-  { label: 'Vakanzkostenrechner', href: '/vakanzkostenrechner', nochNicht: true },
+  { label: 'Vakanzkostenrechner', href: '/vakanzkostenrechner' },
   { label: 'Website-Check', href: '/website-check', nochNicht: true },
   { label: 'Sichtbarkeits-Check', href: '/sichtbarkeits-check', nochNicht: true },
 ];

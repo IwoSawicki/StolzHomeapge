@@ -1,0 +1,32 @@
+---
+/* Icon „Kunden, die nicht wiederkommen": ein Betrieb, über den die
+   Anfrage hinwegzieht und woanders landet.
+
+   Der Bogen setzt links unten an, überspannt das Dach und zeigt rechts
+   nach unten — die Anfrage kommt an, bleibt aber nicht. Die Tür in Lime
+   ist in allen drei Icons der eine farbige Akzent, damit sie als Familie
+   lesbar sind. */
+interface Props {
+  class?: string;
+}
+const { class: klasse } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 64 64"
+  fill="none"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  class:list={['block', klasse]}
+>
+  {/* Der Betrieb */}
+  <path class="stroke-ink" d="M16 36 L32 21 L48 36" />
+  <path class="stroke-ink" d="M20 36 V57 H44 V36" />
+  <rect class="fill-lime stroke-ink" x="28" y="45" width="8" height="12" rx="1" />
+
+  {/* Die Anfrage zieht vorbei */}
+  <path class="stroke-sketch" d="M6 44 C6 6 54 6 54 40" />
+  <path class="stroke-sketch" d="M49 35 L54 42 L59 35" />
+</svg>

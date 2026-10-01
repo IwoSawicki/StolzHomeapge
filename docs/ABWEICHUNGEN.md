@@ -1301,3 +1301,23 @@ und in der Adressleiste des Browser-Rahmens.
 
 Mehrfach derselbe Linktext auf einer Seite ist für Screenreader unklar,
 deshalb trägt jeder Link ein `aria-label` mit seiner Domain.
+
+---
+
+## Vakanzkosten-Rechner und Band auf der Meistermagnet-Seite (01.10.2026 live)
+
+Neu, nicht aus der Vorlage. `/vakanzkostenrechner` rechnet aus, was eine
+offene Stelle kostet. Gerechnet wird nur im Browser. Die Gewerk-Werte sind
+konservativ angesetzt und von Iwo freigegeben, die Herleitung steht als
+Kommentar in `src/data/vakanzkostenrechner.ts`. Die Seite ist indexierbar
+und steht in der Sitemap. Im Footer ist der Eintrag nicht mehr
+ausgegraut.
+
+Auf `/mitarbeiter-gewinnen` steht zwischen Ausgangslage und Prozess ein
+Band, das auf den Rechner verweist: eine grüne Karte auf Weiß und zwanzig
+Balken, die sich über „drei Monate" von Limette nach Rot aufbauen. Iwo hat
+es aus vier Entwürfen ausgewählt.
+
+Der Live-Gang ist gezielt aus `dev` übernommen. Andere Änderungen, die
+dort noch liegen (Prozess-Überschrift, Vergleich als Slider, Vorauswahl,
+Schimmer-Takt, Textmarker), sind nicht mit live gegangen.

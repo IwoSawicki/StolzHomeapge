@@ -151,6 +151,8 @@
   --color-google-blue: #4285f4;
   --color-google-green: #34a853;
   --color-google-red: #ea4335;
+  --color-schaden: #ff6b6b; /* Schadenszahlen im Vakanzkostenrechner (auf dunkelgrün) */
+  --color-schaden-soft: #a8514c; /* zweiter Abschnitt im Schadensbalken */
 
   /* --- Dunkle Buttons auf hell -------------------------------------------- */
   --color-ink-btn-hover: #2a3a2c;
@@ -308,6 +310,9 @@
   --radius-18: 18px;
   --radius-20: 20px;
   --radius-24: 24px;
+  /* Sehr weiche Kante für breite, freistehende Bänder — skaliert mit, damit
+     der Radius auf dem Handy nicht die halbe Karte auffrisst. */
+  --radius-band: clamp(28px, 6vw, 72px);
   --radius-full: 999px;
 
   /* =========================================================================
@@ -343,6 +348,10 @@
   --animate-floaty: floaty 4s ease-in-out infinite;
   --animate-pulse-line: pulse-line 1.8s ease-in-out infinite;
 
+  /* Rechner-Band: jeder Balken wächst einzeln, die Verzögerung steht
+     als Inline-Stil am Balken. */
+  --animate-tagesbalken: tagesbalken 7s ease-in-out infinite;
+
   @keyframes marquee {
     from {
       transform: translateX(0);
@@ -368,6 +377,23 @@
     23%,
     100% {
       transform: translateX(260%) skewX(-12deg);
+    }
+  }
+  /* Balken wächst, bleibt lange stehen, fällt am Ende des Takts zurück.
+     Der Versatz zwischen den Balken ist bewusst kurz (gut eine Sekunde
+     über alle zwanzig): Läuft er länger, steht immer irgendwo in der
+     Reihe ein Balken unten, während seine Nachbarn oben stehen — das
+     sieht aus wie eine Lücke, nicht wie eine Welle. */
+  @keyframes tagesbalken {
+    0% {
+      transform: scaleY(0.08);
+    }
+    14%,
+    88% {
+      transform: scaleY(1);
+    }
+    100% {
+      transform: scaleY(0.08);
     }
   }
   @keyframes floaty {
