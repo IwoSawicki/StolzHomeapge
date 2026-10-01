@@ -366,6 +366,10 @@
   --animate-pfad-ja: pfad-ja 8s ease-in-out infinite;
   --animate-pfad-nein: pfad-nein 8s ease-in-out infinite;
   --animate-fluss: fluss 0.9s linear infinite;
+  /* Füllung der gewählten Antwort: an, solange ihr Weg aktiv ist, sonst
+     ganz aus — die andere Antwort steht dann grau und ohne Farbe da. */
+  --animate-wahl-ja: wahl-ja 8s ease-in-out infinite;
+  --animate-wahl-nein: wahl-nein 8s ease-in-out infinite;
 
   @keyframes marquee {
     from {
@@ -435,6 +439,32 @@
     }
     100% {
       opacity: 0.3;
+    }
+  }
+  @keyframes wahl-ja {
+    0%,
+    44% {
+      opacity: 1;
+    }
+    50%,
+    94% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes wahl-nein {
+    0%,
+    44% {
+      opacity: 0;
+    }
+    50%,
+    94% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
     }
   }
   @keyframes fluss {
@@ -534,6 +564,14 @@
       black calc(100% - 64px),
       transparent 100%
     );
+  }
+
+  /* Feines Punkteraster als Arbeitsfläche (Vorauswahl-Grafik) — wie die
+     Leinwand eines Ablauf-Editors, damit die Karten darauf schweben. */
+  .punktraster {
+    background-color: var(--color-paper-soft);
+    background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1.5px);
+    background-size: 20px 20px;
   }
 
   /* Flächige Hinterlegung ohne Innenabstand (Vorlage: „funktioniert",

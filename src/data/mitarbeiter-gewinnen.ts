@@ -93,6 +93,8 @@ export const vorauswahl = {
   ],
   /* Beispielfragen in der Grafik. Du-Form, weil Bewerberformulare im
      Handwerk so angesprochen werden — die Seite selbst siezt. */
+  /* Kopfzeile der Formular-Karten */
+  marke: 'Schnellbewerbung',
   frage1: 'Hast du einen Führerschein Klasse B?',
   /* Zweig-Beschriftung auf dem Handy, wo die Wege untereinander stehen
      und „Ja"/„Nein" allein nicht mehr zeigen, worauf sie antworten */
@@ -102,6 +104,8 @@ export const vorauswahl = {
   absageText: 'Für diese Stelle ist der Führerschein Pflicht. Danke trotzdem für dein Interesse.',
   frage2: 'Wie viele Jahre Berufserfahrung hast du?',
   antworten2: ['unter 3 Jahre', '3 bis 5 Jahre', '5 bis 10 Jahre', 'über 10 Jahre'],
+  /** welche Antwort im Bild gewählt ist (Index in antworten2) */
+  gewaehlt2: 2,
 };
 
 export const systemNachsatz =
