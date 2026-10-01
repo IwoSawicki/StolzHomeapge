@@ -1,0 +1,111 @@
+---
+/* Rechner-Band, Entwurf D „Lücke im Team".
+
+   Anders als A bis C erzählt das Bild nicht von Zeit, sondern von den
+   Leuten: fünf Plätze im Team, der mittlere ist leer — eine rot
+   gestrichelte Lücke, die pulsiert. Die beiden Nachbarn heben sich im
+   Wechsel, sie tragen die Arbeit mit. Das ist der Satz aus dem Text
+   („…oder das Team sie mitmacht") als Bild.
+
+   Zuschnitt: das Bild oben über die Breite, darunter Überschrift links
+   und Text mit Knopf rechts. Unter 720px stehen beide untereinander. */
+import Eyebrow from '../../Eyebrow.astro';
+import Button from '../../Button.astro';
+
+/* Mitte jeder Figur; Platz 3 ist die Lücke, 2 und 4 tragen mit */
+const plaetze = [
+  { x: 32, art: 'da' },
+  { x: 96, art: 'traegt', verzoegerung: '0s' },
+  { x: 160, art: 'leer' },
+  { x: 224, art: 'traegt', verzoegerung: '1.2s' },
+  { x: 288, art: 'da' },
+] as const;
+
+/* Umriss einer Figur: Schultern als Halbbogen, darüber der Kopf */
+const rumpf = (x: number) => `M${x - 24} 118 V94 A24 24 0 0 1 ${x + 24} 94 V118 Z`;
+const helm = (x: number) => `M${x - 15} 36 A15 15 0 0 1 ${x + 15} 36 Z`;
+---
+
+<section class="bg-paper px-page-x pt-0 pb-section-y-sm">
+  <div class="relative mx-auto max-w-content">
+    <div
+      class="relative flex flex-col gap-32 overflow-hidden rounded-band bg-forest px-innen-block py-40 btn:py-48"
+    >
+      {/* --- Team --- */}
+      <svg
+        viewBox="0 0 320 126"
+        fill="none"
+        class="mx-auto w-[min(440px,100%)]"
+        aria-hidden="true"
+      >
+        {
+          plaetze.map((platz) =>
+            platz.art === 'leer' ? (
+              <g class="animate-luecke">
+                <path
+                  class="stroke-schaden"
+                  stroke-width="2.5"
+                  stroke-dasharray="5 5"
+                  stroke-linejoin="round"
+                  d={rumpf(platz.x)}
+                />
+                <circle
+                  class="stroke-schaden"
+                  stroke-width="2.5"
+                  stroke-dasharray="5 5"
+                  cx={platz.x}
+                  cy="44"
+                  r="14"
+                />
+              </g>
+            ) : (
+              <g
+                class={platz.art === 'traegt' ? 'animate-mittragen' : undefined}
+                style={platz.art === 'traegt' ? `animation-delay:${platz.verzoegerung}` : undefined}
+              >
+                <path class="fill-mint" d={rumpf(platz.x)} />
+                <circle class="fill-mint" cx={platz.x} cy="44" r="13" />
+                <path class="fill-lime" d={helm(platz.x)} />
+                <line
+                  class="stroke-lime"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  x1={platz.x - 18}
+                  y1="36"
+                  x2={platz.x + 18}
+                  y2="36"
+                />
+              </g>
+            ),
+          )
+        }
+        {/* Boden */}
+        <line class="stroke-edge" stroke-width="2" x1="4" y1="120" x2="316" y2="120" />
+      </svg>
+
+      {/* --- Text --- */}
+      <div class="flex flex-wrap items-end gap-x-56 gap-y-20">
+        <div class="flex flex-1 basis-[min(420px,100%)] flex-col items-start gap-16">
+          <Eyebrow variante="lime">Vakanzkosten</Eyebrow>
+          <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
+            Was kostet Sie die offene Stelle, <span
+              class="font-display font-semibold tracking-none italic">während Sie suchen</span
+            >?
+          </h2>
+        </div>
+
+        <div class="flex flex-1 basis-[min(380px,100%)] flex-col items-start gap-20">
+          <p class="m-0 text-18 leading-quote text-mint">
+            Eine unbesetzte Stelle kostet nicht erst, wenn jemand kündigt. Sie kostet jeden
+            Arbeitstag, an dem die Arbeit liegen bleibt oder das Team sie mitmacht. Im
+            Rechner sehen Sie die Zahl für Ihr Gewerk — in unter einer Minute, ohne Eingabe
+            von Kontaktdaten.
+          </p>
+          <Button href="/vakanzkostenrechner" variante="lime" sheen>
+            Zum Vakanzkosten-Rechner<span class="text-18" aria-hidden="true">→</span>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

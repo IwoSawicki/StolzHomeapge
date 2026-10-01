@@ -20,6 +20,8 @@ import heroBild from '../assets/leistungen/mitarbeitergewinnung.jpg';
 import Ausgangslage from '../components/sections/mitarbeiter/Ausgangslage.astro';
 import RechnerBandSanduhr from '../components/sections/mitarbeiter/RechnerBandSanduhr.astro';
 import RechnerBandTage from '../components/sections/mitarbeiter/RechnerBandTage.astro';
+import RechnerBandUhr from '../components/sections/mitarbeiter/RechnerBandUhr.astro';
+import RechnerBandTeam from '../components/sections/mitarbeiter/RechnerBandTeam.astro';
 import SystemSchritte from '../components/sections/leistung/SystemSchritte.astro';
 import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
 import Vergleich from '../components/sections/mitarbeiter/Vergleich.astro';
@@ -69,12 +71,15 @@ const anfrageFelder: Feld[] = [
 
   <main>
     <Ausgangslage />
-    {/* VORLÄUFIG: zwei Entwürfe für die Verlinkung zum Rechner stehen
-        hier zum Vergleich untereinander, bis Iwo einen ausgewählt hat.
-        Danach fliegt der andere raus — zusammen mit dem alten Band in
+    {/* VORLÄUFIG: vier Entwürfe für die Verlinkung zum Rechner stehen
+        hier zum Vergleich untereinander (A Sanduhr, B Tagesbalken,
+        C Kostenuhr, D Lücke im Team), bis Iwo einen ausgewählt hat.
+        Danach fliegen die anderen raus — zusammen mit dem alten Band in
         RechnerBand.astro, das bis dahin als Rückfallebene liegen bleibt. */}
     <RechnerBandSanduhr />
     <RechnerBandTage />
+    <RechnerBandUhr />
+    <RechnerBandTeam />
     <SystemSchritte
       eyebrow="Der Meistermagnet"
       titelVorn="Unser "

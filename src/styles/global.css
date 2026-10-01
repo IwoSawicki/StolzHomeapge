@@ -365,6 +365,17 @@
      die Verzögerung steht als Inline-Stil am Balken. */
   --animate-tagesbalken: tagesbalken 7s ease-in-out infinite;
 
+  /* Rechner-Band, Entwurf „Kostenuhr": Zeiger und roter Bogen laufen im
+     selben Takt einmal herum, danach blendet der Bogen aus und die Runde
+     beginnt neu. */
+  --animate-uhr-bogen: uhr-bogen 8s linear infinite;
+  --animate-uhr-zeiger: uhr-zeiger 8s linear infinite;
+
+  /* Rechner-Band, Entwurf „Lücke im Team": der leere Platz pulsiert, die
+     Nachbarn heben sich versetzt — sie tragen mit. */
+  --animate-luecke: luecke 2.4s ease-in-out infinite;
+  --animate-mittragen: mittragen 2.4s ease-in-out infinite;
+
   @keyframes marquee {
     from {
       transform: translateX(0);
@@ -438,6 +449,51 @@
     }
     100% {
       transform: scaleY(0.08);
+    }
+  }
+  /* 327 ist der Umfang des Bogens (2π · 52). Bis 86 % läuft er voll,
+     bis 94 % steht er, dann blendet er aus — so springt er nicht
+     sichtbar von voll auf leer. */
+  @keyframes uhr-bogen {
+    0% {
+      stroke-dashoffset: 327;
+      opacity: 1;
+    }
+    86%,
+    94% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: 0;
+      opacity: 0;
+    }
+  }
+  @keyframes uhr-zeiger {
+    0% {
+      transform: rotate(0deg);
+    }
+    86%,
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes luecke {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  @keyframes mittragen {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
     }
   }
   @keyframes floaty {
