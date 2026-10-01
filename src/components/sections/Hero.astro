@@ -54,7 +54,10 @@ const poster = await getImage({
       und ihren Betrieb online so zeigen wollen, wie er wirklich ist.
     </p>
 
-    {/* Beide Buttons liegen nebeneinander und brechen erst unter 390px um */}
+    {/* Beide Buttons liegen nebeneinander und brechen erst unter 390px um.
+        Unter 720px stehen sie in 14px nebeneinander; dort brach „Neue
+        Mitarbeiter einstellen" auf zwei Zeilen. Deshalb gibt es dort die
+        Kurzform ohne „Neue" (Entscheidung Iwo, 01.10.2026). */}
     <div
       class="flex w-full max-w-560 flex-wrap justify-center gap-10 hero:flex-nowrap"
     >
@@ -67,7 +70,9 @@ const poster = await getImage({
           class="pointer-events-none absolute inset-y-0 left-0 w-[45%] animate-sheen"
           style="background: linear-gradient(100deg, rgb(228 245 63 / 0) 0%, rgb(228 245 63 / 0.22) 50%, rgb(228 245 63 / 0) 100%)"
         ></span>
-        Neue Aufträge gewinnen
+        <span class="btn:hidden">Aufträge gewinnen</span><span class="hidden btn:inline"
+          >Neue Aufträge gewinnen</span
+        >
       </a>
       <a
         href="/mitarbeiter-gewinnen"
@@ -78,7 +83,9 @@ const poster = await getImage({
           class="pointer-events-none absolute inset-y-0 left-0 w-[45%] animate-sheen"
           style="background: linear-gradient(100deg, rgb(228 245 63 / 0) 0%, rgb(228 245 63 / 0.22) 50%, rgb(228 245 63 / 0) 100%)"
         ></span>
-        Neue Mitarbeiter einstellen
+        <span class="btn:hidden">Mitarbeiter gewinnen</span><span class="hidden btn:inline"
+          >Neue Mitarbeiter einstellen</span
+        >
       </a>
     </div>
 
