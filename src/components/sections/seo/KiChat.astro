@@ -1,0 +1,198 @@
+---
+/* Angedeuteter KI-Chat für den Kopf der SEO-Seite.
+
+   Drei Gespräche aus drei Branchen laufen nacheinander ab: Frage,
+   Tipp-Punkte, Antwort, kurze Pause, dann die nächste Frage darunter.
+   Ältere Nachrichten wandern wie in einem echten Chat oben aus dem
+   Fenster und blenden dort aus. Nach dem dritten Gespräch blendet der
+   Verlauf aus und beginnt von vorn.
+
+   Die erste Frage mit Antwort steht fest im HTML. Ohne JavaScript oder
+   bei eingestellter Bewegungsreduzierung bleibt genau das stehen — der
+   Chat ist dann ein ruhiges Bild statt einer Schleife.
+
+   Text kommt nur aus den eigenen Daten und wird trotzdem per textContent
+   gesetzt; „Ihr Betrieb" steht als eigener Marker-Span. */
+import { chat } from '../../../data/seo-ki-sichtbarkeit';
+
+const erstes = chat.gespraeche[0]!;
+const frageKlasse =
+  'm-0 max-w-[85%] self-end rounded-16 rounded-br-4 bg-forest-card px-16 py-12 text-16 leading-body text-cream';
+const antwortKlasse =
+  'm-0 rounded-16 rounded-tl-4 bg-paper px-16 py-12 text-16 leading-body text-ink';
+const sternPfad = 'M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z';
+---
+
+<figure class="m-0 flex flex-col gap-12" data-ki-chat>
+  <div class="flex h-400 flex-col overflow-hidden rounded-20 border border-edge bg-forest-deep btn:h-420">
+    {/* Kopfzeile des Chatfensters */}
+    <div class="flex items-center gap-10 border-b border-edge px-18 py-14">
+      <span class="flex h-26 w-26 items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
+        <svg viewBox="0 0 24 24" class="w-14" fill="currentColor"><path d={sternPfad} /></svg>
+      </span>
+      <span class="font-mono text-12 tracking-eyebrow uppercase text-mint">{chat.kopf}</span>
+      <span class="ml-auto h-8 w-8 rounded-full bg-lime" aria-hidden="true"></span>
+    </div>
+
+    {/* Verlauf: unten verankert, oben ausgeblendet */}
+    <div
+      class="relative flex-1 overflow-hidden"
+      style="-webkit-mask-image: linear-gradient(to bottom, transparent 0, black 64px); mask-image: linear-gradient(to bottom, transparent 0, black 64px)"
+    >
+      <div
+        class="absolute inset-x-0 bottom-0 flex flex-col gap-14 p-[clamp(14px,3vw,22px)] transition-opacity duration-500"
+        data-verlauf
+        aria-live="off"
+      >
+        <p class={frageKlasse}>{erstes.frage}</p>
+        <div class="flex items-start gap-10">
+          <span class="flex h-30 w-30 flex-none items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="w-16" fill="currentColor"><path d={sternPfad} /></svg>
+          </span>
+          <p class:list={[antwortKlasse, 'min-w-0 flex-1']}>
+            {erstes.antwortVorn}<span class="marker font-bold">{chat.name}</span>{erstes.antwortHinten}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figcaption class="text-13 text-mint-dim">{chat.hinweis}</figcaption>
+
+  <script
+    type="application/json"
+    data-gespraeche
+    set:html={JSON.stringify({ name: chat.name, gespraeche: chat.gespraeche, frageKlasse, antwortKlasse, sternPfad })}
+  />
+</figure>
+
+<style>
+  :global(.chat-neu) {
+    animation: chat-rein 0.5s ease-out both;
+  }
+  @keyframes chat-rein {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  :global(.chat-punkt) {
+    animation: chat-punkt 1s ease-in-out infinite;
+  }
+  @keyframes chat-punkt {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+</style>
+
+<script>
+  interface Gespraech {
+    frage: string;
+    antwortVorn: string;
+    antwortHinten: string;
+  }
+  const chat = document.querySelector<HTMLElement>('[data-ki-chat]');
+  const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (chat && !ruhig) {
+    const verlauf = chat.querySelector<HTMLElement>('[data-verlauf]')!;
+    const daten = JSON.parse(chat.querySelector('[data-gespraeche]')!.textContent || '{}') as {
+      name: string;
+      gespraeche: Gespraech[];
+      frageKlasse: string;
+      antwortKlasse: string;
+      sternPfad: string;
+    };
+
+    const warte = (ms: number) => new Promise((fertig) => setTimeout(fertig, ms));
+    const SVG = 'http://www.w3.org/2000/svg';
+
+    const avatar = () => {
+      const kreis = document.createElement('span');
+      kreis.className = 'flex h-30 w-30 flex-none items-center justify-center rounded-full bg-lime text-forest-deep';
+      kreis.setAttribute('aria-hidden', 'true');
+      const svg = document.createElementNS(SVG, 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('class', 'w-16');
+      svg.setAttribute('fill', 'currentColor');
+      const pfad = document.createElementNS(SVG, 'path');
+      pfad.setAttribute('d', daten.sternPfad);
+      svg.append(pfad);
+      kreis.append(svg);
+      return kreis;
+    };
+
+    const zeile = (inhalt: HTMLElement) => {
+      const reihe = document.createElement('div');
+      reihe.className = 'chat-neu flex items-start gap-10';
+      reihe.append(avatar(), inhalt);
+      return reihe;
+    };
+
+    /* Ältere Nachrichten fallen aus dem DOM, sobald sie weit genug oben
+       aus dem Fenster gewandert sind — der Verlauf wächst nicht endlos. */
+    const aufraeumen = () => {
+      while (verlauf.children.length > 6) verlauf.firstElementChild!.remove();
+    };
+
+    const gespraech = async (g: Gespraech) => {
+      const frage = document.createElement('p');
+      frage.className = `${daten.frageKlasse} chat-neu`;
+      frage.textContent = g.frage;
+      verlauf.append(frage);
+      aufraeumen();
+      await warte(800);
+
+      const tippen = document.createElement('span');
+      tippen.className = 'flex gap-5 rounded-16 rounded-tl-4 bg-paper px-16 py-16';
+      for (let i = 0; i < 3; i++) {
+        const punkt = document.createElement('span');
+        punkt.className = 'chat-punkt h-7 w-7 rounded-full bg-ink-faint';
+        punkt.style.animationDelay = `${i * 0.15}s`;
+        tippen.append(punkt);
+      }
+      const tippZeile = zeile(tippen);
+      verlauf.append(tippZeile);
+      await warte(1600);
+      tippZeile.remove();
+
+      const antwort = document.createElement('p');
+      antwort.className = `${daten.antwortKlasse} min-w-0 flex-1`;
+      const name = document.createElement('span');
+      name.className = 'marker font-bold';
+      name.textContent = daten.name;
+      antwort.append(g.antwortVorn, name, g.antwortHinten);
+      verlauf.append(zeile(antwort));
+      aufraeumen();
+      await warte(4200);
+    };
+
+    /* Das erste Gespräch steht schon da. Danach geht es nahtlos mit dem
+       zweiten darunter weiter; erst nach dem letzten blendet der Verlauf
+       aus und beginnt wieder beim ersten. */
+    const schleife = async () => {
+      await warte(3000);
+      let ab = 1;
+      for (;;) {
+        for (let i = ab; i < daten.gespraeche.length; i++) await gespraech(daten.gespraeche[i]!);
+        verlauf.style.opacity = '0';
+        await warte(500);
+        verlauf.replaceChildren();
+        verlauf.style.opacity = '1';
+        ab = 0;
+      }
+    };
+
+    schleife();
+  }
+</script>

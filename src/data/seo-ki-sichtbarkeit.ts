@@ -204,11 +204,48 @@ export const ki = {
     'Strukturierte Daten, damit Maschinen Leistungen, Ort und Bewertungen lesen können',
     'Gleiche Firmendaten auf Webseite, Google-Profil und Verzeichnissen',
   ],
-  frage: 'Welcher Malerbetrieb an der Bergstraße macht Fassaden?',
-  antwortVorn: 'An der Bergstraße bietet zum Beispiel ',
-  antwortName: 'Ihr Betrieb',
-  antwortHinten: ' Fassadenanstrich, Putz und Dämmung aus einer Hand an — mit eigener Fassaden-Seite, Referenzen aus der Region und guten Bewertungen.',
-  beispielHinweis: 'Beispiel, wie eine KI-Antwort aussehen kann — keine Zusage.',
+  /* Angedeutetes Google-Ergebnis mit KI-Übersicht. Stand zuerst im Kopf;
+     dort läuft jetzt der Chat, das Suchergebnis passt hierher zum Satz
+     über Googles KI-Übersichten. */
+  suche: {
+    begriff: 'fassade streichen bergstraße',
+    treffer: 'Ihr Betrieb — Fassade streichen an der Bergstraße',
+    adresse: 'ihr-betrieb.de › fassade',
+  },
+  sucheHinweis: 'Andeutung, wie ein Suchergebnis aussehen kann — keine Zusage.',
+};
+
+/* --- KI-Chat im Kopf --------------------------------------------------------
+   Drei Gespräche aus drei Branchen, die im Kopf nacheinander ablaufen und
+   dann von vorn beginnen (Wunsch Iwo). Genannt wird immer „Ihr Betrieb",
+   nie ein echter Name. Die Antworten sind Beispiele, wie eine KI einen
+   Betrieb mit guter Webseite beschreiben kann — der Hinweis darunter sagt
+   das. */
+
+export const chat = {
+  kopf: 'KI-Assistent',
+  name: 'Ihr Betrieb',
+  hinweis: 'Beispiele, wie KI-Antworten aussehen können — keine Zusage.',
+  gespraeche: [
+    {
+      frage: 'Welcher Malerbetrieb an der Bergstraße macht Fassaden?',
+      antwortVorn: 'An der Bergstraße bietet zum Beispiel ',
+      antwortHinten:
+        ' Fassadenanstrich, Putz und Dämmung aus einer Hand an — mit eigener Fassaden-Seite, Referenzen aus der Region und guten Bewertungen.',
+    },
+    {
+      frage: 'Kannst du mir einen guten Handwerker in Weinheim empfehlen?',
+      antwortVorn: 'Für Weinheim passt zum Beispiel ',
+      antwortHinten:
+        ' mit Sanierung und Renovierung aus einer Hand, kurzer Anfahrt und vielen guten Bewertungen von Kunden aus der Gegend.',
+    },
+    {
+      frage: 'Welche Umzugsfirma an der Bergstraße ist zuverlässig?',
+      antwortVorn: 'Eine gute Wahl an der Bergstraße ist zum Beispiel ',
+      antwortHinten:
+        ' — mit Besichtigung vor dem Angebot, eigenem Team und vielen Bewertungen von Umzügen in der Region.',
+    },
+  ],
 };
 
 /* --- FAQ ------------------------------------------------------------------- */

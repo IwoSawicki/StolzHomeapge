@@ -1,13 +1,20 @@
 ---
 /* „Auch ChatGPT & Co. empfehlen Betriebe": dunkles Band, links Text und
-   drei Punkte, rechts ein angedeuteter KI-Chat.
+   drei Punkte, rechts ein angedeutetes Google-Ergebnis mit KI-Übersicht
+   und „Ihr Betrieb" auf Platz eins.
 
-   Der Chat ist ausdrücklich ein Beispiel („Ihr Betrieb" statt eines
-   Namens) und trägt den Hinweis, dass er keine Zusage ist. Er spielt
-   einmal ab, sobald er ins Bild kommt: erst die Frage, dann drei Punkte
-   wie beim Tippen, dann die Antwort. Ohne Bewegung steht er fertig da. */
+   Hier stand zuerst ein KI-Chat; der läuft jetzt im Kopf der Seite (als
+   Schleife über drei Branchen). Das Suchergebnis passt hierher zum Satz
+   über Googles KI-Übersichten.
+
+   Keine Namen anderer Betriebe, die übrigen Treffer sind Platzhalter.
+   Sobald die Grafik ins Bild kommt, bauen sich die Zeilen der
+   KI-Übersicht nacheinander auf und „Ihr Betrieb" leuchtet kurz auf.
+   Ohne Skript oder ohne Bewegung steht alles fertig da. */
 import Eyebrow from '../../Eyebrow.astro';
 import { ki } from '../../../data/seo-ki-sichtbarkeit';
+
+const zeile = 'block h-8 rounded-full bg-edge';
 ---
 
 <section class="relative overflow-hidden bg-forest px-page-x py-section-y-md">
@@ -43,89 +50,103 @@ import { ki } from '../../../data/seo-ki-sichtbarkeit';
       </ul>
     </div>
 
-    {/* --- angedeuteter KI-Chat --- */}
-    <figure class="m-0 flex flex-1 basis-[min(420px,100%)] flex-col gap-12" data-chat>
-      <div class="flex flex-col gap-14 rounded-20 border border-edge bg-forest-deep p-[clamp(16px,3vw,24px)]">
-        {/* Frage */}
-        <p class="chat-frage m-0 max-w-[85%] self-end rounded-16 rounded-br-4 bg-forest-card px-16 py-12 text-16 leading-body text-cream">
-          {ki.frage}
-        </p>
+    {/* --- angedeutetes Suchergebnis --- */}
+    <figure class="m-0 flex flex-1 basis-[min(420px,100%)] flex-col gap-12" data-suche>
+      <div class="flex flex-col gap-12" aria-hidden="true">
+        {/* Suchfeld */}
+        <div class="flex items-center gap-12 rounded-full bg-paper px-20 py-14 shadow-card-light">
+          <svg viewBox="0 0 24 24" class="w-18 flex-none text-ink-faint" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" />
+          </svg>
+          <span class="truncate text-16 text-ink">{ki.suche.begriff}</span>
+        </div>
 
-        {/* Antwort */}
-        <div class="flex items-start gap-10">
-          <span class="flex h-30 w-30 flex-none items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="w-16" fill="currentColor">
+        {/* KI-Übersicht */}
+        <div class="flex flex-col gap-10 rounded-20 border border-edge bg-forest-card p-18">
+          <span class="flex items-center gap-8 font-mono text-11 tracking-eyebrow uppercase text-lime">
+            <svg viewBox="0 0 24 24" class="w-14" fill="currentColor">
               <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" />
             </svg>
+            KI-Übersicht
           </span>
-          <div class="relative min-w-0 flex-1">
-            <span class="chat-tippen absolute top-12 left-16 flex gap-4" aria-hidden="true">
-              <span class="h-6 w-6 rounded-full bg-mint"></span>
-              <span class="h-6 w-6 rounded-full bg-mint"></span>
-              <span class="h-6 w-6 rounded-full bg-mint"></span>
+          <span class:list={[zeile, 'seo-zeile w-[92%]']} style="--verzug: 0s"></span>
+          <span class:list={[zeile, 'seo-zeile w-[78%]']} style="--verzug: 0.25s"></span>
+          <span class="seo-zeile flex flex-wrap items-center gap-8" style="--verzug: 0.5s">
+            <span class:list={[zeile, 'w-[24%]']}></span>
+            <span class="seo-betrieb rounded-6 bg-lime px-8 py-2 text-13 font-bold text-forest-deep">Ihr Betrieb</span>
+            <span class:list={[zeile, 'w-[30%]']}></span>
+          </span>
+          <span class:list={[zeile, 'seo-zeile w-[64%]']} style="--verzug: 0.75s"></span>
+        </div>
+
+        {/* Treffer */}
+        <div class="flex flex-col gap-8 rounded-20 bg-paper p-18 shadow-card-light">
+          <div class="flex items-center gap-12 rounded-12 bg-lime/25 px-12 py-10">
+            <span class="flex h-26 w-26 flex-none items-center justify-center rounded-full bg-forest text-12 font-bold text-lime">1</span>
+            <span class="flex min-w-0 flex-col gap-2">
+              <span class="truncate text-15 font-bold text-ink">{ki.suche.treffer}</span>
+              <span class="truncate text-12 text-ink-muted">{ki.suche.adresse}</span>
             </span>
-            <p class="chat-antwort m-0 rounded-16 rounded-tl-4 bg-paper px-16 py-12 text-16 leading-body text-ink">
-              {ki.antwortVorn}<span class="marker font-bold">{ki.antwortName}</span>{ki.antwortHinten}
-            </p>
           </div>
+          {[2, 3].map((platz) => (
+            <div class="flex items-center gap-12 px-12 py-10">
+              <span class="flex h-26 w-26 flex-none items-center justify-center rounded-full bg-paper-grey text-12 font-bold text-ink-faint">{platz}</span>
+              <span class="flex flex-1 flex-col gap-6">
+                <span class="block h-8 w-[70%] rounded-full bg-line"></span>
+                <span class="block h-6 w-[40%] rounded-full bg-paper-grey"></span>
+              </span>
+            </div>
+          ))}
         </div>
       </div>
-      <figcaption class="text-13 text-mint-dim">{ki.beispielHinweis}</figcaption>
+      <figcaption class="text-13 text-mint-dim">{ki.sucheHinweis}</figcaption>
     </figure>
   </div>
 </section>
 
 <style>
-  /* Grundzustand ohne Skript: alles sichtbar. Erst wenn das Skript die
-     Abspielklasse setzt, startet die Folge Frage → Tippen → Antwort. */
-  [data-chat].spielt .chat-frage {
-    animation: chat-rein 0.5s ease-out both;
+  /* Grundzustand: alles sichtbar. Erst die Klasse „spielt" startet den
+     Aufbau — einmalig, sobald die Grafik ins Bild kommt. */
+  [data-suche].spielt .seo-zeile {
+    animation: seo-zeile-auf 0.6s ease-out both;
+    animation-delay: calc(0.2s + var(--verzug));
+    transform-origin: left center;
   }
-  [data-chat].spielt .chat-tippen {
-    animation: chat-tippen 1.6s ease-in-out 0.6s both;
+  [data-suche].spielt .seo-betrieb {
+    animation: seo-betrieb-leuchten 1.2s ease-out 1.3s both;
   }
-  [data-chat].spielt .chat-antwort {
-    animation: chat-rein 0.6s ease-out 2.1s both;
-  }
-  .chat-tippen {
-    opacity: 0;
-  }
-  @keyframes chat-rein {
+  @keyframes seo-zeile-auf {
     from {
       opacity: 0;
-      transform: translateY(8px);
+      transform: scaleX(0.4);
     }
     to {
       opacity: 1;
-      transform: none;
+      transform: scaleX(1);
     }
   }
-  @keyframes chat-tippen {
+  @keyframes seo-betrieb-leuchten {
     0% {
-      opacity: 0;
-    }
-    15%,
-    85% {
-      opacity: 1;
+      box-shadow: 0 0 0 0 rgb(228 245 63 / 0.7);
     }
     100% {
-      opacity: 0;
+      box-shadow: 0 0 0 14px rgb(228 245 63 / 0);
     }
   }
 </style>
 
 <script>
-  const chat = document.querySelector<HTMLElement>('[data-chat]');
-  if (chat && 'IntersectionObserver' in window) {
+  const suche = document.querySelector<HTMLElement>('[data-suche]');
+  if (suche && 'IntersectionObserver' in window) {
     const beobachter = new IntersectionObserver(
       (eintraege) => {
         if (eintraege.some((e) => e.isIntersecting)) {
-          chat.classList.add('spielt');
+          suche.classList.add('spielt');
           beobachter.disconnect();
         }
       },
-      { threshold: 0.5 },
+      { threshold: 0.4 },
     );
-    beobachter.observe(chat);
+    beobachter.observe(suche);
   }
 </script>
