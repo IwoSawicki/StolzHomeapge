@@ -1,0 +1,217 @@
+---
+/* „Vorauswahl": wie das Bewerbungsformular aussortiert.
+
+   Links der Ablauf als Bild: eine Frage mit Ja und Nein, bei Nein die
+   Absage, bei Ja die nächste Frage. Im Wechsel ist einer der beiden Wege
+   aktiv: die gewählte Antwort füllt sich gelb mit Haken, die andere steht
+   grau und ohne Farbe da, und der nicht genommene Weg tritt zurück. So
+   liest sich die Verzweigung, ohne dass man etwas anklicken muss. Ohne
+   Bewegung (prefers-reduced-motion) steht der Ja-Weg gewählt da.
+
+   Zweite Fassung (Wunsch Iwo: „moderner"). Statt grauer Kacheln mit
+   Balken unten jetzt große, runde Auswahlzeilen wie in heutigen
+   Handy-Formularen, ein dünner Fortschrittsbalken, geschwungene
+   Verbindungen statt gestrichelter Pfeile und ein Punkteraster als
+   Arbeitsfläche, auf der die Karten schweben.
+
+   Unter 720px stehen die Teile untereinander. Dann kommt der Ja-Weg
+   zuerst, und beide Zweige sagen ausdrücklich, worauf sie antworten —
+   in DOM-Reihenfolge hätte „Ja" sonst wie eine Antwort auf die Absage
+   darüber gewirkt. Ab 720px stellt order-none die Rasterfolge wieder her.
+
+   Die Grafik ist ein Bild, kein Formular: nichts davon ist bedienbar,
+   deshalb aria-hidden. Was sie zeigt, steht auch im Text. */
+import Eyebrow from '../../Eyebrow.astro';
+import { vorauswahl as v } from '../../../data/mitarbeiter-gewinnen';
+
+const karte = 'rounded-20 bg-paper shadow-card-light ring-1 ring-line';
+const zeile =
+  'relative flex items-center gap-12 overflow-hidden rounded-14 border border-line bg-paper px-14 py-12';
+---
+
+{/* Haken, wiederverwendet in den Auswahlzeilen */}
+<svg width="0" height="0" class="absolute" aria-hidden="true">
+  <symbol id="vorauswahl-haken" viewBox="0 0 24 24">
+    <path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
+</svg>
+
+<section class="bg-paper px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-wrap items-center gap-x-64 gap-y-48">
+    {/* --- Ablauf --- */}
+    <div
+      class="punktraster relative flex-1 basis-[min(580px,100%)] overflow-hidden rounded-band p-[clamp(20px,4vw,40px)]"
+      aria-hidden="true"
+    >
+      {/* weicher Schein hinter der ersten Frage */}
+      <div
+        class="pointer-events-none absolute top-1/2 left-[22%] h-260 w-260 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-[70px]"
+        style="background: radial-gradient(circle, var(--color-lime) 0%, transparent 70%)"
+      >
+      </div>
+
+      <div
+        class="relative grid grid-cols-1 items-center gap-14 btn:grid-cols-[minmax(0,1.1fr)_64px_minmax(0,1fr)] btn:gap-x-0 btn:gap-y-20"
+      >
+        {/* Frage 1: steht links über beide Zeilen */}
+        <div class:list={[karte, 'order-1 flex flex-col gap-16 p-18 btn:order-none btn:row-span-2 btn:p-22']}>
+          <div class="flex items-center justify-between gap-12">
+            <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{v.marke}</span>
+            <span class="h-6 w-80 overflow-hidden rounded-full bg-line">
+              <span class="block h-full w-2/5 rounded-full bg-forest"></span>
+            </span>
+          </div>
+          <p class="m-0 text-18 leading-card font-bold tracking-name text-ink">{v.frage1}</p>
+          <div class="flex flex-col gap-10">
+            {/* Ja */}
+            <div class:list={[zeile, 'animate-pfad-ja']}>
+              <span class="animate-wahl-ja absolute inset-0 bg-lime"></span>
+              <span class="relative h-26 w-26 flex-none">
+                <span class="absolute inset-0 rounded-full border-2 border-ink-faint"></span>
+                <svg class="animate-wahl-ja absolute inset-0 h-full w-full rounded-full bg-forest-deep p-5 text-lime">
+                  <use href="#vorauswahl-haken" />
+                </svg>
+              </span>
+              <span class="relative text-16 font-bold text-ink">Ja</span>
+            </div>
+            {/* Nein */}
+            <div class:list={[zeile, 'animate-pfad-nein']}>
+              <span class="animate-wahl-nein absolute inset-0 bg-lime opacity-0"></span>
+              <span class="relative h-26 w-26 flex-none">
+                <span class="absolute inset-0 rounded-full border-2 border-ink-faint"></span>
+                <svg class="animate-wahl-nein absolute inset-0 h-full w-full rounded-full bg-forest-deep p-5 text-lime opacity-0">
+                  <use href="#vorauswahl-haken" />
+                </svg>
+              </span>
+              <span class="relative text-16 font-bold text-ink">Nein</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Verbindung „Nein": von der Mitte der Frage nach oben rechts */}
+        <div class="animate-pfad-nein order-4 flex items-center gap-10 btn:order-none btn:h-full btn:self-stretch">
+          <svg viewBox="0 0 64 100" preserveAspectRatio="none" class="hidden h-full w-full btn:block">
+            <path
+              class="animate-fluss stroke-ink-faint"
+              d="M0 100 C 34 100, 30 50, 64 50"
+              fill="none"
+              stroke-width="2"
+              stroke-dasharray="5 7"
+              vector-effect="non-scaling-stroke"
+            />
+          </svg>
+          <span class="ml-20 h-20 w-2 rounded-full bg-line-strong btn:hidden"></span>
+          <span class="rounded-full bg-paper px-10 py-4 font-mono text-11 tracking-eyebrow uppercase text-ink-muted ring-1 ring-line btn:hidden">
+            {v.zweigNein}
+          </span>
+        </div>
+
+        {/* Absage */}
+        <div class:list={[karte, 'relative order-5 btn:order-none']}>
+          <div class="animate-pfad-nein flex items-start gap-12 p-16">
+          <span class="flex h-34 w-34 flex-none items-center justify-center rounded-full bg-schaden/15 text-schaden-soft">
+            <svg viewBox="0 0 24 24" class="w-16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+              <path d="M7 7l10 10M17 7L7 17" />
+            </svg>
+          </span>
+          <div class="flex flex-col gap-4">
+            <p class="m-0 text-15 font-bold text-ink">{v.absageTitel}</p>
+            <p class="m-0 text-14 leading-body text-ink-muted">{v.absageText}</p>
+          </div>
+          </div>
+          {/* Zweig-Marke an der Kante, nur breit */}
+          <span class="animate-pfad-nein absolute -top-10 left-16 hidden rounded-full bg-paper px-10 py-3 font-mono text-11 tracking-eyebrow uppercase text-ink-muted ring-1 ring-line btn:block">Nein</span>
+        </div>
+
+        {/* Verbindung „Ja": von der Mitte der Frage nach unten rechts */}
+        <div class="animate-pfad-ja order-2 flex items-center gap-10 btn:order-none btn:h-full btn:self-stretch">
+          <svg viewBox="0 0 64 100" preserveAspectRatio="none" class="hidden h-full w-full btn:block">
+            <path
+              class="animate-fluss stroke-ink-faint"
+              d="M0 0 C 34 0, 30 50, 64 50"
+              fill="none"
+              stroke-width="2"
+              stroke-dasharray="5 7"
+              vector-effect="non-scaling-stroke"
+            />
+          </svg>
+          <span class="ml-20 h-20 w-2 rounded-full bg-line-strong btn:hidden"></span>
+          <span class="rounded-full bg-paper px-10 py-4 font-mono text-11 tracking-eyebrow uppercase text-ink-muted ring-1 ring-line btn:hidden">
+            {v.zweigJa}
+          </span>
+        </div>
+
+        {/* Frage 2: Karte bleibt deckend, nur der Inhalt verblasst — sonst
+            schiene das Punkteraster durch die Karte. */}
+        <div class:list={[karte, 'relative order-3 btn:order-none']}>
+          <div class="animate-pfad-ja flex flex-col gap-12 p-18">
+            <div class="flex items-center justify-between gap-12">
+              <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{v.marke}</span>
+              <span class="h-6 w-80 overflow-hidden rounded-full bg-line">
+                <span class="block h-full w-3/5 rounded-full bg-forest"></span>
+              </span>
+            </div>
+            <p class="m-0 text-16 leading-card font-bold tracking-name text-ink">{v.frage2}</p>
+            <div class="flex flex-col gap-6">
+              {
+                v.antworten2.map((antwort, i) => (
+                  <div class="relative flex items-center gap-10 overflow-hidden rounded-12 border border-line bg-paper px-12 py-8">
+                    {/* Eine Antwort ist gewählt, solange der Ja-Weg aktiv ist */}
+                    {i === v.gewaehlt2 && <span class="animate-wahl-ja absolute inset-0 bg-lime" />}
+                    <span class="relative h-18 w-18 flex-none">
+                      <span class="absolute inset-0 rounded-full border-2 border-ink-faint" />
+                      {i === v.gewaehlt2 && (
+                        <svg class="animate-wahl-ja absolute inset-0 h-full w-full rounded-full bg-forest-deep p-3 text-lime">
+                          <use href="#vorauswahl-haken" />
+                        </svg>
+                      )}
+                    </span>
+                    <span class="relative flex-1 text-14 font-bold text-ink">{antwort}</span>
+                    {/* Treppe aus ein bis vier Stufen für die Jahre */}
+                    <span class="relative flex h-14 flex-none items-end gap-2">
+                      {[0, 1, 2, 3].map((stufe) => (
+                        <span
+                          class:list={['w-3 rounded-full', stufe <= i ? 'bg-ink-muted' : 'bg-line-strong']}
+                          style={`height:${4 + stufe * 3}px`}
+                        />
+                      ))}
+                    </span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+          <span class="animate-pfad-ja absolute -top-10 left-16 hidden rounded-full bg-paper px-10 py-3 font-mono text-11 tracking-eyebrow uppercase text-ink-muted ring-1 ring-line btn:block">Ja</span>
+        </div>
+      </div>
+    </div>
+
+    {/* --- Text --- */}
+    <div class="flex flex-1 basis-[min(420px,100%)] flex-col items-start gap-20">
+      <Eyebrow variante="hell">{v.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        {v.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{v.titelKursiv}</span
+        >{v.titelHinten}
+      </h2>
+      {v.absaetze.map((absatz) => <p class="m-0 text-18 leading-prose text-ink-quiet">{absatz}</p>)}
+      <ul class="m-0 mt-4 flex list-none flex-col gap-12 p-0">
+        {
+          v.punkte.map((punkt) => (
+            <li class="flex items-start gap-12 text-17 leading-body text-ink">
+              <span
+                class="mt-2 flex h-22 w-22 flex-none items-center justify-center rounded-full bg-lime text-forest-deep"
+                aria-hidden="true"
+              >
+                <svg class="h-12 w-12">
+                  <use href="#vorauswahl-haken" />
+                </svg>
+              </span>
+              {punkt}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

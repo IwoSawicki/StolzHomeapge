@@ -8,6 +8,9 @@
    (hell) · 6 Stellen (hell) · 8 FAQ (hell) · 9 Abschluss (dunkel, ein Band
    mit dem Footer).
 
+   Nach dem Handoff dazugekommen (siehe docs/ABWEICHUNGEN.md): das grüne
+   Band zum Vakanzkosten-Rechner zwischen Ausgangslage und Prozess.
+
    Sektion 7 (Referenzfälle) ist im Handoff gesperrt und wird bewusst nicht
    angelegt — auch nicht als Platzhalter. */
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -18,6 +21,7 @@ import Ausgangslage from '../components/sections/mitarbeiter/Ausgangslage.astro'
 import RechnerBand from '../components/sections/mitarbeiter/RechnerBand.astro';
 import SystemSchritte from '../components/sections/leistung/SystemSchritte.astro';
 import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
+import Vorauswahl from '../components/sections/mitarbeiter/Vorauswahl.astro';
 import Vergleich from '../components/sections/mitarbeiter/Vergleich.astro';
 import Stellen from '../components/sections/mitarbeiter/Stellen.astro';
 import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
@@ -74,6 +78,8 @@ const anfrageFelder: Feld[] = [
       schritte={systemSchritte}
       nachsatz={systemNachsatz}
     />
+    {/* Vertieft Schritt 3 des Prozesses: wie das Formular aussortiert */}
+    <Vorauswahl />
     <Leistungsumfang
       eyebrow="Leistungsumfang"
       titelVorn="Was am Ende "

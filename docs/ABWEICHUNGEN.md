@@ -1333,3 +1333,18 @@ Umgebungsvariable `PUBLIC_PAGESPEED_KEY` in `/website-check-key.js`;
 hilfsweise kommt er beim Build. Die Datenschutzerklärung hat dafür einen
 eigenen Abschnitt bekommen. Im Footer ist der Eintrag nicht mehr
 ausgegraut.
+
+---
+
+## Meistermagnet: Sektion „Vorauswahl" (01.10.2026, live)
+
+Neu, nicht aus der Vorlage. Steht direkt nach „Unser Prozess" und
+vertieft dessen dritten Schritt. Der Aufbau folgt einem Beispiel, das Iwo
+geliefert hat: links der Ablauf eines Bewerbungsformulars als animiertes
+Bild, rechts Überschrift, Text und drei Punkte. Im Wechsel ist der Ja-
+oder der Nein-Weg aktiv; die gewählte Antwort ist gelb, die andere grau.
+Ohne Bewegung steht der Ja-Weg gewählt da. Unter 720px kommt der Ja-Weg
+zuerst, und die Zweige heißen „Führerschein: ja/nein".
+
+Die Texte hat Iwo mit dem Live-Gang freigegeben, darunter die „freundliche
+Absage" und „Die Fragen legen wir mit Ihnen fest".
