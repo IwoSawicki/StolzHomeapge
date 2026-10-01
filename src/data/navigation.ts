@@ -38,14 +38,6 @@ export const footerMenue: NavLink[] = [
   { label: 'Startseite', href: '/' },
   { label: 'Kunden gewinnen', href: '/kunden-gewinnen' },
   { label: 'Mitarbeiter gewinnen', href: '/mitarbeiter-gewinnen' },
-  /* Zwei weitere Leistungen, die im Aufbau sind (Stand 01.10.2026).
-     Sie standen zuerst als „Social Media Agentur" und „KI Ranking" unter
-     „Leistungen vor Ort" — dort gehören sie nicht hin, es sind keine
-     Ortsseiten. Die Namen tragen bewusst die Suchbegriffe, weil der
-     Linktext im Footer für Google mitzählt. Ausgegraut, bis Iwo die
-     Seiten freigibt. */
-  { label: 'Social-Media-Marketing', href: '/social-media-marketing', nochNicht: true },
-  { label: 'SEO & KI-Sichtbarkeit', href: '/seo-ki-sichtbarkeit', nochNicht: true },
   { label: 'Projekte', href: '/projekte' },
   { label: 'Über uns', href: '/ueber-uns' },
   { label: 'Kontakt', href: '/kontakt' },
@@ -105,6 +97,15 @@ export const footerStandorte: NavLink[] = [
   { label: 'SEO Bergstraße', href: '/seo-bergstrasse', nochNicht: true },
   { label: 'Online-Marketing Bensheim', href: '/online-marketing-bensheim', nochNicht: true },
   { label: 'Website-Betreuung Bensheim', href: '/website-betreuung-bensheim', nochNicht: true },
+
+  /* Zwei Leistungsseiten im Entwurf (Stand 01.10.2026), hier auf Wunsch
+     von Iwo. Die Namen tragen die Suchbegriffe, weil der Linktext im
+     Footer für Google mitzählt. Auf dev verlinkt, damit Iwo sie
+     anklicken kann; die Seiten selbst tragen noch noindex.
+     ACHTUNG beim Live-Gang dieser Datei: nur mit den Seiten zusammen,
+     sonst zeigen die Links auf 404. */
+  { label: 'Social-Media-Marketing', href: '/social-media-marketing' },
+  { label: 'SEO & KI-Sichtbarkeit', href: '/seo-ki-sichtbarkeit' },
 ];
 
 /* Footer-Spalte „Rechtliches". AGB stehen bewusst nicht drin: es gibt
