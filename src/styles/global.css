@@ -153,6 +153,7 @@
   --color-google-red: #ea4335;
   --color-schaden: #ff6b6b; /* Schadenszahlen im Vakanzkostenrechner (auf dunkelgrün) */
   --color-schaden-soft: #a8514c; /* zweiter Abschnitt im Schadensbalken */
+  --color-mittel: #ffb347; /* Website-Check: Werte 50–89, „ausbaufähig“ (9,4:1 auf forest) */
 
   /* --- Dunkle Buttons auf hell -------------------------------------------- */
   --color-ink-btn-hover: #2a3a2c;

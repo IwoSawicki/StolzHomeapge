@@ -1,0 +1,522 @@
+---
+/* Der Website-Check: Eingabe, Ladezustand, Ergebnis.
+
+   Gemessen wird mit der PageSpeed-Insights-API von Google. Der Aufruf
+   geht direkt aus dem Browser an Google — die Seite bleibt statisch, und
+   wir sehen die geprüfte Adresse nicht. Der Schlüssel kommt beim Build
+   aus PUBLIC_PAGESPEED_KEY. Fehlt er (lokal), wird ohne Schlüssel
+   gefragt; das klappt, solange das kleine gemeinsame Kontingent reicht.
+
+   Alles, was aus der API-Antwort kommt, landet per textContent in der
+   Seite, nie als HTML. Titel und Werte stammen von Google, aber die
+   geprüfte Seite bestimmt mit, was darin steht.
+
+   Die geprüfte Adresse steht bewusst NICHT in der Adresszeile: Umami
+   zählt Adresswechsel mit, und dann läge sie doch bei uns. */
+import Button from '../../Button.astro';
+import {
+  kategorien,
+  messwerte,
+  ladeTexte,
+  fehlerTexte,
+  ergebnisTexte,
+} from '../../../data/website-check';
+
+const konfiguration = {
+  kategorien: kategorien.map((k) => k.schluessel),
+  messwerte: messwerte.map((m) => m.schluessel),
+  ladeTexte,
+  fehlerTexte,
+};
+
+/* Umfang des Rings (2π · 42) */
+const UMFANG = 263.9;
+
+const kartenKlasse = 'rounded-20 border border-edge bg-forest-card p-24';
+const pillKlasse =
+  'cursor-pointer rounded-full border border-edge px-16 py-8 text-15 font-medium text-mint transition-colors peer-checked:border-lime peer-checked:bg-lime peer-checked:text-forest-deep peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-lime';
+---
+
+{/* Schlüssel aus dem Container (siehe deploy/40-website-check-key.sh).
+    Klassisches Skript, damit es vor dem Modul unten gelesen ist. */}
+<script is:inline src="/website-check-key.js"></script>
+
+<section class="bg-forest px-page-x pb-section-y-sm" id="check">
+  <script
+    type="application/json"
+    id="wc-konfiguration"
+    set:html={JSON.stringify(konfiguration)}
+  />
+
+  <div class="mx-auto flex max-w-content flex-col gap-24">
+    {/* --- Eingabe --- */}
+    <form class:list={[kartenKlasse, 'flex flex-col gap-16 btn:p-32']} data-wc-formular novalidate>
+      <label for="wc-adresse" class="text-14 font-medium text-mint-dim">
+        Adresse Ihrer Webseite
+      </label>
+      <div class="flex flex-wrap gap-12">
+        <input
+          id="wc-adresse"
+          name="adresse"
+          type="text"
+          inputmode="url"
+          autocomplete="url"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="meinbetrieb.de"
+          aria-describedby="wc-fehler"
+          class="min-w-0 flex-1 basis-[min(320px,100%)] rounded-10 border border-edge bg-forest px-16 py-13 text-17 font-bold text-cream outline-none transition-colors placeholder:font-medium placeholder:text-mint-placeholder focus:border-lime-edge"
+        />
+        <button
+          type="submit"
+          data-wc-knopf
+          class="inline-flex flex-none items-center justify-center gap-12 rounded-12 bg-lime px-20 py-13 text-14 font-bold text-forest-deep shadow-glow transition-colors duration-200 hover:bg-lime-bright disabled:cursor-wait disabled:opacity-70 btn:px-30 btn:py-16 btn:text-16"
+        >
+          Website prüfen
+        </button>
+      </div>
+
+      <fieldset class="m-0 flex flex-wrap items-center gap-10 border-0 p-0">
+        <legend class="sr-only">Gemessen wird für</legend>
+        <label>
+          <input type="radio" name="geraet" value="mobile" checked class="peer sr-only" />
+          <span class={pillKlasse}>Handy</span>
+        </label>
+        <label>
+          <input type="radio" name="geraet" value="desktop" class="peer sr-only" />
+          <span class={pillKlasse}>Computer</span>
+        </label>
+      </fieldset>
+
+      <p id="wc-fehler" data-wc-fehler role="alert" class="m-0 text-15 leading-body text-schaden" hidden>
+      </p>
+    </form>
+
+    {/* --- Ladezustand --- */}
+    <div class:list={[kartenKlasse, 'flex items-center gap-16']} data-wc-laden hidden>
+      <span
+        class="h-28 w-28 flex-none animate-spin rounded-full border-3 border-edge border-t-lime"
+        aria-hidden="true"></span>
+      <div class="flex flex-col gap-2" aria-live="polite">
+        <p class="m-0 text-17 font-bold text-cream" data-wc-ladetext></p>
+        <p class="m-0 text-15 text-mint-dim">Das dauert meist 20 bis 40 Sekunden.</p>
+      </div>
+    </div>
+
+    {/* --- Ergebnis --- */}
+    <div class="flex flex-col gap-24" data-wc-ergebnis hidden>
+      <div class="flex flex-wrap items-baseline justify-between gap-x-16 gap-y-8">
+        <h2
+          class="m-0 scroll-mt-96 text-26 leading-card font-bold tracking-name text-cream outline-none"
+          tabindex="-1"
+          data-wc-titel
+        >
+          Ergebnis für <span data-wc-domain></span>
+        </h2>
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-mint-dim" data-wc-geraet
+        ></span>
+      </div>
+
+      {/* Vier Ringe */}
+      <ul
+        class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(230px,100%),1fr))] gap-16 p-0"
+      >
+        {
+          kategorien.map((k) => (
+            <li
+              class:list={[kartenKlasse, 'flex items-center gap-16 p-20']}
+              data-wc-kategorie={k.schluessel}
+            >
+              <div class="relative h-76 w-76 flex-none">
+                <svg viewBox="0 0 100 100" fill="none" class="absolute inset-0 -rotate-90" aria-hidden="true">
+                  <circle class="stroke-edge" stroke-width="8" cx="50" cy="50" r="42" />
+                  <circle
+                    class="stroke-mint transition-[stroke-dashoffset] duration-700 ease-out"
+                    stroke-width="8"
+                    stroke-linecap="round"
+                    stroke-dasharray={UMFANG}
+                    stroke-dashoffset={UMFANG}
+                    cx="50"
+                    cy="50"
+                    r="42"
+                    data-wc-ring
+                  />
+                </svg>
+                <span
+                  class="vk-zahl absolute inset-0 flex items-center justify-center text-22 font-bold text-cream"
+                  data-wc-wert
+                >
+                  –
+                </span>
+              </div>
+              <div class="flex min-w-0 flex-col gap-2">
+                <span class="text-17 font-bold text-cream">{k.name}</span>
+                <span class="text-14 leading-body text-mint-dim">{k.zusatz}</span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+
+      {/* Messwerte */}
+      <div class={kartenKlasse}>
+        <h3 class="m-0 text-19 font-bold text-cream">Messwerte</h3>
+        <dl
+          class="m-0 mt-16 grid grid-cols-[repeat(auto-fit,minmax(min(180px,100%),1fr))] gap-x-24 gap-y-20"
+        >
+          {
+            messwerte.map((m) => (
+              <div class="flex flex-col gap-4 border-t border-edge pt-14" data-wc-messwert={m.schluessel}>
+                <dt class="text-14 font-medium text-mint-dim">{m.name}</dt>
+                <dd class="m-0 flex items-center gap-10 text-22 font-bold text-cream">
+                  <span class="h-10 w-10 flex-none rounded-full bg-mint" data-wc-punkt aria-hidden="true" />
+                  <span class="vk-zahl" data-wc-anzeige>–</span>
+                </dd>
+                <dd class="m-0 text-14 leading-body text-mint-dim">{m.erklaerung}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      {/* Verbesserungen und Befunde */}
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(min(380px,100%),1fr))] items-start gap-16">
+        <div class={kartenKlasse}>
+          <h3 class="m-0 text-19 font-bold text-cream">{ergebnisTexte.verbesserungenTitel}</h3>
+          <ol class="m-0 mt-16 flex list-none flex-col gap-12 p-0" data-wc-verbesserungen></ol>
+          <p class="m-0 mt-16 text-15 leading-body text-mint" data-wc-verbesserungen-leer hidden>
+            {ergebnisTexte.verbesserungenLeer}
+          </p>
+        </div>
+        <div class={kartenKlasse} data-wc-befunde-block hidden>
+          <h3 class="m-0 text-19 font-bold text-cream">{ergebnisTexte.befundeTitel}</h3>
+          <ul class="m-0 mt-16 flex list-none flex-col gap-12 p-0" data-wc-befunde></ul>
+        </div>
+      </div>
+
+      {/* Überleitung zum Gespräch */}
+      <div class="flex flex-wrap items-center justify-between gap-24 rounded-20 bg-lime p-24 btn:p-32">
+        <div class="flex max-w-620 flex-col gap-8">
+          <p class="m-0 text-22 font-bold text-forest-deep">{ergebnisTexte.ctaTitel}</p>
+          <p class="m-0 text-17 leading-body text-forest-deep">{ergebnisTexte.ctaText}</p>
+        </div>
+        <Button href="#anfrage" variante="tinte">
+          {ergebnisTexte.ctaKnopf}<span class="text-18" aria-hidden="true">→</span>
+        </Button>
+      </div>
+
+      <p class="m-0 text-14 leading-body text-mint-dim">{ergebnisTexte.hinweis}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  type Stufe = 'gut' | 'mittel' | 'schlecht';
+  interface Audit {
+    id: string;
+    title: string;
+    score: number | null;
+    scoreDisplayMode?: string;
+    displayValue?: string;
+    details?: { type?: string; overallSavingsMs?: number };
+    metricSavings?: Record<string, number>;
+  }
+  interface AuditRef {
+    id: string;
+    weight: number;
+    group?: string;
+  }
+
+  /* Zwei Quellen: zur Laufzeit vom Container geschrieben, sonst beim
+     Build eingesetzt. Ohne Schlüssel landet die Abfrage im kleinen
+     gemeinsamen Kontingent von Google und scheitert schnell mit 429 —
+     genau das war der Fehler auf dev. */
+  const SCHLUESSEL: string =
+    (window as unknown as { __PAGESPEED_KEY__?: string }).__PAGESPEED_KEY__ ||
+    import.meta.env.PUBLIC_PAGESPEED_KEY ||
+    '';
+  if (!SCHLUESSEL) console.warn('Website-Check: kein Schlüssel gefunden, Abfrage ohne Schlüssel.');
+  const UMFANG = 263.9;
+  /* Wartezeit, bevor wir aufgeben. Google selbst bricht bei rund einer
+     Minute ab; bis die Antwort da ist, kann es etwas länger dauern. */
+  const ZEITLIMIT_MS = 100_000;
+
+  const konfiguration = JSON.parse(
+    document.getElementById('wc-konfiguration')!.textContent || '{}',
+  ) as {
+    kategorien: string[];
+    messwerte: string[];
+    ladeTexte: string[];
+    fehlerTexte: Record<'adresse' | 'nichtErreichbar' | 'zuViele' | 'zeitUeberschritten' | 'allgemein', string>;
+  };
+
+  /* Farbklassen stehen hier ausgeschrieben, damit Tailwind sie findet. */
+  const RING: Record<Stufe, string> = {
+    gut: 'stroke-lime',
+    mittel: 'stroke-mittel',
+    schlecht: 'stroke-schaden',
+  };
+  const PUNKT: Record<Stufe, string> = {
+    gut: 'bg-lime',
+    mittel: 'bg-mittel',
+    schlecht: 'bg-schaden',
+  };
+
+  /* Schwellen wie bei Lighthouse: ab 90 gut, ab 50 ausbaufähig */
+  const stufe = (wert: number): Stufe => (wert >= 0.9 ? 'gut' : wert >= 0.5 ? 'mittel' : 'schlecht');
+
+  const formular = document.querySelector<HTMLFormElement>('[data-wc-formular]')!;
+  const feld = formular.querySelector<HTMLInputElement>('#wc-adresse')!;
+  const knopf = formular.querySelector<HTMLButtonElement>('[data-wc-knopf]')!;
+  const fehler = formular.querySelector<HTMLElement>('[data-wc-fehler]')!;
+  const laden = document.querySelector<HTMLElement>('[data-wc-laden]')!;
+  const ladetext = laden.querySelector<HTMLElement>('[data-wc-ladetext]')!;
+  const ergebnis = document.querySelector<HTMLElement>('[data-wc-ergebnis]')!;
+
+  /** „meinbetrieb.de" → „https://meinbetrieb.de/". null, wenn es keine
+      Webadresse sein kann. */
+  const normalisiere = (eingabe: string): string | null => {
+    let text = eingabe.trim();
+    if (!text) return null;
+    if (!/^https?:\/\//i.test(text)) text = 'https://' + text;
+    try {
+      const adresse = new URL(text);
+      const host = adresse.hostname;
+      if (!host.includes('.') || host.startsWith('.') || host.endsWith('.')) return null;
+      return adresse.href;
+    } catch {
+      return null;
+    }
+  };
+
+  const zeigeFehler = (text: string | null) => {
+    fehler.textContent = text ?? '';
+    fehler.hidden = !text;
+    feld.setAttribute('aria-invalid', text ? 'true' : 'false');
+  };
+
+  /** Titel aus Lighthouse tragen Code in Backticks — für Laien nur Rauschen. */
+  const sauber = (text: string) => text.replace(/`/g, '').trim();
+
+  const sekunden = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1 });
+
+  const einsparung = (audit: Audit): number =>
+    audit.details?.overallSavingsMs ??
+    Object.values(audit.metricSavings ?? {}).reduce((summe, wert) => summe + (wert || 0), 0);
+
+  const listenpunkt = (titel: string, zusatz?: string) => {
+    const punkt = document.createElement('li');
+    punkt.className = 'flex flex-col gap-2 border-t border-edge pt-12 first:border-t-0 first:pt-0';
+    const kopf = document.createElement('span');
+    kopf.className = 'text-16 leading-body text-cream';
+    kopf.textContent = titel;
+    punkt.append(kopf);
+    if (zusatz) {
+      const unter = document.createElement('span');
+      unter.className = 'text-14 text-mint-dim';
+      unter.textContent = zusatz;
+      punkt.append(unter);
+    }
+    return punkt;
+  };
+
+  const darstellen = (daten: any, adresse: string, geraet: string) => {
+    const lh = daten.lighthouseResult;
+    const audits: Record<string, Audit> = lh.audits ?? {};
+
+    ergebnis.querySelector('[data-wc-domain]')!.textContent = new URL(adresse).hostname.replace(
+      /^www\./,
+      '',
+    );
+    ergebnis.querySelector('[data-wc-geraet]')!.textContent =
+      geraet === 'desktop' ? 'Gemessen für Computer' : 'Gemessen für Handy';
+
+    /* Ringe */
+    for (const schluessel of konfiguration.kategorien) {
+      const kachel = ergebnis.querySelector(`[data-wc-kategorie="${schluessel}"]`)!;
+      const ring = kachel.querySelector<SVGCircleElement>('[data-wc-ring]')!;
+      const wert = kachel.querySelector<HTMLElement>('[data-wc-wert]')!;
+      const punktzahl = lh.categories?.[schluessel]?.score;
+
+      ring.classList.remove('stroke-mint', ...Object.values(RING));
+      ring.style.strokeDashoffset = String(UMFANG);
+      if (typeof punktzahl === 'number') {
+        ring.classList.add(RING[stufe(punktzahl)]);
+        wert.textContent = String(Math.round(punktzahl * 100));
+        /* einen Frame warten, damit der Ring sichtbar vollläuft */
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            ring.style.strokeDashoffset = String(UMFANG * (1 - punktzahl));
+          }),
+        );
+      } else {
+        ring.classList.add('stroke-mint');
+        wert.textContent = '–';
+      }
+    }
+
+    /* Messwerte */
+    for (const schluessel of konfiguration.messwerte) {
+      const zeile = ergebnis.querySelector(`[data-wc-messwert="${schluessel}"]`)!;
+      const punkt = zeile.querySelector<HTMLElement>('[data-wc-punkt]')!;
+      const audit = audits[schluessel];
+      punkt.classList.remove('bg-mint', ...Object.values(PUNKT));
+      zeile.querySelector('[data-wc-anzeige]')!.textContent = audit?.displayValue
+        ? audit.displayValue.replace(/ /g, ' ')
+        : '–';
+      punkt.classList.add(typeof audit?.score === 'number' ? PUNKT[stufe(audit.score)] : 'bg-mint');
+    }
+
+    /* Größte Bremsen: Prüfungen aus dem Leistungsteil mit messbarer
+       Einsparung, die größte zuerst. Kennzahlen selbst und versteckte
+       Altprüfungen bleiben draußen, doppelte Titel auch. */
+    const leistungsRefs: AuditRef[] = lh.categories?.performance?.auditRefs ?? [];
+    const gesehen = new Set<string>();
+    const bremsen = leistungsRefs
+      .filter((ref) => ref.group !== 'metrics' && ref.group !== 'hidden')
+      .map((ref) => audits[ref.id])
+      .filter(
+        (a): a is Audit =>
+          !!a &&
+          typeof a.score === 'number' &&
+          a.score < 0.9 &&
+          a.scoreDisplayMode !== 'informative' &&
+          a.scoreDisplayMode !== 'notApplicable' &&
+          einsparung(a) > 0,
+      )
+      .sort((a, b) => einsparung(b) - einsparung(a))
+      .filter((a) => {
+        const titel = sauber(a.title);
+        if (gesehen.has(titel)) return false;
+        gesehen.add(titel);
+        return true;
+      })
+      .slice(0, 5);
+
+    const liste = ergebnis.querySelector('[data-wc-verbesserungen]')!;
+    liste.replaceChildren(
+      ...bremsen.map((a) => {
+        const ms = a.details?.overallSavingsMs;
+        const zusatz = ms && ms >= 100
+          ? `Mögliche Ersparnis: etwa ${sekunden.format(ms / 1000)} s`
+          : a.displayValue?.replace(/ /g, ' ');
+        return listenpunkt(sauber(a.title), zusatz);
+      }),
+    );
+    ergebnis.querySelector<HTMLElement>('[data-wc-verbesserungen-leer]')!.hidden = bremsen.length > 0;
+
+    /* Durchgefallene Prüfungen aus den anderen drei Bereichen */
+    const titelBefunde = new Set<string>();
+    for (const bereich of ['seo', 'best-practices', 'accessibility']) {
+      const refs: AuditRef[] = lh.categories?.[bereich]?.auditRefs ?? [];
+      for (const ref of refs) {
+        const a = audits[ref.id];
+        if (
+          a &&
+          ref.weight > 0 &&
+          ref.group !== 'hidden' &&
+          a.score === 0 &&
+          (a.scoreDisplayMode === 'binary' || a.scoreDisplayMode === 'numeric')
+        ) {
+          titelBefunde.add(sauber(a.title));
+        }
+      }
+    }
+    const befunde = [...titelBefunde].slice(0, 6);
+    ergebnis.querySelector('[data-wc-befunde]')!.replaceChildren(
+      ...befunde.map((titel) => listenpunkt(titel)),
+    );
+    ergebnis.querySelector<HTMLElement>('[data-wc-befunde-block]')!.hidden = befunde.length === 0;
+  };
+
+  /** Fehlermeldung aus Statuscode und Google-Meldung ableiten */
+  const fehlerAus = (status: number, meldung: string): string => {
+    if (status === 429) return konfiguration.fehlerTexte.zuViele;
+    if (
+      /FAILED_DOCUMENT_REQUEST|ERRORED_DOCUMENT_REQUEST|DNS_FAILURE|NO_FCP|NOT_HTML|PROTOCOL_TIMEOUT|Unable to process request/i.test(
+        meldung,
+      )
+    ) {
+      return konfiguration.fehlerTexte.nichtErreichbar;
+    }
+    return konfiguration.fehlerTexte.allgemein;
+  };
+
+  let laeuft = false;
+
+  formular.addEventListener('submit', async (ereignis) => {
+    ereignis.preventDefault();
+    if (laeuft) return;
+
+    const adresse = normalisiere(feld.value);
+    if (!adresse) {
+      zeigeFehler(konfiguration.fehlerTexte.adresse);
+      feld.focus();
+      return;
+    }
+    zeigeFehler(null);
+
+    const geraet =
+      formular.querySelector<HTMLInputElement>('input[name="geraet"]:checked')?.value ?? 'mobile';
+
+    laeuft = true;
+    knopf.disabled = true;
+    knopf.textContent = 'Wird geprüft …';
+    ergebnis.hidden = true;
+    laden.hidden = false;
+
+    let schritt = 0;
+    ladetext.textContent = konfiguration.ladeTexte[0];
+    const takt = window.setInterval(() => {
+      schritt = Math.min(schritt + 1, konfiguration.ladeTexte.length - 1);
+      ladetext.textContent = konfiguration.ladeTexte[schritt];
+    }, 5000);
+
+    const abbruch = new AbortController();
+    const wecker = window.setTimeout(() => abbruch.abort(), ZEITLIMIT_MS);
+
+    try {
+      const parameter = new URLSearchParams({ url: adresse, strategy: geraet, locale: 'de' });
+      for (const k of konfiguration.kategorien) parameter.append('category', k);
+      if (SCHLUESSEL) parameter.set('key', SCHLUESSEL);
+
+      const antwort = await fetch(
+        `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?${parameter}`,
+        { signal: abbruch.signal },
+      );
+      const daten = await antwort.json().catch(() => null);
+
+      if (!antwort.ok || !daten?.lighthouseResult) {
+        const meldung: string = daten?.error?.message ?? '';
+        /* Für die Fehlersuche — der Besucher sieht nur die übersetzte Meldung */
+        console.warn('Website-Check:', antwort.status, meldung);
+        zeigeFehler(fehlerAus(antwort.status, meldung));
+        return;
+      }
+
+      darstellen(daten, adresse, geraet);
+      /* Ladekasten zuerst weg, sonst verschiebt sein Verschwinden den
+         Inhalt erst NACH dem Hinscrollen — und der Titel rutscht unter
+         die Kopfzeile. */
+      laden.hidden = true;
+      ergebnis.hidden = false;
+      const titel = ergebnis.querySelector<HTMLElement>('[data-wc-titel]')!;
+      const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      titel.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
+      titel.focus({ preventScroll: true });
+    } catch (fehlerObjekt) {
+      zeigeFehler(
+        fehlerObjekt instanceof DOMException && fehlerObjekt.name === 'AbortError'
+          ? konfiguration.fehlerTexte.zeitUeberschritten
+          : konfiguration.fehlerTexte.allgemein,
+      );
+    } finally {
+      window.clearInterval(takt);
+      window.clearTimeout(wecker);
+      laden.hidden = true;
+      knopf.disabled = false;
+      knopf.textContent = 'Website prüfen';
+      laeuft = false;
+    }
+  });
+</script>

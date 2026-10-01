@@ -1,0 +1,28 @@
+---
+/* Kopf des Website-Checks: Kopfzeile, Überschrift, ein Absatz — dann
+   kommt sofort das Eingabefeld. Gebaut wie der Kopf des Rechners: wer
+   „Website testen" sucht, will prüfen und nicht scrollen. */
+import Header from '../../Header.astro';
+import Eyebrow from '../../Eyebrow.astro';
+import { hero } from '../../../data/website-check';
+---
+
+<div class="bg-forest">
+  <Header />
+
+  <section class="px-page-x pt-40 pb-40">
+    <div class="mx-auto flex max-w-content flex-col items-start gap-20">
+      <Eyebrow variante="lime">Website-Check</Eyebrow>
+
+      <h1
+        class="m-0 max-w-860 text-h1-sub leading-tightest font-bold tracking-system text-paper"
+      >
+        {hero.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{hero.titelKursiv}</span
+        >{hero.titelHinten}
+      </h1>
+
+      <p class="m-0 max-w-760 text-19 leading-body text-mint">{hero.lead}</p>
+    </div>
+  </section>
+</div>

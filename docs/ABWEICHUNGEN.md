@@ -1321,3 +1321,15 @@ es aus vier Entwürfen ausgewählt.
 Der Live-Gang ist gezielt aus `dev` übernommen. Andere Änderungen, die
 dort noch liegen (Prozess-Überschrift, Vergleich als Slider, Vorauswahl,
 Schimmer-Takt, Textmarker), sind nicht mit live gegangen.
+
+---
+
+## Website-Check unter /website-check (01.10.2026 live)
+
+Neue Seite, nicht aus der Vorlage. Gemessen wird mit der
+PageSpeed-Insights-API von Google, direkt aus dem Browser. Den Schlüssel
+schreibt beim Containerstart `deploy/40-website-check-key.sh` aus der
+Umgebungsvariable `PUBLIC_PAGESPEED_KEY` in `/website-check-key.js`;
+hilfsweise kommt er beim Build. Die Datenschutzerklärung hat dafür einen
+eigenen Abschnitt bekommen. Im Footer ist der Eintrag nicht mehr
+ausgegraut.
