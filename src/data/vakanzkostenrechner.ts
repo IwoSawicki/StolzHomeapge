@@ -1,15 +1,11 @@
 /* Vakanzkostenrechner — Werte, Presets und Texte.
 
-   ┌───────────────────────────────────────────────────────────────────┐
-   │  ACHTUNG: Die Gewerk-Presets weiter unten sind NICHT bestätigt.   │
-   │  Sie stammen aus der Build-Spec und sind dort ausdrücklich als     │
-   │  Platzhalter gekennzeichnet. Solange WERTE_BESTAETIGT auf false    │
-   │  steht, trägt die Seite noindex und bleibt aus der Sitemap.        │
-   │  Ein Rechner mit falschen Branchenwerten schadet mehr als keiner.  │
-   │  Nach Freigabe durch Iwo: Werte prüfen, dann die Konstante auf     │
-   │  true setzen — mehr ist nicht zu tun.                              │
-   └───────────────────────────────────────────────────────────────────┘ */
-export const WERTE_BESTAETIGT = false;
+   Die Gewerk-Presets sind am 01.10.2026 von Iwo freigegeben, nach einem
+   Abgleich mit Marktangaben (Herleitung über der Liste `gewerke`).
+   WERTE_BESTAETIGT steuert das noindex der Seite. Wer die Werte wieder
+   in Frage stellt, setzt die Konstante auf false UND nimmt die Seite in
+   astro.config.mjs wieder aus der Sitemap. */
+export const WERTE_BESTAETIGT = true;
 
 /* --- Rechenkonstanten ----------------------------------------------------
    Stehen hier und nicht im Script, damit sie an einer Stelle prüfbar sind
@@ -37,19 +33,41 @@ export interface Gewerk {
    bei den sechs Kernbranchen bleiben oder breiter werden soll, ist noch
    offen (Frage 4 der Spec) — breiter bringt mehr Suchanfragen, schmaler
    stützt die Positionierung. */
+/* Stand 01.10.2026, bewusst konservativ (Entscheidung Iwo).
+
+   Verrechnungssätze: abgeglichen mit Marktangaben 2026 für die
+   Gesellenstunde netto. Angepasst wurden drei Gewerke — Maler 58 → 63 €
+   und Dachdecker 70 → 72 € (beide lagen unter dem Markt), Zimmerer
+   72 → 68 € (lag darüber). Gesetzt ist jeweils das untere Ende der
+   gefundenen Spanne. Für Sanierung, Industrie, Produktion, Maurer,
+   Tiefbau und Metallbau gab es keine belastbaren Angaben; dort stehen
+   die Werte unverändert aus der Spec.
+
+   Produktive Stunden: realistisch sind 1.200 bis 1.450 im Jahr, also
+   100 bis 120 im Monat. Alle Gewerke sind um 15 Stunden gesenkt, die
+   Abstände untereinander bleiben (Dach und Holz wetterabhängig weniger,
+   Produktion mehr).
+
+   Der Deckungsbeitrag bleibt absichtlich niedrig. Er ist als Quote des
+   ganzen Betriebs angesetzt, der Rechner rechnet aber nur den
+   Lohnumsatz — dadurch liegt das Ergebnis eher unter dem tatsächlichen
+   Schaden (Fachpresse: rund 70.800 € entgangener Deckungsbeitrag je
+   unbesetzter SHK-Fachkraft und Jahr, der Rechner kommt auf gut die
+   Hälfte). So gewollt: lieber zu wenig als eine Zahl, die man nicht
+   glaubt. */
 export const gewerke: Gewerk[] = [
-  { schluessel: 'sanierung', name: 'Sanierung & Renovierung', satz: 65, stunden: 125, db: 35 },
-  { schluessel: 'elektro', name: 'Elektro / Photovoltaik', satz: 72, stunden: 125, db: 45 },
-  { schluessel: 'maler', name: 'Maler & Lackierer', satz: 58, stunden: 130, db: 40 },
-  { schluessel: 'shk', name: 'SHK & Heizungsbau', satz: 75, stunden: 120, db: 35 },
-  { schluessel: 'industrie', name: 'Industrie- & Anlagenbau', satz: 75, stunden: 130, db: 30 },
-  { schluessel: 'produktion', name: 'Produktion & Fertigung', satz: 68, stunden: 135, db: 30 },
-  { schluessel: 'dach', name: 'Dachdecker', satz: 70, stunden: 120, db: 32 },
-  { schluessel: 'zimmerer', name: 'Zimmerer / Holzbau', satz: 72, stunden: 120, db: 30 },
-  { schluessel: 'maurer', name: 'Maurer / Betonbau', satz: 65, stunden: 125, db: 28 },
-  { schluessel: 'tiefbau', name: 'Tiefbau / Straßenbau', satz: 68, stunden: 130, db: 22 },
-  { schluessel: 'metallbau', name: 'Metallbau / Schlosser', satz: 70, stunden: 120, db: 35 },
-  { schluessel: 'tischler', name: 'Tischler / Schreiner', satz: 68, stunden: 120, db: 33 },
+  { schluessel: 'sanierung', name: 'Sanierung & Renovierung', satz: 65, stunden: 110, db: 35 },
+  { schluessel: 'elektro', name: 'Elektro / Photovoltaik', satz: 72, stunden: 110, db: 45 },
+  { schluessel: 'maler', name: 'Maler & Lackierer', satz: 63, stunden: 115, db: 40 },
+  { schluessel: 'shk', name: 'SHK & Heizungsbau', satz: 75, stunden: 105, db: 35 },
+  { schluessel: 'industrie', name: 'Industrie- & Anlagenbau', satz: 75, stunden: 115, db: 30 },
+  { schluessel: 'produktion', name: 'Produktion & Fertigung', satz: 68, stunden: 120, db: 30 },
+  { schluessel: 'dach', name: 'Dachdecker', satz: 72, stunden: 105, db: 32 },
+  { schluessel: 'zimmerer', name: 'Zimmerer / Holzbau', satz: 68, stunden: 105, db: 30 },
+  { schluessel: 'maurer', name: 'Maurer / Betonbau', satz: 65, stunden: 110, db: 28 },
+  { schluessel: 'tiefbau', name: 'Tiefbau / Straßenbau', satz: 68, stunden: 115, db: 22 },
+  { schluessel: 'metallbau', name: 'Metallbau / Schlosser', satz: 70, stunden: 105, db: 35 },
+  { schluessel: 'tischler', name: 'Tischler / Schreiner', satz: 68, stunden: 105, db: 33 },
 ];
 
 /** Vorauswahl, wenn nichts in der Adresszeile steht */
@@ -134,9 +152,9 @@ export const faqs: Faq[] = [
       'Weil vom Umsatz auch Material und Lohn abgegangen wären. Übrig geblieben wäre nur der Deckungsbeitrag, und genau der fehlt Ihnen am Ende. Den vollen Umsatz als Schaden auszuweisen wäre eine schöne Zahl, aber betriebswirtschaftlich falsch.',
   },
   {
-    frage: 'Warum rechnen Sie nur mit 120 bis 135 produktiven Stunden im Monat?',
+    frage: 'Warum rechnen Sie nur mit 105 bis 120 produktiven Stunden im Monat?',
     antwort:
-      'Weil das die Stunden sind, die Sie tatsächlich abrechnen. Von rund 165 Arbeitsstunden im Monat gehen Fahrtzeit, Rüstzeit, Werkstatt, Dokumentation und Leerlauf ab. Wer mit 165 Stunden rechnet, bekommt ein Ergebnis, das im Erstgespräch niemand ernst nimmt.',
+      'Weil das die Stunden sind, die Sie im Jahresschnitt tatsächlich abrechnen. Von rund 165 Arbeitsstunden im Monat gehen Urlaub, Feiertage und Krankheit ab, dazu Fahrtzeit, Rüstzeit, Werkstatt, Dokumentation und Leerlauf. Wer mit 165 Stunden rechnet, bekommt ein Ergebnis, das im Erstgespräch niemand ernst nimmt.',
   },
   {
     frage: 'Warum sind die Recruitingkosten nicht im Gesamtschaden enthalten?',

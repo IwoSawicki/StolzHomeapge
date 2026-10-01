@@ -24,14 +24,12 @@ export default defineConfig({
          der Search Console beides gegeneinander.
 
          /alle-projekte und /korbaktion bleiben dauerhaft draußen.
-         /vakanzkostenrechner und /ueber-uns sind nur vorläufig draußen:
-         sobald WERTE_BESTAETIGT in src/data/vakanzkostenrechner.ts auf
-         true steht bzw. Iwo den Über-uns-Text freigegeben hat, müssen
-         das noindex auf der Seite UND die Zeile hier zusammen raus. */
+         /ueber-uns ist nur vorläufig draußen: sobald Iwo den Text
+         freigegeben hat, müssen das noindex auf der Seite UND die Zeile
+         hier zusammen raus. */
       filter: (seite) =>
         !seite.includes('/alle-projekte') &&
         !seite.includes('/korbaktion') &&
-        !seite.includes('/vakanzkostenrechner') &&
         !seite.includes('/ueber-uns'),
     }),
   ],

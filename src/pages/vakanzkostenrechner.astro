@@ -14,14 +14,8 @@
    Stunden und Deckungsbeitrag stehen als Regler im Rechner selbst, die
    Sonderfälle als Hinweistexte daneben und in der FAQ.
 
-   ┌──────────────────────────────────────────────────────────────────┐
-   │  Solange WERTE_BESTAETIGT in src/data/vakanzkostenrechner.ts auf  │
-   │  false steht, trägt die Seite noindex. Die Gewerk-Presets sind    │
-   │  Platzhalter aus der Spec und von Iwo noch nicht bestätigt; ein   │
-   │  Rechner mit falschen Branchenwerten schadet mehr als keiner.     │
-   │  Nach der Freigabe: Konstante auf true setzen und den Footer-     │
-   │  Eintrag in src/data/navigation.ts entgrauen.                     │
-   └──────────────────────────────────────────────────────────────────┘ */
+   Das noindex hängt an WERTE_BESTAETIGT in
+   src/data/vakanzkostenrechner.ts — seit dem 01.10.2026 freigegeben. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
 import RechnerKopf from '../components/sections/rechner/RechnerKopf.astro';
