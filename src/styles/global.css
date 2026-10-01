@@ -355,27 +355,9 @@
   --animate-floaty: floaty 4s ease-in-out infinite;
   --animate-pulse-line: pulse-line 1.8s ease-in-out infinite;
 
-  /* Rechner-Band, Entwurf „Sanduhr": oben läuft der Sand aus, unten
-     sammelt er sich. Beide Hälften teilen sich denselben Takt, sonst
-     würden sie auseinanderlaufen. */
-  --animate-sand-oben: sand-oben 7s linear infinite;
-  --animate-sand-unten: sand-unten 7s linear infinite;
-  --animate-sand-strahl: sand-strahl 0.9s linear infinite;
-
-  /* Rechner-Band, Entwurf „Tagesbalken": jeder Balken wächst einzeln,
-     die Verzögerung steht als Inline-Stil am Balken. */
+  /* Rechner-Band: jeder Balken wächst einzeln, die Verzögerung steht
+     als Inline-Stil am Balken. */
   --animate-tagesbalken: tagesbalken 7s ease-in-out infinite;
-
-  /* Rechner-Band, Entwurf „Kostenuhr": Zeiger und roter Bogen laufen im
-     selben Takt einmal herum, danach blendet der Bogen aus und die Runde
-     beginnt neu. */
-  --animate-uhr-bogen: uhr-bogen 8s linear infinite;
-  --animate-uhr-zeiger: uhr-zeiger 8s linear infinite;
-
-  /* Rechner-Band, Entwurf „Einsatzplan": die offene Zeile pulsiert, an
-     die Schichten der anderen wächst Mehrarbeit an. */
-  --animate-luecke: luecke 2.4s ease-in-out infinite;
-  --animate-mehrarbeit: mehrarbeit 6s ease-in-out infinite;
 
   /* Vorauswahl-Grafik: abwechselnd ist der Ja- und der Nein-Weg aktiv,
      der andere tritt zurück. Beide teilen sich einen Takt. Die Pfeile
@@ -411,37 +393,6 @@
       transform: translateX(260%) skewX(-12deg);
     }
   }
-  /* Der Sand oben rutscht nach unten aus dem Dreieck heraus. 0 bis 86 %
-     läuft er, danach steht die Uhr kurz still, bevor der Takt neu
-     beginnt — ohne diese Pause wirkte der Sprung wie ein Ruckler. */
-  @keyframes sand-oben {
-    0% {
-      transform: translateY(0);
-    }
-    86%,
-    100% {
-      transform: translateY(46px);
-    }
-  }
-  @keyframes sand-unten {
-    0% {
-      transform: translateY(46px);
-    }
-    86%,
-    100% {
-      transform: translateY(0);
-    }
-  }
-  /* Der Strahl ist eine gestrichelte Linie, deren Muster nach unten
-     wandert — das liest sich als rieselnder Sand. */
-  @keyframes sand-strahl {
-    from {
-      stroke-dashoffset: 0;
-    }
-    to {
-      stroke-dashoffset: -12;
-    }
-  }
   /* Balken wächst, bleibt lange stehen, fällt am Ende des Takts zurück.
      Der Versatz zwischen den Balken ist bewusst kurz (gut eine Sekunde
      über alle zwanzig): Läuft er länger, steht immer irgendwo in der
@@ -457,56 +408,6 @@
     }
     100% {
       transform: scaleY(0.08);
-    }
-  }
-  /* 327 ist der Umfang des Bogens (2π · 52). Bis 86 % läuft er voll,
-     bis 94 % steht er, dann blendet er aus — so springt er nicht
-     sichtbar von voll auf leer. */
-  @keyframes uhr-bogen {
-    0% {
-      stroke-dashoffset: 327;
-      opacity: 1;
-    }
-    86%,
-    94% {
-      stroke-dashoffset: 0;
-      opacity: 1;
-    }
-    100% {
-      stroke-dashoffset: 0;
-      opacity: 0;
-    }
-  }
-  @keyframes uhr-zeiger {
-    0% {
-      transform: rotate(0deg);
-    }
-    86%,
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  @keyframes luecke {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.35;
-    }
-  }
-  /* Mehrarbeit wächst aus der regulären Schicht heraus, bleibt stehen
-     und zieht sich am Ende des Takts zurück. */
-  @keyframes mehrarbeit {
-    0% {
-      transform: scaleX(0);
-    }
-    22%,
-    86% {
-      transform: scaleX(1);
-    }
-    100% {
-      transform: scaleX(0);
     }
   }
   @keyframes pfad-ja {

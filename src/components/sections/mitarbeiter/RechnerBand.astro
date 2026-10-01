@@ -7,101 +7,45 @@
    dem „müsste man mal" ein „das kostet mich gerade". Danach liest sich
    der Prozess anders.
 
-   Aufbau nach Vorgabe von Iwo: eine sehr weich gerundete grüne Karte auf
-   hellem Grund, links ein Zeichen in einem leuchtenden Ring, rechts
-   Überschrift und Text.
+   Ausgewählt von Iwo aus vier Entwürfen (Sanduhr, Tagesbalken,
+   Kostenuhr, Einsatzplan) am 01.10.2026. Eine breite, flache grüne
+   Karte auf weißem Grund, deren rechte Hälfte das Bild IST. Zwanzig
+   Balken spannen drei Monate auf — derselbe Zeitraum, mit dem der
+   Rechner standardmäßig rechnet (Wunsch Iwo). Sie wachsen nacheinander
+   von links nach rechts und färben sich dabei von Limette nach Rot — der
+   Schaden, der sich Tag für Tag aufbaut.
 
-   Der Schein liegt jetzt INNERHALB der Karte und wird an ihrer Kante
-   abgeschnitten. Auf dem vorherigen dunklen Grund durfte er hinausragen;
-   auf Weiß wäre daraus ein gelber Fleck neben der Karte geworden.
-
-   Das Zeichen ist ein Kalenderblatt: die vergangenen Tage sind rot
-   abgehakt, die kommenden noch offen. Es zählt nicht mit und ist nicht
-   interaktiv — ein Bild, kein zweiter Rechner. */
+   Keine Zahl an den Balken, keine Achse: Es ist ein Bild, kein zweiter
+   Rechner, und die Höhen sind frei gewählt und stehen für nichts. */
 import Eyebrow from '../../Eyebrow.astro';
 import Button from '../../Button.astro';
 
-/* 3 × 5 Tage. Die ersten 9 sind vorbei — genug, dass die Fläche kippt,
-   aber nicht so viel, dass das Blatt voll aussieht. */
-const TAGE = 15;
-const VERGANGEN = 9;
-const tage = Array.from({ length: TAGE }, (_, i) => ({
-  x: 34 + (i % 5) * 23,
-  y: 66 + Math.floor(i / 5) * 22,
-  vorbei: i < VERGANGEN,
-}));
+const TAGE = 20;
+
+/* Die Balken wachsen gleichmäßig an, mit leichtem Auf und Ab — eine
+   glatte Rampe sähe aus wie ein Diagramm und würde Genauigkeit
+   behaupten, die es nicht gibt. */
+const zacken = [0, 0.04, -0.03, 0.05, -0.02, 0.03, -0.04, 0.02, 0.05, -0.03];
+const balken = Array.from({ length: TAGE }, (_, i) => {
+  const anteil = (i + 1) / TAGE;
+  return {
+    /* 22 % bis 100 % der Feldhöhe */
+    hoehe: Math.round((0.22 + anteil * 0.78 + zacken[i % zacken.length]) * 100),
+    /* über die Reihe von Limette nach Rot */
+    mischung: Math.round(anteil * 100),
+    /* Startversatz: gut eine Sekunde über die ganze Reihe */
+    verzoegerung: (i * 0.07).toFixed(2),
+  };
+});
 ---
 
-{/* Oben ohne eigenen Abstand: die Ausgangslage darüber steht auf demselben
-    weißen Grund und bringt ihren Fußabstand schon mit. Beides zusammen
-    ergab eine leere Fläche von rund 200px über der Karte. */}
 <section class="bg-paper px-page-x pt-0 pb-section-y-sm">
   <div class="relative mx-auto max-w-content">
     <div
-      class="relative flex flex-wrap items-center gap-x-48 gap-y-28 overflow-hidden rounded-band bg-forest px-innen-block py-32 btn:py-40"
+      class="relative flex flex-wrap items-center gap-x-56 gap-y-32 overflow-hidden rounded-band bg-forest px-innen-block py-32 btn:py-40"
     >
-      {/* Schein hinter dem Ring, an der Kartenkante abgeschnitten */}
-      <div
-        class="pointer-events-none absolute top-1/2 left-0 hidden h-260 w-260 -translate-x-1/3 -translate-y-1/2 rounded-full opacity-40 blur-[60px] btn:block"
-        style="background: radial-gradient(circle, var(--color-lime) 0%, transparent 68%)"
-        aria-hidden="true"
-      >
-      </div>
-      {/* --- Zeichen im Ring --- */}
-      {/* Der Kasten ist so groß wie der Ring, damit der Abstand zum Text vom
-          Ring aus gemessen wird und nicht vom Zeichen darin. */}
-      <div
-        class="relative flex h-[min(196px,58vw)] w-[min(196px,58vw)] flex-none items-center justify-center"
-        aria-hidden="true"
-      >
-        <span class="absolute inset-0 rounded-full border border-lime/25 shadow-ring-lime"></span>
-
-        <svg viewBox="0 0 160 160" fill="none" class="relative w-[min(150px,44vw)]">
-          {/* Aufhängung */}
-          <path class="stroke-edge-soft" stroke-width="3" stroke-linecap="round" d="M56 22 V36" />
-          <path class="stroke-edge-soft" stroke-width="3" stroke-linecap="round" d="M104 22 V36" />
-
-          {/* Blatt */}
-          <rect
-            class="fill-forest-deep stroke-edge"
-            stroke-width="2"
-            x="18"
-            y="30"
-            width="124"
-            height="106"
-            rx="14"
-          />
-
-          {/* Kopfleiste */}
-          <path class="fill-lime" d="M18 44 A14 14 0 0 1 32 30 H128 A14 14 0 0 1 142 44 V54 H18 Z" />
-
-          {/* Tage: vorbei in Rot, kommend noch offen */}
-          {
-            tage.map((tag) =>
-              tag.vorbei ? (
-                <circle class="fill-schaden" cx={tag.x} cy={tag.y} r="6" />
-              ) : (
-                <circle class="stroke-edge-soft" stroke-width="2" cx={tag.x} cy={tag.y} r="6" />
-              ),
-            )
-          }
-
-          {/* Zeichen am unteren Rand: hier entsteht die Zahl */}
-          <circle class="fill-forest-deep stroke-schaden" stroke-width="2" cx="122" cy="122" r="22" />
-          <text
-            class="fill-schaden"
-            x="122"
-            y="130"
-            text-anchor="middle"
-            font-size="22"
-            font-weight="700"
-            font-family="Inter, system-ui, sans-serif">€</text
-          >
-        </svg>
-      </div>
-
       {/* --- Text --- */}
-      <div class="flex flex-1 basis-[min(420px,100%)] flex-col items-start gap-20">
+      <div class="flex flex-1 basis-[min(400px,100%)] flex-col items-start gap-20">
         <Eyebrow variante="lime">Vakanzkosten</Eyebrow>
 
         <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
@@ -120,6 +64,30 @@ const tage = Array.from({ length: TAGE }, (_, i) => ({
         <Button href="/vakanzkostenrechner" variante="lime" sheen class="mt-4">
           Zum Vakanzkosten-Rechner<span class="text-18" aria-hidden="true">→</span>
         </Button>
+      </div>
+
+      {/* --- Balkenfeld --- */}
+      {/* `basis` statt fester Breite: unter 720px rutscht das Feld unter
+          den Text und läuft dort über die volle Breite. */}
+      <div class="flex flex-1 basis-[min(320px,100%)] flex-col gap-14" aria-hidden="true">
+        <div class="flex h-[min(150px,34vw)] items-end gap-[min(8px,1.6vw)]">
+          {
+            balken.map((b) => (
+              <span
+                class="animate-tagesbalken flex-1 origin-bottom rounded-full"
+                style={`height:${b.hoehe}%;
+                        background: color-mix(in oklab, var(--color-schaden) ${b.mischung}%, var(--color-lime));
+                        animation-delay:${b.verzoegerung}s`}
+              />
+            ))
+          }
+        </div>
+        <div class="flex items-center justify-between border-t border-edge pt-12">
+          <span class="font-mono text-12 tracking-eyebrow uppercase text-mint-dim">Tag 1</span>
+          <span class="font-mono text-12 tracking-eyebrow uppercase text-mint-dim">
+            nach drei Monaten
+          </span>
+        </div>
       </div>
     </div>
   </div>
