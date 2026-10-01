@@ -1,0 +1,44 @@
+---
+/* Social-Media-Marketing — /social-media-marketing
+
+   ENTWURF. Bisher nur der Hero mit vier laufenden Videos und der
+   Abschluss mit Anfrageformular; die Inhalte dazwischen liefert Iwo nach.
+   Bis dahin noindex, nicht in der Sitemap und im Footer ausgegraut. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import VideoHero from '../components/sections/social-media/VideoHero.astro';
+import Abschluss from '../components/sections/leistung/Abschluss.astro';
+import type { Feld } from '../components/Web3Formular.astro';
+import { abschluss } from '../data/social-media-marketing';
+
+const anfrageFelder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  { name: 'telefon', label: 'Telefonnummer', type: 'tel', pflicht: true, breit: true, autocomplete: 'tel' },
+  { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
+  { name: 'nachricht', label: 'Worum es geht', mehrzeilig: true },
+];
+---
+
+<BaseLayout
+  title="Social-Media-Marketing für Handwerk und Dienstleister | Stolz Marketing"
+  description="Reels, Kampagnen und Anzeigen für Handwerksbetriebe und Dienstleister — gedreht bei Ihnen vor Ort, geschnitten fürs Handy."
+  noindex={true}
+>
+  <VideoHero />
+
+  <main>
+    <Abschluss
+      titelVorn={abschluss.titelVorn}
+      titelMarker={abschluss.titelMarker}
+      titelMitte={abschluss.titelMitte}
+      titelKursiv={abschluss.titelKursiv}
+      titelHinten={abschluss.titelHinten}
+      lead={abschluss.lead}
+      felder={anfrageFelder}
+      betreff="Anfrage über Social-Media-Marketing"
+      ortZeile="Bergstraße und Odenwald"
+    />
+  </main>
+
+  <Footer />
+</BaseLayout>

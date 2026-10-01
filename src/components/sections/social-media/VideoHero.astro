@@ -1,0 +1,156 @@
+---
+/* Hero der Social-Media-Seite: Kopfzeile, große Überschrift, ein Absatz,
+   ein Knopf — darunter vier Hochkant-Videos, die sofort laufen.
+
+   Vorbild von Iwo: createable.si. Dort stehen vier Videos nebeneinander,
+   die beiden mittleren tiefer gesetzt, über jedem eine kleine Marke mit
+   dem Ergebnis. Umgesetzt in unseren Farben: heller Grund mit einem
+   Schein in Limette statt Mint.
+
+   Laden: Vier Videos zusammen wiegen rund 28 MB. Deshalb lädt keins von
+   selbst (preload="none"); ein Skript startet jedes erst, wenn es zu
+   sehen ist, und hält es an, wenn es aus dem Bild läuft. Auf dem Desktop
+   sind alle vier zu sehen und laufen gemeinsam, auf dem Handy nur das,
+   das gerade im Wischband steht. Stumm und in Schleife, wie das
+   Showreel auf der Startseite — auch bei eingestellter
+   Bewegungsreduzierung (Vorgabe Iwo für Videos auf der Seite).
+
+   Unter 1040px wird die Reihe zum Wischband mit Einrasten; die
+   Versetzung der mittleren Videos entfällt dort. */
+import { getImage } from 'astro:assets';
+import Header from '../../Header.astro';
+import Eyebrow from '../../Eyebrow.astro';
+import { hero, heroVideos } from '../../../data/social-media-marketing';
+
+const quellen = import.meta.glob<{ default: string }>('../../../assets/**/*.mp4', { eager: true });
+/* Standbild je Video (ein Bild nach etwa einer Sekunde), damit die Karte
+   nicht leer steht, bis das Video geladen ist. */
+const standbilder = import.meta.glob<{ default: ImageMetadata }>(
+  '../../../assets/social-media/*-standbild.jpg',
+  { eager: true },
+);
+
+const videos = await Promise.all(
+  heroVideos.map(async (video) => {
+    const name = video.datei.replace(/\.mp4$/, '');
+    const standbild = standbilder[`../../../assets/social-media/${name}-standbild.jpg`]!.default;
+    const poster = await getImage({ src: standbild, width: 560, format: 'webp' });
+    return {
+      ...video,
+      src: quellen[`../../../assets/${video.ordner}/${video.datei}`]!.default,
+      poster: poster.src,
+    };
+  }),
+);
+---
+
+<section
+  class="relative overflow-hidden bg-paper-soft"
+  style="background-image: radial-gradient(ellipse 80% 55% at 50% 0%, rgb(228 245 63 / 0.32), transparent 70%)"
+>
+  <Header variante="hell" />
+
+  <div class="flex flex-col items-center px-page-x pt-[clamp(40px,6vw,72px)] text-center">
+    <Eyebrow variante="hell">{hero.eyebrow}</Eyebrow>
+
+    <h1
+      class="m-0 mt-20 max-w-1000 text-h1-gross leading-hero font-bold tracking-system text-ink"
+    >
+      {hero.titelVorn}<span class="font-display font-semibold tracking-none italic"
+        >{hero.titelKursiv}</span
+      >{hero.titelHinten}
+    </h1>
+
+    <p class="m-0 mt-24 max-w-640 text-19 leading-body text-ink-muted">{hero.lead}</p>
+
+    <a
+      href="#anfrage"
+      class="mt-32 inline-flex h-56 items-center gap-10 rounded-full bg-lime px-28 text-16 font-bold text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright"
+    >
+      {hero.knopf}<span class="text-18" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  {/* --- Videoreihe --- */}
+  <div class="mx-auto mt-[clamp(48px,6vw,72px)] max-w-content px-page-x pb-section-y-sm">
+    <ul
+      class="no-scrollbar -mx-20 my-0 flex list-none snap-x snap-mandatory gap-16 overflow-x-auto px-20 pb-8 nav:mx-0 nav:grid nav:grid-cols-4 nav:gap-20 nav:overflow-visible nav:px-0"
+    >
+      {
+        videos.map((video, i) => (
+          <li
+            class:list={[
+              'flex w-[min(68vw,280px)] flex-none snap-center flex-col gap-12 nav:w-auto',
+              /* die beiden mittleren sitzen tiefer, wie im Vorbild */
+              (i === 1 || i === 2) && 'nav:mt-64',
+            ]}
+          >
+            <span class="flex min-h-62 items-center gap-10 rounded-16 bg-paper px-14 py-10 text-left text-14 leading-card font-bold text-ink shadow-card-light ring-1 ring-line">
+              <span
+                class="flex h-32 w-32 flex-none items-center justify-center rounded-full bg-lime/35 text-forest"
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 24 24" class="w-16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 17l6-6 4 4 8-8M15 7h6v6" />
+                </svg>
+              </span>
+              {video.marke}
+            </span>
+            <video
+              class="aspect-[9/16] w-full rounded-20 bg-forest-card object-cover shadow-card-light ring-1 ring-line"
+              src={video.src}
+              poster={video.poster}
+              muted
+              loop
+              playsinline
+              preload="none"
+              data-hero-clip
+              aria-label={`${video.alt}, läuft stumm`}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  /* Jedes Video läuft nur, solange es zu sehen ist. Auf dem Desktop sind
+     das alle vier, auf dem Handy das eine im Wischband. Spart Daten und
+     Akku, ohne dass jemand einen Unterschied sieht. */
+  const clips = document.querySelectorAll<HTMLVideoElement>('[data-hero-clip]');
+
+  const anspielen = (clip: HTMLVideoElement) => {
+    if (clip.paused) clip.play().catch(() => {});
+  };
+
+  if ('IntersectionObserver' in window) {
+    const beobachter = new IntersectionObserver(
+      (eintraege) => {
+        for (const eintrag of eintraege) {
+          const clip = eintrag.target as HTMLVideoElement;
+          if (eintrag.isIntersecting) anspielen(clip);
+          else clip.pause();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    clips.forEach((clip) => beobachter.observe(clip));
+  } else {
+    clips.forEach(anspielen);
+  }
+
+  /* iOS im Stromsparmodus verweigert den ersten Start — bei der ersten
+     Geste noch einmal versuchen, wie beim Showreel auf der Startseite. */
+  ['pointerdown', 'touchstart', 'scroll', 'keydown'].forEach((ereignis) =>
+    window.addEventListener(
+      ereignis,
+      () =>
+        clips.forEach((clip) => {
+          const r = clip.getBoundingClientRect();
+          if (r.right > 0 && r.left < innerWidth && r.bottom > 0 && r.top < innerHeight) anspielen(clip);
+        }),
+      { once: true, passive: true },
+    ),
+  );
+</script>

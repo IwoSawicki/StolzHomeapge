@@ -30,7 +30,10 @@ export default defineConfig({
       filter: (seite) =>
         !seite.includes('/alle-projekte') &&
         !seite.includes('/korbaktion') &&
-        !seite.includes('/ueber-uns'),
+        !seite.includes('/ueber-uns') &&
+        /* Entwürfe zweier neuer Leistungsseiten, noindex bis zur Freigabe */
+        !seite.includes('/social-media-marketing') &&
+        !seite.includes('/seo-ki-sichtbarkeit'),
     }),
   ],
   vite: {

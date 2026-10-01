@@ -204,6 +204,7 @@
   /* Fluide Überschriften – je Rolle, exakt wie in der Vorlage */
   --text-h1: clamp(38px, 5vw, 60px); /* Hero Startseite */
   --text-h1-sub: clamp(36px, 4.8vw, 60px); /* Hero Unterseiten */
+  --text-h1-gross: clamp(40px, 7.2vw, 92px); /* Hero mit Videoreihe (Social Media) */
   --text-h2: clamp(30px, 3.4vw, 44px); /* Projekte, Bewertungen, Zusammenarbeit */
   --text-h2-leistungen: clamp(30px, 3.6vw, 42px);
   --text-h2-branchen: clamp(30px, 3.6vw, 44px);
