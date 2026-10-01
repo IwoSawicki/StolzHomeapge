@@ -125,19 +125,24 @@ const fett = (text: string) =>
         {
           projekt.art === 'video' && projekt.videos && (
             <div class="flex flex-col gap-24">
-              {/* Hochkant-Clips. preload="metadata" statt eines gemeinsamen
-                  Posters: so zeigt jeder Clip sein eigenes erstes Bild —
-                  mit einem Poster sähen alle drei gleich aus. Geladen wird
-                  dabei nur der Dateikopf, nicht das Video. */}
+              {/* Hochkant-Clips, laufen stumm von selbst los (Vorgabe Iwo),
+                  genau wie das Showreel auf der Startseite. Autoplay geht
+                  nur mit `muted`, auf iOS zusätzlich nur mit `playsinline`.
+                  `controls` bleibt, damit man den Ton dazuschalten und
+                  anhalten kann. Kein gemeinsames Poster: dann sähen alle
+                  drei im Standbild gleich aus. */}
               <div class="grid grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-20">
                 {projekt.videos.map((datei, i) => (
                   <video
                     class="aspect-[9/16] w-full rounded-16 border border-line bg-paper-warm object-cover"
                     src={videos[`../../assets/projekte/dmkbau/${datei}`]!.default}
                     controls
+                    autoplay
+                    muted
+                    loop
                     playsinline
-                    preload="metadata"
-                    aria-label={`Kampagnenvideo ${i + 1} für ${projekt.name}`}
+                    data-projektvideo
+                    aria-label={`Kampagnenvideo ${i + 1} für ${projekt.name}, läuft stumm`}
                   />
                 ))}
               </div>
@@ -320,3 +325,38 @@ const fett = (text: string) =>
 
   <Footer />
 </BaseLayout>
+
+<script>
+  /* Die Clips sollen laufen, sobald die Seite offen ist (Vorgabe Iwo).
+     `autoplay muted playsinline` reicht dafür meistens, aber nicht immer:
+     iOS im Stromsparmodus verweigert den Start, und solange noch keine
+     Daten da sind, läuft der erste Versuch ins Leere. Deshalb dieselbe
+     Nachfass-Logik wie beim Showreel auf der Startseite. */
+  const clips = document.querySelectorAll<HTMLVideoElement>('[data-projektvideo]');
+
+  clips.forEach((clip) => {
+    const anspielen = () => {
+      if (clip.paused && !clip.ended) clip.play().catch(() => {});
+    };
+
+    anspielen();
+    clip.addEventListener('loadeddata', anspielen);
+    clip.addEventListener('canplay', anspielen);
+  });
+
+  if (clips.length) {
+    const alleAnspielen = () =>
+      clips.forEach((clip) => {
+        if (clip.paused && !clip.ended) clip.play().catch(() => {});
+      });
+
+    /* beim Zurückwechseln auf den Tab */
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) alleAnspielen();
+    });
+    /* spätestens bei der ersten Nutzergeste, falls der Browser blockt */
+    ['pointerdown', 'touchstart', 'scroll', 'keydown'].forEach((ev) =>
+      window.addEventListener(ev, alleAnspielen, { once: true, passive: true }),
+    );
+  }
+</script>

@@ -83,7 +83,7 @@ export const projekte: Projekt[] = [
   },
   {
     eyebrow: 'DMK Bau · Bauunternehmen',
-    titel: 'Kampagnen für Kundengewinnung und neue Fachkräfte im Bau',
+    titel: 'Kampagnen für Kundengewinnung',
     text: 'Bezahlte Kampagnen für zwei Ziele: Anfragen von Inhabern und Bewerbungen von Fachkräften. Über 100.000 Aufrufe innerhalb der ersten Wochen — bei einem Betrieb, den in der Region ohnehin jeder kennt.',
     domain: 'dmk-bau.de',
     /* Kein Webseiten-Screenshot, sondern ein Foto vom Dreh im Betrieb —
