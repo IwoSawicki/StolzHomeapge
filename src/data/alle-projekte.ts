@@ -35,7 +35,7 @@ export const alleProjekte: InternesProjekt[] = [
     slug: 'dmk-bau',
     name: 'DMK Bau',
     art: 'video',
-    beschreibung: 'Kampagnen für Kundengewinnung und neue Fachkräfte im Bau.',
+    beschreibung: 'Kampagnen für Kundengewinnung.',
     ziel: 'Kundengewinnung & Recruiting',
     kategorien: ['Social Media Ads'],
     bild: 'dmkbau-preview2.webp',

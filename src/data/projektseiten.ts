@@ -71,7 +71,7 @@ export const projektseiten: Projektseite[] = [
     name: 'DMK Bau',
     art: 'video',
     eyebrow: 'Kundengewinnung & Recruiting',
-    titel: 'Kampagnen für Kundengewinnung und neue Fachkräfte im Bau',
+    titel: 'Kampagnen für Kundengewinnung',
     metaBeschreibung:
       'DMK Bau wollte beides: neue Aufträge und neue Fachkräfte. Eine Kampagnen-Strecke aus drei Videos, über 100.000 Aufrufe in den ersten Wochen.',
     einleitung:
