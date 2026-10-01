@@ -1,0 +1,136 @@
+---
+/* Kopf der SEO-Seite: dunkles Band mit Kopfzeile, links Überschrift und
+   Text, rechts ein angedeutetes Suchergebnis — Suchfeld, KI-Übersicht
+   darüber, darunter die Treffer mit „Ihr Betrieb" auf Platz eins.
+
+   Das Bild ist eine Andeutung, keine echte Suche: keine Namen anderer
+   Betriebe, die übrigen Treffer sind graue Platzhalterzeilen. Die
+   Zeilen der KI-Übersicht bauen sich nacheinander auf, „Ihr Betrieb"
+   leuchtet kurz auf — ohne Bewegung steht alles fertig da. */
+import Header from '../../Header.astro';
+import Eyebrow from '../../Eyebrow.astro';
+import { hero } from '../../../data/seo-ki-sichtbarkeit';
+import { erstgespraech } from '../../../data/navigation';
+
+const zeile = 'block h-8 rounded-full bg-edge';
+---
+
+<div class="relative overflow-hidden bg-forest">
+  {/* Schein rechts hinter dem Suchergebnis */}
+  <div
+    class="pointer-events-none absolute top-1/2 right-0 hidden h-520 w-520 translate-x-1/4 -translate-y-1/3 rounded-full opacity-35 blur-[90px] nav:block"
+    style="background: radial-gradient(circle, var(--color-lime) 0%, transparent 70%)"
+    aria-hidden="true"
+  >
+  </div>
+
+  <Header />
+
+  <section class="relative px-page-x pt-40 pb-section-y-sm">
+    <div class="mx-auto flex max-w-content flex-wrap items-center gap-x-64 gap-y-48">
+      <div class="flex flex-1 basis-[min(520px,100%)] flex-col items-start gap-20">
+        <Eyebrow variante="lime">{hero.eyebrow}</Eyebrow>
+        <h1 class="m-0 text-h1-sub leading-tightest font-bold tracking-system text-paper">
+          {hero.titelVorn}<span class="font-display font-semibold tracking-none italic"
+            >{hero.titelKursiv}</span
+          >{hero.titelHinten}
+        </h1>
+        <p class="m-0 max-w-620 text-19 leading-body text-mint">{hero.lead}</p>
+        <div class="mt-8 flex flex-wrap gap-12">
+          <a
+            href={erstgespraech.href}
+            class="inline-flex h-56 items-center gap-10 rounded-8 bg-lime px-28 text-16 font-bold text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright"
+          >
+            {erstgespraech.label}<span class="text-18" aria-hidden="true">→</span>
+          </a>
+          <a
+            href="#analyse"
+            class="box-content inline-flex h-56 items-center rounded-8 border border-lime-edge bg-lime/7 px-26 text-16 font-medium text-cream no-underline transition-colors duration-200 hover:border-lime-edge-hover hover:bg-lime/14"
+          >
+            Beispiel-Analyse ansehen
+          </a>
+        </div>
+      </div>
+
+      {/* --- angedeutetes Suchergebnis --- */}
+      <div class="flex flex-1 basis-[min(420px,100%)] flex-col gap-12" aria-hidden="true">
+        {/* Suchfeld */}
+        <div class="flex items-center gap-12 rounded-full bg-paper px-20 py-14 shadow-card-light">
+          <svg viewBox="0 0 24 24" class="w-18 flex-none text-ink-faint" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" />
+          </svg>
+          <span class="truncate text-16 text-ink">fassade streichen bergstraße</span>
+        </div>
+
+        {/* KI-Übersicht */}
+        <div class="flex flex-col gap-10 rounded-20 border border-edge bg-forest-card p-18">
+          <span class="flex items-center gap-8 font-mono text-11 tracking-eyebrow uppercase text-lime">
+            <svg viewBox="0 0 24 24" class="w-14" fill="currentColor">
+              <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" />
+            </svg>
+            KI-Übersicht
+          </span>
+          <span class:list={[zeile, 'seo-zeile w-[92%]']} style="--verzug: 0s"></span>
+          <span class:list={[zeile, 'seo-zeile w-[78%]']} style="--verzug: 0.25s"></span>
+          <span class="seo-zeile flex flex-wrap items-center gap-8" style="--verzug: 0.5s">
+            <span class:list={[zeile, 'w-[24%]']}></span>
+            <span class="seo-betrieb rounded-6 bg-lime px-8 py-2 text-13 font-bold text-forest-deep">Ihr Betrieb</span>
+            <span class:list={[zeile, 'w-[30%]']}></span>
+          </span>
+          <span class:list={[zeile, 'seo-zeile w-[64%]']} style="--verzug: 0.75s"></span>
+        </div>
+
+        {/* Treffer */}
+        <div class="flex flex-col gap-8 rounded-20 bg-paper p-18 shadow-card-light">
+          <div class="flex items-center gap-12 rounded-12 bg-lime/25 px-12 py-10">
+            <span class="flex h-26 w-26 flex-none items-center justify-center rounded-full bg-forest text-12 font-bold text-lime">1</span>
+            <span class="flex min-w-0 flex-col gap-2">
+              <span class="truncate text-15 font-bold text-ink">Ihr Betrieb — Fassade streichen an der Bergstraße</span>
+              <span class="truncate text-12 text-ink-muted">ihr-betrieb.de › fassade</span>
+            </span>
+          </div>
+          {[2, 3].map((platz) => (
+            <div class="flex items-center gap-12 px-12 py-10">
+              <span class="flex h-26 w-26 flex-none items-center justify-center rounded-full bg-paper-grey text-12 font-bold text-ink-faint">{platz}</span>
+              <span class="flex flex-1 flex-col gap-6">
+                <span class="block h-8 w-[70%] rounded-full bg-line"></span>
+                <span class="block h-6 w-[40%] rounded-full bg-paper-grey"></span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Zeilen der KI-Übersicht bauen sich nacheinander auf, dann leuchtet
+     „Ihr Betrieb" kurz auf. Einmalig beim Laden, keine Schleife. */
+  .seo-zeile {
+    animation: seo-zeile-auf 0.6s ease-out both;
+    animation-delay: calc(0.3s + var(--verzug));
+    transform-origin: left center;
+  }
+  .seo-betrieb {
+    animation: seo-betrieb-leuchten 1.2s ease-out 1.4s both;
+  }
+  @keyframes seo-zeile-auf {
+    from {
+      opacity: 0;
+      transform: scaleX(0.4);
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+  @keyframes seo-betrieb-leuchten {
+    0% {
+      box-shadow: 0 0 0 0 rgb(228 245 63 / 0.7);
+    }
+    100% {
+      box-shadow: 0 0 0 14px rgb(228 245 63 / 0);
+    }
+  }
+</style>

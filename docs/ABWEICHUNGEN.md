@@ -1412,3 +1412,36 @@ Footer. Gemessen wird mit der PageSpeed-Insights-API von Google, direkt
 aus dem Browser. Der Schlüssel kommt als Build-Argument
 `PUBLIC_PAGESPEED_KEY` aus Dokploy. Datenschutzerklärung um einen eigenen
 Abschnitt ergänzt.
+
+---
+
+## Startseite: Hero-Buttons auf dem Handy kurz (01.10.2026, live)
+
+Unter 720px stehen die beiden Hero-Buttons in 14px nebeneinander, und
+„Neue Mitarbeiter einstellen" brach dort auf zwei Zeilen. Dort heißen sie
+jetzt „Aufträge gewinnen" und „Mitarbeiter gewinnen" (Entscheidung Iwo).
+Ab 720px bleibt der Text der Vorlage.
+
+---
+
+## Zwei neue Leistungsseiten als Entwurf (01.10.2026)
+
+Beide sind nicht aus der Vorlage. Bis zur Freigabe tragen sie `noindex`,
+stehen nicht in der Sitemap und sind im Footer ausgegraut. Im Footer
+stehen sie jetzt in der Menü-Spalte statt unter „Leistungen vor Ort".
+
+**/social-media-marketing**: bisher nur Hero und Abschluss. Der Hero folgt
+Iwos Vorbild createable.si: große Überschrift, darunter vier
+Hochkant-Videos mit einer Ergebnis-Marke darüber, die beiden mittleren
+tiefer. Jedes Video läuft nur, solange es zu sehen ist, und hat ein
+Standbild als Poster. Die übrigen Inhalte liefert Iwo.
+
+**/seo-ki-sichtbarkeit**: Kopf mit angedeutetem Suchergebnis, ein
+schematischer Verlauf zu „unabhängig von Klickpreisen", ein Auszug aus
+Iwos Keyword-Analyse für einen Malerbetrieb an der Bergstraße
+(Kennzahlen, Klickpreis-Balken, Keyword-Tabelle, Seitenstruktur als
+Reiter), das Vorgehen, die KI-Suche, FAQ und Abschluss. Aus dem Report
+sind nur Marktdaten aus dem Keyword-Planer und die Seitenstruktur
+übernommen. Kundenname, Budget und Strategie stehen nicht drin.
+**[Rückfrage]** Darf der Kunde genannt werden? Die Texte sind ein
+Entwurf zur Abstimmung.

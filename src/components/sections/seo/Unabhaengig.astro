@@ -1,0 +1,112 @@
+---
+/* „Langfristig unabhängig von Klickpreisen": links der Text, rechts ein
+   schematischer Verlauf der Anfragen über die Zeit.
+
+   Anzeigen springen sofort hoch, bleiben flach und fallen am Tag der
+   Budgetpause auf null. SEO startet bei null, wächst langsam und bleibt.
+   Ausdrücklich schematisch — keine Achsenwerte, keine Messpunkte, damit
+   niemand eine Zahl daraus liest, die es nicht gibt.
+
+   Die Linien zeichnen sich, sobald die Grafik ins Bild kommt (pathLength
+   auf 1 normiert, Strichversatz von 1 auf 0). Ohne Bewegung stehen sie
+   sofort fertig da — die globale Regel für prefers-reduced-motion kürzt
+   den Übergang auf null. */
+import Eyebrow from '../../Eyebrow.astro';
+import { klickpreise as k } from '../../../data/seo-ki-sichtbarkeit';
+
+/* Kurven im Raster 560 × 300, Grundlinie bei y = 250 */
+const anzeigen = 'M48 250 L96 250 L96 128 L372 128 L372 250 L536 250';
+const seo = 'M48 249 C 150 247, 210 220, 280 172 S 430 92, 536 70';
+const seoFlaeche = `${seo} L536 250 L48 250 Z`;
+---
+
+<section class="bg-paper px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-wrap items-center gap-x-64 gap-y-40">
+    <div class="flex flex-1 basis-[min(420px,100%)] flex-col items-start gap-20">
+      <Eyebrow variante="hell">{k.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+        {k.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{k.titelKursiv}</span
+        >{k.titelHinten}
+      </h2>
+      {k.absaetze.map((a) => <p class="m-0 text-18 leading-prose text-ink-quiet">{a}</p>)}
+    </div>
+
+    <figure class="m-0 flex flex-1 basis-[min(520px,100%)] flex-col gap-14" data-verlauf>
+      <div class="rounded-20 bg-paper-soft p-[clamp(14px,3vw,28px)] ring-1 ring-line">
+        <svg viewBox="0 0 560 300" class="block h-auto w-full" role="img" aria-labelledby="verlauf-titel">
+          <title id="verlauf-titel">
+            Schematischer Verlauf: Anfragen über Anzeigen bleiben flach und fallen bei
+            pausiertem Budget auf null, Anfragen über SEO wachsen langsam und bleiben.
+          </title>
+
+          {/* Achsen */}
+          <path class="stroke-line-strong" d="M48 24 V250 H540" fill="none" stroke-width="1.5" />
+          <text class="fill-ink-faint" x="48" y="16" font-size="12" font-family="ui-monospace, monospace">ANFRAGEN</text>
+          <text class="fill-ink-faint" x="540" y="272" font-size="12" font-family="ui-monospace, monospace" text-anchor="end">ZEIT</text>
+
+          {/* Budgetpause */}
+          <path class="stroke-ink-faint" d="M372 40 V250" stroke-width="1.5" stroke-dasharray="4 5" fill="none" />
+          <text class="fill-ink-muted" x="380" y="52" font-size="13" font-weight="600" font-family="Inter, system-ui, sans-serif">{k.markeBudget}</text>
+
+          {/* SEO: Fläche und Linie */}
+          <path class="verlauf-flaeche fill-lime" d={seoFlaeche} />
+          <path class="verlauf-linie stroke-forest" d={seo} pathLength="1" fill="none" stroke-width="4" stroke-linecap="round" />
+
+          {/* Anzeigen */}
+          <path class="verlauf-linie stroke-schaden-soft" d={anzeigen} pathLength="1" fill="none" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+        </svg>
+      </div>
+
+      <figcaption class="flex flex-wrap items-center gap-x-20 gap-y-8 text-14 text-ink-muted">
+        <span class="flex items-center gap-8">
+          <span class="h-4 w-20 rounded-full bg-forest" aria-hidden="true"></span>{k.legendeSeo}
+        </span>
+        <span class="flex items-center gap-8">
+          <span class="h-4 w-20 rounded-full bg-schaden-soft" aria-hidden="true"></span>{k.legendeAnzeigen}
+        </span>
+        <span class="text-13 text-ink-faint">{k.hinweis}</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .verlauf-linie {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .verlauf-flaeche {
+    opacity: 0;
+    transition: opacity 1.2s ease-out 0.6s;
+  }
+  [data-verlauf].ist-sichtbar .verlauf-linie {
+    stroke-dashoffset: 0;
+  }
+  [data-verlauf].ist-sichtbar .verlauf-flaeche {
+    opacity: 0.4;
+  }
+</style>
+
+<script>
+  /* Grafik zeichnen, sobald sie zur Hälfte zu sehen ist. Ohne
+     IntersectionObserver steht sie sofort fertig da. */
+  const verlauf = document.querySelector<HTMLElement>('[data-verlauf]');
+  if (verlauf) {
+    if ('IntersectionObserver' in window) {
+      const beobachter = new IntersectionObserver(
+        (eintraege) => {
+          if (eintraege.some((e) => e.isIntersecting)) {
+            verlauf.classList.add('ist-sichtbar');
+            beobachter.disconnect();
+          }
+        },
+        { threshold: 0.5 },
+      );
+      beobachter.observe(verlauf);
+    } else {
+      verlauf.classList.add('ist-sichtbar');
+    }
+  }
+</script>
