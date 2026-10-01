@@ -7,10 +7,16 @@
    Ausdrücklich schematisch — keine Achsenwerte, keine Messpunkte, damit
    niemand eine Zahl daraus liest, die es nicht gibt.
 
-   Die Linien zeichnen sich, sobald die Grafik ins Bild kommt (pathLength
-   auf 1 normiert, Strichversatz von 1 auf 0). Ohne Bewegung stehen sie
-   sofort fertig da — die globale Regel für prefers-reduced-motion kürzt
-   den Übergang auf null. */
+   Die Grafik ist von sich aus vollständig sichtbar. Erst das Skript misst
+   die echten Linienlängen, blendet die Linien aus und zeichnet sie, sobald
+   die Grafik ins Bild kommt. Scheitert irgendetwas davon, steht der
+   Verlauf einfach fertig da.
+
+   Zuerst war es umgekehrt — unsichtbar, bis eine Klasse ihn zeigte. Das
+   Skript suchte die Grafik über [data-verlauf], und dieses Attribut trägt
+   auch der KI-Chat im Kopf, der weiter oben steht: Beobachtet wurde der
+   Chat, die Linien blieben für immer verborgen. Deshalb heißt die Grafik
+   jetzt [data-zeitverlauf], und sie ist von sich aus sichtbar. */
 import Eyebrow from '../../Eyebrow.astro';
 import { klickpreise as k } from '../../../data/seo-ki-sichtbarkeit';
 
@@ -32,7 +38,7 @@ const seoFlaeche = `${seo} L536 250 L48 250 Z`;
       {k.absaetze.map((a) => <p class="m-0 text-18 leading-prose text-ink-quiet">{a}</p>)}
     </div>
 
-    <figure class="m-0 flex flex-1 basis-[min(520px,100%)] flex-col gap-14" data-verlauf>
+    <figure class="m-0 flex flex-1 basis-[min(520px,100%)] flex-col gap-14" data-zeitverlauf>
       <div class="rounded-20 bg-paper-soft p-[clamp(14px,3vw,28px)] ring-1 ring-line">
         <svg viewBox="0 0 560 300" class="block h-auto w-full" role="img" aria-labelledby="verlauf-titel">
           <title id="verlauf-titel">
@@ -50,11 +56,11 @@ const seoFlaeche = `${seo} L536 250 L48 250 Z`;
           <text class="fill-ink-muted" x="380" y="52" font-size="13" font-weight="600" font-family="Inter, system-ui, sans-serif">{k.markeBudget}</text>
 
           {/* SEO: Fläche und Linie */}
-          <path class="verlauf-flaeche fill-lime" d={seoFlaeche} />
-          <path class="verlauf-linie stroke-forest" d={seo} pathLength="1" fill="none" stroke-width="4" stroke-linecap="round" />
+          <path class="verlauf-flaeche fill-lime opacity-40" d={seoFlaeche} />
+          <path class="verlauf-linie stroke-forest" d={seo} fill="none" stroke-width="4" stroke-linecap="round" />
 
           {/* Anzeigen */}
-          <path class="verlauf-linie stroke-schaden-soft" d={anzeigen} pathLength="1" fill="none" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+          <path class="verlauf-linie stroke-schaden-soft" d={anzeigen} fill="none" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
         </svg>
       </div>
 
@@ -71,42 +77,53 @@ const seoFlaeche = `${seo} L536 250 L48 250 Z`;
   </div>
 </section>
 
-<style>
-  .verlauf-linie {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .verlauf-flaeche {
-    opacity: 0;
-    transition: opacity 1.2s ease-out 0.6s;
-  }
-  [data-verlauf].ist-sichtbar .verlauf-linie {
-    stroke-dashoffset: 0;
-  }
-  [data-verlauf].ist-sichtbar .verlauf-flaeche {
-    opacity: 0.4;
-  }
-</style>
-
 <script>
-  /* Grafik zeichnen, sobald sie zur Hälfte zu sehen ist. Ohne
-     IntersectionObserver steht sie sofort fertig da. */
-  const verlauf = document.querySelector<HTMLElement>('[data-verlauf]');
-  if (verlauf) {
-    if ('IntersectionObserver' in window) {
+  /* Zeichnen beim Hinscrollen — nur als Zugabe. Die Linien werden erst
+     hier ausgeblendet, mit ihrer gemessenen Länge in Bildpunkten des
+     Rasters. Ohne Skript, ohne IntersectionObserver oder bei reduzierter
+     Bewegung bleibt alles sichtbar wie gebaut. */
+  const verlauf = document.querySelector<HTMLElement>('[data-zeitverlauf]');
+  const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (verlauf && !ruhig && 'IntersectionObserver' in window) {
+    const linien = [...verlauf.querySelectorAll<SVGPathElement>('.verlauf-linie')];
+    const flaeche = verlauf.querySelector<SVGPathElement>('.verlauf-flaeche');
+
+    try {
+      for (const linie of linien) {
+        const laenge = Math.ceil(linie.getTotalLength());
+        linie.style.strokeDasharray = `${laenge}`;
+        linie.style.strokeDashoffset = `${laenge}`;
+      }
+      if (flaeche) flaeche.style.opacity = '0';
+
+      const zeichnen = () => {
+        for (const linie of linien) {
+          linie.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1)';
+          linie.style.strokeDashoffset = '0';
+        }
+        if (flaeche) {
+          flaeche.style.transition = 'opacity 1.2s ease-out 0.6s';
+          flaeche.style.opacity = '';
+        }
+      };
+
+      /* Schon ein Drittel im Bild genügt — sonst konnte schnelles
+         Scrollen die Schwelle überspringen. */
       const beobachter = new IntersectionObserver(
         (eintraege) => {
           if (eintraege.some((e) => e.isIntersecting)) {
-            verlauf.classList.add('ist-sichtbar');
+            requestAnimationFrame(zeichnen);
             beobachter.disconnect();
           }
         },
-        { threshold: 0.5 },
+        { threshold: 0.3 },
       );
       beobachter.observe(verlauf);
-    } else {
-      verlauf.classList.add('ist-sichtbar');
+    } catch {
+      /* Messen nicht möglich: Linien wieder sichtbar machen */
+      for (const linie of linien) linie.style.strokeDasharray = linie.style.strokeDashoffset = '';
+      if (flaeche) flaeche.style.opacity = '';
     }
   }
 </script>

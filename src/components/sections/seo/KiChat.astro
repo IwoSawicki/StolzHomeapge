@@ -9,7 +9,10 @@
 
    Die erste Frage mit Antwort steht fest im HTML. Ohne JavaScript oder
    bei eingestellter Bewegungsreduzierung bleibt genau das stehen — der
-   Chat ist dann ein ruhiges Bild statt einer Schleife.
+   Chat ist dann ein ruhiges Bild statt einer Schleife. Läuft die
+   Animation, ist dieses Standbild per CSS von Anfang an verborgen und
+   der Chat startet leer (Wunsch Iwo, 01.10.2026): sonst stünden beim
+   Laden schon zwei Blasen da.
 
    Text kommt nur aus den eigenen Daten und wird trotzdem per textContent
    gesetzt; „Ihr Betrieb" steht als eigener Marker-Span. */
@@ -44,8 +47,8 @@ const sternPfad = 'M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z';
         data-verlauf
         aria-live="off"
       >
-        <p class={frageKlasse}>{erstes.frage}</p>
-        <div class="flex items-start gap-10">
+        <p class={frageKlasse} data-standbild>{erstes.frage}</p>
+        <div class="flex items-start gap-10" data-standbild>
           <span class="flex h-30 w-30 flex-none items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
             <svg viewBox="0 0 24 24" class="w-16" fill="currentColor"><path d={sternPfad} /></svg>
           </span>
@@ -56,7 +59,6 @@ const sternPfad = 'M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z';
       </div>
     </div>
   </div>
-  <figcaption class="text-13 text-mint-dim">{chat.hinweis}</figcaption>
 
   <script
     type="application/json"
@@ -66,6 +68,12 @@ const sternPfad = 'M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z';
 </figure>
 
 <style>
+  /* Standbild ausblenden, bevor das Skript läuft — kein Aufblitzen */
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    [data-standbild] {
+      display: none;
+    }
+  }
   :global(.chat-neu) {
     animation: chat-rein 0.5s ease-out both;
   }
@@ -177,19 +185,18 @@ const sternPfad = 'M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z';
       await warte(4200);
     };
 
-    /* Das erste Gespräch steht schon da. Danach geht es nahtlos mit dem
-       zweiten darunter weiter; erst nach dem letzten blendet der Verlauf
-       aus und beginnt wieder beim ersten. */
+    /* Der Chat startet leer; nach einem kurzen Moment kommt die erste
+       Frage. Die Gespräche laufen nahtlos untereinander, erst nach dem
+       letzten blendet der Verlauf aus und beginnt wieder beim ersten. */
     const schleife = async () => {
-      await warte(3000);
-      let ab = 1;
+      verlauf.replaceChildren();
+      await warte(700);
       for (;;) {
-        for (let i = ab; i < daten.gespraeche.length; i++) await gespraech(daten.gespraeche[i]!);
+        for (const g of daten.gespraeche) await gespraech(g);
         verlauf.style.opacity = '0';
         await warte(500);
         verlauf.replaceChildren();
         verlauf.style.opacity = '1';
-        ab = 0;
       }
     };
 

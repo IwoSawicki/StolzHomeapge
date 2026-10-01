@@ -25,9 +25,9 @@ import {
   type Empfehlung,
 } from '../../../data/seo-ki-sichtbarkeit';
 
-/* Skala der Klickpreis-Balken: 16 €, damit rechts neben dem längsten
-   Balken (13,21 €) auch auf 320px noch Platz für den Wert bleibt. */
-const SKALA = 16;
+/* Skala der Klickpreis-Balken: 10 €, damit rechts neben dem längsten
+   Balken (7,98 €) auch auf 320px noch Platz für den Wert bleibt. */
+const SKALA = 10;
 /* Unter 720px steht der Begriff über dem Balken — nebeneinander blieben
    für den Balken sonst nur rund 80px. */
 const balkenRaster = 'grid grid-cols-1 gap-4 btn:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] btn:items-center btn:gap-12';
@@ -125,8 +125,9 @@ const kachel = ['bg-forest text-paper', 'bg-paper-grey text-ink', 'bg-lime text-
         <div class={balkenRaster} aria-hidden="true">
           <span class="hidden btn:block"></span>
           <span class="relative block h-16 border-t border-line text-11 text-ink-faint">
-            {[0, 5, 10, 15].map((w) => (
-              <span class="absolute top-4 -translate-x-1/2" style={`left:${(w / SKALA) * 100}%`}>{w} €</span>
+            {[0, 2, 4, 6, 8].map((w) => (
+              /* „0 €" steht bündig am Nullpunkt — mittig gesetzt ragte es links aus dem Raster */
+              <span class:list={['absolute top-4', w > 0 && '-translate-x-1/2']} style={`left:${(w / SKALA) * 100}%`}>{w} €</span>
             ))}
           </span>
         </div>

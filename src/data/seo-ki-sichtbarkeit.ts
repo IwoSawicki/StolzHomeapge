@@ -56,8 +56,6 @@ export const analyse = {
 /** Klickpreis-Spanne für die oberen Anzeigenplätze in Euro (unterer –
     oberer Bereich). `fassade` hebt das Kernthema des Beispiels hervor. */
 export const klickpreisBalken = [
-  { begriff: 'schimmel entfernen lassen', von: 3.56, bis: 13.21, fassade: false },
-  { begriff: 'wasserschaden sanierung', von: 3.05, bis: 10.55, fassade: false },
   { begriff: 'fassadenanstrich firma', von: 1.85, bis: 7.98, fassade: true },
   { begriff: 'fassadenarbeiten', von: 1.51, bis: 6.65, fassade: true },
   { begriff: 'renovierung firma', von: 1.24, bis: 5.46, fassade: false },
@@ -212,20 +210,20 @@ export const ki = {
     treffer: 'Ihr Betrieb — Fassade streichen an der Bergstraße',
     adresse: 'ihr-betrieb.de › fassade',
   },
-  sucheHinweis: 'Andeutung, wie ein Suchergebnis aussehen kann — keine Zusage.',
 };
 
 /* --- KI-Chat im Kopf --------------------------------------------------------
    Drei Gespräche aus drei Branchen, die im Kopf nacheinander ablaufen und
    dann von vorn beginnen (Wunsch Iwo). Genannt wird immer „Ihr Betrieb",
    nie ein echter Name. Die Antworten sind Beispiele, wie eine KI einen
-   Betrieb mit guter Webseite beschreiben kann — der Hinweis darunter sagt
-   das. */
+   Betrieb mit guter Webseite beschreiben kann. Einen Hinweis „keine
+   Zusage" darunter gibt es bewusst nicht mehr (Iwo, 01.10.2026): der
+   Platzhalter macht das Beispiel kenntlich, und die FAQ zu Platz 1 sagt
+   offen, dass niemand eine Platzierung garantieren kann. */
 
 export const chat = {
-  kopf: 'KI-Assistent',
+  kopf: 'ChatGPT, Gemini & Co.',
   name: 'Ihr Betrieb',
-  hinweis: 'Beispiele, wie KI-Antworten aussehen können — keine Zusage.',
   gespraeche: [
     {
       frage: 'Welcher Malerbetrieb an der Bergstraße macht Fassaden?',
