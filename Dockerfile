@@ -6,6 +6,11 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 COPY . .
+# Schlüssel für den Website-Check (PageSpeed-Insights-API). Kommt in
+# Dokploy als Build-Argument, weil Astro ihn beim Bauen in das Skript
+# schreibt — zur Laufzeit im nginx-Container wäre es zu spät.
+ARG PUBLIC_PAGESPEED_KEY=""
+ENV PUBLIC_PAGESPEED_KEY=$PUBLIC_PAGESPEED_KEY
 RUN npm run build
 
 FROM nginx:alpine

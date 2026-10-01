@@ -1,0 +1,95 @@
+---
+/* Website-Check — /website-check
+
+   Sektionsreihenfolge:
+     1. Kopf (Kopfzeile, Überschrift, ein Absatz)
+     2. Check (Eingabe, Ladezustand, Ergebnis)
+     3. FAQ
+     4. Abschluss mit Anfrageformular
+
+   Ein Werkzeug, das wirklich misst: die PageSpeed-Insights-API von
+   Google, aufgerufen direkt aus dem Browser. Vorher stand an dieser
+   Stelle nur ein Platzhalter im Footer, hinter dem ein Formular stecken
+   sollte (Entscheidung Iwo, 01.10.2026). */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import CheckKopf from '../components/sections/website-check/CheckKopf.astro';
+import Check from '../components/sections/website-check/Check.astro';
+import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
+import Abschluss from '../components/sections/leistung/Abschluss.astro';
+import type { Feld } from '../components/Web3Formular.astro';
+import { faqs, abschluss } from '../data/website-check';
+
+const anfrageFelder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  {
+    name: 'telefon',
+    label: 'Telefonnummer',
+    type: 'tel',
+    pflicht: true,
+    breit: true,
+    autocomplete: 'tel',
+  },
+  {
+    name: 'webseite',
+    label: 'Ihre Webseite',
+    breit: true,
+    autocomplete: 'url',
+    inputmode: 'url',
+  },
+  { name: 'nachricht', label: 'Worum es geht', mehrzeilig: true },
+];
+
+/* FAQ als strukturierte Daten — die Fragen stehen wortgleich sichtbar auf
+   der Seite, sonst wäre die Auszeichnung regelwidrig. */
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.frage,
+    acceptedAnswer: { '@type': 'Answer', text: f.antwort },
+  })),
+};
+
+const anwendungJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Website-Check für Handwerksbetriebe',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Alle — läuft im Browser',
+  url: 'https://stolz-marketing.de/website-check',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  provider: { '@id': 'https://stolz-marketing.de/#organisation' },
+};
+---
+
+<BaseLayout
+  title="Website-Check: Ladezeit, Technik und Google-Grundlagen prüfen | Stolz Marketing"
+  description="Prüfen Sie Ihre Webseite kostenlos: Ladezeit auf dem Handy, technische Fehler und die Grundlagen für Google — gemessen mit Google Lighthouse, Ergebnis in unter einer Minute."
+>
+  <CheckKopf />
+
+  <main>
+    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(anwendungJsonLd)} />
+
+    <Check />
+
+    <FaqLeistung eintraege={faqs} id="faq-website-check" />
+
+    <Abschluss
+      titelVorn={abschluss.titelVorn}
+      titelMarker={abschluss.titelMarker}
+      titelMitte={abschluss.titelMitte}
+      titelKursiv={abschluss.titelKursiv}
+      titelHinten={abschluss.titelHinten}
+      lead={abschluss.lead}
+      felder={anfrageFelder}
+      betreff="Anfrage über den Website-Check"
+      ortZeile="Bergstraße und Odenwald"
+    />
+  </main>
+
+  <Footer />
+</BaseLayout>
