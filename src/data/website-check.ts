@@ -3,9 +3,10 @@
    Gemessen wird mit der PageSpeed-Insights-API von Google (Lighthouse).
    Der Aufruf geht direkt aus dem Browser des Besuchers an Google; es gibt
    keinen eigenen Server dazwischen, und wir speichern die geprüfte
-   Adresse nicht. Der Schlüssel kommt beim Build aus der Umgebung
-   (PUBLIC_PAGESPEED_KEY, in Dokploy als Build-Argument hinterlegt) und
-   ist in der Google Cloud auf stolz-marketing.de beschränkt. */
+   Adresse nicht. Der Schlüssel kommt aus der Umgebungsvariable
+   PUBLIC_PAGESPEED_KEY in Dokploy — beim Containerstart geschrieben
+   (deploy/40-website-check-key.sh), hilfsweise beim Build — und ist in
+   der Google Cloud auf stolz-marketing.de beschränkt. */
 
 export const hero = {
   titelVorn: 'Wie schnell ist Ihre Webseite ',

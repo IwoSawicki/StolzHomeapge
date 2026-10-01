@@ -37,6 +37,10 @@ const pillKlasse =
   'cursor-pointer rounded-full border border-edge px-16 py-8 text-15 font-medium text-mint transition-colors peer-checked:border-lime peer-checked:bg-lime peer-checked:text-forest-deep peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-lime';
 ---
 
+{/* Schlüssel aus dem Container (siehe deploy/40-website-check-key.sh).
+    Klassisches Skript, damit es vor dem Modul unten gelesen ist. */}
+<script is:inline src="/website-check-key.js"></script>
+
 <section class="bg-forest px-page-x pb-section-y-sm" id="check">
   <script
     type="application/json"
@@ -223,7 +227,15 @@ const pillKlasse =
     group?: string;
   }
 
-  const SCHLUESSEL: string = import.meta.env.PUBLIC_PAGESPEED_KEY ?? '';
+  /* Zwei Quellen: zur Laufzeit vom Container geschrieben, sonst beim
+     Build eingesetzt. Ohne Schlüssel landet die Abfrage im kleinen
+     gemeinsamen Kontingent von Google und scheitert schnell mit 429 —
+     genau das war der Fehler auf dev. */
+  const SCHLUESSEL: string =
+    (window as unknown as { __PAGESPEED_KEY__?: string }).__PAGESPEED_KEY__ ||
+    import.meta.env.PUBLIC_PAGESPEED_KEY ||
+    '';
+  if (!SCHLUESSEL) console.warn('Website-Check: kein Schlüssel gefunden, Abfrage ohne Schlüssel.');
   const UMFANG = 263.9;
   /* Wartezeit, bevor wir aufgeben. Google selbst bricht bei rund einer
      Minute ab; bis die Antwort da ist, kann es etwas länger dauern. */
