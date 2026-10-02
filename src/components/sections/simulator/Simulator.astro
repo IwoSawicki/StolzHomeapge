@@ -1,0 +1,370 @@
+---
+/* Der Bewerbungs-Simulator: links Überschrift, Text und eine Karte „Das
+   landet bei Ihnen", die sich mit jeder Antwort live füllt; rechts ein
+   Handy, auf dem sich der Besucher durch eine Bewerbung klickt.
+
+   Ablauf im Handy: Stellenanzeige → fünf Fragen → Kontakt (vorausgefüllt,
+   gesendet wird nichts) → „Geschafft" mit der gemessenen Zeit. Die
+   Führerschein-Frage ist das Muss-Kriterium: „Nein" führt zur Absage,
+   und die Karte links zeigt „Aussortiert" — so wird die Vorauswahl
+   erlebbar.
+
+   Alles steht im HTML; das Skript zeigt jeweils einen Bildschirm. Ohne
+   JavaScript bleibt die Stellenanzeige mit einem Hinweis stehen.
+   Antworten landen per textContent in der Karte. */
+import Eyebrow from '../../Eyebrow.astro';
+import {
+  hero,
+  anzeige,
+  fragen,
+  absage,
+  kontakt,
+  fertig,
+  ankunft,
+} from '../../../data/bewerbungs-simulator';
+
+const ANZAHL = fragen.length;
+/* Gewählte Antwort (aria-pressed) füllt sich gelb, der Kreis wird zum
+   dunklen Punkt — wie in der Vorauswahl-Grafik der Meistermagnet-Seite. */
+const antwortKlasse =
+  'group flex w-full cursor-pointer items-center gap-12 rounded-14 border border-line bg-paper px-14 py-12 text-left text-15 font-bold text-ink transition-colors hover:border-forest hover:bg-paper-soft focus-visible:border-forest aria-pressed:border-lime aria-pressed:bg-lime';
+const schirmKlasse = 'schirm absolute inset-0 flex flex-col gap-16 overflow-y-auto px-18 pt-12 pb-20';
+const hakenPfad = 'M5 12.5l4.5 4.5L19 7.5';
+---
+
+<section class="relative overflow-hidden bg-forest px-page-x pt-24 pb-section-y-sm" data-simulator>
+  <div
+    class="pointer-events-none absolute top-1/3 right-[10%] hidden h-520 w-520 rounded-full opacity-30 blur-[100px] nav:block"
+    style="background: radial-gradient(circle, var(--color-lime) 0%, transparent 70%)"
+    aria-hidden="true"
+  >
+  </div>
+
+  {/* Raster statt Umbruch: auf dem Desktop stehen Text und Live-Karte
+      links untereinander, das Handy rechts über beide Zeilen. Auf dem
+      Handy gilt die DOM-Reihenfolge — Text, Simulator, dann die Karte,
+      die man nach dem Durchklicken direkt darunter sieht. */}
+  <div class="relative mx-auto grid max-w-content grid-cols-1 items-start gap-x-64 gap-y-32 pt-24 nav:grid-cols-[minmax(0,1fr)_360px] nav:pt-48">
+    {/* --- Text --- */}
+    <div class="flex flex-col items-start gap-20 nav:col-start-1 nav:row-start-1">
+      <Eyebrow variante="lime">{hero.eyebrow}</Eyebrow>
+      <h1 class="m-0 text-h1-sub leading-tightest font-bold tracking-system text-paper">
+        {hero.titelVorn}<span class="font-display font-semibold tracking-none italic"
+          >{hero.titelKursiv}</span
+        >{hero.titelHinten}
+      </h1>
+      <p class="m-0 max-w-560 text-19 leading-body text-mint">{hero.lead}</p>
+      <ul class="m-0 flex list-none flex-col gap-10 p-0">
+        {
+          hero.punkte.map((punkt) => (
+            <li class="flex items-center gap-10 text-16 text-cream">
+              <span class="flex h-20 w-20 flex-none items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="w-12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d={hakenPfad} /></svg>
+              </span>
+              {punkt}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {/* --- Live-Karte: was beim Betrieb ankommt --- */}
+    <div class="order-3 nav:order-none nav:col-start-1 nav:row-start-2">
+      <div class="flex w-full max-w-480 flex-col gap-14 rounded-20 bg-paper p-20 shadow-card-light" data-karte aria-live="polite">
+        <div class="flex items-center gap-10">
+          <span class="flex h-34 w-34 items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="w-16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+            </svg>
+          </span>
+          <div class="flex flex-col">
+            <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{ankunft.eyebrow}</span>
+            <span class="text-17 font-bold text-ink">{ankunft.titel}</span>
+          </div>
+          {/* Sichtbarkeit über das hidden-Attribut, nicht über die Klasse —
+              das Skript schaltet das Attribut, eine Klasse „hidden" bliebe
+              dabei stehen und hielte das Badge unsichtbar. */}
+          <span class="ml-auto rounded-full bg-lime px-10 py-3 text-12 font-bold text-forest-deep" data-karte-passt hidden>{ankunft.passt}</span>
+          <span class="ml-auto rounded-full bg-schaden/15 px-10 py-3 text-12 font-bold text-schaden-soft" data-karte-raus hidden>Aussortiert</span>
+        </div>
+        <p class="m-0 text-14 leading-body text-ink-muted" data-karte-leer>
+          <span class="hidden nav:inline">{ankunft.leer}</span><span class="nav:hidden">{ankunft.leerMobil}</span>
+        </p>
+        <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-16 gap-y-8 text-14" data-karte-liste>
+          {
+            fragen.map((f) => (
+              <>
+                <dt class="text-ink-faint">{f.feld}</dt>
+                <dd class="m-0 font-bold text-ink" data-karte-wert={f.schluessel}>—</dd>
+              </>
+            ))
+          }
+          <dt class="text-ink-faint">Name</dt>
+          <dd class="m-0 font-bold text-ink" data-karte-wert="name">—</dd>
+          <dt class="text-ink-faint">Telefon</dt>
+          <dd class="m-0 font-bold text-ink" data-karte-wert="telefon">—</dd>
+          <dt class="text-ink-faint">Dauer</dt>
+          <dd class="m-0 font-bold text-ink" data-karte-wert="dauer">—</dd>
+        </dl>
+      </div>
+    </div>
+
+    {/* --- Handy --- */}
+    <div class="order-2 mx-auto flex w-[min(360px,100%)] flex-col items-center nav:order-none nav:col-start-2 nav:row-span-2 nav:row-start-1 nav:mx-0">
+      <div class="relative h-640 w-full overflow-hidden rounded-[2.75rem] border-8 border-forest-black bg-paper shadow-card-light ring-1 ring-edge">
+        {/* Statuszeile */}
+        <div class="flex items-center justify-between px-22 pt-10 pb-4 text-12 font-bold text-ink" aria-hidden="true">
+          <span>9:41</span>
+          <span class="h-20 w-88 rounded-full bg-forest-black"></span>
+          <span class="flex gap-3"><span class="h-8 w-14 rounded-2 bg-ink"></span></span>
+        </div>
+        {/* Fortschritt */}
+        <div class="mx-18 h-6 overflow-hidden rounded-full bg-line" aria-hidden="true">
+          <span class="block h-full w-0 rounded-full bg-forest transition-[width] duration-500" data-fortschritt></span>
+        </div>
+        <p class="sr-only" aria-live="polite" data-ansage></p>
+
+        <div class="absolute inset-x-0 top-52 bottom-0">
+          {/* Start: Stellenanzeige */}
+          <div class={schirmKlasse} data-schirm="start">
+            <div class="flex items-center gap-12">
+              <span class="flex h-48 w-48 items-center justify-center rounded-14 bg-forest font-bold text-lime" aria-hidden="true">IB</span>
+              <div class="flex flex-col">
+                <span class="text-14 text-ink-muted">{anzeige.betrieb} sucht</span>
+                <h2 class="m-0 text-19 leading-card font-bold text-ink" tabindex="-1" data-titel>{anzeige.stelle}</h2>
+              </div>
+            </div>
+            <div class="flex h-160 flex-none items-end rounded-16 bg-forest p-14" style="background-image: radial-gradient(circle at 70% 30%, rgb(228 245 63 / 0.35), transparent 60%)" aria-hidden="true">
+              <span class="rounded-full bg-paper/90 px-10 py-4 text-12 font-bold text-ink">▶ Einblick in den Betrieb</span>
+            </div>
+            <ul class="m-0 flex list-none flex-wrap gap-6 p-0">
+              {anzeige.vorteile.map((v) => <li class="rounded-full bg-paper-soft px-10 py-5 text-13 font-medium text-ink ring-1 ring-line">{v}</li>)}
+            </ul>
+            <button type="button" class="mt-auto w-full cursor-pointer rounded-14 border-0 bg-lime px-16 py-16 text-16 font-bold text-forest-deep shadow-glow transition-colors hover:bg-lime-bright" data-los>
+              {anzeige.knopf}
+            </button>
+            <p class="m-0 text-center text-13 text-ink-faint">{anzeige.hinweis}</p>
+            <noscript><p class="m-0 text-center text-13 text-ink-muted">Der Simulator braucht JavaScript.</p></noscript>
+          </div>
+
+          {/* Fragen */}
+          {
+            fragen.map((f, i) => (
+              <div class={schirmKlasse} data-schirm={`frage-${i}`} hidden>
+                <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">Frage {i + 1} von {ANZAHL}</span>
+                <h2 class="m-0 text-22 leading-card font-bold tracking-name text-ink" tabindex="-1" data-titel>{f.frage}</h2>
+                <div class="flex flex-col gap-10">
+                  {f.antworten.map((a) => (
+                    <button type="button" class={antwortKlasse} data-antwort={f.schluessel} data-wert={a.text} data-absage={a.absage ? 'ja' : undefined}>
+                      <span class="h-20 w-20 flex-none rounded-full border-2 border-ink-faint group-aria-pressed:border-forest-deep group-aria-pressed:bg-forest-deep" aria-hidden="true" />
+                      {a.text}
+                    </button>
+                  ))}
+                </div>
+                <button type="button" class="mt-auto cursor-pointer self-start border-0 bg-transparent p-0 text-14 text-ink-muted underline underline-offset-4" data-zurueck>
+                  Zurück
+                </button>
+              </div>
+            ))
+          }
+
+          {/* Absage */}
+          <div class={schirmKlasse} data-schirm="absage" hidden>
+            <span class="mt-24 flex h-56 w-56 items-center justify-center self-center rounded-full bg-schaden/15 text-schaden-soft" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="w-24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17" /></svg>
+            </span>
+            <h2 class="m-0 text-center text-24 font-bold text-ink" tabindex="-1" data-titel>{absage.titel}</h2>
+            <p class="m-0 text-center text-15 leading-body text-ink-muted">{absage.text}</p>
+            <p class="m-0 rounded-14 bg-forest px-14 py-12 text-14 leading-body text-cream">
+              <span class="font-bold text-lime">Für Sie als Betrieb: </span>{absage.erklaerung}
+            </p>
+            <button type="button" class="mt-auto w-full cursor-pointer rounded-14 border border-line bg-paper px-16 py-14 text-15 font-bold text-ink" data-anders>
+              {absage.zurueck}
+            </button>
+          </div>
+
+          {/* Kontakt */}
+          <div class={schirmKlasse} data-schirm="kontakt" hidden>
+            <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">Letzter Schritt</span>
+            <h2 class="m-0 text-22 leading-card font-bold tracking-name text-ink" tabindex="-1" data-titel>{kontakt.frage}</h2>
+            <label class="flex flex-col gap-6 text-13 font-bold text-ink-muted">
+              Name
+              <input type="text" value={kontakt.name} readonly class="rounded-12 border border-line bg-paper-soft px-14 py-12 text-16 text-ink outline-none" />
+            </label>
+            <label class="flex flex-col gap-6 text-13 font-bold text-ink-muted">
+              Telefon
+              <input type="text" value={kontakt.telefon} readonly class="rounded-12 border border-line bg-paper-soft px-14 py-12 text-16 text-ink outline-none" />
+            </label>
+            <p class="m-0 text-13 text-ink-faint">{kontakt.hinweis}</p>
+            <button type="button" class="mt-auto w-full cursor-pointer rounded-14 border-0 bg-lime px-16 py-16 text-16 font-bold text-forest-deep shadow-glow transition-colors hover:bg-lime-bright" data-senden>
+              {kontakt.knopf}
+            </button>
+          </div>
+
+          {/* Geschafft */}
+          <div class={schirmKlasse} data-schirm="fertig" hidden>
+            <span class="schirm-haken mt-32 flex h-72 w-72 items-center justify-center self-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="w-36" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d={hakenPfad} /></svg>
+            </span>
+            <h2 class="m-0 text-center text-26 font-bold text-ink" tabindex="-1" data-titel>{fertig.titel}</h2>
+            <p class="m-0 text-center text-16 leading-body text-ink-muted">
+              {fertig.textVorn}<strong class="text-ink" data-zeit>—</strong>{fertig.textHinten}
+            </p>
+            <a href="#rueckruf" class="mt-auto flex w-full items-center justify-center gap-8 rounded-14 bg-forest px-16 py-16 text-16 font-bold text-paper no-underline">
+              Und jetzt für Ihren Betrieb<span aria-hidden="true">↓</span>
+            </a>
+            <button type="button" class="w-full cursor-pointer rounded-14 border border-line bg-paper px-16 py-12 text-14 font-bold text-ink" data-nochmal>
+              {fertig.nochmal}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Jeder neue Bildschirm gleitet von rechts herein. */
+  .schirm:not([hidden]) {
+    animation: schirm-rein 0.35s ease-out both;
+  }
+  @keyframes schirm-rein {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .schirm-haken {
+    animation: haken-pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  }
+  @keyframes haken-pop {
+    from {
+      transform: scale(0.4);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  const sim = document.querySelector<HTMLElement>('[data-simulator]');
+  if (sim) {
+    const schirme = [...sim.querySelectorAll<HTMLElement>('[data-schirm]')];
+    const fortschritt = sim.querySelector<HTMLElement>('[data-fortschritt]')!;
+    const ansage = sim.querySelector<HTMLElement>('[data-ansage]')!;
+    const karte = sim.querySelector<HTMLElement>('[data-karte]')!;
+    const anzahl = sim.querySelectorAll('[data-schirm^="frage-"]').length;
+    const schritte = anzahl + 1; // Fragen + Kontakt
+
+    let start = 0;
+    let verlauf: string[] = [];
+
+    const wert = (schluessel: string, text: string) => {
+      const feld = karte.querySelector<HTMLElement>(`[data-karte-wert="${schluessel}"]`);
+      if (feld) feld.textContent = text;
+    };
+
+    /* fokus = false nur beim ersten Aufbau: Beim Laden darf der Fokus
+       nicht springen, erst wenn der Besucher klickt. */
+    const zeige = (name: string, schritt: number, fokus = true) => {
+      schirme.forEach((s) => (s.hidden = s.dataset.schirm !== name));
+      fortschritt.style.width = `${Math.min(100, (schritt / schritte) * 100)}%`;
+      const aktiv = schirme.find((s) => s.dataset.schirm === name)!;
+      aktiv.scrollTop = 0;
+      if (fokus) {
+        aktiv.querySelector<HTMLElement>('[data-titel]')?.focus({ preventScroll: true });
+        ansage.textContent = aktiv.querySelector('[data-titel]')?.textContent ?? '';
+      }
+    };
+
+    const zuruecksetzen = () => {
+      karte.querySelectorAll<HTMLElement>('[data-karte-wert]').forEach((f) => (f.textContent = '—'));
+      karte.querySelector<HTMLElement>('[data-karte-passt]')!.hidden = true;
+      karte.querySelector<HTMLElement>('[data-karte-raus]')!.hidden = true;
+      karte.querySelector<HTMLElement>('[data-karte-leer]')!.hidden = false;
+      sim.querySelectorAll<HTMLElement>('[data-antwort]').forEach((b) => b.removeAttribute('aria-pressed'));
+      verlauf = [];
+    };
+
+    /* Start */
+    sim.querySelector('[data-los]')!.addEventListener('click', () => {
+      zuruecksetzen();
+      start = performance.now();
+      karte.querySelector<HTMLElement>('[data-karte-leer]')!.hidden = true;
+      verlauf.push('start');
+      zeige('frage-0', 0);
+    });
+
+    /* Antworten */
+    sim.querySelectorAll<HTMLButtonElement>('[data-antwort]').forEach((knopf) => {
+      knopf.addEventListener('click', () => {
+        const schluessel = knopf.dataset.antwort!;
+        const schirm = knopf.closest<HTMLElement>('[data-schirm]')!;
+        const index = Number(schirm.dataset.schirm!.split('-')[1]);
+        schirm.querySelectorAll('[data-antwort]').forEach((b) => b.removeAttribute('aria-pressed'));
+        knopf.setAttribute('aria-pressed', 'true');
+        wert(schluessel, knopf.dataset.wert!);
+        verlauf.push(schirm.dataset.schirm!);
+
+        if (knopf.dataset.absage) {
+          karte.querySelector<HTMLElement>('[data-karte-raus]')!.hidden = false;
+          karte.querySelector<HTMLElement>('[data-karte-passt]')!.hidden = true;
+          zeige('absage', index + 1);
+          return;
+        }
+        karte.querySelector<HTMLElement>('[data-karte-raus]')!.hidden = true;
+        /* kurze Pause, damit die gewählte Antwort sichtbar aufleuchtet */
+        setTimeout(() => {
+          if (index + 1 < anzahl) zeige(`frage-${index + 1}`, index + 1);
+          else zeige('kontakt', anzahl);
+        }, 220);
+      });
+    });
+
+    /* Zurück: einen Bildschirm zurück */
+    sim.querySelectorAll('[data-zurueck]').forEach((knopf) =>
+      knopf.addEventListener('click', () => {
+        const vorher = verlauf.pop() ?? 'start';
+        const schritt = vorher.startsWith('frage-') ? Number(vorher.split('-')[1]) : 0;
+        zeige(vorher, schritt);
+      }),
+    );
+
+    /* Absage: zur Führerschein-Frage zurück */
+    sim.querySelector('[data-anders]')!.addEventListener('click', () => {
+      const frage = verlauf.pop() ?? 'frage-0';
+      karte.querySelector<HTMLElement>('[data-karte-raus]')!.hidden = true;
+      wert('fuehrerschein', '—');
+      zeige(frage, Number(frage.split('-')[1]));
+    });
+
+    /* Absenden */
+    sim.querySelector('[data-senden]')!.addEventListener('click', () => {
+      const sekunden = Math.max(1, Math.round((performance.now() - start) / 1000));
+      const text = sekunden === 1 ? '1 Sekunde' : `${sekunden} Sekunden`;
+      sim.querySelector<HTMLElement>('[data-zeit]')!.textContent = text;
+      wert('name', 'Max Mustermann');
+      wert('telefon', '0151 2345678');
+      wert('dauer', text);
+      karte.querySelector<HTMLElement>('[data-karte-passt]')!.hidden = false;
+      zeige('fertig', schritte);
+    });
+
+    /* Nochmal */
+    sim.querySelector('[data-nochmal]')!.addEventListener('click', () => {
+      zuruecksetzen();
+      zeige('start', 0);
+    });
+
+    /* Erst mit Skript stehen die Bildschirme gestapelt — ohne bleibt die
+       Anzeige mit dem Hinweis stehen. */
+    zeige('start', 0, false);
+  }
+</script>

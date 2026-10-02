@@ -47,6 +47,9 @@ export const footerMenue: NavLink[] = [
 export const footerTools: NavLink[] = [
   { label: 'Vakanzkostenrechner', href: '/vakanzkostenrechner' },
   { label: 'Website-Check', href: '/website-check' },
+  /* Landingpage für Anzeigen, zugleich ein Werkzeug zum Ausprobieren
+     (live seit 02.10.2026) */
+  { label: 'Bewerbungs-Simulator', href: '/bewerbungs-simulator' },
   /* Der geplante Sichtbarkeits-Check steht nicht mehr in der Liste
      (Iwo, 02.10.2026) */
 ];

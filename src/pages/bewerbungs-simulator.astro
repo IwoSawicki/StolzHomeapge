@@ -1,0 +1,104 @@
+---
+/* Bewerbungs-Simulator — /bewerbungs-simulator
+
+   Landingpage für Anzeigen (Idee Iwo, 01.10.2026). Deshalb ohne
+   Hauptmenü: oben nur das Logo, damit nichts vom Ausprobieren und vom
+   Rückruf ablenkt. Der Footer bleibt vollständig — Impressum und
+   Datenschutz müssen erreichbar sein.
+
+   Sektionsreihenfolge:
+     1. Simulator (dunkel): Text, Handy, Live-Karte
+     2. Rückruf (dunkler): „Und jetzt für Ihren Betrieb" mit Formular
+     3. Warum das funktioniert (hell), mit Link zum Meistermagneten
+
+   Im Footer unter „Tools" verlinkt. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import Logo from '../components/Logo.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import Web3Formular from '../components/Web3Formular.astro';
+import type { Feld } from '../components/Web3Formular.astro';
+import Simulator from '../components/sections/simulator/Simulator.astro';
+import { rueckruf, warum } from '../data/bewerbungs-simulator';
+
+const rueckrufFelder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  { name: 'telefon', label: 'Telefonnummer', type: 'tel', pflicht: true, breit: true, autocomplete: 'tel' },
+  { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
+];
+---
+
+<BaseLayout
+  title="Bewerbungs-Simulator: So bewirbt man sich in 60 Sekunden | Stolz Marketing"
+  description="Klicken Sie sich selbst durch eine Bewerbung, wie wir sie für Handwerksbetriebe bauen — auf dem Handy, ohne Anschreiben, ohne Lebenslauf. Danach sehen Sie, was bei Ihnen ankäme."
+>
+  {/* Schlanker Kopf ohne Menü — eine Landingpage hat genau ein Ziel */}
+  <div class="bg-forest px-page-x pt-24">
+    <div class="mx-auto max-w-content">
+      <a href="/" class="inline-block" aria-label="Stolz Marketing — zur Startseite">
+        <Logo variante="hell" hoehe={26} />
+      </a>
+    </div>
+  </div>
+
+  <main>
+    <Simulator />
+
+    {/* --- Rückruf --- */}
+    <section id="rueckruf" class="bg-forest-deep px-page-x py-section-y-md">
+      <div class="mx-auto flex max-w-content flex-wrap items-center gap-x-64 gap-y-40">
+        <div class="flex flex-1 basis-[min(440px,100%)] flex-col items-start gap-20">
+          <Eyebrow variante="lime">Rückruf</Eyebrow>
+          <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
+            {rueckruf.titelVorn}<span class="font-display font-semibold tracking-none italic"
+              >{rueckruf.titelKursiv}</span
+            >{rueckruf.titelHinten}
+          </h2>
+          <p class="m-0 max-w-560 text-18 leading-prose text-mint">{rueckruf.lead}</p>
+        </div>
+        <Web3Formular
+          felder={rueckrufFelder}
+          betreff="Rückruf über den Bewerbungs-Simulator"
+          knopfText={rueckruf.knopf}
+          variante="dunkel"
+          class="flex-1 basis-[min(400px,100%)] rounded-20 border border-edge bg-forest-review px-quote-x py-quote-y"
+        />
+      </div>
+    </section>
+
+    {/* --- Warum das funktioniert --- */}
+    <section class="bg-paper px-page-x py-section-y-md">
+      <div class="mx-auto flex max-w-content flex-col gap-40">
+        <div class="flex flex-col items-start gap-16">
+          <Eyebrow variante="hell">{warum.eyebrow}</Eyebrow>
+          <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+            {warum.titelVorn}<span class="font-display font-semibold tracking-none italic"
+              >{warum.titelKursiv}</span
+            >{warum.titelHinten}
+          </h2>
+        </div>
+        <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-16 p-0">
+          {
+            warum.punkte.map((p, i) => (
+              <li class="flex flex-col gap-12 rounded-20 bg-paper-soft p-24 ring-1 ring-line">
+                <span class="flex h-40 w-40 items-center justify-center rounded-full bg-lime font-mono text-14 font-bold text-forest-deep">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 class="m-0 text-19 leading-card font-bold text-ink">{p.titel}</h3>
+                <p class="m-0 text-16 leading-body text-ink-muted">{p.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <a
+          href="/mitarbeiter-gewinnen"
+          class="self-start text-17 font-medium text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-lime-link-hover"
+        >
+          {warum.link} →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1376,3 +1376,20 @@ garantieren kann.
 Der Textmarker im Chat ist auf `main` der volle Lime-Kasten; der
 auslaufende Marker von dev ist noch nicht freigegeben.
 **[Rückfrage]** Darf der Kunde aus der Analyse genannt werden?
+
+---
+
+## Bewerbungs-Simulator unter /bewerbungs-simulator (02.10.2026, live)
+
+Neu, nicht aus der Vorlage. Eine Landingpage für Anzeigen (Idee Iwo): Der
+Betriebsinhaber klickt sich auf einem angedeuteten Handy selbst durch
+eine Bewerbung, wie wir sie bauen — fünf Fragen, der Führerschein als
+Muss-Kriterium mit Absage, vorausgefüllter Kontakt, am Ende die
+gemessene Zeit. Daneben füllt sich die Karte „Das landet bei Ihnen".
+Im Simulator wird nichts gesendet; erst das Rückruf-Formular darunter ist
+echt (Web3Forms, wie alle Formulare — kein neuer Dienst, kein neuer
+Abschnitt in der Datenschutzerklärung).
+
+Oben steht nur das Logo, kein Menü: Eine Landingpage hat ein Ziel. Der
+Footer bleibt vollständig, Impressum und Datenschutz sind erreichbar.
+Verlinkt im Footer unter „Tools".
