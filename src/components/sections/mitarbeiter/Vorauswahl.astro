@@ -22,6 +22,7 @@
    Die Grafik ist ein Bild, kein Formular: nichts davon ist bedienbar,
    deshalb aria-hidden. Was sie zeigt, steht auch im Text. */
 import Eyebrow from '../../Eyebrow.astro';
+import Button from '../../Button.astro';
 import { vorauswahl as v } from '../../../data/mitarbeiter-gewinnen';
 
 const karte = 'rounded-20 bg-paper shadow-card-light ring-1 ring-line';
@@ -212,6 +213,10 @@ const zeile =
           ))
         }
       </ul>
+      {/* Wer es selbst erleben will: der Simulator zeigt genau diesen Ablauf */}
+      <Button href="/bewerbungs-simulator" variante="tinte" sheen class="mt-8">
+        {v.simulatorKnopf}<span class="text-18" aria-hidden="true">→</span>
+      </Button>
     </div>
   </div>
 </section>

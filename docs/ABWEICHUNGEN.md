@@ -1393,3 +1393,8 @@ Abschnitt in der Datenschutzerklärung).
 Oben steht nur das Logo, kein Menü: Eine Landingpage hat ein Ziel. Der
 Footer bleibt vollständig, Impressum und Datenschutz sind erreichbar.
 Verlinkt im Footer unter „Tools".
+
+Unter der Sektion „Vorauswahl" der Meistermagnet-Seite führt ein Button
+„Bewerbung ausprobieren" zum Simulator (Wunsch Iwo, live seit
+02.10.2026). Der längere Text „Bewerbung selbst ausprobieren" brach auf
+320px auf zwei Zeilen.

@@ -91,6 +91,8 @@ export const vorauswahl = {
     'Ohne Anschreiben, ohne Lebenslauf',
     'Die Fragen legen wir mit Ihnen fest',
   ],
+  /* Verlinkung zum Bewerbungs-Simulator (Wunsch Iwo, 02.10.2026) */
+  simulatorKnopf: 'Bewerbung ausprobieren',
   /* Beispielfragen in der Grafik. Du-Form, weil Bewerberformulare im
      Handwerk so angesprochen werden — die Seite selbst siezt. */
   /* Kopfzeile der Formular-Karten */
