@@ -45,11 +45,11 @@ export const footerMenue: NavLink[] = [
 
 /** Footer-Spalte „Tools" */
 export const footerTools: NavLink[] = [
+  /* Landingpage für Anzeigen, zugleich ein Werkzeug zum Ausprobieren
+     (01.10.2026). Steht oben (Reihenfolge Iwo, 02.10.2026). */
+  { label: 'Bewerbungs-Simulator', href: '/bewerbungs-simulator' },
   { label: 'Vakanzkostenrechner', href: '/vakanzkostenrechner' },
   { label: 'Website-Check', href: '/website-check' },
-  /* Landingpage für Anzeigen, zugleich ein Werkzeug zum Ausprobieren
-     (01.10.2026) */
-  { label: 'Bewerbungs-Simulator', href: '/bewerbungs-simulator' },
   /* Der geplante Sichtbarkeits-Check steht nicht mehr in der Liste
      (Iwo, 02.10.2026) */
 ];
