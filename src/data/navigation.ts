@@ -47,7 +47,8 @@ export const footerMenue: NavLink[] = [
 export const footerTools: NavLink[] = [
   { label: 'Vakanzkostenrechner', href: '/vakanzkostenrechner' },
   { label: 'Website-Check', href: '/website-check' },
-  { label: 'Sichtbarkeits-Check', href: '/sichtbarkeits-check', nochNicht: true },
+  /* Der geplante Sichtbarkeits-Check steht nicht mehr in der Liste
+     (Iwo, 02.10.2026) */
 ];
 
 /** Footer-Spalte „Branchen" — die sechs Kernbranchen, dieselben, die auf
@@ -90,6 +91,11 @@ export const footerBranchen: NavLink[] = branchen
     ausgegraut wie die übrigen offenen Seiten, als sichtbare Merkliste.
     Sobald eine Seite steht: `nochNicht` entfernen. */
 export const footerStandorte: NavLink[] = [
+  /* Leistungsseite auf Wunsch von Iwo (live seit 01.10.2026), oben in
+     der Liste (02.10.2026). Der Name trägt die Suchbegriffe, weil der
+     Linktext im Footer für Google mitzählt. Social-Media-Marketing kommt
+     direkt darunter, sobald die Seite live ist. */
+  { label: 'SEO & KI-Sichtbarkeit', href: '/seo-ki-sichtbarkeit' },
   { label: 'Webdesign Bergstraße', href: '/webdesign-bergstrasse' },
   /* gebaut — steht als einzige der sechs schon als Link da */
   { label: 'Webdesign Bensheim', href: '/webdesign-bensheim' },
@@ -97,11 +103,6 @@ export const footerStandorte: NavLink[] = [
   { label: 'SEO Bergstraße', href: '/seo-bergstrasse', nochNicht: true },
   { label: 'Online-Marketing Bensheim', href: '/online-marketing-bensheim', nochNicht: true },
   { label: 'Website-Betreuung Bensheim', href: '/website-betreuung-bensheim', nochNicht: true },
-
-  /* Leistungsseite auf Wunsch von Iwo (live seit 01.10.2026). Der Name
-     trägt die Suchbegriffe, weil der Linktext im Footer für Google
-     mitzählt. */
-  { label: 'SEO & KI-Sichtbarkeit', href: '/seo-ki-sichtbarkeit' },
 ];
 
 /* Footer-Spalte „Rechtliches". AGB stehen bewusst nicht drin: es gibt
