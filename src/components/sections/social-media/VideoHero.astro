@@ -85,7 +85,9 @@ const videos = await Promise.all(
               (i === 1 || i === 2) && 'nav:mt-64',
             ]}
           >
-            <span class="flex min-h-62 items-center gap-10 rounded-16 bg-paper px-14 py-10 text-left text-14 leading-card font-bold text-ink shadow-card-light ring-1 ring-line">
+            {/* Mindesthöhe für drei Zeilen: sonst rutscht das Video unter einer
+                zweizeiligen Marke höher als die Nachbarn */}
+            <span class="flex min-h-73 items-center gap-10 rounded-16 bg-paper px-14 py-10 text-left text-14 leading-card font-bold text-ink shadow-card-light ring-1 ring-line">
               <span
                 class="flex h-32 w-32 flex-none items-center justify-center rounded-full bg-lime/35 text-forest"
                 aria-hidden="true"

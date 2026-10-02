@@ -8,8 +8,10 @@
    noindex und ist im Footer ausgegraut.
 
    Zahlen in den Video-Marken nur, wenn sie belegt sind: die über
-   100.000 Aufrufe der DMK-Kampagne stehen so schon auf der Startseite.
-   Für die anderen Videos fehlen Zahlen — dort steht, was der Clip ist. */
+   100.000 Aufrufe der DMK-Kampagne stehen so schon auf der Startseite,
+   die zehn neuen Mitarbeiter für SAAN standen so auf dem alten Auftritt
+   (Iwos Text, Branch alter-auftritt, src/data/projekte.ts). Für die
+   anderen Videos fehlen Zahlen — dort steht, was der Clip ist. */
 
 export const hero = {
   eyebrow: 'Social-Media-Marketing',
@@ -23,7 +25,7 @@ export const hero = {
 export interface HeroVideo {
   /** Dateiname unter src/assets/… (Pfad steht in `ordner`) */
   datei: string;
-  ordner: 'startseite' | 'projekte/dmkbau';
+  ordner: 'startseite' | 'projekte/dmkbau' | 'projekte/saan';
   /** Text in der Marke über dem Video */
   marke: string;
   /** Beschreibung für Screenreader */
@@ -31,8 +33,11 @@ export interface HeroVideo {
 }
 
 /* Reihenfolge = Reihenfolge im Hero, von links nach rechts.
-   Drei von vier Clips sind von DMK Bau, weil im Projekt bisher nur diese
-   Hochkant-Videos liegen. Weitere Referenzen liefert Iwo nach. */
+   Der SAAN-Clip kommt aus dem alten Auftritt (Branch alter-auftritt) und
+   ersetzt den Recruiting-Clip von DMK Bau, damit nicht drei von vier
+   Videos vom selben Kunden sind (Wunsch Iwo, 02.10.2026). Von den drei
+   SAAN-Clips steht der mit dem stärksten Einstieg hier: „Du willst
+   arbeiten? Dann hör gut zu". */
 export const heroVideos: HeroVideo[] = [
   {
     datei: 'DMK-SM-01-5Handwerker_1.mp4',
@@ -41,16 +46,16 @@ export const heroVideos: HeroVideo[] = [
     alt: 'Kampagnenvideo für DMK Bau',
   },
   {
+    datei: 'SAAN-RecruitingAD-01.mp4',
+    ordner: 'projekte/saan',
+    marke: 'SAAN · zehn neue Mitarbeiter in wenigen Wochen',
+    alt: 'Recruiting-Video für SAAN Wasserstrahltechnik',
+  },
+  {
     datei: 'stolz-showreel.mp4',
     ordner: 'startseite',
     marke: 'Showreel · Dreh, Schnitt und Anzeigen aus einer Hand',
     alt: 'Showreel von Stolz Marketing',
-  },
-  {
-    datei: 'DMK-SM-03-BadScheissHandwerker_1.mp4',
-    ordner: 'projekte/dmkbau',
-    marke: 'DMK Bau · Recruiting-Clip für neue Fachkräfte',
-    alt: 'Recruiting-Video für DMK Bau',
   },
   {
     datei: 'DMK-SM-04-5Sterne100Bewertungen_1.mp4',

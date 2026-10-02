@@ -1435,6 +1435,10 @@ Iwos Vorbild createable.si: große Überschrift, darunter vier
 Hochkant-Videos mit einer Ergebnis-Marke darüber, die beiden mittleren
 tiefer. Jedes Video läuft nur, solange es zu sehen ist, und hat ein
 Standbild als Poster. Die übrigen Inhalte liefert Iwo.
+Ein Clip stammt von SAAN Wasserstrahltechnik, aus dem alten Auftritt
+(Branch `alter-auftritt`); die Marke „zehn neue Mitarbeiter in wenigen
+Wochen" ist Iwos Ergebnis von dort. Von raum.Konzept liegen im Repo nur
+Standbilder, kein Video.
 
 **/seo-ki-sichtbarkeit** (live seit 01.10.2026, indexiert, in der
 Sitemap, im Footer unter „Leistungen vor Ort"): Kopf mit angedeutetem
