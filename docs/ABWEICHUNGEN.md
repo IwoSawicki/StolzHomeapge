@@ -1453,3 +1453,25 @@ sind auf Iwos Wunsch entfallen: Der Platzhalter „Ihr Betrieb" macht das
 Beispiel kenntlich, und die FAQ sagt offen, dass niemand Platz 1
 garantieren kann.
 **[Rückfrage]** Darf der Kunde genannt werden?
+
+---
+
+## Bewerbungs-Simulator unter /bewerbungs-simulator (02.10.2026, live)
+
+Neu, nicht aus der Vorlage. Eine Landingpage für Anzeigen (Idee Iwo): Der
+Betriebsinhaber klickt sich auf einem angedeuteten Handy selbst durch
+eine Bewerbung, wie wir sie bauen — fünf Fragen, der Führerschein als
+Muss-Kriterium mit Absage, vorausgefüllter Kontakt, am Ende die
+gemessene Zeit. Daneben füllt sich die Karte „Das landet bei Ihnen".
+Im Simulator wird nichts gesendet; erst das Rückruf-Formular darunter ist
+echt (Web3Forms, wie alle Formulare — kein neuer Dienst, kein neuer
+Abschnitt in der Datenschutzerklärung).
+
+Oben steht nur das Logo, kein Menü: Eine Landingpage hat ein Ziel. Der
+Footer bleibt vollständig, Impressum und Datenschutz sind erreichbar.
+Verlinkt im Footer unter „Tools".
+
+Auf dev führt außerdem ein Button „Bewerbung ausprobieren" unter der
+Sektion „Vorauswahl" der Meistermagnet-Seite zum Simulator (Wunsch Iwo).
+Der längere Text „Bewerbung selbst ausprobieren" brach auf 320px auf
+zwei Zeilen.
