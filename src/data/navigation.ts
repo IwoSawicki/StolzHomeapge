@@ -50,7 +50,8 @@ export const footerTools: NavLink[] = [
   /* Landingpage für Anzeigen, zugleich ein Werkzeug zum Ausprobieren
      (01.10.2026) */
   { label: 'Bewerbungs-Simulator', href: '/bewerbungs-simulator' },
-  { label: 'Sichtbarkeits-Check', href: '/sichtbarkeits-check', nochNicht: true },
+  /* Der geplante Sichtbarkeits-Check steht nicht mehr in der Liste
+     (Iwo, 02.10.2026) */
 ];
 
 /** Footer-Spalte „Branchen" — die sechs Kernbranchen, dieselben, die auf
@@ -93,6 +94,14 @@ export const footerBranchen: NavLink[] = branchen
     ausgegraut wie die übrigen offenen Seiten, als sichtbare Merkliste.
     Sobald eine Seite steht: `nochNicht` entfernen. */
 export const footerStandorte: NavLink[] = [
+  /* Die beiden Leistungsseiten stehen oben (Reihenfolge Iwo,
+     02.10.2026). Die Namen tragen die Suchbegriffe, weil der Linktext im
+     Footer für Google mitzählt. SEO & KI-Sichtbarkeit ist seit 01.10.2026
+     live. Social-Media-Marketing ist noch Entwurf mit noindex und nur auf
+     dev verlinkt — beim Live-Gang dieser Datei nur mit der Seite
+     zusammen, sonst zeigt der Link auf 404. */
+  { label: 'SEO & KI-Sichtbarkeit', href: '/seo-ki-sichtbarkeit' },
+  { label: 'Social-Media-Marketing', href: '/social-media-marketing' },
   { label: 'Webdesign Bergstraße', href: '/webdesign-bergstrasse' },
   /* gebaut — steht als einzige der sechs schon als Link da */
   { label: 'Webdesign Bensheim', href: '/webdesign-bensheim' },
@@ -100,14 +109,6 @@ export const footerStandorte: NavLink[] = [
   { label: 'SEO Bergstraße', href: '/seo-bergstrasse', nochNicht: true },
   { label: 'Online-Marketing Bensheim', href: '/online-marketing-bensheim', nochNicht: true },
   { label: 'Website-Betreuung Bensheim', href: '/website-betreuung-bensheim', nochNicht: true },
-
-  /* Zwei Leistungsseiten, hier auf Wunsch von Iwo. Die Namen tragen die
-     Suchbegriffe, weil der Linktext im Footer für Google mitzählt.
-     SEO & KI-Sichtbarkeit ist seit 01.10.2026 live. Social-Media-Marketing
-     ist noch Entwurf mit noindex und nur auf dev verlinkt — beim Live-Gang
-     dieser Datei nur mit der Seite zusammen, sonst zeigt der Link auf 404. */
-  { label: 'Social-Media-Marketing', href: '/social-media-marketing' },
-  { label: 'SEO & KI-Sichtbarkeit', href: '/seo-ki-sichtbarkeit' },
 ];
 
 /* Footer-Spalte „Rechtliches". AGB stehen bewusst nicht drin: es gibt
