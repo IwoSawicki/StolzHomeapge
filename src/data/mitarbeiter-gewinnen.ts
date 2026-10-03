@@ -272,3 +272,87 @@ export const abschluss = {
   titelHinten: '.',
   lead: 'Im Erstgespräch finden wir gemeinsam heraus, ob wir Ihre Aufgabe annehmen können.',
 };
+
+/* --- Bewerber-Cockpit ---------------------------------------------------
+   ENTWURF (03.10.2026, nur dev). Iwo will damit werben, dass wir eine
+   eigene Software für den Bewerberprozess haben, und sie in den
+   kommenden Monaten als Kunden-Dashboard bauen — zuerst für den
+   Meistermagneten, später auch für Leads aus Google Ads und SEO.
+   ACHTUNG vor dem Live-Gang: Die Texte sagen „unsere eigene Software".
+   Live erst, wenn es sie gibt — sonst wäre das Werbung mit etwas, das
+   noch nicht existiert.
+
+   Alle Bewerber sind ausgedacht (Vorname, Initial) und als
+   Beispieldaten gekennzeichnet. */
+
+export const cockpit = {
+  eyebrow: 'Eigene Software',
+  titelVorn: 'Jeder Bewerber ',
+  titelKursiv: 'auf einen Blick',
+  titelHinten: '.',
+  lead: 'Bewerbungen landen bei uns nicht in einem Postfach, sondern in unserem eigenen Bewerber-Cockpit: vorqualifiziert, nach Stand sortiert und mit allen Antworten aus dem Formular. Sie sehen jederzeit, wer neu ist, mit wem ein Gespräch ansteht und wer zur Probearbeit kommt.',
+  punkte: [
+    'Bewerbungen aus Instagram und Facebook laufen direkt ein',
+    'Wer ein Muss-Kriterium nicht erfüllt, bekommt automatisch eine Absage',
+    'Jeder Bewerber mit Stand, Antworten und Eingang — ohne Excel-Liste',
+  ],
+  hinweisMaus: 'Ziehen Sie einen Bewerber in die nächste Spalte — oder klicken Sie ihn an.',
+  hinweisTouch: 'Tippen Sie einen Bewerber an, um ihn weiterzuschieben.',
+  demo: 'Demo mit Beispieldaten',
+  app: 'Bewerber-Cockpit',
+  betrieb: 'Ihr Betrieb',
+  stelle: 'Geselle (m/w/d) · Vollzeit',
+  aussortiert: 'Automatisch abgesagt',
+  kennzahlen: {
+    gesamt: 'Bewerbungen',
+    gesamtZusatz: 'letzte 7 Tage',
+    passend: 'Passen zu Ihren Kriterien',
+    abgesagt: 'Automatisch abgesagt',
+    abgesagtZusatz: 'ohne Ihren Aufwand',
+    eingestellt: 'Eingestellt',
+  },
+};
+
+export const cockpitSpalten = [
+  { id: 'neu', titel: 'Neu' },
+  { id: 'kontaktiert', titel: 'Kontaktiert' },
+  { id: 'gespraech', titel: 'Gespräch' },
+  { id: 'probe', titel: 'Probearbeit' },
+  { id: 'eingestellt', titel: 'Eingestellt' },
+] as const;
+
+export type CockpitSpalte = (typeof cockpitSpalten)[number]['id'];
+
+export interface CockpitBewerber {
+  id: string;
+  name: string;
+  beruf: string;
+  erfahrung: string;
+  fuehrerschein: boolean;
+  anfahrt: string;
+  start: string;
+  quelle: 'Instagram' | 'Facebook';
+  eingang: string;
+  spalte: CockpitSpalte;
+  /** Grund der automatischen Absage — dann steht der Bewerber nicht im Board */
+  absage?: string;
+}
+
+export const cockpitBewerber: CockpitBewerber[] = [
+  { id: 'b1', name: 'Lukas M.', beruf: 'Anlagenmechaniker SHK', erfahrung: '5–10 Jahre', fuehrerschein: true, anfahrt: '12 km', start: 'Sofort', quelle: 'Instagram', eingang: 'vor 2 Std.', spalte: 'neu' },
+  { id: 'b2', name: 'Jonas W.', beruf: 'Anlagenmechaniker SHK', erfahrung: '3–5 Jahre', fuehrerschein: true, anfahrt: '8 km', start: 'In 1–3 Monaten', quelle: 'Facebook', eingang: 'vor 5 Std.', spalte: 'neu' },
+  { id: 'b3', name: 'Kevin S.', beruf: 'Elektroniker', erfahrung: 'über 10 Jahre', fuehrerschein: true, anfahrt: '21 km', start: 'Sofort', quelle: 'Instagram', eingang: 'gestern', spalte: 'kontaktiert' },
+  { id: 'b4', name: 'Marco B.', beruf: 'Anlagenmechaniker SHK', erfahrung: '5–10 Jahre', fuehrerschein: true, anfahrt: '15 km', start: 'Sofort', quelle: 'Instagram', eingang: 'vor 2 Tagen', spalte: 'gespraech' },
+  { id: 'b5', name: 'Daniel K.', beruf: 'Anlagenmechaniker SHK', erfahrung: '3–5 Jahre', fuehrerschein: true, anfahrt: '6 km', start: 'In 1–3 Monaten', quelle: 'Facebook', eingang: 'vor 3 Tagen', spalte: 'gespraech' },
+  { id: 'b6', name: 'Tim R.', beruf: 'Elektroniker', erfahrung: '5–10 Jahre', fuehrerschein: true, anfahrt: '18 km', start: 'Sofort', quelle: 'Instagram', eingang: 'vor 5 Tagen', spalte: 'probe' },
+  { id: 'b7', name: 'Patrick H.', beruf: 'Anlagenmechaniker SHK', erfahrung: 'über 10 Jahre', fuehrerschein: true, anfahrt: '10 km', start: 'Sofort', quelle: 'Facebook', eingang: 'vor 6 Tagen', spalte: 'eingestellt' },
+  { id: 'a1', name: 'Sven L.', beruf: 'Anlagenmechaniker SHK', erfahrung: 'unter 3 Jahre', fuehrerschein: false, anfahrt: '9 km', start: 'Sofort', quelle: 'Instagram', eingang: 'gestern', spalte: 'neu', absage: 'Kein Führerschein Klasse B' },
+  { id: 'a2', name: 'Florian G.', beruf: 'Anderer Beruf', erfahrung: '3–5 Jahre', fuehrerschein: true, anfahrt: '64 km', start: 'Später', quelle: 'Facebook', eingang: 'vor 4 Tagen', spalte: 'neu', absage: 'Anfahrt über 30 km' },
+];
+
+/* Kommen während der Demo herein, sobald das Cockpit zu sehen ist: erst
+   eine passende Bewerbung, dann eine, die automatisch abgesagt wird. */
+export const cockpitNachschub: CockpitBewerber[] = [
+  { id: 'n1', name: 'Niklas F.', beruf: 'Anlagenmechaniker SHK', erfahrung: '5–10 Jahre', fuehrerschein: true, anfahrt: '14 km', start: 'Sofort', quelle: 'Instagram', eingang: 'gerade eben', spalte: 'neu' },
+  { id: 'n2', name: 'Dennis A.', beruf: 'Elektroniker', erfahrung: '3–5 Jahre', fuehrerschein: false, anfahrt: '11 km', start: 'Sofort', quelle: 'Facebook', eingang: 'gerade eben', spalte: 'neu', absage: 'Kein Führerschein Klasse B' },
+];

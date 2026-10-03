@@ -1530,3 +1530,24 @@ breit), darunter brechen lange Einträge auf zwei Zeilen um, auf 320px
 steht eine Spalte. „Vakanzkostenrechner" trägt dafür weiche
 Trennstellen. Der große Claim und die gestreckte Wortmarke des
 bisherigen Footers sind im Entwurf nicht enthalten.
+
+---
+
+## Entwurf: Bewerber-Cockpit auf der Meistermagnet-Seite (03.10.2026, nur dev)
+
+Neu, nicht aus der Vorlage. Idee Iwo: mit einer eigenen Software für den
+Bewerberprozess werben, die er in den kommenden Monaten als
+Kunden-Dashboard baut — zuerst für den Meistermagneten, später auch für
+Leads aus Google Ads und SEO. Steht direkt nach „Vorauswahl".
+
+Ein App-Fenster mit vier Kennzahlen und einem Kanban-Board (Neu →
+Kontaktiert → Gespräch → Probearbeit → Eingestellt). Mit der Maus lassen
+sich Bewerber zwischen den Spalten ziehen; ein Klick (auf dem Handy ein
+Tippen, per Tastatur Enter) öffnet die Antworten aus dem Formular mit
+„Weiter" und „Zurück". Sobald das Cockpit zu sehen ist, kommen zwei
+Bewerbungen herein: eine passende landet unter „Neu", eine ohne
+Führerschein wird automatisch abgesagt. Die Kennzahlen zählen mit.
+
+Alle Bewerber sind ausgedacht und als „Demo mit Beispieldaten"
+gekennzeichnet. **Vor dem Live-Gang:** Die Texte sagen „unser eigenes
+Bewerber-Cockpit". Live erst, wenn es die Software gibt.

@@ -1,0 +1,48 @@
+---
+/* Eine Bewerberkarte im Bewerber-Cockpit. Die vollständigen Angaben
+   stehen als JSON in data-bewerber — daraus füllt das Skript die
+   Detailansicht. Siehe Cockpit.astro. */
+import type { CockpitBewerber } from '../../../data/mitarbeiter-gewinnen';
+
+interface Props {
+  b: CockpitBewerber;
+}
+
+const { b } = Astro.props;
+const kuerzel = b.name
+  .split(' ')
+  .map((teil) => teil[0])
+  .join('');
+const chip = 'rounded-full bg-paper-soft px-8 py-3 text-11 leading-none text-ink-muted ring-1 ring-line';
+---
+
+<li class="list-none" data-karte-li>
+  <button
+    type="button"
+    class="karte flex w-full cursor-grab touch-manipulation flex-col gap-10 rounded-12 border-0 bg-paper p-12 text-left font-[inherit] shadow-card-light ring-1 ring-line transition-[transform,box-shadow] duration-200 select-none hover:-translate-y-2 hover:ring-forest/35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+    data-karte={b.id}
+    data-bewerber={JSON.stringify(b)}
+    aria-haspopup="dialog"
+  >
+    <span class="flex items-center gap-10">
+      <span class="flex h-32 w-32 flex-none items-center justify-center rounded-full bg-lime/45 text-12 font-bold text-forest" aria-hidden="true">
+        {kuerzel}
+      </span>
+      <span class="flex min-w-0 flex-col">
+        <span class="truncate text-14 font-bold text-ink">{b.name}</span>
+        <span class="text-12 leading-card text-ink-muted">{b.beruf}</span>
+      </span>
+    </span>
+    <span class="flex flex-wrap gap-4">
+      <span class={chip}>{b.erfahrung}</span>
+      <span class={chip}>{b.anfahrt}</span>
+      {b.fuehrerschein && <span class={chip}>✓ Führerschein</span>}
+    </span>
+    <span class="flex items-center justify-between gap-8 text-11 text-ink-faint">
+      <span class="flex items-center gap-6">
+        <span class="h-6 w-6 rounded-full bg-forest" aria-hidden="true"></span>{b.quelle}
+      </span>
+      <span>{b.eingang}</span>
+    </span>
+  </button>
+</li>

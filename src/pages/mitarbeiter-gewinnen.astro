@@ -22,6 +22,7 @@ import RechnerBand from '../components/sections/mitarbeiter/RechnerBand.astro';
 import SystemSchritte from '../components/sections/leistung/SystemSchritte.astro';
 import Leistungsumfang from '../components/sections/leistung/Leistungsumfang.astro';
 import Vorauswahl from '../components/sections/mitarbeiter/Vorauswahl.astro';
+import Cockpit from '../components/sections/mitarbeiter/Cockpit.astro';
 import Vergleich from '../components/sections/mitarbeiter/Vergleich.astro';
 import Stellen from '../components/sections/mitarbeiter/Stellen.astro';
 import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
@@ -80,6 +81,8 @@ const anfrageFelder: Feld[] = [
     />
     {/* Vertieft Schritt 3 des Prozesses: wie das Formular aussortiert */}
     <Vorauswahl />
+    {/* ENTWURF (nur dev): interaktive Demo des eigenen Bewerber-Cockpits */}
+    <Cockpit />
     <Leistungsumfang
       eyebrow="Leistungsumfang"
       titelVorn="Was am Ende "
