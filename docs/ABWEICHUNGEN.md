@@ -1419,3 +1419,10 @@ Linie wandert durch die Zeit, je ein Punkt fährt auf beiden Kurven mit;
 der rote fällt bei „Budget pausiert" auf null, der grüne steigt weiter
 (Wunsch Iwo: es soll sich auch beim Hinschauen etwas bewegen). Nur
 solange die Grafik zu sehen ist, nicht bei reduzierter Bewegung.
+
+**SEO-Seite, Reiter der Keyword-Analyse (03.10.2026, live):** Statt
+einer grauen Pille stehen die Reiter als einzelne weiße Knöpfe mit Rand
+und Schatten da, darüber „Ansicht wählen". Noch nicht angesehene Reiter
+tragen einen Punkt mit pulsierendem Lichthof, der nach dem ersten
+Antippen verschwindet (Iwo: auf dem Handy war nicht zu erkennen, dass
+man tippen kann).

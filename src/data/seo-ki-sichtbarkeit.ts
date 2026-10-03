@@ -50,6 +50,8 @@ export const analyse = {
     { wert: '1–8 €', text: 'kostet ein Klick auf eine Top-Anzeige zum Thema Fassade' },
   ],
   reiter: ['Klickpreise', 'Suchbegriffe', 'Seitenstruktur'],
+  /* steht über den Reitern, damit klar ist, dass man wechseln kann */
+  reiterHinweis: 'Ansicht wählen',
 };
 
 /** Klickpreis-Spanne für die oberen Anzeigenplätze in Euro (unterer –

@@ -74,24 +74,36 @@ const kachel = ['bg-forest text-paper', 'bg-paper-grey text-ink', 'bg-lime text-
 
     {/* Report-Karte mit Reitern */}
     <div class="flex flex-col gap-24 rounded-20 bg-paper p-[clamp(18px,3.4vw,36px)] shadow-card-light ring-1 ring-line">
-      <div class="flex flex-wrap items-center justify-between gap-x-24 gap-y-12">
-        <div class="flex flex-wrap gap-6 rounded-full bg-paper-soft p-4" role="tablist" aria-label="Auszug aus der Analyse" data-reiterleiste>
-          {
-            a.reiter.map((name, i) => (
-              <button
-                type="button"
-                role="tab"
-                id={`reiter-${i}`}
-                aria-controls={`bereich-${i}`}
-                aria-selected={i === 0 ? 'true' : 'false'}
-                tabindex={i === 0 ? 0 : -1}
-                class="cursor-pointer rounded-full border-0 bg-transparent px-16 py-8 text-15 font-medium text-ink-muted transition-colors aria-selected:bg-forest aria-selected:text-paper"
-                data-reiter
-              >
-                {name}
-              </button>
-            ))
-          }
+      {/* Reiter als eigenständige Knöpfe statt als graue Pille: Auf dem
+          Handy war nicht zu erkennen, dass man sie antippen kann (Iwo,
+          03.10.2026). Noch nicht angesehene Reiter tragen einen
+          pulsierenden Punkt, der nach dem ersten Antippen verschwindet. */}
+      <div class="flex flex-wrap items-end justify-between gap-x-24 gap-y-12">
+        <div class="flex flex-col gap-10">
+          <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{a.reiterHinweis}</span>
+          <div class="flex flex-wrap gap-8" role="tablist" aria-label="Auszug aus der Analyse" data-reiterleiste>
+            {
+              a.reiter.map((name, i) => (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`reiter-${i}`}
+                  aria-controls={`bereich-${i}`}
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  tabindex={i === 0 ? 0 : -1}
+                  class="flex cursor-pointer items-center gap-8 rounded-full border-0 bg-paper px-16 py-10 text-15 font-medium text-ink shadow-card-light ring-1 ring-line-strong transition-colors hover:ring-forest aria-selected:bg-forest aria-selected:text-paper aria-selected:shadow-none aria-selected:ring-forest"
+                  data-reiter
+                >
+                  {/* erst das Skript zeigt den Punkt — ohne Skript gibt es nichts zu tippen */}
+                  <span class="relative flex h-8 w-8 flex-none" aria-hidden="true" hidden data-reiter-punkt>
+                    <span class="reiter-puls absolute inset-0 rounded-full bg-lime"></span>
+                    <span class="relative h-8 w-8 rounded-full bg-forest"></span>
+                  </span>
+                  {name}
+                </button>
+              ))
+            }
+          </div>
         </div>
         <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{a.quelle}</span>
       </div>
@@ -235,6 +247,24 @@ const kachel = ['bg-forest text-paper', 'bg-paper-grey text-ink', 'bg-lime text-
   </div>
 </section>
 
+<style>
+  /* Lichthof um den Punkt auf noch nicht angesehenen Reitern */
+  .reiter-puls {
+    animation: reiter-puls 1.8s ease-out infinite;
+  }
+  @keyframes reiter-puls {
+    0% {
+      opacity: 0.9;
+      transform: scale(1);
+    }
+    80%,
+    100% {
+      opacity: 0;
+      transform: scale(2.8);
+    }
+  }
+</style>
+
 <script>
   /* Reiter: Klick oder Pfeiltasten wechseln den Bereich. Erst das Skript
      blendet die nicht gewählten Bereiche aus — ohne JavaScript bleibt
@@ -244,12 +274,18 @@ const kachel = ['bg-forest text-paper', 'bg-paper-grey text-ink', 'bg-lime text-
     const reiter = [...leiste.querySelectorAll<HTMLButtonElement>('[data-reiter]')];
     const bereiche = [...document.querySelectorAll<HTMLElement>('[data-bereich]')];
 
+    /* Punkte zeigen, welche Reiter noch nicht angesehen wurden */
+    const punkte = reiter.map((r) => r.querySelector<HTMLElement>('[data-reiter-punkt]'));
+    const gesehen = new Set<number>();
+
     const waehle = (index: number, fokus = false) => {
+      gesehen.add(index);
       reiter.forEach((r, i) => {
         const aktiv = i === index;
         r.setAttribute('aria-selected', String(aktiv));
         r.tabIndex = aktiv ? 0 : -1;
         bereiche[i]!.hidden = !aktiv;
+        if (punkte[i]) punkte[i]!.hidden = gesehen.has(i);
       });
       if (fokus) reiter[index]!.focus();
     };
