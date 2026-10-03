@@ -17,7 +17,19 @@
    von selbst weiterspringt, und mit Tastatur und Screenreader nutzbar.
    Meistermagnet steht vorn.
    Handoff: BUILDmitarbeitergewinnen.md, Sektion 5 */
-import { vergleichZeilen, vergleichWege } from '../../../data/mitarbeiter-gewinnen';
+import {
+  vergleichZeilen as standardZeilen,
+  vergleichWege as standardWege,
+  type VergleichWeg,
+} from '../../../data/mitarbeiter-gewinnen';
+
+/* Ohne Angaben die Tabelle der Meistermagnet-Seite. Die Seite v2 reicht
+   eine Fassung mit der zusätzlichen Zeile „Absicherung" herein. */
+interface Props {
+  zeilen?: string[];
+  wege?: VergleichWeg[];
+}
+const { zeilen: vergleichZeilen = standardZeilen, wege: vergleichWege = standardWege } = Astro.props;
 
 /* Auf dem Handy steht der Meistermagnet oben */
 const kartenReihenfolge = [...vergleichWege].sort(

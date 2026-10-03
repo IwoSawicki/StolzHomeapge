@@ -512,6 +512,8 @@ const summaryKlasse =
 </style>
 
 <script>
+  import { vakanzkosten } from '../../../lib/vakanzkosten';
+
   /* --------------------------------------------------------------------
      Vakanzkostenrechner — Rechnung und Anzeige.
 
@@ -663,18 +665,21 @@ const summaryKlasse =
       const recruiting = zahl(feld.recruiting, 'recruiting');
       const verkuerzung = zahl(feld.verkuerzung, 'verkuerzung');
 
-      const umsatz = stellen * monate * stunden * satz;
-      const dbVerlust = umsatz * (db / 100);
-      const fixkosten = feld.kfzAktiv.checked ? zahl(feld.kfz, 'kfz') * monate : 0;
-      const ueberMehr =
-        ueberstunden *
-        monate *
-        lohn *
-        kfg.konstanten.zuschlag *
-        (1 + kfg.konstanten.lohnnebenkosten);
-
-      const gesamt = dbVerlust + fixkosten + ueberMehr;
-      const proTag = gesamt / (monate * kfg.konstanten.arbeitstage);
+      /* Die Formel steht in src/lib/vakanzkosten.ts — dieselbe nutzt der
+         Mini-Rechner auf der Meistermagnet-Seite v2 */
+      const { umsatz, dbVerlust, fixkosten, ueberMehr, gesamt, proTag } = vakanzkosten({
+        stellen,
+        monate,
+        satz,
+        stunden,
+        db,
+        kfz: feld.kfzAktiv.checked ? zahl(feld.kfz, 'kfz') : 0,
+        ueberstunden,
+        lohn,
+        arbeitstage: kfg.konstanten.arbeitstage,
+        zuschlag: kfg.konstanten.zuschlag,
+        lohnnebenkosten: kfg.konstanten.lohnnebenkosten,
+      });
       const ersparnis = proTag * verkuerzung * 5;
 
       /* --- Anzeige --- */
