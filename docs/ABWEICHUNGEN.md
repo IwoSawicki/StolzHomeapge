@@ -1412,3 +1412,10 @@ Auf dunklem Grund endet der Auslauf bei 55 % (`.marker-dunkel`, im
 Abschluss der Leistungsseiten und auf der Projektkarte „20 Anfragen pro
 Monat"). Mit 15 % lag die dunkle Schrift am Ende bei 1,5 : 1 Kontrast
 und war kaum lesbar; mit 55 % sind es mindestens 5,2 : 1.
+
+**SEO-Seite, Grafik „unabhängig von Klickpreisen" (03.10.2026, live):**
+Nach dem Zeichnen läuft ein Zeitstrahl in Schleife — eine senkrechte
+Linie wandert durch die Zeit, je ein Punkt fährt auf beiden Kurven mit;
+der rote fällt bei „Budget pausiert" auf null, der grüne steigt weiter
+(Wunsch Iwo: es soll sich auch beim Hinschauen etwas bewegen). Nur
+solange die Grafik zu sehen ist, nicht bei reduzierter Bewegung.
