@@ -579,14 +579,39 @@
     color: var(--color-forest-deep);
   }
 
-  /* Mehrzeiliger Textmarker bricht sauber um */
+  /* Mehrzeiliger Textmarker bricht sauber um.
+
+     Der Strich läuft nach rechts aus, statt als geschlossener Kasten zu
+     enden — wie mit einem echten Textmarker gezogen (Vorbild von Iwo:
+     hanseo.org, live seit 03.10.2026). Bei box-decoration-break: clone
+     bekommt jede Zeile ihren eigenen Verlauf, der Auslauf sitzt also an
+     jedem Zeilenende.
+
+     Das rechte Ende bleibt bei 15 % Lime stehen statt bei 0: ganz
+     durchsichtig sähe auf farbigem Grund nach einem Fehler aus, so bleibt
+     immer ein Rest Farbe stehen.
+
+     Auf dunklem Grund reicht das nicht: Dort liefe der Strich ins Dunkle
+     aus, und die dunkle Schrift am Ende hätte nur noch 1,5 : 1 Kontrast
+     („richtigen Agen-tur" war kaum zu lesen). Deshalb .marker-dunkel —
+     der Auslauf endet bei 55 % und hält so mindestens 5,2 : 1. */
   .marker {
-    background: var(--color-lime);
+    --marker-auslauf: rgb(228 245 63 / 0.15);
+    background: linear-gradient(
+      90deg,
+      var(--color-lime) 0%,
+      var(--color-lime) 38%,
+      var(--marker-auslauf) 100%
+    );
     color: var(--color-forest-deep);
     padding: 0.04em 0.22em;
     border-radius: var(--radius-4);
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
+  }
+  /* Textmarker auf dunklem Grund — siehe oben */
+  .marker-dunkel {
+    --marker-auslauf: rgb(228 245 63 / 0.55);
   }
 }
 

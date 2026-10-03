@@ -1398,3 +1398,17 @@ Unter der Sektion „Vorauswahl" der Meistermagnet-Seite führt ein Button
 „Bewerbung ausprobieren" zum Simulator (Wunsch Iwo, live seit
 02.10.2026). Der längere Text „Bewerbung selbst ausprobieren" brach auf
 320px auf zwei Zeilen.
+
+---
+
+## Textmarker als Verlauf (03.10.2026, live)
+
+Der gelbe Textmarker hinter hervorgehobenen Wörtern ist kein gefüllter
+Kasten mehr, sondern läuft nach rechts aus — wie mit einem echten
+Textmarker gezogen (Vorbild von Iwo: hanseo.org). Volle Farbe bis 38 %,
+danach bis 15 % Lime.
+
+Auf dunklem Grund endet der Auslauf bei 55 % (`.marker-dunkel`, im
+Abschluss der Leistungsseiten und auf der Projektkarte „20 Anfragen pro
+Monat"). Mit 15 % lag die dunkle Schrift am Ende bei 1,5 : 1 Kontrast
+und war kaum lesbar; mit 55 % sind es mindestens 5,2 : 1.
