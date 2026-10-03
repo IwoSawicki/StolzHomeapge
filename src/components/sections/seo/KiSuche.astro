@@ -50,8 +50,11 @@ const zeile = 'block h-8 rounded-full bg-edge';
       </ul>
     </div>
 
-    {/* --- angedeutetes Suchergebnis --- */}
-    <figure class="m-0 flex flex-1 basis-[min(420px,100%)] flex-col gap-12" data-suche>
+    {/* --- angedeutetes Suchergebnis ---
+        min-w-0: Die Trefferzeile bricht nicht um, sondern wird gekürzt.
+        Ohne min-w-0 nimmt die Grafik trotzdem die volle Textbreite ein
+        und ragte auf dem Handy über 100px aus dem Bild. */}
+    <figure class="m-0 flex min-w-0 flex-1 basis-[min(420px,100%)] flex-col gap-12" data-suche>
       <div class="flex flex-col gap-12" aria-hidden="true">
         {/* Suchfeld */}
         <div class="flex items-center gap-12 rounded-full bg-paper px-20 py-14 shadow-card-light">
