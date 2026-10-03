@@ -16,7 +16,14 @@
    Skript suchte die Grafik über [data-verlauf], und dieses Attribut trägt
    auch der KI-Chat im Kopf, der weiter oben steht: Beobachtet wurde der
    Chat, die Linien blieben für immer verborgen. Deshalb heißt die Grafik
-   jetzt [data-zeitverlauf], und sie ist von sich aus sichtbar. */
+   jetzt [data-zeitverlauf], und sie ist von sich aus sichtbar.
+
+   Danach läuft ein Zeitstrahl in Schleife (Wunsch Iwo, 03.10.2026: es
+   soll sich auch etwas bewegen, während man hinschaut). Eine senkrechte
+   Linie wandert durch die Zeit, auf jeder Kurve fährt ein Punkt mit: der
+   rote fällt bei „Budget pausiert" auf null, der grüne steigt weiter. So
+   erzählt die Grafik ihre Aussage immer wieder neu. Er läuft nur, solange
+   die Grafik zu sehen ist, und entfällt bei reduzierter Bewegung. */
 import Eyebrow from '../../Eyebrow.astro';
 import { klickpreise as k } from '../../../data/seo-ki-sichtbarkeit';
 
@@ -61,6 +68,13 @@ const seoFlaeche = `${seo} L536 250 L48 250 Z`;
 
           {/* Anzeigen */}
           <path class="verlauf-linie stroke-schaden-soft" d={anzeigen} fill="none" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+
+          {/* Zeitstrahl — unsichtbar, bis das Skript ihn bewegt */}
+          <g class="opacity-0" data-laeufer>
+            <line class="stroke-ink-faint" x1="48" y1="24" x2="48" y2="250" stroke-width="1.5" stroke-dasharray="2 4" data-laeufer-linie />
+            <circle class="fill-schaden-soft stroke-paper-soft" cx="48" cy="250" r="9" stroke-width="3" data-laeufer-anzeigen />
+            <circle class="fill-forest stroke-paper-soft" cx="48" cy="249" r="9" stroke-width="3" data-laeufer-seo />
+          </g>
         </svg>
       </div>
 
@@ -81,13 +95,14 @@ const seoFlaeche = `${seo} L536 250 L48 250 Z`;
   /* Zeichnen beim Hinscrollen — nur als Zugabe. Die Linien werden erst
      hier ausgeblendet, mit ihrer gemessenen Länge in Bildpunkten des
      Rasters. Ohne Skript, ohne IntersectionObserver oder bei reduzierter
-     Bewegung bleibt alles sichtbar wie gebaut. */
+     Bewegung bleibt alles sichtbar wie gebaut, ohne Zeitstrahl. */
   const verlauf = document.querySelector<HTMLElement>('[data-zeitverlauf]');
   const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (verlauf && !ruhig && 'IntersectionObserver' in window) {
     const linien = [...verlauf.querySelectorAll<SVGPathElement>('.verlauf-linie')];
     const flaeche = verlauf.querySelector<SVGPathElement>('.verlauf-flaeche');
+    const [seoLinie, anzeigenLinie] = linien as [SVGPathElement, SVGPathElement];
 
     try {
       for (const linie of linien) {
@@ -106,6 +121,8 @@ const seoFlaeche = `${seo} L536 250 L48 250 Z`;
           flaeche.style.transition = 'opacity 1.2s ease-out 0.6s';
           flaeche.style.opacity = '';
         }
+        /* Zeitstrahl erst, wenn die Linien stehen */
+        window.setTimeout(zeitstrahl, 2000);
       };
 
       /* Schon ein Drittel im Bild genügt — sonst konnte schnelles
@@ -124,6 +141,79 @@ const seoFlaeche = `${seo} L536 250 L48 250 Z`;
       /* Messen nicht möglich: Linien wieder sichtbar machen */
       for (const linie of linien) linie.style.strokeDasharray = linie.style.strokeDashoffset = '';
       if (flaeche) flaeche.style.opacity = '';
+    }
+
+    /* --- Zeitstrahl ---------------------------------------------------- */
+    function zeitstrahl() {
+      const laeufer = verlauf!.querySelector<SVGGElement>('[data-laeufer]');
+      const strich = verlauf!.querySelector<SVGLineElement>('[data-laeufer-linie]');
+      const punktSeo = verlauf!.querySelector<SVGCircleElement>('[data-laeufer-seo]');
+      const punktAnzeigen = verlauf!.querySelector<SVGCircleElement>('[data-laeufer-anzeigen]');
+      if (!laeufer || !strich || !punktSeo || !punktAnzeigen) return;
+
+      /* Jede Kurve einmal abtasten. Für eine Stelle x gilt der letzte
+         Punkt entlang der Linie, der noch nicht rechts davon liegt — an
+         den senkrechten Stücken der Anzeigen-Linie springt der Punkt so
+         hoch bzw. fällt auf null, statt dazwischen zu hängen. */
+      const abtasten = (pfad: SVGPathElement) => {
+        const laenge = pfad.getTotalLength();
+        return Array.from({ length: 481 }, (_, i) => pfad.getPointAtLength((laenge * i) / 480));
+      };
+      const hoeheBei = (punkte: DOMPoint[], x: number) => {
+        let y = punkte[0]!.y;
+        for (const p of punkte) {
+          if (p.x > x + 0.01) break;
+          y = p.y;
+        }
+        return y;
+      };
+      let seo: DOMPoint[];
+      let anzeigen: DOMPoint[];
+      try {
+        seo = abtasten(seoLinie);
+        anzeigen = abtasten(anzeigenLinie);
+      } catch {
+        return;
+      }
+
+      const LINKS = 48;
+      const RECHTS = 536;
+      const LAUF = 5600; // ms von links nach rechts
+      const HALT = 1600; // ms am rechten Rand, dann von vorn
+      const BLENDE = 350; // ms Ein- und Ausblenden
+
+      let start: number | null = null;
+      let bild = 0;
+
+      const schritt = (jetzt: number) => {
+        if (start === null) start = jetzt;
+        const t = (jetzt - start) % (LAUF + HALT);
+        const x = LINKS + (RECHTS - LINKS) * Math.min(t / LAUF, 1);
+
+        strich.setAttribute('x1', `${x}`);
+        strich.setAttribute('x2', `${x}`);
+        punktSeo.setAttribute('cx', `${x}`);
+        punktSeo.setAttribute('cy', `${hoeheBei(seo, x)}`);
+        punktAnzeigen.setAttribute('cx', `${x}`);
+        punktAnzeigen.setAttribute('cy', `${hoeheBei(anzeigen, x)}`);
+
+        const ende = LAUF + HALT - t;
+        laeufer.style.opacity = `${Math.min(1, t / BLENDE, ende / BLENDE)}`;
+        bild = requestAnimationFrame(schritt);
+      };
+
+      /* Nur laufen, solange die Grafik zu sehen ist. Kommt sie wieder
+         ins Bild, beginnt der Strahl von links. */
+      new IntersectionObserver((eintraege) => {
+        const sichtbar = eintraege.some((e) => e.isIntersecting);
+        cancelAnimationFrame(bild);
+        if (sichtbar) {
+          start = null;
+          bild = requestAnimationFrame(schritt);
+        } else {
+          laeufer.style.opacity = '0';
+        }
+      }).observe(verlauf!);
     }
   }
 </script>
