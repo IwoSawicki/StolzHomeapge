@@ -1,0 +1,51 @@
+---
+/* Kandidaten-Karte: so kommt eine vorsortierte Bewerbung beim Betrieb an.
+   Klar als Beispiel gekennzeichnet. Der Beruf folgt dem Gewerk aus ?g= —
+   das Skript der Seite setzt ihn in [data-kandidat-beruf]. */
+import { kandidat as k } from '../../../data/mitarbeiter-v2';
+
+interface Props {
+  beruf: string;
+  class?: string;
+  /** kleine Fassung für das Gewerk-Panel */
+  klein?: boolean;
+}
+
+const { beruf, class: klasse, klein = false } = Astro.props;
+const chip = 'rounded-full bg-paper-soft px-10 py-4 text-12 leading-none text-ink-muted ring-1 ring-line';
+---
+
+<div
+  class:list={[
+    'flex flex-col rounded-20 bg-paper shadow-card-light ring-1 ring-line',
+    klein ? 'gap-10 p-16' : 'gap-14 p-20',
+    klasse,
+  ]}
+>
+  <div class="flex items-start gap-12">
+    <span class="flex min-w-0 items-center gap-12">
+      <span class="flex h-40 w-40 flex-none items-center justify-center rounded-full bg-forest text-paper" aria-hidden="true">
+        <svg viewBox="0 0 24 24" class="w-18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" />
+        </svg>
+      </span>
+      <span class="flex flex-col">
+        <span class="text-16 leading-card font-bold text-ink" data-kandidat-beruf>{beruf}</span>
+        <span class="text-13 text-ink-muted">{k.stufe} · {k.erfahrung}</span>
+      </span>
+    </span>
+  </div>
+  <div class="flex flex-wrap gap-6">
+    <span class={chip}>✓ {k.fuehrerschein}</span>
+    <span class={chip}>{k.anfahrt}</span>
+    {!klein && <span class={chip}>{k.start}</span>}
+  </div>
+  {/* „Beispiel" unten: oben neben langen Berufen fehlte der Platz */}
+  <div class="flex flex-wrap items-center justify-between gap-x-12 gap-y-8">
+    <span class="flex items-center gap-8 rounded-full bg-forest px-12 py-6 text-13 font-bold text-paper">
+      <span class="h-8 w-8 rounded-full bg-lime" aria-hidden="true"></span>
+      {k.status}
+    </span>
+    <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{k.beispiel}</span>
+  </div>
+</div>

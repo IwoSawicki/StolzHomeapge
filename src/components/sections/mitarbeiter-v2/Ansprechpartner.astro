@@ -1,0 +1,61 @@
+---
+/* S12 · Ihr Ansprechpartner (dunkles Band). Iwo groß mit Foto, Text in
+   der Ich-Form, Handynummer zum Antippen. Darunter klein das Team — aus
+   derselben Liste wie auf der Startseite (src/data/startseite.ts). */
+import { Image } from 'astro:assets';
+import Eyebrow from '../../Eyebrow.astro';
+import iwo from '../../../assets/portraits/iwo-sawicki.jpg';
+import { ansprechpartner as a } from '../../../data/mitarbeiter-v2';
+import { kontakt } from '../../../data/navigation';
+import { team } from '../../../data/startseite';
+
+const portraits = import.meta.glob<{ default: ImageMetadata }>('../../../assets/portraits/*.jpg', { eager: true });
+const bild = (datei: string) => portraits[`../../../assets/portraits/${datei}`]!.default;
+---
+
+<section class="bg-forest px-page-x py-section-y-md">
+  <div class="mx-auto grid max-w-content grid-cols-1 items-center gap-x-64 gap-y-40 btn:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)]">
+    <div class="relative mx-auto aspect-[4/5] w-full max-w-420 overflow-hidden rounded-24 bg-forest-card">
+      <Image src={iwo} alt={`${a.name}, ${a.rolle}`} widths={[420, 760, 1000]} sizes="(min-width: 720px) 420px, 90vw" class="absolute inset-0 h-full w-full object-cover" style="object-position: 50% 18%" loading="lazy" />
+    </div>
+
+    <div class="flex flex-col items-start gap-20">
+      <Eyebrow variante="lime">{a.eyebrow}</Eyebrow>
+      <div class="flex flex-col gap-4">
+        <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">{a.name}</h2>
+        <span class="text-17 text-mint">{a.rolle}</span>
+      </div>
+      <p class="m-0 max-w-560 text-19 leading-prose text-cream">{a.text}</p>
+      <a href={kontakt.telefonLink} class="group flex items-center gap-14 rounded-16 bg-forest-card px-20 py-14 no-underline ring-1 ring-edge transition-colors hover:ring-lime-edge-hover">
+        <span class="flex h-40 w-40 items-center justify-center rounded-full bg-cream text-forest-deep" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="w-18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />
+          </svg>
+        </span>
+        <span class="flex flex-col">
+          <span class="text-13 text-mint">{a.direkt}</span>
+          <span class="text-22 font-bold text-paper">{kontakt.telefonAnzeige}</span>
+        </span>
+      </a>
+
+      <div class="mt-12 flex flex-col gap-12 border-t border-edge pt-20">
+        <span class="font-mono text-11 tracking-eyebrow uppercase text-mint-dimmer">{a.team}</span>
+        <ul class="m-0 flex list-none flex-wrap gap-x-24 gap-y-14 p-0">
+          {
+            team.map((t) => (
+              <li class="flex items-center gap-10">
+                <span class="relative block h-40 w-40 overflow-hidden rounded-full bg-forest-card">
+                  <Image src={bild(t.portrait)} alt="" width={80} height={80} class="absolute inset-0 h-full w-full object-cover" style={`object-position: ${t.position}`} loading="lazy" />
+                </span>
+                <span class="flex flex-col">
+                  <span class="text-15 font-bold text-paper">{t.name}</span>
+                  <span class="text-13 text-mint">{t.rolle}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

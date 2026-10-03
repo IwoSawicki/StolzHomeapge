@@ -1,0 +1,89 @@
+---
+/* Meistermagnet v2 — /mitarbeiter-gewinnen-v2
+
+   ENTWURF (03.10.2026, nur dev): neu ausgearbeitete Fassung der Seite
+   „Mitarbeiter gewinnen" nach Iwos Briefing (Claude Cowork). Steht neben
+   der bisherigen Seite, damit beide verglichen werden können; noindex,
+   nicht in der Sitemap, nirgends verlinkt.
+
+   Gedacht vor allem fürs Handy: Iwo zeigt die Seite an der Haustür oder
+   schickt den Link per WhatsApp — personalisiert über ?b= und ?g=
+   (src/lib/personalisierung.ts, Generator unter /intern/link).
+
+   Sektionen (hell / dunkel im Wechsel):
+     S1  Hero mit Handy-Vorführung und Kandidaten-Karte (hell)
+     S2  Logo-Leiste (hell)
+     S3  Was Sie bekommen (hellgrau)
+     S4  Die Garantie (dunkel)
+     S5  Ihr Aufwand (hell)
+     S6  Für Ihr Gewerk (hellgrau)
+     S7  Warum Handwerker wechseln (dunkel)
+     S8  Wie schwer ist Ihre Stelle? (hell)
+     S9  Was eine offene Stelle kostet (hellgrau)
+     S10 Im Vergleich, mit Zeile „Absicherung" (hell)
+     S11 Aus der Praxis (hell)
+     S12 Ihr Ansprechpartner (dunkel)
+     S13 FAQ (hell)
+     S14 Erstgespräch (hellgrau)
+   Dazu auf dem Handy eine Leiste mit Erstgespräch und Anrufen.
+
+   Offene Werte stehen als sichtbare Platzhalter da: docs/TODO-IWO.md. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import LogoRail from '../components/LogoRail.astro';
+import Vergleich from '../components/sections/mitarbeiter/Vergleich.astro';
+import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
+import HeroV2 from '../components/sections/mitarbeiter-v2/HeroV2.astro';
+import Bekommen from '../components/sections/mitarbeiter-v2/Bekommen.astro';
+import Garantie from '../components/sections/mitarbeiter-v2/Garantie.astro';
+import Aufwand from '../components/sections/mitarbeiter-v2/Aufwand.astro';
+import GewerkWahl from '../components/sections/mitarbeiter-v2/GewerkWahl.astro';
+import Wechselgruende from '../components/sections/mitarbeiter-v2/Wechselgruende.astro';
+import Schwierigkeit from '../components/sections/mitarbeiter-v2/Schwierigkeit.astro';
+import MiniRechner from '../components/sections/mitarbeiter-v2/MiniRechner.astro';
+import Praxis from '../components/sections/mitarbeiter-v2/Praxis.astro';
+import Ansprechpartner from '../components/sections/mitarbeiter-v2/Ansprechpartner.astro';
+import Erstgespraech from '../components/sections/mitarbeiter-v2/Erstgespraech.astro';
+import HandyLeiste from '../components/sections/mitarbeiter-v2/HandyLeiste.astro';
+import ogBild from '../assets/og-meistermagnet.jpg';
+import { faqs, vergleichZeilen, vergleichWege } from '../data/mitarbeiter-gewinnen';
+import { faqZusatz, vergleichAbsicherung } from '../data/mitarbeiter-v2';
+
+const zeilen = [...vergleichZeilen, vergleichAbsicherung.zeile];
+const wege = vergleichWege.map((w, i) => ({ ...w, werte: [...w.werte, vergleichAbsicherung.werte[i]!] }));
+---
+
+<BaseLayout
+  title="Fachkräfte einstellen – mit Garantie | Meistermagnet von Stolz Marketing"
+  description="Vorsortierte Bewerbungen von Fachkräften aus Ihrer Region: Drehtag im Betrieb, Anzeigen auf Social Media, ein Handy-Formular, das aussortiert. Mit schriftlicher Bewerbungs-Garantie."
+  noindex={true}
+  ogBild={ogBild}
+  ogBildAlt="Fachkräfte einstellen. Mit Garantie. – Meistermagnet von Stolz Marketing"
+>
+  <HeroV2 />
+
+  <main>
+    <div class="flex flex-col items-center gap-20 bg-paper px-24 pb-[clamp(48px,6vw,72px)]">
+      <p class="m-0 text-center text-14 font-medium tracking-caps uppercase text-ink-muted">
+        Über 50 Projekte für Handwerksbetriebe seit 2022
+      </p>
+      <LogoRail class="mx-auto w-[min(1160px,100%)]" />
+    </div>
+
+    <Bekommen />
+    <Garantie />
+    <Aufwand />
+    <GewerkWahl />
+    <Wechselgruende />
+    <Schwierigkeit />
+    <MiniRechner />
+    <Vergleich zeilen={zeilen} wege={wege} />
+    <Praxis />
+    <Ansprechpartner />
+    <FaqLeistung eintraege={[...faqs, ...faqZusatz]} id="faq-mitarbeiter-v2" />
+    <Erstgespraech />
+  </main>
+
+  <HandyLeiste />
+  <Footer />
+</BaseLayout>

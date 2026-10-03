@@ -1,0 +1,118 @@
+---
+/* S5 · Ihr Aufwand (hell). Zeitstrahl über fünf Schritte, auf dem Handy
+   senkrecht, ab 1040px waagerecht. Die Schritte, bei denen der Inhaber
+   dabei ist, tragen einen dunklen Punkt und die Marke „Sie" — so sieht
+   man auf einen Blick, wie wenig davon seine Zeit kostet.
+
+   Animation T-1, an den Scroll gekoppelt: die Linie füllt sich, die Punkte
+   rasten ein, sobald die Füllung sie erreicht. Ohne Skript oder bei
+   reduzierter Bewegung ist der Strahl voll gefüllt (--f: 1).
+
+   Die Stundenzahl oben ist ein Platzhalter, bis Iwo sie liefert. */
+import Eyebrow from '../../Eyebrow.astro';
+import PlatzhalterText from './PlatzhalterText.astro';
+import { aufwand as a } from '../../../data/mitarbeiter-v2';
+---
+
+<section class="bg-paper px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-44">
+    <div class="flex flex-wrap items-end justify-between gap-x-40 gap-y-20">
+      <div class="flex max-w-680 flex-col items-start gap-18">
+        <Eyebrow variante="hell">{a.eyebrow}</Eyebrow>
+        <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">{a.titel}</h2>
+        <p class="m-0 text-18 leading-prose text-ink-quiet">{a.lead}</p>
+      </div>
+      <span class="rounded-16 bg-paper-soft px-18 py-14 text-15 font-bold text-ink ring-1 ring-line">
+        <PlatzhalterText text={a.zaehler} />
+      </span>
+    </div>
+
+    <ol class="zeitstrahl relative m-0 grid list-none grid-cols-1 gap-28 p-0 pl-36 nav:grid-cols-5 nav:gap-24 nav:pt-36 nav:pl-0" style="--f: 1" data-zeitstrahl>
+      {/* Linie und Füllung */}
+      <span class="absolute top-6 bottom-6 left-9 w-3 rounded-full bg-line nav:top-9 nav:right-0 nav:bottom-auto nav:left-0 nav:h-3 nav:w-auto" aria-hidden="true">
+        <span class="zeit-fuellung absolute inset-0 rounded-full bg-forest"></span>
+      </span>
+
+      {
+        a.schritte.map((s, i) => (
+          <li class="zeit-schritt relative flex flex-col gap-8" style={`--pos: ${i / (a.schritte.length - 1)}`}>
+            <span
+              class:list={[
+                'zeit-punkt absolute top-2 -left-36 h-22 w-22 rounded-full ring-4 ring-paper nav:-top-36 nav:left-0',
+                s.sie ? 'bg-forest' : 'bg-paper ring-offset-0 outline-2 outline-line-strong',
+              ]}
+              aria-hidden="true"
+            ></span>
+            <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">
+              <PlatzhalterText text={s.wann} />
+            </span>
+            <span class="text-19 leading-card font-bold text-ink">{s.was}</span>
+            <span
+              class:list={[
+                'self-start rounded-full px-10 py-4 text-12 font-bold',
+                s.sie ? 'bg-forest text-paper' : 'bg-paper-soft text-ink-muted ring-1 ring-line',
+              ]}
+            >
+              <PlatzhalterText text={s.wer} />
+            </span>
+            <p class="m-0 text-15 leading-body text-ink-muted">{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .zeit-fuellung {
+    transform-origin: top;
+    transform: scaleY(var(--f));
+  }
+  @media (min-width: 1040px) {
+    .zeit-fuellung {
+      transform-origin: left;
+      transform: scaleX(var(--f));
+    }
+  }
+  .zeit-punkt {
+    transition:
+      scale 0.35s cubic-bezier(0.34, 1.4, 0.64, 1),
+      opacity 0.3s ease-out;
+  }
+  .zeitstrahl.laeuft .zeit-schritt:not(.erreicht) .zeit-punkt {
+    scale: 0.6;
+    opacity: 0.4;
+  }
+</style>
+
+<script>
+  /* T-1: Füllung an den Scroll gekoppelt. Voll, sobald das untere Ende
+     des Strahls etwa auf zwei Dritteln der Bildschirmhöhe steht. */
+  const strahl = document.querySelector<HTMLElement>('[data-zeitstrahl]');
+  const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (strahl && !ruhig) {
+    const schritte = [...strahl.querySelectorAll<HTMLElement>('.zeit-schritt')];
+    strahl.classList.add('laeuft');
+    let geplant = false;
+
+    const messen = () => {
+      geplant = false;
+      const r = strahl.getBoundingClientRect();
+      const start = window.innerHeight * 0.85;
+      const ende = window.innerHeight * 0.55;
+      const f = Math.min(1, Math.max(0, (start - r.top) / (r.height + start - ende)));
+      strahl.style.setProperty('--f', f.toFixed(3));
+      for (const s of schritte) s.classList.toggle('erreicht', f >= Number(s.style.getPropertyValue('--pos')) - 0.02);
+    };
+    const anfordern = () => {
+      if (!geplant) {
+        geplant = true;
+        requestAnimationFrame(messen);
+      }
+    };
+    window.addEventListener('scroll', anfordern, { passive: true });
+    window.addEventListener('resize', anfordern);
+    messen();
+  }
+</script>

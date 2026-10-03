@@ -1,0 +1,100 @@
+---
+/* S7 · Warum Handwerker wechseln (dunkles Band). Inhalte der bisherigen
+   Seite (Ausgangslage, sechs Wechselgründe), neu inszeniert.
+
+   Animation W-1 beim Hinscrollen, einmalig: „Mehr Geld" liegt wie ein
+   Aufkleber über dem Raster, wird durchgestrichen und rückt beiseite,
+   dann decken sich die sechs Gründe gestaffelt auf. Ohne Skript oder
+   Bewegung: Aufkleber gestrichen, Gründe sichtbar. */
+import Eyebrow from '../../Eyebrow.astro';
+import { wechsel as w } from '../../../data/mitarbeiter-v2';
+import { ausgangslageAbsaetze, wechselgruende } from '../../../data/mitarbeiter-gewinnen';
+---
+
+<section class="bg-forest-deep px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-40" data-wechsel>
+    <div class="flex max-w-760 flex-col items-start gap-20">
+      <Eyebrow variante="lime">{w.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">{w.titel}</h2>
+      <p class="m-0 text-18 leading-prose text-mint">{ausgangslageAbsaetze[0]}</p>
+      <p class="m-0 text-18 leading-prose text-cream">{w.uebergang}</p>
+    </div>
+
+    <div class="relative flex flex-col gap-24">
+      {/* Der Aufkleber */}
+      <div class="wechsel-aufkleber relative self-start -rotate-2 rounded-12 bg-paper px-22 py-12 shadow-card-light">
+        <span class="relative text-[clamp(28px,4vw,40px)] leading-none font-bold tracking-system text-ink">
+          {w.aufkleber}
+          <span class="wechsel-strich absolute top-1/2 -right-6 -left-6 h-4 -translate-y-1/2 rounded-full bg-schaden-soft" aria-hidden="true"></span>
+        </span>
+      </div>
+
+      <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-14 p-0">
+        {
+          wechselgruende.map((g, i) => (
+            <li class="wechsel-grund flex flex-col gap-8 rounded-16 bg-forest-card p-20 ring-1 ring-edge" style={`--i:${i}`}>
+              <span class="font-mono text-11 tracking-eyebrow text-mint-dimmer">0{i + 1}</span>
+              <span class="text-18 leading-card font-bold text-paper">{g.titel}</span>
+              <span class="text-15 leading-body text-mint">{g.text}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="m-0 max-w-680 text-20 leading-card font-bold text-paper">{w.schluss}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wechsel-strich {
+    transform-origin: left;
+  }
+  /* Tailwind setzt die Verschiebung über die translate-Eigenschaft —
+     deshalb hier scale statt transform, sonst doppelt verschoben */
+  [data-wechsel].vorher .wechsel-strich {
+    scale: 0 1;
+  }
+  [data-wechsel].vorher .wechsel-aufkleber {
+    opacity: 1;
+    translate: 0 0;
+  }
+  [data-wechsel].vorher .wechsel-grund {
+    opacity: 0;
+    translate: 0 16px;
+  }
+  .wechsel-aufkleber {
+    opacity: 0.7;
+  }
+  [data-wechsel].spielt .wechsel-strich {
+    transition: scale 0.5s cubic-bezier(0.45, 0, 0.25, 1) 0.4s;
+  }
+  [data-wechsel].spielt .wechsel-aufkleber {
+    transition: opacity 0.5s ease-out 1s;
+  }
+  [data-wechsel].spielt .wechsel-grund {
+    transition:
+      opacity 0.5s ease-out,
+      translate 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(1.2s + var(--i) * 0.08s);
+  }
+</style>
+
+<script>
+  const wechsel = document.querySelector<HTMLElement>('[data-wechsel]');
+  const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (wechsel && !ruhig && 'IntersectionObserver' in window) {
+    const aufkleber = wechsel.querySelector('.wechsel-aufkleber')!;
+    wechsel.classList.add('vorher');
+    const b = new IntersectionObserver(
+      (e) => {
+        if (!e.some((x) => x.isIntersecting)) return;
+        wechsel.classList.add('spielt');
+        requestAnimationFrame(() => requestAnimationFrame(() => wechsel.classList.remove('vorher')));
+        b.disconnect();
+      },
+      { threshold: 0, rootMargin: '0px 0px -35% 0px' },
+    );
+    b.observe(aufkleber);
+  }
+</script>

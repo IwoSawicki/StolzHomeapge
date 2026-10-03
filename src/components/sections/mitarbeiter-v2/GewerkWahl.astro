@@ -1,0 +1,140 @@
+---
+/* S6 · Für Ihr Gewerk (hellgrau). Chips oben, darunter ein Panel mit
+   typischen Rollen, Wechselgründen, Schwierigkeit und einer passenden
+   Kandidaten-Karte. Alle Panels stehen im HTML; das Skript zeigt eins und
+   blendet beim Wechsel über (C-1). Ohne Skript stehen alle untereinander.
+
+   Vorauswahl über ?g=. Inhalte aus gewerkeV2 in src/data/mitarbeiter-v2.ts
+   — ein Entwurf, den Iwo prüft. */
+import Eyebrow from '../../Eyebrow.astro';
+import KandidatKarte from './KandidatKarte.astro';
+import { gewerkeV2, GEWERK_V2_STANDARD, gewerkKopf as k } from '../../../data/mitarbeiter-v2';
+import { stufen } from '../../../data/mitarbeiter-gewinnen';
+---
+
+<section class="bg-paper-soft px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-32">
+    <div class="flex max-w-680 flex-col items-start gap-18">
+      <Eyebrow variante="hell">{k.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">{k.titel}</h2>
+      <p class="m-0 text-18 leading-prose text-ink-quiet">{k.lead}</p>
+    </div>
+
+    <div class="flex flex-wrap gap-8" role="group" aria-label={k.titel} hidden data-gewerk-chips>
+      {
+        gewerkeV2.map((g) => (
+          <button
+            type="button"
+            class="cursor-pointer rounded-full border-0 bg-paper px-16 py-10 font-[inherit] text-15 font-medium text-ink shadow-card-light ring-1 ring-line-strong transition-colors hover:ring-forest aria-pressed:bg-forest aria-pressed:text-paper aria-pressed:shadow-none aria-pressed:ring-forest"
+            aria-pressed={g.schluessel === GEWERK_V2_STANDARD ? 'true' : 'false'}
+            aria-controls={`gewerk-${g.schluessel}`}
+            data-gewerk-chip={g.schluessel}
+          >
+            {g.name}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="grid" data-gewerk-panels>
+      {
+        gewerkeV2.map((g) => (
+          <div
+            id={`gewerk-${g.schluessel}`}
+            class="gewerk-panel col-start-1 row-start-1 grid grid-cols-1 gap-24 rounded-24 bg-paper p-[clamp(20px,3vw,36px)] shadow-card-light ring-1 ring-line nav:grid-cols-[minmax(0,1fr)_minmax(0,320px)] nav:gap-48"
+            data-gewerk-panel={g.schluessel}
+          >
+            <div class="flex flex-col gap-24">
+              <h3 class="m-0 text-26 leading-card font-bold tracking-system text-ink">{g.name}</h3>
+              <div class="flex flex-col gap-10">
+                <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{k.rollen}</span>
+                <span class="flex flex-wrap gap-8">
+                  {g.rollen.map((r) => (
+                    <span class="rounded-full bg-paper-soft px-12 py-6 text-14 font-medium text-ink ring-1 ring-line">{r}</span>
+                  ))}
+                </span>
+              </div>
+              <div class="flex flex-col gap-10">
+                <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{k.gruende}</span>
+                <ul class="m-0 flex list-none flex-col gap-8 p-0">
+                  {g.wechselgruende.map((w) => (
+                    <li class="flex gap-10 text-16 leading-body text-ink-quiet">
+                      <span class="mt-10 h-5 w-5 flex-none rounded-full bg-forest" aria-hidden="true"></span>
+                      {w}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div class="flex flex-col gap-10">
+                <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{k.stufe}</span>
+                <span class="flex flex-wrap items-center gap-x-14 gap-y-8">
+                  <span class="flex gap-4" aria-hidden="true">
+                    {[1, 2, 3, 4].map((n) => (
+                      <span class:list={['h-10 w-28 rounded-full', n <= g.stufe ? 'bg-forest' : 'bg-line']}></span>
+                    ))}
+                  </span>
+                  <span class="text-14 font-medium text-ink">
+                    Stufe {g.stufe} von 4 · {stufen[g.stufe - 1]!.titel}
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center gap-10">
+              <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{k.karte}</span>
+              <KandidatKarte beruf={g.beruf} klein />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .gewerk-panel {
+    transition:
+      opacity 0.35s ease-out,
+      transform 0.35s ease-out;
+  }
+  [data-gewerk-panels].aktiv .gewerk-panel:not(.gezeigt) {
+    opacity: 0;
+    transform: translateY(8px);
+    visibility: hidden;
+    pointer-events: none;
+  }
+  /* Ohne Skript stehen die Panels untereinander statt übereinander */
+  [data-gewerk-panels]:not(.aktiv) {
+    gap: calc(var(--spacing) * 16);
+  }
+  [data-gewerk-panels]:not(.aktiv) .gewerk-panel {
+    grid-row: auto;
+  }
+</style>
+
+<script>
+  import { personalisierung } from '../../../lib/personalisierung';
+  import { GEWERK_V2_STANDARD } from '../../../data/mitarbeiter-v2';
+
+  const chips = document.querySelector<HTMLElement>('[data-gewerk-chips]');
+  const panels = document.querySelector<HTMLElement>('[data-gewerk-panels]');
+
+  if (chips && panels) {
+    const knoepfe = [...chips.querySelectorAll<HTMLButtonElement>('[data-gewerk-chip]')];
+    const alle = [...panels.querySelectorAll<HTMLElement>('[data-gewerk-panel]')];
+
+    const waehle = (schluessel: string) => {
+      knoepfe.forEach((k) => k.setAttribute('aria-pressed', String(k.dataset.gewerkChip === schluessel)));
+      alle.forEach((p) => {
+        const an = p.dataset.gewerkPanel === schluessel;
+        p.classList.toggle('gezeigt', an);
+        p.setAttribute('aria-hidden', String(!an));
+        p.inert = !an;
+      });
+    };
+
+    chips.hidden = false;
+    panels.classList.add('aktiv');
+    waehle(personalisierung().gewerk?.schluessel ?? GEWERK_V2_STANDARD);
+    knoepfe.forEach((k) => k.addEventListener('click', () => waehle(k.dataset.gewerkChip!)));
+  }
+</script>

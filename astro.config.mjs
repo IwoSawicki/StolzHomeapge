@@ -32,7 +32,10 @@ export default defineConfig({
         !seite.includes('/korbaktion') &&
         !seite.includes('/ueber-uns') &&
         /* Entwurf einer neuen Leistungsseite, noindex bis zur Freigabe */
-        !seite.includes('/social-media-marketing'),
+        !seite.includes('/social-media-marketing') &&
+        /* Entwurf Meistermagnet v2 und interner Link-Generator */
+        !seite.includes('/mitarbeiter-gewinnen-v2') &&
+        !seite.includes('/intern/'),
     }),
   ],
   vite: {

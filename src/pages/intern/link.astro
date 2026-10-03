@@ -1,0 +1,100 @@
+---
+/* Interner Link-Generator — /intern/link
+
+   Für Iwo nach dem Besuch an der Haustür: Betrieb und Gewerk eintragen,
+   fertigen Link zur Meistermagnet-Seite v2 kopieren oder direkt per
+   WhatsApp schicken. noindex, nicht in der Sitemap, nirgends verlinkt.
+
+   Der Link zeigt auf dieselbe Domain, auf der der Generator läuft — auf
+   dev also auf dev.stolz-marketing.de, solange es v2 nur dort gibt.
+
+   Den QR-Code aus dem Briefing gibt es noch nicht: dafür bräuchte es eine
+   zusätzliche Bibliothek, und die kommt nur nach Rückfrage hinein. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { gewerkeV2, GEWERK_V2_STANDARD } from '../../data/mitarbeiter-v2';
+
+const feld = 'h-48 rounded-12 border-0 bg-paper px-14 font-[inherit] text-16 text-ink ring-1 ring-line-strong focus-visible:outline-2 focus-visible:outline-forest';
+const knopf = 'flex h-48 cursor-pointer items-center justify-center rounded-12 border-0 px-18 font-[inherit] text-15 font-bold no-underline transition-colors';
+---
+
+<BaseLayout title="Link-Generator (intern) | Stolz Marketing" description="Interner Link-Generator für die Meistermagnet-Seite." noindex={true}>
+  <main class="min-h-screen bg-paper-soft px-page-x py-48">
+    <div class="mx-auto flex max-w-560 flex-col gap-28">
+      <div class="flex flex-col gap-8">
+        <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">Intern</span>
+        <h1 class="m-0 text-28 leading-card font-bold tracking-system text-ink">Link für den Betrieb</h1>
+        <p class="m-0 text-16 leading-body text-ink-muted">
+          Nach dem Besuch: Betrieb und Gewerk eintragen, Link schicken. Die Seite begrüßt den Betrieb mit Namen und zeigt
+          Beruf, Gewerk und Rechner passend an.
+        </p>
+      </div>
+
+      <form class="flex flex-col gap-18 rounded-20 bg-paper p-24 shadow-card-light ring-1 ring-line" data-generator>
+        <label class="flex flex-col gap-8 text-14 font-bold text-ink">
+          Betrieb
+          <input name="b" maxlength="60" class={feld} placeholder="z. B. Malerbetrieb Yilmaz" autocomplete="off" />
+        </label>
+        <label class="flex flex-col gap-8 text-14 font-bold text-ink">
+          Gewerk
+          <select name="g" class={feld}>
+            {gewerkeV2.map((g) => <option value={g.schluessel} selected={g.schluessel === GEWERK_V2_STANDARD}>{g.name}</option>)}
+          </select>
+        </label>
+        <label class="flex flex-col gap-8 text-14 font-bold text-ink">
+          Vorname des Inhabers (für die Nachricht, optional)
+          <input name="vorname" maxlength="40" class={feld} autocomplete="off" />
+        </label>
+
+        <div class="flex flex-col gap-8">
+          <span class="text-14 font-bold text-ink">Link</span>
+          <output class="rounded-12 bg-paper-soft px-14 py-12 font-mono text-13 break-all text-ink ring-1 ring-line" data-link></output>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 btn:grid-cols-3">
+          <button type="button" class:list={[knopf, 'bg-forest text-paper hover:bg-forest-card']} data-kopieren>Kopieren</button>
+          <a class:list={[knopf, 'bg-lime text-forest-deep hover:bg-lime-bright']} target="_blank" rel="noopener" data-whatsapp>WhatsApp</a>
+          <a class:list={[knopf, 'bg-paper-soft text-ink ring-1 ring-line-strong hover:ring-forest']} target="_blank" rel="noopener" data-oeffnen>Ansehen</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-generator]');
+  if (form) {
+    const ausgabe = form.querySelector<HTMLOutputElement>('[data-link]')!;
+    const whatsapp = form.querySelector<HTMLAnchorElement>('[data-whatsapp]')!;
+    const oeffnen = form.querySelector<HTMLAnchorElement>('[data-oeffnen]')!;
+    const kopieren = form.querySelector<HTMLButtonElement>('[data-kopieren]')!;
+
+    const bauen = () => {
+      const daten = new FormData(form);
+      const p = new URLSearchParams();
+      const b = String(daten.get('b') ?? '').trim();
+      if (b) p.set('b', b);
+      p.set('g', String(daten.get('g')));
+      const link = `${window.location.origin}/mitarbeiter-gewinnen-v2?${p.toString()}`;
+      const vorname = String(daten.get('vorname') ?? '').trim();
+      const nachricht = `${vorname ? `Hallo ${vorname}, ` : 'Hallo, '}wie besprochen hier die Seite für Ihren Betrieb: ${link}\n\nViele Grüße\nIwo Sawicki`;
+      ausgabe.textContent = link;
+      oeffnen.href = link;
+      whatsapp.href = `https://wa.me/?text=${encodeURIComponent(nachricht)}`;
+      return link;
+    };
+
+    form.addEventListener('input', bauen);
+    form.addEventListener('submit', (e) => e.preventDefault());
+    kopieren.addEventListener('click', async () => {
+      const link = bauen();
+      try {
+        await navigator.clipboard.writeText(link);
+        kopieren.textContent = 'Kopiert ✓';
+      } catch {
+        kopieren.textContent = 'Bitte markieren';
+      }
+      window.setTimeout(() => (kopieren.textContent = 'Kopieren'), 1800);
+    });
+    bauen();
+  }
+</script>

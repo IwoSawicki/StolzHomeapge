@@ -1,0 +1,202 @@
+---
+/* S9 · Was eine offene Stelle kostet (hellgrau). Kompakte Fassung des
+   Vakanzkostenrechners: Gewerk, offene Stellen, Monate. Gerechnet wird
+   mit derselben Formel (src/lib/vakanzkosten.ts) und denselben Presets
+   (src/data/vakanzkostenrechner.ts) — nur ohne Fahrzeug- und
+   Überstundenkosten, also eher weniger als der große Rechner.
+
+   Die Zahl je Arbeitstag zählt beim Ändern hoch (V-1). Der Link nimmt
+   die Eingaben mit auf /vakanzkostenrechner. Ohne Skript stehen die
+   Werte für die Vorauswahl da. Ton neutral, kein Alarm-Rot. */
+import Eyebrow from '../../Eyebrow.astro';
+import { miniRechner as m } from '../../../data/mitarbeiter-v2';
+import {
+  gewerke,
+  GEWERK_STANDARD,
+  ARBEITSTAGE_PRO_MONAT,
+  UEBERSTUNDEN_ZUSCHLAG,
+  LOHNNEBENKOSTEN,
+} from '../../../data/vakanzkostenrechner';
+import { vakanzkosten } from '../../../lib/vakanzkosten';
+
+const STELLEN = 1;
+const MONATE = 3;
+const g = gewerke.find((x) => x.schluessel === GEWERK_STANDARD)!;
+const start = vakanzkosten({
+  stellen: STELLEN,
+  monate: MONATE,
+  satz: g.satz,
+  stunden: g.stunden,
+  db: g.db,
+  kfz: 0,
+  ueberstunden: 0,
+  lohn: 0,
+  arbeitstage: ARBEITSTAGE_PRO_MONAT,
+  zuschlag: UEBERSTUNDEN_ZUSCHLAG,
+  lohnnebenkosten: LOHNNEBENKOSTEN,
+});
+const euro = (n: number) => new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(Math.round(n));
+const konfig = {
+  gewerke: gewerke.map(({ schluessel, satz, stunden, db }) => ({ schluessel, satz, stunden, db })),
+  arbeitstage: ARBEITSTAGE_PRO_MONAT,
+  zuschlag: UEBERSTUNDEN_ZUSCHLAG,
+  lohnnebenkosten: LOHNNEBENKOSTEN,
+};
+const feldKlasse = 'flex flex-col gap-10';
+const labelKlasse = 'text-14 font-bold text-ink';
+---
+
+<section class="bg-paper-soft px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-32">
+    <div class="flex max-w-680 flex-col items-start gap-18">
+      <Eyebrow variante="hell">{m.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">{m.titel}</h2>
+      <p class="m-0 text-18 leading-prose text-ink-quiet">{m.lead}</p>
+    </div>
+
+    <form class="grid grid-cols-1 gap-20 nav:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]" data-mini-rechner>
+      <div class="flex flex-col gap-24 rounded-24 bg-paper p-[clamp(20px,3vw,32px)] shadow-card-light ring-1 ring-line">
+        <div class={feldKlasse}>
+          <label for="mini-gewerk" class={labelKlasse}>{m.gewerk}</label>
+          <select id="mini-gewerk" class="h-48 cursor-pointer rounded-12 border-0 bg-paper-soft px-14 font-[inherit] text-16 text-ink ring-1 ring-line-strong focus-visible:outline-2 focus-visible:outline-forest">
+            {gewerke.map((x) => <option value={x.schluessel} selected={x.schluessel === GEWERK_STANDARD}>{x.name}</option>)}
+          </select>
+        </div>
+
+        <div class={feldKlasse}>
+          <span id="mini-stellen-label" class={labelKlasse}>{m.stellen}</span>
+          <div class="flex items-center gap-12" role="group" aria-labelledby="mini-stellen-label">
+            <button type="button" class="flex h-44 w-44 cursor-pointer items-center justify-center rounded-full border-0 bg-paper-soft text-20 text-ink ring-1 ring-line-strong transition-colors hover:ring-forest" aria-label="Eine Stelle weniger" data-stellen="-1">−</button>
+            <output id="mini-stellen" class="min-w-40 text-center text-22 font-bold text-ink" aria-live="polite">{STELLEN}</output>
+            <button type="button" class="flex h-44 w-44 cursor-pointer items-center justify-center rounded-full border-0 bg-paper-soft text-20 text-ink ring-1 ring-line-strong transition-colors hover:ring-forest" aria-label="Eine Stelle mehr" data-stellen="1">+</button>
+          </div>
+        </div>
+
+        <div class={feldKlasse}>
+          <span class="flex items-baseline justify-between gap-12">
+            <label for="mini-monate" class={labelKlasse}>{m.monate}</label>
+            <output for="mini-monate" id="mini-monate-wert" class="text-15 font-bold text-ink">{MONATE} Monate</output>
+          </span>
+          <input id="mini-monate" type="range" min="1" max="12" step="1" value={MONATE} class="mini-regler w-full cursor-pointer accent-forest" />
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-between gap-24 rounded-24 bg-forest p-[clamp(20px,3vw,32px)] text-paper">
+        <div class="flex flex-col gap-6">
+          <span class="text-15 text-mint">ca.</span>
+          <span class="text-[clamp(44px,7vw,68px)] leading-none font-bold tracking-system" data-mini-tag>{euro(start.proTag)} €</span>
+          <span class="text-17 text-mint">{m.proTag}</span>
+        </div>
+        <dl class="m-0 grid grid-cols-[minmax(0,1fr)_auto] gap-x-16 gap-y-8 border-t border-edge pt-18 text-15">
+          <dt class="text-mint">{m.umsatz}</dt>
+          <dd class="m-0 text-right font-bold" data-mini-umsatz>{euro(start.umsatz)} €</dd>
+          <dt class="text-mint">{m.schaden}</dt>
+          <dd class="m-0 text-right font-bold" data-mini-schaden>{euro(start.gesamt)} €</dd>
+        </dl>
+        <div class="flex flex-col gap-4 text-13 text-mint-dim">
+          <span>{m.konservativ}</span>
+          <span>{m.browser}</span>
+        </div>
+        <a href={`/vakanzkostenrechner?gewerk=${GEWERK_STANDARD}&stellen=${STELLEN}&monate=${MONATE}`} class="self-start text-15 font-bold text-paper underline decoration-1 underline-offset-4 transition-colors hover:text-mint-light" data-mini-link>
+          {m.ausfuehrlich} →
+        </a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .mini-regler {
+    height: calc(var(--spacing) * 28);
+  }
+</style>
+
+<script is:inline type="application/json" id="mini-konfig" set:html={JSON.stringify(konfig)} />
+
+<script>
+  import { vakanzkosten } from '../../../lib/vakanzkosten';
+  import { personalisierung } from '../../../lib/personalisierung';
+
+  interface Konfig {
+    gewerke: { schluessel: string; satz: number; stunden: number; db: number }[];
+    arbeitstage: number;
+    zuschlag: number;
+    lohnnebenkosten: number;
+  }
+
+  const form = document.querySelector<HTMLFormElement>('[data-mini-rechner]');
+  const roh = document.getElementById('mini-konfig')?.textContent;
+  if (form && roh) {
+    const k = JSON.parse(roh) as Konfig;
+    const euro = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
+    const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const gewerk = form.querySelector<HTMLSelectElement>('#mini-gewerk')!;
+    const monate = form.querySelector<HTMLInputElement>('#mini-monate')!;
+    const monateWert = form.querySelector<HTMLOutputElement>('#mini-monate-wert')!;
+    const stellenAus = form.querySelector<HTMLOutputElement>('#mini-stellen')!;
+    const tag = form.querySelector<HTMLElement>('[data-mini-tag]')!;
+    const link = form.querySelector<HTMLAnchorElement>('[data-mini-link]')!;
+    let stellen = Number(stellenAus.textContent) || 1;
+    form.addEventListener('submit', (e) => e.preventDefault());
+
+    /* Vorauswahl aus ?g= — nur, wenn es ein Preset dafür gibt */
+    const vorwahl = personalisierung().gewerk?.vakanz;
+    if (vorwahl && k.gewerke.some((g) => g.schluessel === vorwahl)) gewerk.value = vorwahl;
+
+    /* Zahl je Tag zählt hoch (V-1) */
+    let ziel = 0;
+    let aktuell = Number(tag.textContent!.replace(/\D/g, ''));
+    const zaehle = (wert: number) => {
+      ziel = wert;
+      if (ruhig) {
+        tag.textContent = `${euro.format(wert)} €`;
+        aktuell = wert;
+        return;
+      }
+      const von = aktuell;
+      const beginn = performance.now();
+      const schritt = (jetzt: number) => {
+        if (ziel !== wert) return;
+        const t = Math.min(1, (jetzt - beginn) / 600);
+        aktuell = Math.round(von + (wert - von) * (1 - Math.pow(1 - t, 3)));
+        tag.textContent = `${euro.format(aktuell)} €`;
+        if (t < 1) requestAnimationFrame(schritt);
+      };
+      requestAnimationFrame(schritt);
+    };
+
+    const rechnen = () => {
+      const g = k.gewerke.find((x) => x.schluessel === gewerk.value)!;
+      const m = Number(monate.value);
+      const e = vakanzkosten({
+        stellen,
+        monate: m,
+        satz: g.satz,
+        stunden: g.stunden,
+        db: g.db,
+        kfz: 0,
+        ueberstunden: 0,
+        lohn: 0,
+        arbeitstage: k.arbeitstage,
+        zuschlag: k.zuschlag,
+        lohnnebenkosten: k.lohnnebenkosten,
+      });
+      stellenAus.textContent = String(stellen);
+      monateWert.textContent = m === 1 ? '1 Monat' : `${m} Monate`;
+      zaehle(Math.round(e.proTag));
+      form.querySelector('[data-mini-umsatz]')!.textContent = `${euro.format(Math.round(e.umsatz))} €`;
+      form.querySelector('[data-mini-schaden]')!.textContent = `${euro.format(Math.round(e.gesamt))} €`;
+      link.href = `/vakanzkostenrechner?gewerk=${g.schluessel}&stellen=${stellen}&monate=${m}`;
+    };
+
+    form.querySelectorAll<HTMLButtonElement>('[data-stellen]').forEach((b) =>
+      b.addEventListener('click', () => {
+        stellen = Math.min(20, Math.max(1, stellen + Number(b.dataset.stellen)));
+        rechnen();
+      }),
+    );
+    gewerk.addEventListener('change', rechnen);
+    monate.addEventListener('input', rechnen);
+    rechnen();
+  }
+</script>

@@ -1,0 +1,62 @@
+---
+/* S14 · Erstgespräch (hellgrau). Text, Iwo klein mit Telefonnummer und
+   das Formular (Web3Forms wie überall). Aus ?b= wird „Betrieb"
+   vorbelegt, aus ?g= „Welche Stelle". Unter dem Knopf die Garantie-Zeile. */
+import { Image } from 'astro:assets';
+import Eyebrow from '../../Eyebrow.astro';
+import Web3Formular from '../../Web3Formular.astro';
+import type { Feld } from '../../Web3Formular.astro';
+import GarantieBadge from './GarantieBadge.astro';
+import iwo from '../../../assets/portraits/iwo-sawicki.jpg';
+import { erstgespraech as e, CTA } from '../../../data/mitarbeiter-v2';
+import { kontakt } from '../../../data/navigation';
+
+const felder: Feld[] = [
+  { name: 'name', label: 'Name', pflicht: true, breit: true, autocomplete: 'name' },
+  { name: 'telefon', label: 'Telefonnummer', type: 'tel', pflicht: true, breit: true, autocomplete: 'tel' },
+  { name: 'betrieb', label: 'Betrieb', breit: true, autocomplete: 'organization' },
+  { name: 'stelle', label: 'Welche Stelle', breit: true, platzhalter: e.stellePlatzhalter },
+];
+---
+
+<section id="erstgespraech" class="scroll-mt-96 bg-paper-soft px-page-x py-section-y-md">
+  <div class="mx-auto grid max-w-content grid-cols-1 items-start gap-x-64 gap-y-36 nav:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+    <div class="flex flex-col items-start gap-20">
+      <Eyebrow variante="hell">{e.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">{e.titel}</h2>
+      <p class="m-0 max-w-520 text-18 leading-prose text-ink-quiet">{e.text}</p>
+      <div class="mt-8 flex items-center gap-14">
+        <span class="relative block h-64 w-64 flex-none overflow-hidden rounded-full bg-forest-card">
+          <Image src={iwo} alt="" width={128} height={128} class="absolute inset-0 h-full w-full object-cover" style="object-position: 50% 18%" loading="lazy" />
+        </span>
+        <span class="flex flex-col">
+          <span class="text-14 text-ink-muted">{e.anrufen}</span>
+          <a href={kontakt.telefonLink} class="text-20 font-bold text-ink no-underline transition-colors hover:text-lime-link-hover">{kontakt.telefonAnzeige}</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-16" data-erstgespraech-form>
+      <Web3Formular
+        felder={felder}
+        betreff="Erstgespräch über /mitarbeiter-gewinnen-v2"
+        knopfText={CTA}
+        variante="hell"
+        class="rounded-24 bg-paper p-[clamp(20px,3vw,32px)] shadow-card-light ring-1 ring-line"
+      />
+      <GarantieBadge />
+    </div>
+  </div>
+</section>
+
+<script>
+  import { personalisierung } from '../../../lib/personalisierung';
+  const { betrieb, gewerk } = personalisierung();
+  const box = document.querySelector('[data-erstgespraech-form]');
+  const setze = (name: string, wert: string | null | undefined) => {
+    const feld = box?.querySelector<HTMLInputElement>(`[name="${name}"]`);
+    if (feld && wert && !feld.value) feld.value = wert;
+  };
+  setze('betrieb', betrieb);
+  setze('stelle', gewerk?.beruf);
+</script>

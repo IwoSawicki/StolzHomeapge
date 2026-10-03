@@ -1,0 +1,138 @@
+---
+/* S8 · Wie schwer ist Ihre Stelle? (hell). Regler mit vier Rastpunkten,
+   jede Stufe auch per Tipp auf ihren Namen wählbar. Je Stufe wechseln
+   Beschreibung, „Drehtag: …" und die Aufwand-Anzeige (S-1).
+
+   Stufentexte aus der bisherigen Seite (stufen). Bewusst ohne Zeit- und
+   Kostenangaben, solange Iwo keine liefert. Ohne Skript stehen alle vier
+   Stufen als Liste da. */
+import Eyebrow from '../../Eyebrow.astro';
+import { schwierigkeit as s } from '../../../data/mitarbeiter-v2';
+import { stufen } from '../../../data/mitarbeiter-gewinnen';
+
+const START = 3;
+---
+
+<section class="bg-paper px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-36">
+    <div class="flex max-w-680 flex-col items-start gap-18">
+      <Eyebrow variante="hell">{s.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">{s.titel}</h2>
+      <p class="m-0 text-18 leading-prose text-ink-quiet">{s.intro}</p>
+    </div>
+
+    <div class="flex flex-col gap-28 rounded-24 bg-paper-soft p-[clamp(20px,3vw,36px)] ring-1 ring-line" data-stufen>
+      {/* Regler — erst das Skript zeigt ihn */}
+      <div class="flex flex-col gap-14" hidden data-stufen-regler>
+        <label for="stufen-regler" class="sr-only">{s.reglerLabel}</label>
+        <input
+          id="stufen-regler"
+          type="range"
+          min="1"
+          max="4"
+          step="1"
+          value={START}
+          class="stufen-regler w-full cursor-pointer accent-forest"
+          aria-valuetext={stufen[START - 1]!.titel}
+        />
+        <div class="grid grid-cols-4 gap-8">
+          {
+            stufen.map((st, i) => (
+              <button
+                type="button"
+                class="cursor-pointer rounded-12 border-0 bg-transparent p-0 text-left font-[inherit] text-13 leading-card font-medium text-ink-muted transition-colors hover:text-ink aria-pressed:font-bold aria-pressed:text-ink"
+                aria-pressed={i + 1 === START ? 'true' : 'false'}
+                data-stufe-knopf={i + 1}
+              >
+                <span class="block font-mono text-11 tracking-eyebrow text-ink-faint">Stufe {i + 1}</span>
+                {/* Die Namen sind für vier Spalten auf dem Handy zu lang */}
+                <span class="hidden btn:block">{st.titel}</span>
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      {/* Panels */}
+      <div class="grid" data-stufen-panels>
+        {
+          stufen.map((st, i) => (
+            <div class="stufen-panel col-start-1 row-start-1 grid grid-cols-1 items-start gap-24 nav:grid-cols-[minmax(0,1fr)_minmax(0,300px)]" data-stufe={i + 1}>
+              <div class="flex flex-col gap-10">
+                <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">Stufe {i + 1} von 4</span>
+                <h3 class="m-0 text-23 leading-card font-bold tracking-system text-ink">{st.titel}</h3>
+                <p class="m-0 text-17 leading-prose text-ink-quiet">{st.text}</p>
+              </div>
+              <div class="flex flex-col gap-16 rounded-16 bg-paper p-18 ring-1 ring-line">
+                <span class="flex items-center justify-between gap-12 text-15">
+                  <span class="text-ink-muted">{s.drehtagLabel}</span>
+                  <span class:list={['rounded-full px-12 py-4 text-13 font-bold', i >= 2 ? 'bg-forest text-paper' : 'bg-paper-soft text-ink ring-1 ring-line']}>
+                    {s.drehtag[i]}
+                  </span>
+                </span>
+                <span class="flex items-center justify-between gap-12 text-15">
+                  <span class="text-ink-muted">{s.aufwandLabel}</span>
+                  <span class="flex gap-4" aria-label={`${i + 1} von 4`}>
+                    {[1, 2, 3, 4].map((n) => (
+                      <span class:list={['h-10 w-24 rounded-full', n <= i + 1 ? 'bg-forest' : 'bg-line']}></span>
+                    ))}
+                  </span>
+                </span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <p class="m-0 max-w-680 text-18 leading-prose font-medium text-ink">{s.schluss}</p>
+  </div>
+</section>
+
+<style>
+  .stufen-panel {
+    transition: opacity 0.3s ease-out;
+  }
+  [data-stufen-panels].aktiv .stufen-panel:not(.gezeigt) {
+    opacity: 0;
+    visibility: hidden;
+  }
+  [data-stufen-panels]:not(.aktiv) {
+    gap: calc(var(--spacing) * 28);
+  }
+  [data-stufen-panels]:not(.aktiv) .stufen-panel {
+    grid-row: auto;
+  }
+  .stufen-regler {
+    height: calc(var(--spacing) * 28);
+  }
+</style>
+
+<script>
+  import { stufen } from '../../../data/mitarbeiter-gewinnen';
+
+  const box = document.querySelector<HTMLElement>('[data-stufen]');
+  if (box) {
+    const regler = box.querySelector<HTMLInputElement>('#stufen-regler')!;
+    const knoepfe = [...box.querySelectorAll<HTMLButtonElement>('[data-stufe-knopf]')];
+    const panels = box.querySelector<HTMLElement>('[data-stufen-panels]')!;
+    const alle = [...panels.querySelectorAll<HTMLElement>('[data-stufe]')];
+
+    const setze = (stufe: number) => {
+      regler.value = String(stufe);
+      regler.setAttribute('aria-valuetext', stufen[stufe - 1]!.titel);
+      knoepfe.forEach((k) => k.setAttribute('aria-pressed', String(Number(k.dataset.stufeKnopf) === stufe)));
+      alle.forEach((p) => {
+        const an = Number(p.dataset.stufe) === stufe;
+        p.classList.toggle('gezeigt', an);
+        p.inert = !an;
+      });
+    };
+
+    box.querySelector<HTMLElement>('[data-stufen-regler]')!.hidden = false;
+    panels.classList.add('aktiv');
+    setze(Number(regler.value));
+    regler.addEventListener('input', () => setze(Number(regler.value)));
+    knoepfe.forEach((k) => k.addEventListener('click', () => setze(Number(k.dataset.stufeKnopf))));
+  }
+</script>

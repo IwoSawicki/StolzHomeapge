@@ -1,0 +1,241 @@
+---
+/* S3 · Was Sie bekommen (hellgrau). Drei Karten, je mit einem kleinen
+   Bild in Bewegung:
+
+   R-1  Stilisierte Karte Bergstraße / Rhein-Neckar — keine Kartenkachel,
+        nicht maßstäblich. Der 30-km-Kreis zieht auf, die Punkte darin
+        leuchten nacheinander auf. Einmal beim Hinscrollen.
+   F-1  Punkte fallen durch vier Filterstufen; an jeder Stufe fallen graue
+        Punkte seitlich heraus, unten kommen wenige an. Bewusst ohne
+        Zahlen. Läuft langsam in Schleife, solange es zu sehen ist.
+   ---  Drehtag: vorerst ein Standbild vom Dreh bei DMK Bau, bis der
+        Clip da ist (docs/TODO-IWO.md).
+
+   Bei reduzierter Bewegung steht jeweils der Endzustand da. */
+import { Image } from 'astro:assets';
+import drehtag from '../../../assets/projekte/dmkbau/dreh-dmk-bau.webp';
+import { bekommen as b } from '../../../data/mitarbeiter-v2';
+
+/* Orte auf der stilisierten Karte (Raster 320 × 240) — nur Orientierung */
+/* Nur Orte außerhalb des Kreises tragen einen Namen — innen stünden sie
+   den Punkten im Weg */
+const orte = [
+  { name: 'Darmstadt', x: 176, y: 24, anker: 'start' },
+  { name: 'Mannheim', x: 50, y: 178, anker: 'middle' },
+  { name: 'Heidelberg', x: 228, y: 218, anker: 'start' },
+];
+const mitte = { x: 176, y: 124 };
+/* Fachkräfte im Umkreis — feste Positionen, damit das Bild ruhig bleibt */
+const punkte = [
+  [140, 96], [214, 86], [120, 140], [232, 128], [158, 168], [202, 182],
+  [146, 70], [110, 112], [236, 160], [178, 196], [126, 186], [222, 104],
+];
+
+/* Filter: jede Stufe etwas schmaler. Ein Punkt fällt an Stufe 1–4 heraus
+   (seitlich, grau) oder kommt unten an (0). */
+const stufenY = [62, 106, 150, 194];
+const stufenBreite = [210, 180, 150, 120];
+const fall = [
+  { x: 120, raus: 1, seite: -1 }, { x: 178, raus: 2, seite: 1 }, { x: 150, raus: 0, seite: 0 },
+  { x: 104, raus: 1, seite: -1 }, { x: 196, raus: 3, seite: 1 }, { x: 136, raus: 2, seite: -1 },
+  { x: 168, raus: 4, seite: 1 }, { x: 146, raus: 3, seite: -1 }, { x: 186, raus: 1, seite: 1 },
+  { x: 160, raus: 0, seite: 0 }, { x: 128, raus: 4, seite: -1 }, { x: 172, raus: 2, seite: 1 },
+];
+
+const karte = 'flex flex-col gap-18 rounded-24 bg-paper p-[clamp(18px,2.4vw,26px)] shadow-card-light ring-1 ring-line';
+const bild = 'relative h-240 overflow-hidden rounded-16 bg-paper-soft ring-1 ring-line';
+---
+
+<section id="bekommen" class="scroll-mt-96 bg-paper-soft px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-36">
+    <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">{b.titel}</h2>
+
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-20">
+      {/* --- 1 · Umkreis --- */}
+      <article class={karte}>
+        <div class={bild} data-umkreis>
+          <svg viewBox="0 0 320 240" class="absolute inset-0 h-full w-full" role="img" aria-label="Stilisierte Karte: Ihr Betrieb in der Mitte, Fachkräfte im Umkreis von rund 30 Kilometern">
+            {/* Rhein, stilisiert */}
+            <path class="stroke-line-strong" d="M70 0 C 90 60, 60 110, 92 150 S 120 220, 104 240" fill="none" stroke-width="6" stroke-linecap="round" />
+            {orte.map((o) => (
+              <g>
+                <circle class="fill-ink-faint" cx={o.x} cy={o.y} r="2" />
+                <text class="fill-ink-faint" x={o.anker === 'middle' ? o.x : o.x + 6} y={o.anker === 'middle' ? o.y - 7 : o.y + 3} text-anchor={o.anker} font-size="9" font-family="Inter, system-ui, sans-serif">{o.name}</text>
+              </g>
+            ))}
+            <circle class="umkreis-kreis fill-lime/25 stroke-forest" cx={mitte.x} cy={mitte.y} r="78" stroke-width="1.5" stroke-dasharray="4 4" />
+            {punkte.map(([x, y], i) => (
+              <circle class="umkreis-punkt fill-forest" cx={x} cy={y} r="3.5" style={`--i:${i}`} />
+            ))}
+            <g>
+              <circle class="fill-forest" cx={mitte.x} cy={mitte.y} r="9" />
+              <circle class="fill-paper" cx={mitte.x} cy={mitte.y} r="3.5" />
+            </g>
+            <text class="fill-ink" x={mitte.x} y={mitte.y - 16} font-size="10" font-weight="700" text-anchor="middle" font-family="Inter, system-ui, sans-serif">{b.betriebLabel}</text>
+            <text class="fill-forest" x={mitte.x + 56} y={mitte.y + 70} font-size="9" font-weight="600" font-family="Inter, system-ui, sans-serif">{b.radiusLabel}</text>
+          </svg>
+        </div>
+        <h3 class="m-0 text-20 leading-card font-bold text-ink">{b.karten[0]!.titel}</h3>
+        <p class="m-0 text-16 leading-body text-ink-muted">{b.karten[0]!.text}</p>
+      </article>
+
+      {/* --- 2 · Filter --- */}
+      <article class={karte}>
+        <div class={bild} data-filter>
+          <svg viewBox="0 0 300 240" class="absolute inset-0 h-full w-full" role="img" aria-label={`Filter in vier Stufen: ${b.filterStufen.join(', ')}. Wer nicht passt, fällt heraus.`}>
+            {stufenY.map((y, i) => (
+              <g>
+                <rect class="fill-line" x={150 - stufenBreite[i]! / 2} y={y} width={stufenBreite[i]} height="6" rx="3" />
+                <rect class="fill-paper" x="144" y={y - 1} width="12" height="8" />
+                <text class="fill-ink-muted" x={150 - stufenBreite[i]! / 2} y={y - 6} font-size="9" font-weight="600" font-family="Inter, system-ui, sans-serif">{b.filterStufen[i]}</text>
+              </g>
+            ))}
+            {/* zwei Mini-Karten unten */}
+            {[118, 156].map((x) => (
+              <g>
+                <rect class="fill-paper stroke-forest" x={x} y="214" width="30" height="20" rx="4" stroke-width="1.5" />
+                <rect class="fill-forest" x={x + 5} y="220" width="12" height="3" rx="1.5" />
+                <rect class="fill-line-strong" x={x + 5} y="226" width="18" height="3" rx="1.5" />
+              </g>
+            ))}
+            {fall.map((p, i) => (
+              <circle
+                class:list={['filter-punkt', p.raus === 0 && 'kommt-an']}
+                cx="0"
+                cy="0"
+                r="5"
+                style={`--x:${p.x}px; --y:${p.raus ? stufenY[p.raus - 1]! - 7 : 222}px; --dx:${p.seite * 150}px; --verzug:${i * 0.55}s`}
+              />
+            ))}
+          </svg>
+        </div>
+        <h3 class="m-0 text-20 leading-card font-bold text-ink">{b.karten[1]!.titel}</h3>
+        <p class="m-0 text-16 leading-body text-ink-muted">{b.karten[1]!.text}</p>
+      </article>
+
+      {/* --- 3 · Drehtag --- */}
+      <article class={karte}>
+        <div class={bild}>
+          <Image
+            src={drehtag}
+            alt={b.drehtagAlt}
+            widths={[400, 700]}
+            sizes="(min-width: 1040px) 360px, 90vw"
+            class="absolute inset-0 h-full w-full object-cover"
+            style="object-position: 50% 40%"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="m-0 text-20 leading-card font-bold text-ink">{b.karten[2]!.titel}</h3>
+        <p class="m-0 text-16 leading-body text-ink-muted">{b.karten[2]!.text}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* --- R-1: Kreis zieht auf, Punkte leuchten nacheinander --- */
+  .umkreis-kreis,
+  .umkreis-punkt {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  [data-umkreis].vorher .umkreis-kreis {
+    transform: scale(0);
+  }
+  [data-umkreis].vorher .umkreis-punkt {
+    opacity: 0.15;
+    transform: scale(0.5);
+  }
+  [data-umkreis].spielt .umkreis-kreis {
+    transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-umkreis].spielt .umkreis-punkt {
+    transition:
+      opacity 0.45s ease-out,
+      transform 0.45s ease-out;
+    transition-delay: calc(0.9s + var(--i) * 0.09s);
+  }
+
+  /* --- F-1: Punkte fallen durch den Filter --- */
+  .filter-punkt {
+    fill: var(--color-forest);
+    opacity: 0;
+  }
+  [data-filter].spielt .filter-punkt {
+    animation: filter-fall 7s cubic-bezier(0.4, 0, 0.3, 1) var(--verzug) infinite;
+  }
+  [data-filter].spielt .filter-punkt.kommt-an {
+    animation-name: filter-an;
+  }
+  @keyframes filter-fall {
+    0% {
+      transform: translate(var(--x), -10px);
+      opacity: 0;
+    }
+    6% {
+      opacity: 1;
+    }
+    38% {
+      transform: translate(var(--x), var(--y));
+      fill: var(--color-forest);
+    }
+    46% {
+      fill: var(--color-line-strong);
+      opacity: 1;
+    }
+    70%,
+    100% {
+      transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + 24px));
+      fill: var(--color-line-strong);
+      opacity: 0;
+    }
+  }
+  @keyframes filter-an {
+    0% {
+      transform: translate(var(--x), -10px);
+      opacity: 0;
+    }
+    6% {
+      opacity: 1;
+    }
+    55% {
+      transform: translate(var(--x), var(--y));
+      opacity: 1;
+    }
+    70%,
+    100% {
+      transform: translate(var(--x), var(--y));
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  /* Erst das Skript setzt den Anfangszustand — ohne Skript steht alles
+     fertig da. Der Filter läuft nur, solange er zu sehen ist. */
+  const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const umkreis = document.querySelector<HTMLElement>('[data-umkreis]');
+  const filter = document.querySelector<HTMLElement>('[data-filter]');
+
+  if (!ruhig && 'IntersectionObserver' in window) {
+    if (umkreis) {
+      umkreis.classList.add('vorher');
+      const b = new IntersectionObserver(
+        (e) => {
+          if (!e.some((x) => x.isIntersecting)) return;
+          umkreis.classList.add('spielt');
+          requestAnimationFrame(() => umkreis.classList.remove('vorher'));
+          b.disconnect();
+        },
+        { threshold: 0.4 },
+      );
+      b.observe(umkreis);
+    }
+    if (filter) {
+      new IntersectionObserver((e) => {
+        filter.classList.toggle('spielt', e.some((x) => x.isIntersecting));
+      }).observe(filter);
+    }
+  }
+</script>

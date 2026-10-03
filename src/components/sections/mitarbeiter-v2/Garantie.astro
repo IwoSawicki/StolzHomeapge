@@ -1,0 +1,142 @@
+---
+/* S4 · Die Garantie (dunkles Band) — Herzstück der Seite v2.
+
+   Links der Gedanke dahinter (vorher prüfen, dann einstehen), rechts die
+   Garantie als Dokument: Titel, Kernsatz, aufklappbare Bedingungen,
+   Unterschrift, Stempel. Die Werte im Kernsatz sind Platzhalter, bis Iwo
+   die Garantie festgelegt und juristisch geprüft hat (docs/TODO-IWO.md).
+
+   Animation G-1 beim Hinscrollen, einmalig: das Blatt schiebt sich
+   herein, die Unterschrift zeichnet sich, zuletzt setzt der Stempel auf.
+   Der Stempel ist die eine Akzentfläche dieses Bands, der Knopf ist
+   deshalb nicht gelb. Ohne Skript oder Bewegung: alles fertig. */
+import Eyebrow from '../../Eyebrow.astro';
+import Button from '../../Button.astro';
+import PlatzhalterText from './PlatzhalterText.astro';
+import { garantie as g, CTA } from '../../../data/mitarbeiter-v2';
+---
+
+<section class="bg-forest px-page-x py-section-y-md">
+  <div class="mx-auto grid max-w-content grid-cols-1 items-center gap-x-64 gap-y-48 nav:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+    <div class="flex flex-col items-start gap-22">
+      <Eyebrow variante="lime">{g.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">{g.titel}</h2>
+      {g.absaetze.map((a) => <p class="m-0 max-w-560 text-18 leading-prose text-mint">{a}</p>)}
+      <div class="mt-6 flex flex-col items-start gap-12">
+        <Button href="#erstgespraech" variante="dunkel" class="gap-10 font-bold">
+          {CTA}<span aria-hidden="true">→</span>
+        </Button>
+        <span class="text-14 text-mint-dim">{g.ctaZeile}</span>
+      </div>
+    </div>
+
+    {/* --- Das Dokument --- */}
+    <div class="relative mx-auto w-full max-w-480" data-garantie>
+      <article class="relative flex flex-col gap-20 rounded-8 bg-paper p-[clamp(22px,3.4vw,36px)] text-ink shadow-card-light">
+        <div class="flex items-center gap-12 border-b border-line pb-16">
+          <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">{g.kopfzeile}</span>
+        </div>
+        <h3 class="m-0 text-26 leading-card font-bold tracking-system">{g.kartenTitel}</h3>
+        <p class="m-0 text-17 leading-prose text-ink-quiet">
+          <PlatzhalterText text={g.kernsatz} />
+        </p>
+
+        <details class="group rounded-12 bg-paper-soft ring-1 ring-line">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-12 px-16 py-12 text-14 font-bold text-ink [&::-webkit-details-marker]:hidden">
+            {g.bedingungenKnopf}
+            <span class="text-18 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+          </summary>
+          <ul class="m-0 flex list-none flex-col gap-8 px-16 pt-2 pb-16 text-14 leading-body text-ink-muted">
+            {
+              g.bedingungen.map((b) => (
+                <li class="flex gap-10">
+                  <span class="mt-8 h-4 w-4 flex-none rounded-full bg-ink-faint" aria-hidden="true"></span>
+                  <span><PlatzhalterText text={b} /></span>
+                </li>
+              ))
+            }
+          </ul>
+        </details>
+
+        {/* Unterschrift und Stempel */}
+        <div class="relative flex items-end justify-between gap-16 pt-8">
+          <div class="flex flex-col gap-4">
+            <svg viewBox="0 0 220 64" class="h-56 w-[min(200px,100%)] text-forest" aria-hidden="true">
+              <path
+                class="unterschrift"
+                d="M8 44 C 14 20, 22 12, 24 22 C 26 34, 18 50, 22 52 C 28 54, 34 30, 40 30 C 44 30, 42 46, 48 46 C 54 46, 58 30, 64 32 C 70 34, 64 48, 72 46 C 80 44, 86 34, 92 36 M 108 40 C 116 22, 132 18, 128 28 C 124 38, 104 40, 112 48 C 120 56, 140 40, 146 34 C 152 28, 150 46, 158 44 C 168 42, 176 30, 190 34 C 200 37, 206 32, 212 26"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="border-t border-line-strong pt-6 text-13 text-ink-muted">{g.unterschrift}, {g.unterschriftRolle}</span>
+          </div>
+          <span class="garantie-stempel flex h-96 w-96 flex-none -rotate-12 items-center justify-center rounded-full bg-lime text-center font-mono text-11 leading-tight font-bold tracking-eyebrow uppercase text-forest-deep ring-4 ring-lime/40 ring-offset-2 ring-offset-paper">
+            {g.stempel}
+          </span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .garantie-stempel {
+    transform-origin: center;
+  }
+  [data-garantie].vorher {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+  [data-garantie].vorher .unterschrift {
+    stroke-dashoffset: var(--laenge);
+  }
+  [data-garantie].vorher .garantie-stempel {
+    opacity: 0;
+    scale: 1.15;
+  }
+  [data-garantie].spielt {
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-garantie].spielt .unterschrift {
+    transition: stroke-dashoffset 1.4s cubic-bezier(0.45, 0, 0.25, 1) 0.6s;
+  }
+  [data-garantie].spielt .garantie-stempel {
+    transition:
+      opacity 0.2s ease-out 2.05s,
+      scale 0.45s cubic-bezier(0.34, 1.4, 0.64, 1) 2.05s;
+  }
+</style>
+
+<script>
+  /* G-1: erst das Skript blendet aus — ohne Skript steht alles fertig da */
+  const blatt = document.querySelector<HTMLElement>('[data-garantie]');
+  const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const linie = blatt?.querySelector<SVGPathElement>('.unterschrift');
+
+  if (blatt && linie && !ruhig && 'IntersectionObserver' in window) {
+    try {
+      const laenge = Math.ceil(linie.getTotalLength());
+      linie.style.strokeDasharray = `${laenge}`;
+      blatt.style.setProperty('--laenge', `${laenge}`);
+      blatt.classList.add('vorher');
+      const b = new IntersectionObserver(
+        (e) => {
+          if (!e.some((x) => x.isIntersecting)) return;
+          blatt.classList.add('spielt');
+          requestAnimationFrame(() => requestAnimationFrame(() => blatt.classList.remove('vorher')));
+          b.disconnect();
+        },
+        { threshold: 0.35 },
+      );
+      b.observe(blatt);
+    } catch {
+      blatt.classList.remove('vorher');
+    }
+  }
+</script>

@@ -1,0 +1,59 @@
+---
+/* Leiste unten auf dem Handy (unter 1040px): Erstgespräch und Anrufen.
+   Erscheint, sobald „Was Sie bekommen" erreicht ist, und verschwindet,
+   wenn das Formular im Bild ist. Sitzt über der Menü-Pille des Headers. */
+import { CTA, leiste } from '../../../data/mitarbeiter-v2';
+import { kontakt } from '../../../data/navigation';
+---
+
+<div
+  class="handy-leiste fixed inset-x-16 z-40 flex gap-8 nav:hidden"
+  style="bottom: calc(var(--spacing) * 84 + env(safe-area-inset-bottom))"
+  data-handy-leiste
+  data-zustand="weg"
+>
+  <a href="#erstgespraech" class="flex h-48 flex-1 items-center justify-center gap-10 rounded-14 bg-lime text-15 font-bold text-forest-deep no-underline shadow-card-light">
+    {CTA}<span aria-hidden="true">→</span>
+  </a>
+  <a href={kontakt.telefonLink} class="flex h-48 w-48 flex-none items-center justify-center rounded-14 bg-forest text-paper shadow-card-light" aria-label={`${leiste.anrufen}: ${kontakt.telefonAnzeige}`}>
+    <svg viewBox="0 0 24 24" class="w-20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />
+    </svg>
+  </a>
+</div>
+
+<style>
+  .handy-leiste {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.25s ease-out;
+  }
+  .handy-leiste[data-zustand='weg'] {
+    transform: translateY(24px);
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const leiste = document.querySelector<HTMLElement>('[data-handy-leiste]');
+  const start = document.getElementById('bekommen');
+  const ziel = document.getElementById('erstgespraech');
+  if (leiste && start && ziel) {
+    let nachStart = false;
+    let zielSichtbar = false;
+    const setze = () => (leiste.dataset.zustand = nachStart && !zielSichtbar ? 'da' : 'weg');
+    window.addEventListener(
+      'scroll',
+      () => {
+        nachStart = start.getBoundingClientRect().top < window.innerHeight * 0.6;
+        setze();
+      },
+      { passive: true },
+    );
+    new IntersectionObserver((e) => {
+      zielSichtbar = e.some((x) => x.isIntersecting);
+      setze();
+    }).observe(ziel);
+  }
+</script>

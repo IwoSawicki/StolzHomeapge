@@ -1,0 +1,68 @@
+---
+/* S11 · Aus der Praxis (hell). Echte Belege, nichts Ausgedachtes:
+   - Fallkarten zur Mitarbeitergewinnung nur, wenn Iwo sie freigibt
+     (FAELLE_FREIGEGEBEN) — bis dahin bleibt der Block weg.
+   - DMK Bau: das bestehende Projekt mit Link auf die Projektseite.
+   - Zwei echte Google-Bewertungen, Wortlaut unverändert
+     (src/data/startseite.ts). */
+import { Image } from 'astro:assets';
+import Eyebrow from '../../Eyebrow.astro';
+import dmkBild from '../../../assets/social-media/DMK-SM-04-5Sterne100Bewertungen_1-standbild.jpg';
+import { referenzen as r } from '../../../data/mitarbeiter-v2';
+import { bewertungen } from '../../../data/startseite';
+
+/* DMK Bau und Fight Society — die dritte trägt ein Emoji, das passt nicht
+   zum Ton dieser Seite */
+const zitate = bewertungen.filter((b) => b.betrieb === 'DMK Bau' || b.betrieb === 'Fight Society Clothing');
+const kuerzel = (name: string) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((t) => t[0])
+    .join('');
+---
+
+<section class="bg-paper px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-32">
+    <div class="flex max-w-680 flex-col items-start gap-18">
+      <Eyebrow variante="hell">{r.eyebrow}</Eyebrow>
+      <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">{r.titel}</h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-20 nav:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+      <a
+        href="/projekte/dmk-bau"
+        class="group flex flex-col overflow-hidden rounded-24 bg-forest no-underline shadow-card-light btn:flex-row nav:flex-col"
+      >
+        <span class="relative block h-240 overflow-hidden btn:h-auto btn:w-[45%] nav:h-260 nav:w-auto">
+          <Image src={dmkBild} alt="" widths={[400, 700]} sizes="(min-width: 1040px) 480px, 100vw" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" style="object-position: 50% 78%" loading="lazy" />
+        </span>
+        <span class="flex flex-1 flex-col gap-10 p-24">
+          <span class="font-mono text-11 tracking-eyebrow uppercase text-mint-dimmer">{r.dmkArt}</span>
+          <span class="text-26 leading-card font-bold text-paper">{r.dmkTitel}</span>
+          <span class="text-16 leading-body text-mint">{r.dmkText}</span>
+          <span class="mt-auto pt-8 text-15 font-bold text-paper underline decoration-1 underline-offset-4 group-hover:text-mint-light">{r.dmkLink} →</span>
+        </span>
+      </a>
+
+      <div class="grid grid-cols-1 gap-16">
+        {
+          zitate.map((z) => (
+            <figure class="m-0 flex flex-col gap-16 rounded-24 bg-paper-soft p-24 ring-1 ring-line">
+              <span class="text-14 tracking-[2px] text-star-alt" aria-label="5 von 5 Sternen">★★★★★</span>
+              <blockquote class="m-0 text-16 leading-prose text-ink-quiet">„{z.text.replace(/\n+/g, ' ')}"</blockquote>
+              <figcaption class="flex items-center gap-12">
+                <span class="flex h-36 w-36 flex-none items-center justify-center rounded-full bg-forest text-12 font-bold text-paper" aria-hidden="true">{kuerzel(z.name)}</span>
+                <span class="flex flex-col">
+                  <span class="text-15 font-bold text-ink">{z.name}</span>
+                  <span class="text-13 text-ink-muted">{z.betrieb} · Google-Bewertung</span>
+                </span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

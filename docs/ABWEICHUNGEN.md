@@ -1551,3 +1551,26 @@ Führerschein wird automatisch abgesagt. Die Kennzahlen zählen mit.
 Alle Bewerber sind ausgedacht und als „Demo mit Beispieldaten"
 gekennzeichnet. **Vor dem Live-Gang:** Die Texte sagen „unser eigenes
 Bewerber-Cockpit". Live erst, wenn es die Software gibt.
+
+---
+
+## Entwurf: Meistermagnet v2 unter /mitarbeiter-gewinnen-v2 (03.10.2026, nur dev)
+
+Neu ausgearbeitete Fassung der Seite „Mitarbeiter gewinnen" nach Iwos
+Briefing (Claude Cowork, nach einer Analyse von persox.de, hioffice.com
+und mission-connect.de). Steht neben der bisherigen Seite: noindex, nicht
+in der Sitemap, nirgends verlinkt. Vierzehn Sektionen von „Fachkräfte
+einstellen. Aus Ihrer Region. Mit Garantie." bis zum Erstgespräch, mit
+Handy-Vorführung, Garantie-Dokument, Zeitstrahl, Gewerk-Auswahl,
+Stufen-Regler und Mini-Rechner. Personalisierbar über `?b=` (Betrieb),
+`?g=` (Gewerk) und `?h=` (Fassung der Überschrift); Links dafür erzeugt
+der interne Generator unter `/intern/link`. Eigenes Vorschaubild für
+WhatsApp (`src/assets/og-meistermagnet.jpg`, BaseLayout nimmt dafür jetzt
+optional `ogBild`).
+
+Die Formel des Vakanzkostenrechners steht dafür jetzt in
+`src/lib/vakanzkosten.ts`; der große Rechner rechnet unverändert. Der
+Vergleich nimmt optional eigene Zeilen an (für die Zeile „Absicherung").
+
+Offene Werte, Abweichungen vom Briefing und Nebenbefunde:
+`docs/TODO-IWO.md`.

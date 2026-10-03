@@ -1,0 +1,342 @@
+---
+/* S1 · Hero der Meistermagnet-Seite v2 (hell).
+
+   Links: Überschrift mit Garantie, ein Knopf, darunter die Garantie-Zeile
+   und die Vertrauenszeile. Rechts ein Handy, das sich selbst durch die
+   Bewerbung tippt (Animation H-1 im Briefing): Beruf → Erfahrung →
+   Führerschein → Start → Anfahrt. Am Ende kommt die Kandidaten-Karte
+   heraus — „So kommt es bei Ihnen an". Nach einer Pause von vorn.
+
+   Das Handy ist ein Bild, kein Formular; ein Tipp darauf führt zum echten
+   Bewerbungs-Simulator. Dessen Logik wird hier bewusst nicht ein zweites
+   Mal eingebaut — es läuft nur eine Vorführung mit denselben Fragen.
+
+   Ohne Skript und bei reduzierter Bewegung steht der Endzustand da:
+   „Geschafft" auf dem Handy, die Karte daneben.
+
+   Laut Briefing trägt der Hero keine Akzentfläche außer dem Knopf in der
+   Navigation; der Erstgespräch-Knopf ist deshalb dunkel. */
+import Header from '../../Header.astro';
+import Eyebrow from '../../Eyebrow.astro';
+import Button from '../../Button.astro';
+import GarantieBadge from './GarantieBadge.astro';
+import KandidatKarte from './KandidatKarte.astro';
+import { kontakt } from '../../../data/navigation';
+import { fragen, fertig } from '../../../data/bewerbungs-simulator';
+import {
+  hero,
+  heroTitel,
+  heroAntworten,
+  CTA,
+  gewerkeV2,
+  GEWERK_V2_STANDARD,
+} from '../../../data/mitarbeiter-v2';
+
+const standard = gewerkeV2.find((g) => g.schluessel === GEWERK_V2_STANDARD)!;
+
+/* Die fünf Bildschirme: Frage, Antworten, welche angetippt wird */
+const schirme = [
+  { frage: fragen[0]!.frage, antworten: [standard.beruf, 'Anderer Handwerksberuf'], wahl: 0 },
+  ...[
+    [fragen[1]!, heroAntworten.erfahrung],
+    [fragen[2]!, heroAntworten.fuehrerschein],
+    [fragen[3]!, heroAntworten.start],
+    [fragen[4]!, heroAntworten.weg],
+  ].map(([f, wahl]) => {
+    const frage = f as (typeof fragen)[number];
+    const antworten = frage.antworten.map((a) => a.text);
+    return { frage: frage.frage, antworten, wahl: antworten.indexOf(wahl as string) };
+  }),
+];
+---
+
+<section class="relative overflow-hidden bg-paper">
+  <Header variante="hell" />
+
+  <div
+    class="mx-auto grid max-w-content grid-cols-1 items-center gap-x-56 gap-y-48 px-page-x pt-[clamp(28px,5vw,64px)] pb-[clamp(48px,7vw,96px)] nav:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]"
+  >
+    {/* --- Text --- */}
+    <div class="flex flex-col items-start gap-20">
+      <span class="text-15 font-medium text-ink-muted" hidden data-fuer>
+        {hero.fuer} <span class="font-bold text-ink" data-fuer-name></span>
+      </span>
+      <Eyebrow variante="hell">{hero.eyebrow}</Eyebrow>
+      <h1 class="m-0 text-h1-sub leading-hero font-bold tracking-system text-ink">
+        <span class="block" data-h1="0">{heroTitel.a[0]}</span>
+        <span class="block" data-h1="1">{heroTitel.a[1]}</span>
+      </h1>
+      <p class="m-0 max-w-560 text-18 leading-prose text-ink-quiet">{hero.lead}</p>
+
+      <div class="mt-4 flex flex-col items-start gap-14">
+        <Button href="#erstgespraech" variante="tinte">
+          {CTA}<span class="text-18" aria-hidden="true">→</span>
+        </Button>
+        <GarantieBadge />
+        <a href="#bekommen" class="text-15 font-medium text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-lime-link-hover">
+          {hero.zweiterLink} ↓
+        </a>
+      </div>
+
+      {/* Vertrauenszeile */}
+      <div class="mt-8 flex flex-wrap items-center gap-x-24 gap-y-8 border-t border-line pt-18 text-14 text-ink-muted">
+        <a href={kontakt.googleProfil} target="_blank" rel="noopener" class="flex items-center gap-8 text-ink-muted no-underline transition-colors hover:text-ink">
+          <span class="font-medium text-ink">Google</span>
+          <span class="tracking-[2px] text-star-alt" aria-label="5 von 5 Sternen">★★★★★</span>
+          {hero.vertrauen[0]}
+        </a>
+        <span>{hero.vertrauen[1]}</span>
+        <span>{hero.vertrauen[2]}</span>
+      </div>
+    </div>
+
+    {/* --- Handy mit Vorführung --- */}
+    <div class="relative flex flex-col items-center nav:items-end" data-vorfuehrung>
+      <a
+        href="/bewerbungs-simulator"
+        class="relative block w-[min(290px,78vw)] no-underline"
+        aria-label={`${hero.selbstProbieren}: Bewerbungs-Simulator`}
+        data-simulator-link
+      >
+        <div class="relative h-480 overflow-hidden rounded-[2.5rem] btn:h-520 border-8 border-forest-black bg-paper shadow-card-light ring-1 ring-line" aria-hidden="true">
+          {/* Statuszeile und Fortschritt */}
+          <div class="flex items-center justify-between px-22 pt-12 text-11 font-bold text-ink">
+            <span>9:41</span>
+            <span class="h-14 w-72 rounded-full bg-forest-black"></span>
+            <span class="h-8 w-16 rounded-2 bg-ink"></span>
+          </div>
+          <div class="mx-18 mt-10 h-4 overflow-hidden rounded-full bg-line">
+            <span class="block h-full w-full rounded-full bg-forest transition-[width] duration-500" data-fortschritt></span>
+          </div>
+
+          <div class="absolute inset-x-0 top-52 bottom-0" data-buehne>
+            {
+              schirme.map((s, i) => (
+                <div class="hero-schirm absolute inset-0 flex flex-col gap-14 px-18 pt-18" data-schirm={i} data-zustand="nachher">
+                  <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">Frage {i + 1} von 5</span>
+                  <span class="text-19 leading-card font-bold text-ink">{s.frage}</span>
+                  <span class="flex flex-col gap-8">
+                    {s.antworten.map((a, j) => (
+                      <span
+                        class="hero-antwort flex items-center justify-between rounded-12 bg-paper px-14 py-12 text-14 font-medium text-ink ring-1 ring-line"
+                        data-wahl={j === s.wahl ? '' : undefined}
+                        data-beruf={i === 0 && j === 0 ? '' : undefined}
+                      >
+                        {a}
+                        <span class="h-16 w-16 rounded-full ring-2 ring-line-strong"></span>
+                      </span>
+                    ))}
+                  </span>
+                </div>
+              ))
+            }
+            <div class="hero-schirm absolute inset-0 flex flex-col items-center gap-12 px-18 pt-56 text-center" data-schirm="fertig" data-zustand="aktiv">
+              <span class="flex h-64 w-64 items-center justify-center rounded-full bg-forest text-paper">
+                <svg viewBox="0 0 24 24" class="w-28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+              </span>
+              <span class="text-22 font-bold text-ink">{fertig.titel}</span>
+              <span class="text-14 leading-body text-ink-muted">Deine Bewerbung ist da.</span>
+            </div>
+
+            {/* Tipp-Kreis */}
+            <span class="hero-tipp pointer-events-none absolute top-0 left-0 h-40 w-40 rounded-full bg-forest/15 ring-2 ring-forest/60" data-tipp></span>
+          </div>
+        </div>
+      </a>
+      <a href="/bewerbungs-simulator" class="mt-14 text-14 font-medium text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-lime-link-hover nav:mr-56" data-simulator-link>
+        {hero.selbstProbieren} →
+      </a>
+
+      {/* Kandidaten-Karte: kommt aus dem Handy */}
+      <div class="hero-karte relative z-10 mt-28 w-[min(340px,100%)] nav:absolute nav:bottom-40 nav:-left-16 nav:mt-0 nav:w-[280px]" data-zustand="da" data-hero-karte>
+        {/* Etikett sitzt auf der Kante der Karte */}
+        <span class="absolute -top-12 left-16 z-10 rounded-full bg-forest px-12 py-5 font-mono text-11 tracking-eyebrow text-paper uppercase">{hero.kartenLabel}</span>
+        <KandidatKarte beruf={standard.beruf} class="pt-28" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-schirm {
+    transition:
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.55s ease-out;
+  }
+  .hero-schirm[data-zustand='nachher'] {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  .hero-schirm[data-zustand='vorher'] {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  .hero-antwort {
+    transition:
+      background-color 0.25s ease-out,
+      box-shadow 0.25s ease-out;
+  }
+  .hero-antwort.gewaehlt {
+    background-color: var(--color-forest);
+    color: var(--color-paper);
+    box-shadow: none;
+  }
+  .hero-tipp {
+    opacity: 0;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.25s ease-out;
+  }
+  .hero-tipp.tippt {
+    animation: hero-tippen 0.45s ease-out;
+  }
+  @keyframes hero-tippen {
+    0% {
+      scale: 1;
+    }
+    40% {
+      scale: 0.72;
+    }
+    100% {
+      scale: 1;
+    }
+  }
+  .hero-karte {
+    transition:
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.5s ease-out;
+  }
+  .hero-karte[data-zustand='weg'] {
+    transform: translateY(-36px) scale(0.92);
+    opacity: 0;
+  }
+  @media (min-width: 1040px) {
+    .hero-karte[data-zustand='weg'] {
+      transform: translate(80px, -40px) scale(0.9);
+    }
+  }
+</style>
+
+<script>
+  import { personalisierung } from '../../../lib/personalisierung';
+  import { heroTitel } from '../../../data/mitarbeiter-v2';
+
+  const { betrieb, gewerk, ueberschrift } = personalisierung();
+
+  /* --- Personalisierung ------------------------------------------------ */
+  if (betrieb) {
+    const fuer = document.querySelector<HTMLElement>('[data-fuer]');
+    if (fuer) {
+      fuer.querySelector('[data-fuer-name]')!.textContent = betrieb;
+      fuer.hidden = false;
+    }
+  }
+  if (ueberschrift) {
+    heroTitel[ueberschrift].forEach((zeile, i) => {
+      const el = document.querySelector(`[data-h1="${i}"]`);
+      if (el) el.textContent = zeile;
+    });
+  }
+  if (gewerk) {
+    document.querySelectorAll('[data-beruf], [data-kandidat-beruf]').forEach((el) => {
+      /* Der Kreis rechts in der Antwort bleibt stehen */
+      const kreis = el.querySelector('span');
+      el.textContent = gewerk.beruf;
+      if (kreis) el.append(kreis);
+    });
+    document.querySelectorAll<HTMLAnchorElement>('[data-simulator-link]').forEach((a) => {
+      a.href = `/bewerbungs-simulator?g=${gewerk.schluessel}`;
+    });
+  }
+
+  /* --- Vorführung ------------------------------------------------------ */
+  const buehne = document.querySelector<HTMLElement>('[data-buehne]');
+  const vorfuehrung = document.querySelector<HTMLElement>('[data-vorfuehrung]');
+  const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (buehne && vorfuehrung && !ruhig && 'IntersectionObserver' in window) {
+    const schirme = [...buehne.querySelectorAll<HTMLElement>('[data-schirm]')];
+    const fragen = schirme.filter((s) => s.dataset.schirm !== 'fertig');
+    const fertig = schirme.find((s) => s.dataset.schirm === 'fertig')!;
+    const tipp = buehne.querySelector<HTMLElement>('[data-tipp]')!;
+    const fortschritt = document.querySelector<HTMLElement>('[data-fortschritt]')!;
+    const karte = document.querySelector<HTMLElement>('[data-hero-karte]')!;
+
+    let sichtbar = true;
+    let lauf = 0;
+    const warte = (ms: number) => new Promise((fertig) => setTimeout(fertig, ms));
+    /* Pausiert, solange der Hero nicht zu sehen ist */
+    const sobaldSichtbar = async () => {
+      while (!sichtbar) await warte(300);
+    };
+
+    const zeige = (index: number | 'fertig') => {
+      /* Während der Bildschirm gleitet, ist kein Finger zu sehen */
+      tipp.style.opacity = '0';
+      schirme.forEach((s, i) => {
+        const istZiel = index === 'fertig' ? s === fertig : i === index;
+        const davor = index === 'fertig' ? s !== fertig : i < (index as number);
+        s.dataset.zustand = istZiel ? 'aktiv' : davor ? 'vorher' : 'nachher';
+      });
+    };
+
+    const zurueckstellen = () => {
+      schirme.forEach((s) => {
+        s.style.transition = 'none';
+        s.dataset.zustand = 'nachher';
+        s.querySelectorAll('.gewaehlt').forEach((a) => a.classList.remove('gewaehlt'));
+      });
+      void buehne.offsetWidth;
+      schirme.forEach((s) => (s.style.transition = ''));
+      fortschritt.style.width = '0%';
+      karte.dataset.zustand = 'weg';
+    };
+
+    const tippeAuf = async (ziel: HTMLElement) => {
+      const b = buehne.getBoundingClientRect();
+      const r = ziel.getBoundingClientRect();
+      tipp.style.transform = `translate(${r.right - b.left - 52}px, ${r.top - b.top + r.height / 2 - 20}px)`;
+      tipp.style.opacity = '1';
+      await warte(550);
+      tipp.classList.remove('tippt');
+      void tipp.offsetWidth;
+      tipp.classList.add('tippt');
+      ziel.classList.add('gewaehlt');
+      await warte(450);
+    };
+
+    const durchlauf = async (nummer: number) => {
+      zurueckstellen();
+      for (let i = 0; i < fragen.length; i++) {
+        await sobaldSichtbar();
+        if (nummer !== lauf) return;
+        zeige(i);
+        fortschritt.style.width = `${(i / fragen.length) * 100}%`;
+        await warte(i === 0 ? 900 : 650);
+        await tippeAuf(fragen[i]!.querySelector<HTMLElement>('[data-wahl]')!);
+      }
+      tipp.style.opacity = '0';
+      fortschritt.style.width = '100%';
+      zeige('fertig');
+      await warte(500);
+      karte.dataset.zustand = 'da';
+      await warte(3200);
+    };
+
+    const schleife = async () => {
+      const nummer = ++lauf;
+      for (;;) {
+        await durchlauf(nummer);
+        if (nummer !== lauf) return;
+      }
+    };
+
+    new IntersectionObserver((eintraege) => {
+      sichtbar = eintraege.some((e) => e.isIntersecting);
+    }).observe(vorfuehrung);
+
+    schleife();
+  }
+</script>

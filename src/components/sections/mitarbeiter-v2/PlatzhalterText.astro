@@ -1,0 +1,23 @@
+---
+/* Text mit Platzhaltern: Stellen in doppelten geschweiften Klammern sind
+   Werte, die nur Iwo liefern kann (siehe docs/TODO-IWO.md). Sie werden
+   sichtbar als Platzhalter gesetzt — gestrichelt umrandet, in
+   Schreibmaschinenschrift —, damit sie niemand für fertigen Text hält. */
+interface Props {
+  text: string;
+}
+
+const teile = Astro.props.text.split(/(\{\{.+?\}\})/g).filter(Boolean);
+---
+
+{
+  teile.map((teil) =>
+    teil.startsWith('{{') ? (
+      <span class="platzhalter rounded-4 px-4 font-mono text-[0.86em] whitespace-normal outline-1 outline-current/50 outline-dashed">
+        {teil}
+      </span>
+    ) : (
+      teil
+    ),
+  )
+}
