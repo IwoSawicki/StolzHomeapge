@@ -48,7 +48,8 @@ export const footerTools: NavLink[] = [
   /* Landingpage für Anzeigen, zugleich ein Werkzeug zum Ausprobieren
      (01.10.2026). Steht oben (Reihenfolge Iwo, 02.10.2026). */
   { label: 'Bewerbungs-Simulator', href: '/bewerbungs-simulator' },
-  { label: 'Vakanzkostenrechner', href: '/vakanzkostenrechner' },
+  /* weiche Trennstellen (U+00AD): in schmalen Footer-Spalten zu lang */
+  { label: 'Vakanz\u00ADkosten\u00ADrechner', href: '/vakanzkostenrechner' },
   { label: 'Website-Check', href: '/website-check' },
   /* Der geplante Sichtbarkeits-Check steht nicht mehr in der Liste
      (Iwo, 02.10.2026) */

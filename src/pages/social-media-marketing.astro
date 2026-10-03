@@ -5,7 +5,7 @@
    Abschluss mit Anfrageformular; die Inhalte dazwischen liefert Iwo nach.
    Bis dahin noindex, nicht in der Sitemap und im Footer ausgegraut. */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Footer from '../components/Footer.astro';
+import FooterPortrait from '../components/FooterPortrait.astro';
 import VideoHero from '../components/sections/social-media/VideoHero.astro';
 import Abschluss from '../components/sections/leistung/Abschluss.astro';
 import type { Feld } from '../components/Web3Formular.astro';
@@ -40,5 +40,6 @@ const anfrageFelder: Feld[] = [
     />
   </main>
 
-  <Footer />
+  {/* Entwurf: Footer mit Porträt, zum Vergleich nur hier */}
+  <FooterPortrait />
 </BaseLayout>

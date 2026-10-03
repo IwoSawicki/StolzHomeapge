@@ -1508,3 +1508,25 @@ und Schatten da, darüber „Ansicht wählen". Noch nicht angesehene Reiter
 tragen einen Punkt mit pulsierendem Lichthof, der nach dem ersten
 Antippen verschwindet (Iwo: auf dem Handy war nicht zu erkennen, dass
 man tippen kann).
+
+---
+
+## Entwurf: Footer mit Porträt (03.10.2026, nur dev)
+
+Vorbild von Iwo: der Footer von lumix.solar. `src/components/FooterPortrait.astro`,
+bisher nur auf der Social-Media-Seite (dev, noindex), damit er sich mit
+dem bisherigen Footer auf allen anderen Seiten vergleichen lässt.
+
+Heller Grund mit einer Schräge in Lime. Links eine weiße Karte mit vier
+Spalten (Leistungen vor Ort, Branchen, Menü, Tools und Social), unten
+darin Logo und Ort, rechts bündig in der Ecke ein dunkler Kasten mit
+E-Mail und Telefon. Rechts daneben Iwos Porträt mit „Iwo Sawicki ·
+Inhaber" und dem Erstgespräch-Knopf. Auf dem Handy steht das Porträt
+zuerst.
+
+Die Spalten sind so breit wie ihr längster Eintrag: auf 1440px stehen
+alle vier ohne Umbruch nebeneinander (dafür ist das Porträt 340px
+breit), darunter brechen lange Einträge auf zwei Zeilen um, auf 320px
+steht eine Spalte. „Vakanzkostenrechner" trägt dafür weiche
+Trennstellen. Der große Claim und die gestreckte Wortmarke des
+bisherigen Footers sind im Entwurf nicht enthalten.
