@@ -118,7 +118,7 @@ export const garantie = {
 };
 
 /* Entwurf B der Garantie (04.10.2026): die Zusage als Versprechen statt
-   als Dokument — gelbes Band, Siegel, große Überschrift, drei Schritte.
+   als Dokument — dunkelgrünes Band, Siegel, große Überschrift, drei Schritte.
    Auf dev mit ?garantie=b. Werte wie in Entwurf A als Platzhalter. */
 export const garantieB = {
   eyebrow: 'Die Bewerbungs-Garantie',

@@ -1586,8 +1586,14 @@ den übrigen Heros. Eyebrow kürzer: „Personal fürs Handwerk".
 
 **Meistermagnet v2, Garantie Entwurf B (04.10.2026, nur dev):** Iwo fand
 die Garantie als Dokument zu schwach. Entwurf B zeigt sie als
-Versprechen: gelbes Band, ein Siegel mit langsam drehendem Schriftring,
+Versprechen: dunkelgrünes Band, ein gelbes Siegel mit langsam drehendem
+Schriftring,
 die Zusage als große Überschrift („Passende Bewerbungen. Oder wir
 arbeiten weiter – ohne Honorar."), darunter der konkrete Wert und drei
 Schritte (vorher prüfen, schriftlich festhalten, dafür einstehen).
 Umschaltbar mit `?garantie=b`; ohne Angabe bleibt Entwurf A.
+
+Gelb ist auf der ganzen Seite nie Hintergrund einer Sektion, nur Fläche
+für Knöpfe, Marker und Elemente wie das Siegel (Iwo, 04.10.2026). Ein
+erster Stand von Entwurf B stand auf gelbem Band und ist deshalb
+umgestellt.

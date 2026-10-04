@@ -4,7 +4,9 @@
 
    Entwurf A zeigt die Garantie als Dokument mit Unterschrift; die Zusage
    steckt dort in einem langen Satz. Hier ist sie die Hauptsache:
-   - ein gelbes Band (die eine Akzentfläche dieser Bildschirmhöhe),
+   - ein dunkelgrünes Band — Gelb gibt es auf der Seite nur auf Flächen
+     wie Knöpfen und Siegel, nie als Hintergrund einer Sektion (Iwo,
+     04.10.2026),
    - ein Siegel, dessen Schriftring sich langsam dreht,
    - die Zusage als große Überschrift, darunter der konkrete Wert,
    - drei Schritte, warum sie hält: prüfen, festhalten, einstehen.
@@ -24,7 +26,7 @@ const ring = g.siegel;
 const UMFANG = 513;
 ---
 
-<section class="bg-lime px-page-x py-section-y-md text-forest-deep" data-garantie-b>
+<section class="bg-forest px-page-x py-section-y-md text-paper" data-garantie-b>
   <div class="mx-auto flex max-w-content flex-col gap-48">
     <div class="grid grid-cols-1 items-center gap-x-72 gap-y-36 nav:grid-cols-[auto_minmax(0,1fr)]">
       {/* --- Siegel --- */}
@@ -33,15 +35,15 @@ const UMFANG = 513;
           <defs>
             <path id="siegel-kreis" d="M100 100 m-82 0 a82 82 0 1 1 164 0 a82 82 0 1 1 -164 0" />
           </defs>
-          <circle cx="100" cy="100" r="98" class="fill-forest-deep" />
-          <circle cx="100" cy="100" r="68" class="fill-none stroke-lime/40" stroke-width="1" stroke-dasharray="2 4" />
+          <circle cx="100" cy="100" r="98" class="fill-lime" />
+          <circle cx="100" cy="100" r="68" class="fill-none stroke-forest-deep/35" stroke-width="1" stroke-dasharray="2 4" />
           <g class="siegel-ring">
-            <text class="fill-cream" font-size="12" font-weight="700" font-family="ui-monospace, monospace">
+            <text class="fill-forest-deep" font-size="12" font-weight="700" font-family="ui-monospace, monospace">
               <textPath href="#siegel-kreis" textLength={UMFANG} lengthAdjust="spacing">{ring.toUpperCase()}</textPath>
             </text>
           </g>
         </svg>
-        <div class="absolute inset-[22%] flex flex-col items-center justify-center gap-6 rounded-full bg-cream text-center">
+        <div class="absolute inset-[22%] flex flex-col items-center justify-center gap-6 rounded-full bg-forest-deep text-center text-paper">
           <svg viewBox="0 0 24 24" class="w-[28%]" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12.5l4.5 4.5L19 7.5" />
           </svg>
@@ -51,11 +53,11 @@ const UMFANG = 513;
 
       {/* --- Die Zusage --- */}
       <div class="flex flex-col items-start gap-22">
-        <Eyebrow variante="hell" class="border-forest-deep/35 text-forest-deep">{g.eyebrow}</Eyebrow>
+        <Eyebrow variante="lime">{g.eyebrow}</Eyebrow>
         <h2 class="m-0 text-[clamp(34px,5vw,64px)] leading-tightest font-bold tracking-claim">
-          {g.titelVorn}<span class="block text-forest-deep/70">{g.titelHinten}</span>
+          {g.titelVorn}<span class="block text-mint">{g.titelHinten}</span>
         </h2>
-        <p class="m-0 flex items-start gap-12 rounded-16 bg-forest-deep px-18 py-14 text-17 leading-body font-medium text-paper">
+        <p class="m-0 flex items-start gap-12 rounded-16 bg-forest-card px-18 py-14 text-17 leading-body font-medium text-paper ring-1 ring-edge">
           <span class="mt-2 flex h-22 w-22 flex-none items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
             <svg viewBox="0 0 24 24" class="w-12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
           </span>
@@ -68,14 +70,14 @@ const UMFANG = 513;
     <ol class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-16 p-0">
       {
         g.schritte.map((s, i) => (
-          <li class="garantie-schritt flex flex-col gap-12 rounded-20 bg-paper p-24 shadow-card-light" style={`--i:${i}`}>
+          <li class="garantie-schritt flex flex-col gap-12 rounded-20 bg-forest-card p-24 ring-1 ring-edge" style={`--i:${i}`}>
             <span class="flex items-center gap-12">
-              <span class="flex h-36 w-36 flex-none items-center justify-center rounded-full bg-forest-deep font-mono text-13 font-bold text-paper">
+              <span class="flex h-36 w-36 flex-none items-center justify-center rounded-full bg-cream font-mono text-13 font-bold text-forest-deep">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <span class="text-20 leading-card font-bold text-ink">{s.titel}</span>
+              <span class="text-20 leading-card font-bold text-paper">{s.titel}</span>
             </span>
-            <span class="text-16 leading-body text-ink-muted">{s.text}</span>
+            <span class="text-16 leading-body text-mint">{s.text}</span>
           </li>
         ))
       }
@@ -84,21 +86,21 @@ const UMFANG = 513;
     {/* --- Knopf und Bedingungen --- */}
     <div class="flex flex-wrap items-start justify-between gap-x-40 gap-y-20">
       <div class="flex flex-col items-start gap-10">
-        <Button href="#erstgespraech" variante="tinte">
+        <Button href="#erstgespraech" variante="lime">
           {CTA}<span class="text-18" aria-hidden="true">→</span>
         </Button>
-        <span class="text-14 text-forest-deep/75">{g.ctaZeile}</span>
+        <span class="text-14 text-mint-dim">{g.ctaZeile}</span>
       </div>
-      <details class="group w-full max-w-480 rounded-16 bg-paper/55 ring-1 ring-forest-deep/15">
+      <details class="group w-full max-w-480 rounded-16 bg-forest-card ring-1 ring-edge">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-12 px-18 py-14 text-15 font-bold [&::-webkit-details-marker]:hidden">
           {g.bedingungenKnopf}
           <span class="text-20 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
         </summary>
-        <ul class="m-0 flex list-none flex-col gap-8 px-18 pt-2 pb-16 text-14 leading-body text-forest-deep/80">
+        <ul class="m-0 flex list-none flex-col gap-8 px-18 pt-2 pb-16 text-14 leading-body text-mint">
           {
             garantie.bedingungen.map((b) => (
               <li class="flex gap-10">
-                <span class="mt-8 h-4 w-4 flex-none rounded-full bg-forest-deep/50" aria-hidden="true"></span>
+                <span class="mt-8 h-4 w-4 flex-none rounded-full bg-mint-dim" aria-hidden="true"></span>
                 <span><PlatzhalterText text={b} /></span>
               </li>
             ))
