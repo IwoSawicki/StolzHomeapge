@@ -103,14 +103,6 @@ export const garantie = {
   kartenTitel: 'Bewerbungs-Garantie',
   kernsatz:
     'Kommen innerhalb von {{60}} Tagen nach Kampagnenstart nicht mindestens {{X}} vorqualifizierte Bewerbungen, arbeiten wir ohne Agenturhonorar weiter, bis sie da sind.',
-  bedingungenKnopf: 'Bedingungen ansehen',
-  bedingungen: [
-    'Die Stelle wurde vorher gemeinsam als machbar eingestuft.',
-    'Der Drehtag hat stattgefunden.',
-    'Das Werbebudget läuft wie vereinbart.',
-    'Sie melden sich innerhalb von {{48}} Stunden bei den Bewerbern.',
-    '{{weitere Bedingungen – Iwo, juristisch prüfen lassen}}',
-  ],
   unterschrift: 'Iwo Sawicki',
   unterschriftRolle: 'Inhaber',
   stempel: 'Schriftlich',
@@ -122,8 +114,11 @@ export const garantie = {
    Auf dev mit ?garantie=b. Werte wie in Entwurf A als Platzhalter. */
 export const garantieB = {
   eyebrow: 'Die Bewerbungs-Garantie',
-  titelVorn: 'Passende Bewerbungen. ',
-  titelHinten: 'Oder wir arbeiten weiter – ohne Honorar.',
+  /* Richtung nach mission-connect.de („Wir garantieren, was andere nur
+     versprechen"), aber in eigenen Worten — laut Briefing steht kein Satz
+     von dort auf der Seite */
+  titelVorn: 'Andere versprechen Bewerbungen. ',
+  titelHinten: 'Wir unterschreiben sie.',
   zusage: '{{X}} vorqualifizierte Bewerbungen in {{60}} Tagen nach Kampagnenstart. Schriftlich, im Vertrag.',
   siegel: 'Schriftliche Bewerbungs-Garantie · Stolz Marketing · ',
   siegelMitte: 'Garantiert',
@@ -134,14 +129,13 @@ export const garantieB = {
     },
     {
       titel: 'Schriftlich festhalten',
-      text: 'Was wir zusagen, steht im Vertrag: wie viele Bewerbungen, in welcher Zeit, unter welchen Bedingungen. Kein „Wir versuchen es".',
+      text: 'Was wir zusagen, steht im Vertrag: wie viele Bewerbungen, in welcher Zeit, unter welchen Bedingungen. Schwarz auf weiß.',
     },
     {
       titel: 'Dafür einstehen',
       text: 'Kommen die Bewerbungen nicht, arbeiten wir ohne Agenturhonorar weiter, bis sie da sind.',
     },
   ],
-  bedingungenKnopf: 'Bedingungen ansehen',
   ctaZeile: 'Im Erstgespräch sagen wir Ihnen, ob wir Ihre Stelle garantieren können.',
 };
 
