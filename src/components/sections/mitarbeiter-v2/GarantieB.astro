@@ -2,22 +2,26 @@
 /* S4 · Die Garantie — Entwurf B (04.10.2026, Iwo: „die Garantie wirkt
    noch schwach").
 
-   Entwurf A zeigt die Garantie als Dokument mit Unterschrift; die Zusage
-   steckt dort in einem langen Satz. Hier ist sie die Hauptsache:
-   - ein dunkelgrünes Band — Gelb gibt es auf der Seite nur auf Flächen
-     wie Knöpfen und Siegel, nie als Hintergrund einer Sektion (Iwo,
-     04.10.2026),
-   - ein Siegel, dessen Schriftring sich langsam dreht,
-   - die Zusage als große Überschrift, darunter der konkrete Wert,
-   - drei Schritte, warum sie hält: prüfen, festhalten, einstehen.
+   Entwurf A zeigt die Garantie als Dokument mit Unterschrift. Hier ist sie
+   ein Versprechen, auf dunkelgrünem Band — Gelb gibt es auf der Seite nur
+   auf Flächen wie Knöpfen und Siegel, nie als Hintergrund einer Sektion.
+
+   Zweite Fassung nach eigener Kritik: Die Zusage stand klein in einem
+   Kasten, die Folge („ohne Honorar weiter") versteckt im dritten von drei
+   Ablauf-Schritten, und der Gegensatz der Überschrift wurde nicht
+   eingelöst. Jetzt:
+   1. Siegel und Überschrift „Andere versprechen … Wir unterschreiben sie."
+      mit einem Satz, warum wir das können (wir prüfen vorher).
+   2. Die Klausel groß in zwei Hälften: „Wir garantieren …" — sonst —
+      „Bleiben sie aus, arbeiten wir ohne Honorar weiter".
+   3. Vergleich „Ohne Garantie" / „Mit Bewerbungs-Garantie".
 
    Die Bedingungen stehen bewusst nicht auf der Seite (Iwo: wirkt
    unprofessionell) — sie gehören in den Vertrag und ins Erstgespräch.
+   Werte als Platzhalter wie in Entwurf A. Auf dev mit ?garantie=b.
 
-   Auf dev umschaltbar mit ?garantie=b (siehe Seite). Werte als
-   Platzhalter wie in Entwurf A. Die Schritte bauen sich beim Hinscrollen
-   gestaffelt auf; ohne Skript oder Bewegung steht alles da, das Siegel
-   steht still. */
+   Beim Hinscrollen bauen sich Klausel und Vergleich gestaffelt auf;
+   ohne Skript oder Bewegung steht alles da, das Siegel steht still. */
 import Eyebrow from '../../Eyebrow.astro';
 import Button from '../../Button.astro';
 import PlatzhalterText from './PlatzhalterText.astro';
@@ -27,13 +31,16 @@ import { garantieB as g, CTA } from '../../../data/mitarbeiter-v2';
    (2π · 82 ≈ 515) verteilt — doppelt gesetzt überlappte er sich */
 const ring = g.siegel;
 const UMFANG = 513;
+const k = g.klausel;
+const haken = 'M5 12.5l4.5 4.5L19 7.5';
+const kreuz = 'M7 7l10 10M17 7L7 17';
 ---
 
 <section class="bg-forest px-page-x py-section-y-md text-paper" data-garantie-b>
   <div class="mx-auto flex max-w-content flex-col gap-48">
+    {/* --- Siegel und Überschrift --- */}
     <div class="grid grid-cols-1 items-center gap-x-72 gap-y-36 nav:grid-cols-[auto_minmax(0,1fr)]">
-      {/* --- Siegel --- */}
-      <div class="relative mx-auto aspect-square w-[clamp(190px,26vw,290px)]" aria-hidden="true">
+      <div class="relative mx-auto aspect-square w-[clamp(190px,24vw,270px)]" aria-hidden="true">
         <svg viewBox="0 0 200 200" class="absolute inset-0 h-full w-full">
           <defs>
             <path id="siegel-kreis" d="M100 100 m-82 0 a82 82 0 1 1 164 0 a82 82 0 1 1 -164 0" />
@@ -48,52 +55,82 @@ const UMFANG = 513;
         </svg>
         <div class="absolute inset-[22%] flex flex-col items-center justify-center gap-6 rounded-full bg-forest-deep text-center text-paper">
           <svg viewBox="0 0 24 24" class="w-[28%]" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12.5l4.5 4.5L19 7.5" />
+            <path d={haken} />
           </svg>
           <span class="text-[clamp(13px,1.5vw,16px)] font-bold tracking-system">{g.siegelMitte}</span>
         </div>
       </div>
 
-      {/* --- Die Zusage --- */}
       <div class="flex flex-col items-start gap-22">
         <Eyebrow variante="lime">{g.eyebrow}</Eyebrow>
         <h2 class="m-0 text-[clamp(34px,5vw,64px)] leading-tightest font-bold tracking-claim">
           {g.titelVorn}<span class="block text-mint">{g.titelHinten}</span>
         </h2>
-        <p class="m-0 flex items-start gap-12 rounded-16 bg-forest-card px-18 py-14 text-17 leading-body font-medium text-paper ring-1 ring-edge">
-          <span class="mt-2 flex h-22 w-22 flex-none items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="w-12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
-          </span>
-          <span><PlatzhalterText text={g.zusage} /></span>
-        </p>
+        <p class="m-0 max-w-620 text-18 leading-prose text-mint-light">{g.warum}</p>
       </div>
     </div>
 
-    {/* --- Drei Schritte --- */}
-    <ol class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-16 p-0">
-      {
-        g.schritte.map((s, i) => (
-          <li class="garantie-schritt flex flex-col gap-12 rounded-20 bg-forest-card p-24 ring-1 ring-edge" style={`--i:${i}`}>
-            <span class="flex items-center gap-12">
-              <span class="flex h-36 w-36 flex-none items-center justify-center rounded-full bg-cream font-mono text-13 font-bold text-forest-deep">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <span class="text-20 leading-card font-bold text-paper">{s.titel}</span>
-            </span>
-            <span class="text-16 leading-body text-mint">{s.text}</span>
-          </li>
-        ))
-      }
-    </ol>
+    {/* --- Die Klausel: zugesagt — sonst — Folge --- */}
+    <div class="garantie-teil grid grid-cols-1 overflow-hidden rounded-24 bg-paper text-ink shadow-card nav:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]" style="--i:0">
+      <div class="flex flex-col gap-10 p-[clamp(22px,3.4vw,40px)]">
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">{k.zusageLabel}</span>
+        <span class="text-[clamp(26px,3.4vw,40px)] leading-tightest font-bold tracking-system">
+          <PlatzhalterText text={k.zusage} />
+        </span>
+        <span class="text-17 text-ink-muted"><PlatzhalterText text={k.zusageZusatz} /></span>
+      </div>
+      {/* Trenner: auf dem Handy waagerecht, ab 1040px senkrecht */}
+      <div class="relative flex items-center justify-center px-24 nav:px-0">
+        <span class="absolute inset-x-0 top-1/2 h-px bg-line nav:inset-x-auto nav:inset-y-0 nav:left-1/2 nav:h-auto nav:w-px"></span>
+        <span class="relative rounded-full bg-forest-deep px-16 py-8 font-mono text-12 font-bold tracking-eyebrow text-paper uppercase">{k.sonst}</span>
+      </div>
+      <div class="flex flex-col gap-10 bg-paper-soft p-[clamp(22px,3.4vw,40px)]">
+        <span class="font-mono text-12 tracking-eyebrow uppercase text-ink-faint">{k.folgeLabel}</span>
+        <span class="text-[clamp(26px,3.4vw,40px)] leading-tightest font-bold tracking-system">{k.folge}</span>
+        <span class="text-17 text-ink-muted">{k.folgeZusatz}</span>
+      </div>
+    </div>
+
+    {/* --- Vergleich, der die Überschrift einlöst --- */}
+    <div class="grid grid-cols-1 gap-16 btn:grid-cols-2">
+      <div class="garantie-teil flex flex-col gap-16 rounded-20 p-24 ring-1 ring-edge" style="--i:1">
+        <span class="text-17 font-bold text-mint">{g.vergleich.ohneTitel}</span>
+        <ul class="m-0 flex list-none flex-col gap-12 p-0">
+          {
+            g.vergleich.ohne.map((punkt) => (
+              <li class="flex items-start gap-12 text-16 leading-body text-mint">
+                <span class="mt-2 flex h-22 w-22 flex-none items-center justify-center rounded-full ring-1 ring-mint-dim text-mint-dim" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" class="w-11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d={kreuz} /></svg>
+                </span>
+                {punkt}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="garantie-teil flex flex-col gap-16 rounded-20 bg-forest-card p-24 ring-1 ring-lime-edge" style="--i:2">
+        <span class="text-17 font-bold text-paper">{g.vergleich.mitTitel}</span>
+        <ul class="m-0 flex list-none flex-col gap-12 p-0">
+          {
+            g.vergleich.mit.map((punkt) => (
+              <li class="flex items-start gap-12 text-16 leading-body font-medium text-paper">
+                <span class="mt-2 flex h-22 w-22 flex-none items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" class="w-12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d={haken} /></svg>
+                </span>
+                {punkt}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
 
     {/* --- Knopf --- */}
-    <div class="flex flex-wrap items-start justify-between gap-x-40 gap-y-20">
-      <div class="flex flex-col items-start gap-10">
-        <Button href="#erstgespraech" variante="lime">
-          {CTA}<span class="text-18" aria-hidden="true">→</span>
-        </Button>
-        <span class="text-14 text-mint-dim">{g.ctaZeile}</span>
-      </div>
+    <div class="flex flex-col items-start gap-10">
+      <Button href="#erstgespraech" variante="lime">
+        {CTA}<span class="text-18" aria-hidden="true">→</span>
+      </Button>
+      <span class="text-14 text-mint-dim">{g.ctaZeile}</span>
     </div>
   </div>
 </section>
@@ -109,15 +146,15 @@ const UMFANG = 513;
       transform: rotate(360deg);
     }
   }
-  [data-garantie-b].vorher .garantie-schritt {
+  [data-garantie-b].vorher .garantie-teil {
     opacity: 0;
     translate: 0 18px;
   }
-  [data-garantie-b].spielt .garantie-schritt {
+  [data-garantie-b].spielt .garantie-teil {
     transition:
       opacity 0.5s ease-out,
       translate 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: calc(0.15s + var(--i) * 0.09s);
+    transition-delay: calc(0.1s + var(--i) * 0.12s);
   }
 </style>
 
@@ -125,7 +162,7 @@ const UMFANG = 513;
   const band = document.querySelector<HTMLElement>('[data-garantie-b]');
   const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (band && !ruhig && 'IntersectionObserver' in window) {
-    const schritte = band.querySelector('ol')!;
+    const ziel = band.querySelector('.garantie-teil')!;
     band.classList.add('vorher');
     const b = new IntersectionObserver(
       (e) => {
@@ -134,8 +171,8 @@ const UMFANG = 513;
         requestAnimationFrame(() => requestAnimationFrame(() => band.classList.remove('vorher')));
         b.disconnect();
       },
-      { threshold: 0.25 },
+      { threshold: 0.2 },
     );
-    b.observe(schritte);
+    b.observe(ziel);
   }
 </script>

@@ -119,23 +119,30 @@ export const garantieB = {
      von dort auf der Seite */
   titelVorn: 'Andere versprechen Bewerbungen. ',
   titelHinten: 'Wir unterschreiben sie.',
-  zusage: '{{X}} vorqualifizierte Bewerbungen in {{60}} Tagen nach Kampagnenstart. Schriftlich, im Vertrag.',
+  /* Warum wir das können — der Satz, der die Garantie glaubwürdig macht */
+  warum: 'Das können wir, weil wir vorher prüfen: Wir nehmen nur Stellen an, die wir für machbar halten. Bei allen anderen sagen wir es Ihnen im Erstgespräch.',
+  /* Die Klausel in zwei Hälften: was zugesagt ist, und was sonst passiert.
+     Zweite Fassung (04.10.2026): vorher stand die Zusage klein in einem
+     Kasten und die Folge versteckt im dritten Schritt. */
+  klausel: {
+    zusageLabel: 'Wir garantieren',
+    zusage: '{{X}} vorqualifizierte Bewerbungen',
+    zusageZusatz: 'in {{60}} Tagen nach Kampagnenstart',
+    sonst: 'sonst',
+    folgeLabel: 'Bleiben sie aus',
+    folge: 'arbeiten wir ohne Honorar weiter',
+    folgeZusatz: 'bis die Bewerbungen da sind',
+  },
+  /* Vergleich, der die Überschrift einlöst. Bewusst „Ohne Garantie" statt
+     „Andere" — es geht um das Prinzip, nicht um benannte Wettbewerber. */
+  vergleich: {
+    ohneTitel: 'Ohne Garantie',
+    ohne: ['„Wir versuchen es."', 'Ob es klappt, sehen Sie hinterher.', 'Das Honorar läuft so oder so.'],
+    mitTitel: 'Mit Bewerbungs-Garantie',
+    mit: ['Vorher geprüft, ob es machbar ist.', 'Schwarz auf weiß im Vertrag.', 'Ohne Ergebnis kein Honorar mehr.'],
+  },
   siegel: 'Schriftliche Bewerbungs-Garantie · Stolz Marketing · ',
   siegelMitte: 'Garantiert',
-  schritte: [
-    {
-      titel: 'Vorher prüfen',
-      text: 'Bevor irgendetwas läuft, schauen wir uns Ihre Stelle an. Halten wir sie nicht für machbar, sagen wir es im Erstgespräch – bevor Sie einen Euro ausgeben.',
-    },
-    {
-      titel: 'Schriftlich festhalten',
-      text: 'Was wir zusagen, steht im Vertrag: wie viele Bewerbungen, in welcher Zeit, unter welchen Bedingungen. Schwarz auf weiß.',
-    },
-    {
-      titel: 'Dafür einstehen',
-      text: 'Kommen die Bewerbungen nicht, arbeiten wir ohne Agenturhonorar weiter, bis sie da sind.',
-    },
-  ],
   ctaZeile: 'Im Erstgespräch sagen wir Ihnen, ob wir Ihre Stelle garantieren können.',
 };
 
