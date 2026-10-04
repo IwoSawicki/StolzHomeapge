@@ -1,5 +1,13 @@
 ---
-/* S1 · Hero der Meistermagnet-Seite v2 (hell).
+/* S1 · Hero der Meistermagnet-Seite v2 (dunkel, mit Foto vom Drehtag).
+
+   Zweite Fassung (Iwo, 04.10.2026): die erste stand hell und glatt auf
+   Weiß, mit dem Handy als einzigem Bild — das wirkte wie eine Software,
+   die man kauft. Jetzt trägt ein echtes Foto vom Drehtag den Hero: ein
+   Monteur bei SAAN Wasserstrahltechnik, roh und ungestellt. Auf dem
+   Handy steht es oben und läuft nach unten ins Dunkle aus, der Text
+   beginnt im Übergang. Ab 1040px steht es rechts randlos, Handy und
+   Karte liegen darüber.
 
    Links: Überschrift mit Garantie, ein Knopf, darunter die Garantie-Zeile
    und die Vertrauenszeile. Rechts ein Handy, das sich selbst durch die
@@ -14,9 +22,11 @@
    Ohne Skript und bei reduzierter Bewegung steht der Endzustand da:
    „Geschafft" auf dem Handy, die Karte daneben.
 
-   Laut Briefing trägt der Hero keine Akzentfläche außer dem Knopf in der
-   Navigation; der Erstgespräch-Knopf ist deshalb dunkel. */
+   Auf dem dunklen Band ist der Erstgespräch-Knopf gelb wie in allen
+   anderen Heros der Seite. */
+import { Image } from 'astro:assets';
 import Header from '../../Header.astro';
+import foto from '../../../assets/projekte-intern/video-dreh-saan-wasserstrahl-1.webp';
 import Eyebrow from '../../Eyebrow.astro';
 import Button from '../../Button.astro';
 import GarantieBadge from './GarantieBadge.astro';
@@ -50,38 +60,57 @@ const schirme = [
 ];
 ---
 
-<section class="relative overflow-hidden bg-paper">
-  <Header variante="hell" />
+<section class="relative isolate overflow-hidden bg-forest-deep">
+  {/* --- Foto vom Drehtag --- */}
+  <div class="absolute inset-x-0 top-0 -z-10 h-[min(74vh,640px)] nav:inset-y-0 nav:left-auto nav:h-auto nav:w-[46%]">
+    <Image
+      src={foto}
+      alt=""
+      widths={[480, 800, 1200]}
+      sizes="(min-width: 1040px) 46vw, 100vw"
+      quality={70}
+      loading="eager"
+      fetchpriority="high"
+      class="h-full w-full object-cover"
+      style="object-position: 58% 30%"
+    />
+    <div class="hero-schleier absolute inset-0"></div>
+    <span class="absolute right-16 bottom-[42%] hidden rounded-full bg-forest-deep/70 px-12 py-6 text-12 text-cream backdrop-blur-sm btn:block nav:right-24 nav:bottom-24">
+      {hero.fotoText}
+    </span>
+  </div>
+
+  <Header />
 
   <div
-    class="mx-auto grid max-w-content grid-cols-1 items-center gap-x-56 gap-y-48 px-page-x pt-[clamp(28px,5vw,64px)] pb-[clamp(48px,7vw,96px)] nav:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]"
+    class="mx-auto grid max-w-content grid-cols-1 items-center gap-x-56 gap-y-48 px-page-x pt-[clamp(150px,44vw,300px)] pb-[clamp(48px,7vw,96px)] nav:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] nav:pt-[clamp(28px,5vw,64px)]"
   >
     {/* --- Text --- */}
     <div class="flex flex-col items-start gap-20">
-      <span class="text-15 font-medium text-ink-muted" hidden data-fuer>
-        {hero.fuer} <span class="font-bold text-ink" data-fuer-name></span>
+      <span class="text-15 font-medium text-mint" hidden data-fuer>
+        {hero.fuer} <span class="font-bold text-paper" data-fuer-name></span>
       </span>
-      <Eyebrow variante="hell">{hero.eyebrow}</Eyebrow>
-      <h1 class="m-0 text-h1-sub leading-hero font-bold tracking-system text-ink">
+      <Eyebrow variante="lime">{hero.eyebrow}</Eyebrow>
+      <h1 class="m-0 text-h1-sub leading-hero font-bold tracking-system text-paper">
         <span class="block" data-h1="0">{heroTitel.a[0]}</span>
         <span class="block" data-h1="1">{heroTitel.a[1]}</span>
       </h1>
-      <p class="m-0 max-w-560 text-18 leading-prose text-ink-quiet">{hero.lead}</p>
+      <p class="m-0 max-w-560 text-18 leading-prose text-mint-light">{hero.lead}</p>
 
       <div class="mt-4 flex flex-col items-start gap-14">
-        <Button href="#erstgespraech" variante="tinte">
+        <Button href="#erstgespraech" variante="lime">
           {CTA}<span class="text-18" aria-hidden="true">→</span>
         </Button>
-        <GarantieBadge />
-        <a href="#bekommen" class="text-15 font-medium text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-lime-link-hover">
+        <GarantieBadge variante="dunkel" />
+        <a href="#bekommen" class="text-15 font-medium text-cream underline decoration-1 underline-offset-4 transition-colors hover:text-lime">
           {hero.zweiterLink} ↓
         </a>
       </div>
 
       {/* Vertrauenszeile */}
-      <div class="mt-8 flex flex-wrap items-center gap-x-24 gap-y-8 border-t border-line pt-18 text-14 text-ink-muted">
-        <a href={kontakt.googleProfil} target="_blank" rel="noopener" class="flex items-center gap-8 text-ink-muted no-underline transition-colors hover:text-ink">
-          <span class="font-medium text-ink">Google</span>
+      <div class="mt-8 flex flex-wrap items-center gap-x-24 gap-y-8 border-t border-edge pt-18 text-14 text-mint">
+        <a href={kontakt.googleProfil} target="_blank" rel="noopener" class="flex flex-wrap items-center gap-8 text-mint no-underline transition-colors hover:text-cream">
+          <span class="font-medium text-paper">Google</span>
           <span class="tracking-[2px] text-star-alt" aria-label="5 von 5 Sternen">★★★★★</span>
           {hero.vertrauen[0]}
         </a>
@@ -90,15 +119,16 @@ const schirme = [
       </div>
     </div>
 
-    {/* --- Handy mit Vorführung --- */}
-    <div class="relative flex flex-col items-center nav:items-end" data-vorfuehrung>
+    {/* --- Handy mit Vorführung — ab 1040px links in der Spalte, damit der
+        Monteur auf dem Foto rechts daneben frei bleibt --- */}
+    <div class="relative flex flex-col items-center nav:items-start" data-vorfuehrung>
       <a
         href="/bewerbungs-simulator"
         class="relative block w-[min(290px,78vw)] no-underline"
         aria-label={`${hero.selbstProbieren}: Bewerbungs-Simulator`}
         data-simulator-link
       >
-        <div class="relative h-480 overflow-hidden rounded-[2.5rem] btn:h-520 border-8 border-forest-black bg-paper shadow-card-light ring-1 ring-line" aria-hidden="true">
+        <div class="relative h-430 overflow-hidden rounded-[2.5rem] btn:h-520 border-8 border-forest-black bg-paper shadow-card ring-1 ring-edge" aria-hidden="true">
           {/* Statuszeile und Fortschritt */}
           <div class="flex items-center justify-between px-22 pt-12 text-11 font-bold text-ink">
             <span>9:41</span>
@@ -145,14 +175,14 @@ const schirme = [
           </div>
         </div>
       </a>
-      <a href="/bewerbungs-simulator" class="mt-14 text-14 font-medium text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-lime-link-hover nav:mr-56" data-simulator-link>
+      <a href="/bewerbungs-simulator" class="mt-14 text-14 font-medium text-cream underline decoration-1 underline-offset-4 transition-colors hover:text-lime nav:ml-[196px]" data-simulator-link>
         {hero.selbstProbieren} →
       </a>
 
       {/* Kandidaten-Karte: kommt aus dem Handy */}
-      <div class="hero-karte relative z-10 mt-28 w-[min(340px,100%)] nav:absolute nav:bottom-40 nav:-left-16 nav:mt-0 nav:w-[280px]" data-zustand="da" data-hero-karte>
+      <div class="hero-karte relative z-10 mt-28 w-[min(340px,100%)] nav:absolute nav:bottom-8 nav:-left-80 nav:mt-0 nav:w-[264px]" data-zustand="da" data-hero-karte>
         {/* Etikett sitzt auf der Kante der Karte */}
-        <span class="absolute -top-12 left-16 z-10 rounded-full bg-forest px-12 py-5 font-mono text-11 tracking-eyebrow text-paper uppercase">{hero.kartenLabel}</span>
+        <span class="absolute -top-12 left-16 z-10 rounded-full bg-lime px-12 py-5 font-mono text-11 tracking-eyebrow text-forest-deep uppercase">{hero.kartenLabel}</span>
         <KandidatKarte beruf={standard.beruf} class="pt-28" />
       </div>
     </div>
@@ -160,6 +190,24 @@ const schirme = [
 </section>
 
 <style>
+  /* Schleier über dem Foto: auf dem Handy oben das Motiv, darunter dunkel
+     für den Text; ab 1040px von links nach rechts, oben für die Navigation */
+  .hero-schleier {
+    background: linear-gradient(
+      to bottom,
+      rgb(12 27 16 / 0.55) 0%,
+      rgb(12 27 16 / 0.15) 22%,
+      rgb(12 27 16 / 0.7) 52%,
+      var(--color-forest-deep) 78%
+    );
+  }
+  @media (min-width: 1040px) {
+    .hero-schleier {
+      background:
+        linear-gradient(to bottom, rgb(12 27 16 / 0.85) 0%, rgb(12 27 16 / 0) 22%),
+        linear-gradient(to right, var(--color-forest-deep) 0%, rgb(12 27 16 / 0.6) 30%, rgb(12 27 16 / 0) 62%);
+    }
+  }
   .hero-schirm {
     transition:
       transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),

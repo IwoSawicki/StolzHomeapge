@@ -31,12 +31,14 @@ export const heroTitel = {
 export type HeroVariante = keyof typeof heroTitel;
 
 export const hero = {
-  eyebrow: 'Mitarbeitergewinnung fürs Handwerk',
+  eyebrow: 'Personal fürs Handwerk',
   fuer: 'Für',
   lead: 'Wir zeigen Ihren Betrieb, wie er wirklich ist, und bringen ihn zu den Handwerkern im Umkreis, die einen Job haben – aber wechseln würden. Sie führen nur noch die Gespräche.',
   zweiterLink: 'So funktioniert es',
   vertrauen: ['5,0 Sterne aus 20 Bewertungen', 'Über 50 Projekte seit 2022', REGION],
   kartenLabel: 'So kommt es bei Ihnen an',
+  /* Bildunterschrift zum Foto im Hero */
+  fotoText: 'Drehtag bei SAAN Wasserstrahltechnik',
   selbstProbieren: 'Selbst ausprobieren',
 };
 

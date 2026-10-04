@@ -1574,3 +1574,12 @@ Vergleich nimmt optional eigene Zeilen an (für die Zeile „Absicherung").
 
 Offene Werte, Abweichungen vom Briefing und Nebenbefunde:
 `docs/TODO-IWO.md`.
+
+**Meistermagnet v2, Hero zweite Fassung (04.10.2026, nur dev):** Die
+erste Fassung stand hell auf Weiß mit dem Handy als einzigem Bild und
+wirkte laut Iwo „wie eine Software, die man kauft". Jetzt dunkles Band
+mit einem echten Foto vom Drehtag bei SAAN Wasserstrahltechnik: auf dem
+Handy oben, nach unten ins Dunkle auslaufend, ab 1040px rechts randlos.
+Handy-Vorführung und Kandidaten-Karte liegen darüber, der Monteur bleibt
+daneben frei. Der Erstgespräch-Knopf ist auf dem dunklen Band gelb wie in
+den übrigen Heros. Eyebrow kürzer: „Personal fürs Handwerk".
