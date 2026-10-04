@@ -171,7 +171,12 @@ const schirme = [
             </div>
 
             {/* Tipp-Kreis */}
-            <span class="hero-tipp pointer-events-none absolute top-0 left-0 h-40 w-40 rounded-full bg-forest/15 ring-2 ring-forest/60" data-tipp></span>
+            {/* Außen die Position, innen das Eindrücken — zusammen auf einem
+                Element hat das Verkleinern den Verschiebeweg mitgeschrumpft,
+                und der Kreis sprang bei jedem Tipp nach oben links */}
+            <span class="hero-tipp pointer-events-none absolute top-0 left-0 h-40 w-40" data-tipp>
+              <span class="hero-tipp-kreis block h-full w-full rounded-full bg-forest/15 ring-2 ring-forest/60"></span>
+            </span>
           </div>
         </div>
       </a>
@@ -233,22 +238,20 @@ const schirme = [
   }
   .hero-tipp {
     opacity: 0;
-    transition:
-      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.25s ease-out;
+    transition: opacity 0.25s ease-out;
   }
-  .hero-tipp.tippt {
+  .hero-tipp.tippt .hero-tipp-kreis {
     animation: hero-tippen 0.45s ease-out;
   }
   @keyframes hero-tippen {
     0% {
-      scale: 1;
+      transform: scale(1);
     }
     40% {
-      scale: 0.72;
+      transform: scale(0.72);
     }
     100% {
-      scale: 1;
+      transform: scale(1);
     }
   }
   .hero-karte {
@@ -345,9 +348,11 @@ const schirme = [
     const tippeAuf = async (ziel: HTMLElement) => {
       const b = buehne.getBoundingClientRect();
       const r = ziel.getBoundingClientRect();
+      /* Der Kreis erscheint dort, wo getippt wird — kein Flug quer übers
+         Display, er ist zwischen zwei Bildschirmen ohnehin ausgeblendet */
       tipp.style.transform = `translate(${r.right - b.left - 52}px, ${r.top - b.top + r.height / 2 - 20}px)`;
       tipp.style.opacity = '1';
-      await warte(550);
+      await warte(450);
       tipp.classList.remove('tippt');
       void tipp.offsetWidth;
       tipp.classList.add('tippt');
