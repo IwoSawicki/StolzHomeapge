@@ -117,6 +117,34 @@ export const garantie = {
   ctaZeile: 'Inklusive Einschätzung, ob wir Ihre Stelle garantieren können.',
 };
 
+/* Entwurf B der Garantie (04.10.2026): die Zusage als Versprechen statt
+   als Dokument — gelbes Band, Siegel, große Überschrift, drei Schritte.
+   Auf dev mit ?garantie=b. Werte wie in Entwurf A als Platzhalter. */
+export const garantieB = {
+  eyebrow: 'Die Bewerbungs-Garantie',
+  titelVorn: 'Passende Bewerbungen. ',
+  titelHinten: 'Oder wir arbeiten weiter – ohne Honorar.',
+  zusage: '{{X}} vorqualifizierte Bewerbungen in {{60}} Tagen nach Kampagnenstart. Schriftlich, im Vertrag.',
+  siegel: 'Schriftliche Bewerbungs-Garantie · Stolz Marketing · ',
+  siegelMitte: 'Garantiert',
+  schritte: [
+    {
+      titel: 'Vorher prüfen',
+      text: 'Bevor irgendetwas läuft, schauen wir uns Ihre Stelle an. Halten wir sie nicht für machbar, sagen wir es im Erstgespräch – bevor Sie einen Euro ausgeben.',
+    },
+    {
+      titel: 'Schriftlich festhalten',
+      text: 'Was wir zusagen, steht im Vertrag: wie viele Bewerbungen, in welcher Zeit, unter welchen Bedingungen. Kein „Wir versuchen es".',
+    },
+    {
+      titel: 'Dafür einstehen',
+      text: 'Kommen die Bewerbungen nicht, arbeiten wir ohne Agenturhonorar weiter, bis sie da sind.',
+    },
+  ],
+  bedingungenKnopf: 'Bedingungen ansehen',
+  ctaZeile: 'Im Erstgespräch sagen wir Ihnen, ob wir Ihre Stelle garantieren können.',
+};
+
 /* --- S5 · Ihr Aufwand -------------------------------------------------------- */
 
 export const aufwand = {

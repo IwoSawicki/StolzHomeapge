@@ -36,6 +36,7 @@ import FaqLeistung from '../components/sections/leistung/FaqLeistung.astro';
 import HeroV2 from '../components/sections/mitarbeiter-v2/HeroV2.astro';
 import Bekommen from '../components/sections/mitarbeiter-v2/Bekommen.astro';
 import Garantie from '../components/sections/mitarbeiter-v2/Garantie.astro';
+import GarantieB from '../components/sections/mitarbeiter-v2/GarantieB.astro';
 import Aufwand from '../components/sections/mitarbeiter-v2/Aufwand.astro';
 import GewerkWahl from '../components/sections/mitarbeiter-v2/GewerkWahl.astro';
 import Wechselgruende from '../components/sections/mitarbeiter-v2/Wechselgruende.astro';
@@ -71,7 +72,10 @@ const wege = vergleichWege.map((w, i) => ({ ...w, werte: [...w.werte, vergleichA
     </div>
 
     <Bekommen />
-    <Garantie />
+    {/* Zwei Entwürfe der Garantie zum Vergleichen: A (Dokument) ohne
+        Angabe, B (Versprechen auf gelbem Band) mit ?garantie=b */}
+    <div data-garantie-variante="a"><Garantie /></div>
+    <div data-garantie-variante="b" hidden><GarantieB /></div>
     <Aufwand />
     <GewerkWahl />
     <Wechselgruende />
@@ -85,5 +89,12 @@ const wege = vergleichWege.map((w, i) => ({ ...w, werte: [...w.werte, vergleichA
   </main>
 
   <HandyLeiste />
+  <script>
+    if (new URLSearchParams(window.location.search).get('garantie') === 'b') {
+      document.querySelectorAll<HTMLElement>('[data-garantie-variante]').forEach((el) => {
+        el.hidden = el.dataset.garantieVariante !== 'b';
+      });
+    }
+  </script>
   <Footer />
 </BaseLayout>

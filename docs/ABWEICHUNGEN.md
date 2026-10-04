@@ -1583,3 +1583,11 @@ Handy oben, nach unten ins Dunkle auslaufend, ab 1040px rechts randlos.
 Handy-Vorführung und Kandidaten-Karte liegen darüber, der Monteur bleibt
 daneben frei. Der Erstgespräch-Knopf ist auf dem dunklen Band gelb wie in
 den übrigen Heros. Eyebrow kürzer: „Personal fürs Handwerk".
+
+**Meistermagnet v2, Garantie Entwurf B (04.10.2026, nur dev):** Iwo fand
+die Garantie als Dokument zu schwach. Entwurf B zeigt sie als
+Versprechen: gelbes Band, ein Siegel mit langsam drehendem Schriftring,
+die Zusage als große Überschrift („Passende Bewerbungen. Oder wir
+arbeiten weiter – ohne Honorar."), darunter der konkrete Wert und drei
+Schritte (vorher prüfen, schriftlich festhalten, dafür einstehen).
+Umschaltbar mit `?garantie=b`; ohne Angabe bleibt Entwurf A.
