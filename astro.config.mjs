@@ -35,7 +35,9 @@ export default defineConfig({
         !seite.includes('/social-media-marketing') &&
         /* Entwurf Meistermagnet v2 und interner Link-Generator */
         !seite.includes('/mitarbeiter-gewinnen-v2') &&
-        !seite.includes('/intern/'),
+        !seite.includes('/intern/') &&
+        /* Videomappen für einzelne Interessenten, per Link verschickt */
+        !seite.includes('/videos/'),
     }),
   ],
   vite: {
