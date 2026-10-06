@@ -37,8 +37,8 @@ export default defineConfig({
         !seite.includes('/mitarbeiter-gewinnen-v2') &&
         !seite.includes('/intern/') &&
         /* Persönliche Mappen für einzelne Interessenten, per Link
-           verschickt (/fuer/<name>) */
-        !seite.includes('/fuer/'),
+           verschickt (/einblick/<name>) */
+        !seite.includes('/einblick/'),
     }),
   ],
   vite: {
