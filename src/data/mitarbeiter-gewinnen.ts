@@ -274,13 +274,14 @@ export const abschluss = {
 };
 
 /* --- Bewerber-Cockpit ---------------------------------------------------
-   ENTWURF (03.10.2026, nur dev). Iwo will damit werben, dass wir eine
-   eigene Software für den Bewerberprozess haben, und sie in den
-   kommenden Monaten als Kunden-Dashboard bauen — zuerst für den
+   Live seit 06.10.2026 (Iwo, für ein Meeting). Iwo will damit werben,
+   dass wir eine eigene Software für den Bewerberprozess haben, und sie in
+   den kommenden Monaten als Kunden-Dashboard bauen — zuerst für den
    Meistermagneten, später auch für Leads aus Google Ads und SEO.
-   ACHTUNG vor dem Live-Gang: Die Texte sagen „unsere eigene Software".
-   Live erst, wenn es sie gibt — sonst wäre das Werbung mit etwas, das
-   noch nicht existiert.
+   ACHTUNG: Die Texte sagen „unser eigenes Bewerber-Cockpit". Solange es
+   die Software noch nicht für Kunden gibt, ist das Werbung mit etwas, das
+   noch nicht existiert — Iwo ist darauf hingewiesen; Texte anpassen oder
+   die Sektion wieder herausnehmen, falls die Software nicht kommt.
 
    Alle Bewerber sind ausgedacht (Vorname, Initial) und als
    Beispieldaten gekennzeichnet. */
