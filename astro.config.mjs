@@ -20,7 +20,10 @@ export default defineConfig({
     // hinter dem QR-Code auf dem Flyer und trägt ebenfalls noindex.
     sitemap({
       filter: (seite) =>
-        !seite.includes('/alle-projekte') && !seite.includes('/korbaktion'),
+        !seite.includes('/alle-projekte') &&
+        !seite.includes('/korbaktion') &&
+        /* Videomappen für einzelne Interessenten, per Link verschickt */
+        !seite.includes('/videos/'),
     }),
   ],
   vite: {
