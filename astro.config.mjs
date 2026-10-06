@@ -23,8 +23,8 @@ export default defineConfig({
         !seite.includes('/alle-projekte') &&
         !seite.includes('/korbaktion') &&
         /* Persönliche Mappen für einzelne Interessenten, per Link
-           verschickt (/fuer/<name>) */
-        !seite.includes('/fuer/'),
+           verschickt (/einblick/<name>) */
+        !seite.includes('/einblick/'),
     }),
   ],
   vite: {

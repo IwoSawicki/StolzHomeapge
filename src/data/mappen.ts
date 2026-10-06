@@ -1,4 +1,4 @@
-/* Persönliche Mappen — Seiten unter /fuer/<name>, die Iwo einem
+/* Persönliche Mappen — Seiten unter /einblick/<name>, die Iwo einem
    möglichen Kunden schickt: Videos und Webseiten aus unserer Arbeit,
    passend zu dieser einen Firma ausgewählt.
 
@@ -40,7 +40,7 @@ export interface MappenWebseite {
 }
 
 export interface Mappe {
-  /** Adresse: /videos/<slug> */
+  /** Adresse: /einblick/<slug> */
   slug: string;
   /** Für den Seitentitel im Browser-Tab */
   fuer: string;
