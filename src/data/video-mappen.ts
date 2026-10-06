@@ -33,6 +33,21 @@ export interface VideoMappe {
   videos: MappenVideo[];
 }
 
+/** Überschriften über den Videogruppen, Reihenfolge = Reihenfolge auf
+    der Seite */
+export const mappenGruppen: { art: MappenVideo['art']; titel: string }[] = [
+  { art: 'Recruiting', titel: 'Recruiting' },
+  { art: 'Kundengewinnung', titel: 'Kundengewinnung' },
+];
+
+/** Kontaktblock am Ende jeder Mappe */
+export const mappenKontakt = {
+  eyebrow: 'Ihr Ansprechpartner',
+  titel: 'Fragen zu den Videos? Rufen Sie mich einfach an.',
+  name: 'Iwo Sawicki',
+  rolle: 'Inhaber Stolz Marketing',
+};
+
 export const videoMappen: VideoMappe[] = [
   {
     /* Für Lulay (06.10.2026). Iwo schickt den Link per Mail. Erst die

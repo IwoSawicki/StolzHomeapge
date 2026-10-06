@@ -5,8 +5,13 @@
    zum Durchklicken. Texte und Videos je Mappe in src/data/video-mappen.ts.
    noindex, nicht in der Sitemap, nirgends verlinkt (wie /alle-projekte).
 
-   Aufbau: dunkles Band mit Überschrift und den Videos als Hochkant-Karten,
-   darunter Iwo als Ansprechpartner, dann der Footer (Impressum).
+   Aufbau (Wunsch Iwo, 06.10.2026):
+     1. dunkles Band mit Überschrift und den Videos, getrennt nach
+        Recruiting und Kundengewinnung
+     2. „Unsere Leistungen" wie auf der Startseite
+     3. Hinweis auf den Bewerbungs-Simulator
+     4. Iwo als Ansprechpartner, groß
+     5. Footer (Impressum)
 
    Verhalten
    - Karte: Standbild, Play-Kreis, Marke. Auf dem Desktop läuft beim
@@ -20,8 +25,11 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import portraitIwo from '../../assets/portraits/iwo-sawicki.jpg';
-import { videoMappen } from '../../data/video-mappen';
+import Leistungen from '../../components/sections/Leistungen.astro';
+import { videoMappen, mappenGruppen, mappenKontakt as k } from '../../data/video-mappen';
 import { kontakt } from '../../data/navigation';
+import { hero as simulator } from '../../data/bewerbungs-simulator';
+import { vorauswahl } from '../../data/mitarbeiter-gewinnen';
 
 export function getStaticPaths() {
   return videoMappen.map((mappe) => ({ params: { slug: mappe.slug }, props: { mappe } }));
@@ -51,6 +59,12 @@ const videos = await Promise.all(
   }),
 );
 
+/* Gruppen für die Anzeige. Die Nummer jedes Videos bleibt die aus der
+   Gesamtliste, damit die Großansicht über alle Gruppen weiterblättert. */
+const gruppen = mappenGruppen
+  .map((g) => ({ ...g, videos: videos.map((v, i) => ({ ...v, i })).filter((v) => v.art === g.art) }))
+  .filter((g) => g.videos.length > 0);
+
 const blaettern =
   'flex h-44 w-44 cursor-pointer items-center justify-center rounded-full border border-lime-edge bg-transparent text-18 text-paper transition-colors hover:border-lime hover:bg-forest-card';
 ---
@@ -74,78 +88,117 @@ const blaettern =
         </h1>
         <p class="m-0 mt-22 max-w-600 text-18 leading-body text-mint-light">{mappe.lead}</p>
 
-        {/* --- Videokarten --- */}
-        <ul class="m-0 mt-[clamp(40px,5vw,64px)] flex w-full list-none flex-wrap items-start justify-center gap-16 p-0 btn:gap-24">
-          {
-            videos.map((video, i) => (
-              <li class="max-w-220 shrink-0 grow-0 basis-[calc(50%-8px)] btn:basis-170 nav:basis-[calc((100%-96px)/5)] nav:even:mt-48">
-                <button
-                  type="button"
-                  class="group flex w-full cursor-pointer flex-col gap-14 border-0 bg-transparent p-0 text-left"
-                  data-mappe-oeffnen={i}
-                  aria-label={`Video ${video.kunde} ansehen`}
-                >
-                  <span class="relative block aspect-[9/16] w-full overflow-hidden rounded-20 bg-forest-black ring-1 ring-edge transition-[box-shadow,translate] duration-300 group-hover:-translate-y-4 group-hover:shadow-ring-lime">
-                    <video
-                      class="absolute inset-0 h-full w-full object-cover"
-                      src={video.src}
-                      poster={video.poster}
-                      muted
-                      loop
-                      playsinline
-                      preload="none"
-                      aria-hidden="true"
-                      tabindex="-1"
-                      data-vorschau
-                    ></video>
-                    {/* Verlauf unten, damit die Marke lesbar bleibt */}
-                    <span class="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-forest-black/80 to-transparent" aria-hidden="true"></span>
-                    <span class="absolute top-12 left-12 rounded-full bg-forest-black/70 px-10 py-5 text-12 font-medium text-paper backdrop-blur-sm">
-                      {video.art}
-                    </span>
-                    <span
-                      class="absolute top-1/2 left-1/2 flex h-56 w-56 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-lime text-forest-deep shadow-glow-play transition-[scale,opacity] duration-300 group-hover:scale-110"
-                      aria-hidden="true"
+        {/* --- Videokarten, nach Art gruppiert --- */}
+        {
+          gruppen.map((gruppe) => (
+            <div class="mt-[clamp(40px,5vw,64px)] flex w-full flex-col items-center gap-24">
+              <h2 class="m-0 flex w-full items-center gap-16 font-mono text-13 font-medium tracking-eyebrow uppercase text-mint">
+                <span class="h-1 flex-1 bg-edge" aria-hidden="true"></span>
+                {gruppe.titel}
+                <span class="h-1 flex-1 bg-edge" aria-hidden="true"></span>
+              </h2>
+              <ul class="m-0 flex w-full list-none flex-wrap items-start justify-center gap-16 p-0 btn:gap-32">
+                {gruppe.videos.map((video) => (
+                  <li class="max-w-300 shrink-0 grow-0 basis-[calc(50%-8px)] btn:basis-[calc((100%-64px)/3)]">
+                    <button
+                      type="button"
+                      class="group flex w-full cursor-pointer flex-col gap-16 border-0 bg-transparent p-0 text-left"
+                      data-mappe-oeffnen={video.i}
+                      aria-label={`Video ${video.kunde} ansehen`}
                     >
-                      <svg class="ml-3 h-20 w-20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z" /></svg>
-                    </span>
-                  </span>
-                  <span class="flex flex-col gap-4">
-                    <span class="text-16 leading-card font-bold text-paper">{video.kunde}</span>
-                    <span class="text-14 leading-tight-body text-mint">{video.text}</span>
-                  </span>
-                </button>
-              </li>
-            ))
-          }
-        </ul>
+                      <span class="relative block aspect-[9/16] w-full overflow-hidden rounded-20 bg-forest-black ring-1 ring-edge transition-[box-shadow,translate] duration-300 group-hover:-translate-y-4 group-hover:shadow-ring-lime">
+                        <video
+                          class="absolute inset-0 h-full w-full object-cover"
+                          src={video.src}
+                          poster={video.poster}
+                          muted
+                          loop
+                          playsinline
+                          preload="none"
+                          aria-hidden="true"
+                          tabindex="-1"
+                          data-vorschau
+                        ></video>
+                        <span
+                          class="absolute top-1/2 left-1/2 flex h-56 w-56 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-lime text-forest-deep shadow-glow-play transition-[scale,opacity] duration-300 group-hover:scale-110 btn:h-72 btn:w-72"
+                          aria-hidden="true"
+                        >
+                          <svg class="ml-3 h-20 w-20 btn:h-26 btn:w-26" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z" /></svg>
+                        </span>
+                      </span>
+                      <span class="flex flex-col gap-6">
+                        <span class="text-16 leading-card font-bold text-paper btn:text-19">{video.kunde}</span>
+                        <span class="text-14 leading-tight-body text-mint btn:text-16">{video.text}</span>
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- Leistungen, dieselbe Sektion wie auf der Startseite --- */}
+    <Leistungen />
+
+    {/* --- Bewerbungs-Simulator --- */}
+    <section class="bg-paper px-page-x pb-section-y">
+      <div class="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-48 gap-y-28 rounded-24 bg-forest px-20 py-panel btn:p-panel">
+        <div class="flex flex-1 basis-[min(460px,100%)] flex-col items-start gap-18">
+          <Eyebrow variante="lime">{simulator.eyebrow}</Eyebrow>
+          <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
+            {simulator.titelVorn}<span class="font-display font-semibold tracking-none text-lime italic">{simulator.titelKursiv}</span>{simulator.titelHinten}
+          </h2>
+          <p class="m-0 text-17 leading-body text-mint-light">{simulator.lead}</p>
+        </div>
+        <div class="flex flex-col items-start gap-24">
+          <ul class="m-0 flex list-none flex-col gap-12 p-0">
+            {
+              simulator.punkte.map((punkt) => (
+                <li class="flex items-center gap-12 text-16 text-paper">
+                  <span class="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-lime text-13 font-bold text-forest-deep" aria-hidden="true">✓</span>
+                  {punkt}
+                </li>
+              ))
+            }
+          </ul>
+          <a
+            href="/bewerbungs-simulator"
+            class="inline-flex h-56 items-center gap-8 rounded-full bg-lime px-20 text-15 font-bold whitespace-nowrap text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright btn:px-28 btn:text-16"
+          >
+            {vorauswahl.simulatorKnopf}<span class="hidden text-18 hero:inline" aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     </section>
 
     {/* --- Ansprechpartner --- */}
-    <section class="bg-paper px-page-x py-section-y-sm">
-      <div class="mx-auto flex max-w-760 flex-wrap items-center justify-center gap-x-32 gap-y-20 text-center btn:flex-nowrap btn:text-left">
+    <section class="bg-paper-soft px-page-x py-section-y-md">
+      <div class="mx-auto flex max-w-1000 flex-wrap items-center justify-center gap-x-[clamp(32px,6vw,80px)] gap-y-32 text-center btn:flex-nowrap btn:text-left">
         <Image
           src={portraitIwo}
-          alt="Iwo Sawicki"
-          width={240}
-          class="h-112 w-112 shrink-0 rounded-full object-cover object-top ring-1 ring-line"
+          alt={k.name}
+          width={640}
+          class="aspect-[4/5] w-[min(300px,100%)] shrink-0 rounded-24 object-cover object-top shadow-card-light"
         />
-        <div class="flex flex-col items-center gap-12 btn:items-start">
-          <p class="m-0 text-22 leading-card font-bold tracking-heading text-ink">
-            Fragen zu den Videos? Rufen Sie mich einfach an.
+        <div class="flex flex-col items-center gap-18 btn:items-start">
+          <Eyebrow variante="hell">{k.eyebrow}</Eyebrow>
+          <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">{k.titel}</h2>
+          <p class="m-0 text-18 text-ink-muted">
+            <span class="font-bold text-ink">{k.name}</span>, {k.rolle}
           </p>
-          <p class="m-0 text-15 text-ink-muted">Iwo Sawicki, Inhaber Stolz Marketing</p>
-          <div class="mt-4 flex flex-wrap justify-center gap-10 btn:justify-start">
+          <div class="mt-8 flex flex-wrap justify-center gap-12 btn:justify-start">
             <a
               href={kontakt.telefonLink}
-              class="inline-flex h-48 items-center rounded-full bg-lime px-22 text-15 font-bold text-forest-deep no-underline transition-colors hover:bg-lime-bright"
+              class="inline-flex h-56 items-center rounded-full bg-lime px-28 text-17 font-bold text-forest-deep no-underline shadow-glow transition-colors hover:bg-lime-bright"
             >
               {kontakt.telefonAnzeige}
             </a>
             <a
               href={`mailto:${kontakt.email}`}
-              class="inline-flex h-48 items-center rounded-full px-22 text-15 font-bold text-ink no-underline ring-1 ring-line-strong transition-colors hover:bg-paper-hover"
+              class="inline-flex h-56 items-center rounded-full bg-paper px-28 text-17 font-bold text-ink no-underline ring-1 ring-line-strong transition-colors hover:bg-paper-hover"
             >
               {kontakt.email}
             </a>
