@@ -140,7 +140,17 @@ Dockerfile              # Dokploy: Build Type „Dockerfile", Port 80
 ```
 
 ## Deployment
-- Dokploy baut über das `Dockerfile` (Node-Build → nginx, Port 80)
+- Dokploy soll über das `Dockerfile` bauen (Node-Build → nginx, Port 80).
+  **Stand 06.10.2026: tut es nicht.** Live läuft stattdessen das
+  `start`-Skript aus `package.json` (`astro preview`, Port 3000), weil
+  der Build Type in Dokploy auf automatischer Erkennung steht. Folge:
+  `deploy/nginx.conf` wirkt nicht — keine 301-Weiterleitungen, kein
+  Langzeit-Caching für `/_astro/`, kein `noindex` für die
+  Redesign-Domain. Umstellung in Dokploy: Build Type „Dockerfile",
+  Domain auf Container-Port 80, `PUBLIC_PAGESPEED_KEY` als
+  Umgebungsvariable stehen lassen. Erst die dev-App, dann main.
+  Prüfen: `curl -I https://dev.stolz-marketing.de/archiv` muss `301`
+  mit `location: /projekte` liefern.
 - `main` = Produktion (stolz-marketing.de)
 - `dev` = Staging (dev.stolz-marketing.de)
 - `alter-auftritt` = Archiv des bisherigen Auftritts, wird nicht deployed
