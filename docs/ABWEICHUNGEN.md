@@ -1426,3 +1426,22 @@ und Schatten da, darüber „Ansicht wählen". Noch nicht angesehene Reiter
 tragen einen Punkt mit pulsierendem Lichthof, der nach dem ersten
 Antippen verschwindet (Iwo: auf dem Handy war nicht zu erkennen, dass
 man tippen kann).
+
+---
+
+## Bewerber-Cockpit auf der Meistermagnet-Seite (06.10.2026, live)
+
+Neu, nicht aus der Vorlage; steht direkt nach „Vorauswahl". Interaktive
+Demo einer eigenen Software für den Bewerberprozess: App-Fenster mit vier
+Kennzahlen und einem Kanban-Board (Neu → Kontaktiert → Gespräch →
+Probearbeit → Eingestellt). Bewerber lassen sich mit der Maus zwischen
+den Spalten ziehen; ein Klick (Handy: Tippen, Tastatur: Enter) öffnet die
+Antworten aus dem Formular mit „Weiter" und „Zurück". Sobald das Cockpit
+zu sehen ist, kommen zwei Bewerbungen herein, eine davon wird automatisch
+abgesagt; die Kennzahlen zählen mit. Alle Bewerber sind ausgedacht und
+als „Demo mit Beispieldaten" gekennzeichnet.
+
+Live auf Wunsch von Iwo für ein Meeting. **Hinweis:** Die Texte sprechen
+von „unserem eigenen Bewerber-Cockpit". Iwo baut die Software in den
+kommenden Monaten; bis Kunden sie nutzen können, wirbt die Seite mit
+etwas, das es noch nicht gibt. Darauf ist Iwo hingewiesen.

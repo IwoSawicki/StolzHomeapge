@@ -1,0 +1,582 @@
+---
+/* „Eigene Software": interaktive Demo des Bewerber-Cockpits.
+
+   Idee Iwo (03.10.2026), angelehnt an ein Dashboard aus Pinterest; live
+   seit 06.10.2026. Iwo will die Software in den kommenden Monaten wirklich
+   bauen — siehe Hinweis in src/data/mitarbeiter-gewinnen.ts.
+
+   Aufbau: oben Text, darunter ein App-Fenster mit Kopfzeile, vier
+   Kennzahlen und einem Kanban-Board in fünf Spalten (Neu → Eingestellt).
+
+   Bedienung:
+   - Maus: Karte in eine andere Spalte ziehen. Klick öffnet die Details.
+   - Touch und Tastatur: Karte antippen bzw. Enter — die Detailansicht
+     hat „Weiter" und „Zurück". Ziehen per Finger gibt es bewusst nicht,
+     es käme dem seitlichen Wischen durchs Board in die Quere.
+   - Sobald das Cockpit zu sehen ist, kommen zwei Bewerbungen herein:
+     eine passende landet unter „Neu", eine ohne Führerschein wird
+     automatisch abgesagt. Nicht bei reduzierter Bewegung.
+   - Die Kennzahlen zählen bei jeder Änderung mit.
+
+   Ohne JavaScript steht das Board als ruhiges Bild da. */
+import Eyebrow from '../../Eyebrow.astro';
+import CockpitKarte from './CockpitKarte.astro';
+import {
+  cockpit as c,
+  cockpitSpalten,
+  cockpitBewerber,
+  cockpitNachschub,
+} from '../../../data/mitarbeiter-gewinnen';
+
+const imBoard = cockpitBewerber.filter((b) => !b.absage);
+const abgesagt = cockpitBewerber.filter((b) => b.absage);
+const kachel = 'flex flex-col gap-6 rounded-16 bg-paper-soft p-16 ring-1 ring-line';
+const kachelTitel = 'text-12 font-medium text-ink-muted';
+const kachelZahl = 'kpi-zahl text-28 leading-none font-bold tracking-system text-ink';
+/* Balken der Mini-Grafik „letzte 7 Tage" — rein schmückend */
+const woche = [38, 52, 30, 64, 58, 82, 70];
+---
+
+<section class="bg-paper-soft px-page-x py-section-y-md">
+  <div class="mx-auto flex max-w-content flex-col gap-40">
+    {/* --- Text --- */}
+    <div class="flex flex-wrap items-end gap-x-64 gap-y-24">
+      <div class="flex flex-1 basis-[min(460px,100%)] flex-col items-start gap-20">
+        <Eyebrow variante="hell">{c.eyebrow}</Eyebrow>
+        <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-ink">
+          {c.titelVorn}<span class="font-display font-semibold tracking-none italic">{c.titelKursiv}</span>{c.titelHinten}
+        </h2>
+        <p class="m-0 text-18 leading-prose text-ink-quiet">{c.lead}</p>
+      </div>
+      <ul class="m-0 flex flex-1 basis-[min(360px,100%)] list-none flex-col gap-12 p-0">
+        {
+          c.punkte.map((punkt) => (
+            <li class="flex items-start gap-12 text-17 leading-body text-ink">
+              <span class="mt-2 flex h-22 w-22 flex-none items-center justify-center rounded-full bg-lime text-forest-deep" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="w-12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+              </span>
+              {punkt}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {/* --- App-Fenster --- */}
+    <figure
+      class="relative m-0 overflow-hidden rounded-24 bg-paper shadow-card-light ring-1 ring-line"
+      aria-label={`${c.app} — ${c.demo}`}
+      data-cockpit
+    >
+      {/* Kopfzeile */}
+      <div class="flex flex-wrap items-center gap-x-14 gap-y-10 border-b border-line px-[clamp(14px,2.4vw,24px)] py-14">
+        <span class="flex h-30 w-30 flex-none items-center justify-center rounded-8 bg-forest text-lime" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="w-16" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" /></svg>
+        </span>
+        <span class="flex flex-col">
+          <span class="text-15 font-bold text-ink">{c.app}</span>
+          <span class="text-12 text-ink-muted">{c.stelle}</span>
+        </span>
+        <span class="ml-auto flex items-center gap-10">
+          <span class="rounded-full bg-lime/35 px-10 py-4 font-mono text-11 tracking-eyebrow uppercase text-forest">{c.demo}</span>
+          <span class="hidden items-center gap-8 text-13 font-medium text-ink btn:flex">
+            <span class="flex h-28 w-28 items-center justify-center rounded-full bg-forest text-11 font-bold text-paper" aria-hidden="true">IB</span>
+            {c.betrieb}
+          </span>
+        </span>
+      </div>
+
+      <div class="flex flex-col gap-18 p-[clamp(14px,2.4vw,24px)]">
+        {/* Kennzahlen */}
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(min(150px,100%),1fr))] gap-12">
+          <div class={kachel}>
+            <span class={kachelTitel}>{c.kennzahlen.gesamt}</span>
+            <span class="flex items-end justify-between gap-12">
+              <span class={kachelZahl} data-kpi="gesamt">{cockpitBewerber.length}</span>
+              <span class="flex h-28 items-end gap-3" aria-hidden="true">
+                {woche.map((h) => <span class="w-5 rounded-full bg-forest/70" style={`height:${h}%`}></span>)}
+              </span>
+            </span>
+            <span class="text-11 text-ink-faint">{c.kennzahlen.gesamtZusatz}</span>
+          </div>
+          <div class={kachel}>
+            <span class={kachelTitel}>{c.kennzahlen.passend}</span>
+            <span class={kachelZahl} data-kpi="passend">{imBoard.length}</span>
+            <span class="h-4 overflow-hidden rounded-full bg-line" aria-hidden="true">
+              <span class="block h-full rounded-full bg-lime transition-[width] duration-500" style={`width:${Math.round((imBoard.length / cockpitBewerber.length) * 100)}%`} data-kpi-balken></span>
+            </span>
+          </div>
+          <div class={kachel}>
+            <span class={kachelTitel}>{c.kennzahlen.abgesagt}</span>
+            <span class={kachelZahl} data-kpi="abgesagt">{abgesagt.length}</span>
+            <span class="text-11 text-ink-faint">{c.kennzahlen.abgesagtZusatz}</span>
+          </div>
+          <div class="flex flex-col gap-6 rounded-16 bg-forest p-16">
+            <span class="text-12 font-medium text-mint">{c.kennzahlen.eingestellt}</span>
+            <span class="kpi-zahl text-28 leading-none font-bold tracking-system text-lime" data-kpi="eingestellt">
+              {imBoard.filter((b) => b.spalte === 'eingestellt').length}
+            </span>
+          </div>
+        </div>
+
+        {/* Werkzeugleiste: erst das Skript zeigt sie — ohne Skript gibt es nichts zu bedienen */}
+        <div class="flex flex-wrap items-center justify-between gap-x-16 gap-y-10" hidden data-werkzeug>
+          <span class="flex items-center gap-8 text-13 text-ink-muted">
+            <span class="relative flex h-8 w-8 flex-none" aria-hidden="true">
+              <span class="cockpit-puls absolute inset-0 rounded-full bg-lime"></span>
+              <span class="relative h-8 w-8 rounded-full bg-forest"></span>
+            </span>
+            <span class="pointer-coarse:hidden">{c.hinweisMaus}</span>
+            <span class="hidden pointer-coarse:inline">{c.hinweisTouch}</span>
+          </span>
+          <button
+            type="button"
+            class="cursor-pointer rounded-full border-0 bg-paper-soft px-12 py-6 font-[inherit] text-13 font-medium text-ink ring-1 ring-line transition-colors hover:ring-forest aria-pressed:bg-forest aria-pressed:text-paper aria-pressed:ring-forest"
+            aria-pressed="false"
+            aria-controls="cockpit-absagen"
+            data-absagen-schalter
+          >
+            {c.aussortiert} (<span data-kpi="abgesagt-knopf">{abgesagt.length}</span>)
+          </button>
+        </div>
+
+        {/* Automatisch abgesagte Bewerbungen — eingeklappt */}
+        <ul id="cockpit-absagen" class="m-0 flex list-none flex-wrap gap-8 p-0" hidden data-absagen>
+          {
+            abgesagt.map((b) => (
+              <li class="flex items-center gap-10 rounded-12 bg-paper-soft px-12 py-8 text-13 ring-1 ring-line">
+                <span class="font-medium text-ink-muted line-through">{b.name}</span>
+                <span class="text-ink-faint">{b.absage} · Absage versendet</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        {/* Board: auf dem Handy seitlich wischen, ab 1040px fünf Spalten */}
+        <div class="no-scrollbar -mx-[clamp(14px,2.4vw,24px)] flex snap-x snap-mandatory gap-12 overflow-x-auto px-[clamp(14px,2.4vw,24px)] pb-4 nav:mx-0 nav:grid nav:grid-cols-5 nav:overflow-visible nav:px-0">
+          {
+            cockpitSpalten.map((s) => (
+              <section
+                class="spalte flex w-[min(250px,76vw)] flex-none snap-start flex-col gap-10 rounded-16 bg-paper-soft p-10 ring-1 ring-line transition-[box-shadow] nav:w-auto nav:min-w-0"
+                aria-label={s.titel}
+                data-spalte={s.id}
+              >
+                <span class="flex items-center justify-between px-4 pt-2">
+                  <span class="text-13 font-bold text-ink">{s.titel}</span>
+                  <span class="rounded-full bg-paper px-8 py-2 text-12 font-medium text-ink-muted ring-1 ring-line" data-anzahl>
+                    {imBoard.filter((b) => b.spalte === s.id).length}
+                  </span>
+                </span>
+                <ul class="m-0 flex min-h-96 flex-col gap-8 p-0" data-liste>
+                  {imBoard.filter((b) => b.spalte === s.id).map((b) => <CockpitKarte b={b} />)}
+                </ul>
+              </section>
+            ))
+          }
+        </div>
+      </div>
+
+      {/* Bewerbungen, die während der Demo hereinkommen */}
+      {
+        cockpitNachschub.map((b) =>
+          b.absage ? (
+            <template data-nachschub={b.id} data-absage={b.absage} data-name={b.name} data-quelle={b.quelle}>
+              <li class="flex items-center gap-10 rounded-12 bg-paper-soft px-12 py-8 text-13 ring-1 ring-line">
+                <span class="font-medium text-ink-muted line-through">{b.name}</span>
+                <span class="text-ink-faint">{b.absage} · Absage versendet</span>
+              </li>
+            </template>
+          ) : (
+            <template data-nachschub={b.id} data-name={b.name} data-quelle={b.quelle}>
+              <CockpitKarte b={b} />
+            </template>
+          ),
+        )
+      }
+
+      {/* Detailansicht */}
+      <div
+        class="absolute inset-y-0 right-0 z-10 flex w-[min(380px,100%)] flex-col gap-18 overflow-y-auto border-l border-line bg-paper p-22 shadow-card-light"
+        role="dialog"
+        aria-labelledby="cockpit-detail-name"
+        hidden
+        data-detail
+      >
+        <div class="flex items-start gap-12">
+          <span class="flex h-44 w-44 flex-none items-center justify-center rounded-full bg-lime/45 text-15 font-bold text-forest" aria-hidden="true" data-detail-kuerzel></span>
+          <span class="flex min-w-0 flex-1 flex-col gap-2">
+            <span id="cockpit-detail-name" class="text-19 font-bold text-ink" tabindex="-1" data-detail-name></span>
+            <span class="text-14 text-ink-muted" data-detail-beruf></span>
+          </span>
+          <button
+            type="button"
+            class="flex h-36 w-36 flex-none cursor-pointer items-center justify-center rounded-full border-0 bg-paper-soft text-ink ring-1 ring-line transition-colors hover:ring-forest"
+            aria-label="Details schließen"
+            data-detail-zu
+          >
+            <svg viewBox="0 0 24 24" class="w-16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          </button>
+        </div>
+
+        <span class="flex items-center gap-8 text-13 text-ink-muted">
+          Stand:
+          <span class="rounded-full bg-forest px-10 py-3 text-12 font-bold text-paper" data-detail-stand></span>
+          <span class="rounded-full bg-lime/45 px-10 py-3 text-12 font-bold text-forest">Passt</span>
+        </span>
+
+        <div class="flex flex-col gap-10">
+          <span class="font-mono text-11 tracking-eyebrow uppercase text-ink-faint">Antworten aus dem Formular</span>
+          <dl class="m-0 grid grid-cols-[auto_minmax(0,1fr)] gap-x-16 gap-y-8 text-14" data-detail-antworten></dl>
+        </div>
+
+        <div class="flex flex-wrap gap-8 nav:mt-auto">
+          <button
+            type="button"
+            class="flex-1 cursor-pointer rounded-12 border-0 bg-forest px-16 py-12 font-[inherit] text-14 font-bold text-paper transition-colors hover:bg-forest-card disabled:cursor-default disabled:opacity-40"
+            data-detail-weiter
+          ></button>
+          <button
+            type="button"
+            class="cursor-pointer rounded-12 border-0 bg-paper-soft px-16 py-12 font-[inherit] text-14 font-medium text-ink ring-1 ring-line transition-colors hover:ring-forest disabled:cursor-default disabled:opacity-40"
+            data-detail-zurueck
+          >
+            ← Zurück
+          </button>
+        </div>
+      </div>
+
+      {/* Meldung oben rechts */}
+      <div class="pointer-events-none absolute top-14 right-14 z-20 flex max-w-[calc(100%-28px)]" aria-live="polite">
+        <span class="cockpit-meldung flex items-center gap-10 rounded-full bg-forest-deep px-14 py-8 text-13 font-medium text-paper shadow-card-light" hidden data-meldung>
+          <span class="h-8 w-8 flex-none rounded-full bg-lime" aria-hidden="true"></span>
+          <span data-meldung-text></span>
+        </span>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<style>
+  /* Lichthof am Hinweispunkt */
+  .cockpit-puls {
+    animation: cockpit-puls 1.8s ease-out infinite;
+  }
+  @keyframes cockpit-puls {
+    0% {
+      opacity: 0.9;
+      transform: scale(1);
+    }
+    80%,
+    100% {
+      opacity: 0;
+      transform: scale(2.8);
+    }
+  }
+
+  /* Vom Skript gesetzt: Spalte unter der gezogenen Karte, die gezogene
+     Karte selbst, eine gerade verschobene oder neu eingetroffene Karte,
+     eine geänderte Kennzahl, die Meldung */
+  :global(.spalte.ziel) {
+    box-shadow: 0 0 0 2px var(--color-forest);
+  }
+  :global(.karte.gezogen) {
+    opacity: 0.35;
+  }
+  :global(.karte-geist) {
+    position: fixed;
+    z-index: 60;
+    pointer-events: none;
+    transform: rotate(2.5deg);
+    box-shadow: 0 18px 40px rgb(13 33 24 / 0.22);
+  }
+  :global(.karte.frisch) {
+    animation: karte-frisch 1.6s ease-out;
+  }
+  @keyframes karte-frisch {
+    0% {
+      box-shadow: 0 0 0 0 rgb(228 245 63 / 0.9);
+      transform: translateY(-6px);
+    }
+    100% {
+      box-shadow: 0 0 0 12px rgb(228 245 63 / 0);
+      transform: none;
+    }
+  }
+  :global(.kpi-zahl.frisch) {
+    animation: kpi-frisch 0.7s ease-out;
+  }
+  @keyframes kpi-frisch {
+    0% {
+      transform: translateY(-4px);
+      opacity: 0.3;
+    }
+    100% {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  .cockpit-meldung:not([hidden]) {
+    animation: meldung-rein 0.35s ease-out;
+  }
+  @keyframes meldung-rein {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  interface Bewerber {
+    id: string;
+    name: string;
+    beruf: string;
+    erfahrung: string;
+    fuehrerschein: boolean;
+    anfahrt: string;
+    start: string;
+    quelle: string;
+    eingang: string;
+    spalte: string;
+  }
+
+  const cockpit = document.querySelector<HTMLElement>('[data-cockpit]');
+
+  if (cockpit) {
+    const spalten = [...cockpit.querySelectorAll<HTMLElement>('[data-spalte]')];
+    const reihenfolge = spalten.map((s) => s.dataset.spalte!);
+    const titel = Object.fromEntries(spalten.map((s) => [s.dataset.spalte!, s.getAttribute('aria-label')!]));
+    const liste = (id: string) => cockpit.querySelector<HTMLElement>(`[data-spalte="${id}"] [data-liste]`)!;
+    const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const daten = (karte: HTMLElement) => JSON.parse(karte.dataset.bewerber!) as Bewerber;
+    const kurzAnimieren = (el: Element, klasse = 'frisch') => {
+      el.classList.remove(klasse);
+      void (el as HTMLElement).offsetWidth;
+      el.classList.add(klasse);
+    };
+
+    /* --- Werkzeugleiste sichtbar machen ------------------------------ */
+    cockpit.querySelector<HTMLElement>('[data-werkzeug]')!.hidden = false;
+    const schalter = cockpit.querySelector<HTMLButtonElement>('[data-absagen-schalter]')!;
+    const absagen = cockpit.querySelector<HTMLElement>('[data-absagen]')!;
+    schalter.addEventListener('click', () => {
+      const an = schalter.getAttribute('aria-pressed') !== 'true';
+      schalter.setAttribute('aria-pressed', String(an));
+      absagen.hidden = !an;
+    });
+
+    /* --- Kennzahlen ---------------------------------------------------- */
+    const setzeZahl = (schluessel: string, wert: number) => {
+      for (const el of cockpit.querySelectorAll<HTMLElement>(`[data-kpi="${schluessel}"]`)) {
+        if (el.textContent !== String(wert)) {
+          el.textContent = String(wert);
+          if (el.classList.contains('kpi-zahl')) kurzAnimieren(el);
+        }
+      }
+    };
+    const zaehlen = () => {
+      const imBoard = cockpit.querySelectorAll('[data-liste] [data-karte]').length;
+      const abgesagt = absagen.children.length;
+      setzeZahl('gesamt', imBoard + abgesagt);
+      setzeZahl('passend', imBoard);
+      setzeZahl('abgesagt', abgesagt);
+      setzeZahl('abgesagt-knopf', abgesagt);
+      setzeZahl('eingestellt', liste('eingestellt').children.length);
+      cockpit.querySelector<HTMLElement>('[data-kpi-balken]')!.style.width = `${Math.round((imBoard / (imBoard + abgesagt)) * 100)}%`;
+      for (const s of spalten) s.querySelector('[data-anzahl]')!.textContent = String(s.querySelector('[data-liste]')!.children.length);
+    };
+
+    /* --- Verschieben --------------------------------------------------- */
+    const verschieben = (karte: HTMLElement, ziel: string) => {
+      const b = daten(karte);
+      if (b.spalte === ziel) return;
+      b.spalte = ziel;
+      karte.dataset.bewerber = JSON.stringify(b);
+      liste(ziel).prepend(karte.closest('li')!);
+      kurzAnimieren(karte);
+      zaehlen();
+      if (offen === karte) fuelleDetail(karte);
+    };
+
+    /* --- Detailansicht ------------------------------------------------- */
+    const detail = cockpit.querySelector<HTMLElement>('[data-detail]')!;
+    const feld = (name: string) => detail.querySelector<HTMLElement>(`[data-detail-${name}]`)!;
+    const weiter = feld('weiter') as HTMLButtonElement;
+    const zurueck = feld('zurueck') as HTMLButtonElement;
+    let offen: HTMLElement | null = null;
+
+    const fuelleDetail = (karte: HTMLElement) => {
+      const b = daten(karte);
+      const i = reihenfolge.indexOf(b.spalte);
+      feld('kuerzel').textContent = b.name.split(' ').map((t) => t[0]).join('');
+      feld('name').textContent = b.name;
+      feld('beruf').textContent = b.beruf;
+      feld('stand').textContent = titel[b.spalte]!;
+      const antworten: [string, string][] = [
+        ['Erfahrung', b.erfahrung],
+        ['Führerschein B', b.fuehrerschein ? 'Ja' : 'Nein'],
+        ['Anfahrt', b.anfahrt],
+        ['Start', b.start],
+        ['Quelle', b.quelle],
+        ['Eingang', b.eingang],
+      ];
+      const dl = feld('antworten');
+      dl.replaceChildren(
+        ...antworten.flatMap(([k, v]) => {
+          const dt = document.createElement('dt');
+          dt.className = 'text-ink-muted';
+          dt.textContent = k;
+          const dd = document.createElement('dd');
+          dd.className = 'm-0 font-medium text-ink';
+          dd.textContent = v;
+          return [dt, dd];
+        }),
+      );
+      const naechste = reihenfolge[i + 1];
+      weiter.disabled = !naechste;
+      weiter.textContent = naechste ? `Weiter: ${titel[naechste]} →` : 'Eingestellt ✓';
+      zurueck.disabled = i === 0;
+    };
+
+    const oeffnen = (karte: HTMLElement) => {
+      offen = karte;
+      fuelleDetail(karte);
+      detail.hidden = false;
+      feld('name').focus();
+    };
+    const schliessen = () => {
+      if (!offen) return;
+      detail.hidden = true;
+      offen.focus();
+      offen = null;
+    };
+
+    weiter.addEventListener('click', () => {
+      if (!offen) return;
+      const ziel = reihenfolge[reihenfolge.indexOf(daten(offen).spalte) + 1];
+      if (ziel) verschieben(offen, ziel);
+    });
+    zurueck.addEventListener('click', () => {
+      if (!offen) return;
+      const ziel = reihenfolge[reihenfolge.indexOf(daten(offen).spalte) - 1];
+      if (ziel) verschieben(offen, ziel);
+    });
+    feld('zu').addEventListener('click', schliessen);
+    detail.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') schliessen();
+    });
+
+    /* --- Ziehen mit der Maus ------------------------------------------ */
+    let start: { x: number; y: number; karte: HTMLElement } | null = null;
+    let geist: HTMLElement | null = null;
+    let zielSpalte: HTMLElement | null = null;
+    let klickSperre = false;
+
+    cockpit.addEventListener('pointerdown', (e) => {
+      const karte = (e.target as HTMLElement).closest<HTMLElement>('[data-karte]');
+      if (!karte || e.pointerType !== 'mouse' || e.button !== 0) return;
+      start = { x: e.clientX, y: e.clientY, karte };
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!start) return;
+      if (!geist) {
+        if (Math.hypot(e.clientX - start.x, e.clientY - start.y) < 6) return;
+        const r = start.karte.getBoundingClientRect();
+        geist = start.karte.cloneNode(true) as HTMLElement;
+        geist.classList.add('karte-geist');
+        geist.removeAttribute('data-karte');
+        geist.style.width = `${r.width}px`;
+        geist.dataset.versatzX = String(start.x - r.left);
+        geist.dataset.versatzY = String(start.y - r.top);
+        document.body.append(geist);
+        start.karte.classList.add('gezogen');
+        document.body.style.cursor = 'grabbing';
+      }
+      geist.style.left = `${e.clientX - Number(geist.dataset.versatzX)}px`;
+      geist.style.top = `${e.clientY - Number(geist.dataset.versatzY)}px`;
+      const unter = document.elementFromPoint(e.clientX, e.clientY)?.closest<HTMLElement>('[data-spalte]') ?? null;
+      if (unter !== zielSpalte) {
+        zielSpalte?.classList.remove('ziel');
+        zielSpalte = unter;
+        zielSpalte?.classList.add('ziel');
+      }
+    });
+
+    window.addEventListener('pointerup', () => {
+      if (!start) return;
+      if (geist) {
+        if (zielSpalte) verschieben(start.karte, zielSpalte.dataset.spalte!);
+        start.karte.classList.remove('gezogen');
+        geist.remove();
+        geist = null;
+        zielSpalte?.classList.remove('ziel');
+        zielSpalte = null;
+        document.body.style.cursor = '';
+        /* Ein Klick nach dem Loslassen käme im selben Durchlauf — danach
+           die Sperre wieder lösen, sonst schluckt sie den nächsten echten
+           Klick (der Browser löst nach dem Ziehen oft gar keinen aus). */
+        klickSperre = true;
+        window.setTimeout(() => (klickSperre = false), 0);
+      }
+      start = null;
+    });
+
+    cockpit.addEventListener('click', (e) => {
+      const karte = (e.target as HTMLElement).closest<HTMLElement>('[data-karte]');
+      if (!karte) return;
+      if (klickSperre) {
+        klickSperre = false;
+        return;
+      }
+      oeffnen(karte);
+    });
+
+    /* --- Meldung ------------------------------------------------------- */
+    const meldung = cockpit.querySelector<HTMLElement>('[data-meldung]')!;
+    let meldungTimer = 0;
+    const melde = (text: string) => {
+      meldung.querySelector('[data-meldung-text]')!.textContent = text;
+      meldung.hidden = true;
+      void meldung.offsetWidth;
+      meldung.hidden = false;
+      clearTimeout(meldungTimer);
+      meldungTimer = window.setTimeout(() => (meldung.hidden = true), 3800);
+    };
+
+    /* --- Neue Bewerbungen während der Demo ---------------------------- */
+    const nachschub = [...cockpit.querySelectorAll<HTMLTemplateElement>('template[data-nachschub]')];
+    const eintreffen = (vorlage: HTMLTemplateElement) => {
+      const el = vorlage.content.firstElementChild!.cloneNode(true) as HTMLElement;
+      if (vorlage.dataset.absage) {
+        absagen.prepend(el);
+        melde(`${vorlage.dataset.name}: ${vorlage.dataset.absage} — automatisch abgesagt`);
+        kurzAnimieren(schalter, 'frisch');
+      } else {
+        liste('neu').prepend(el);
+        kurzAnimieren(el.querySelector('[data-karte]')!);
+        melde(`Neue Bewerbung über ${vorlage.dataset.quelle}: ${vorlage.dataset.name}`);
+      }
+      zaehlen();
+    };
+
+    if (!ruhig && 'IntersectionObserver' in window && nachschub.length) {
+      const beobachter = new IntersectionObserver(
+        (eintraege) => {
+          if (!eintraege.some((e) => e.isIntersecting)) return;
+          beobachter.disconnect();
+          nachschub.forEach((vorlage, i) => window.setTimeout(() => eintreffen(vorlage), 4000 + i * 7000));
+        },
+        { threshold: 0.4 },
+      );
+      beobachter.observe(cockpit);
+    }
+  }
+</script>
