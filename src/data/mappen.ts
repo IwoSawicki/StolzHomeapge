@@ -3,8 +3,7 @@
    passend zu dieser einen Firma ausgewählt.
 
    Wie /alle-projekte: noindex, nicht in der Sitemap, nirgends verlinkt.
-   Wer den Link nicht hat, findet die Seite nicht. Bis 06.10.2026 lagen
-   die Mappen unter /videos/<name>; deploy/nginx.conf leitet um.
+   Wer den Link nicht hat, findet die Seite nicht.
 
    Neue Mappe: einen Eintrag in `mappen` unten ergänzen.
    - Videos liegen als .mp4 irgendwo unter src/assets/, das Standbild
@@ -81,6 +80,12 @@ export const mappenGruppen: MappenGruppe[] = [
     ueberschrift: 'So sieht zum Beispiel ein A/B-Test aus.',
     lead: 'Drei Recruiting-Videos für raum.Konzept aus demselben Material: gleiche Botschaft, anderer Einstieg. Im Test laufen alle drei gleichzeitig. Weiter läuft die Variante, die die meisten Bewerbungen bringt.',
   },
+  {
+    schluessel: 'stech',
+    titel: 'Recruiting',
+    ueberschrift: 'Drei Einstiege, eine Stelle.',
+    lead: 'S-Tech Fahrzeugbau sucht Monteure für Kran-Sonderaufbauten. Drei Videos von einem Drehtag im Betrieb, jedes mit eigenem Einstieg: klare Ansage, Frage oder Empfehlung.',
+  },
   { schluessel: 'Recruiting', titel: 'Recruiting' },
   { schluessel: 'Kundengewinnung', titel: 'Kundengewinnung' },
 ];
@@ -89,9 +94,11 @@ export const mappenGruppen: MappenGruppe[] = [
 export const mappenWebseiten = {
   titel: 'Webseiten',
   ueberschrift: 'Und so sehen unsere Webseiten aus.',
-  lead: 'Ein paar Auftritte für Handwerksbetriebe, alle live. Ein Klick öffnet die Webseite.',
+  lead: 'Ein paar Auftritte aus unserer Arbeit, alle live. Ein Klick öffnet die Webseite.',
   knopfWebseite: 'Webseite ansehen',
   knopfProjekt: 'Zum Projekt',
+  /** Kleine Zeile über dem Merkmal, bei Videos und Webseiten */
+  labelMerkmal: 'Was es ausmacht',
 };
 
 /** Kontaktblock am Ende jeder Mappe */
@@ -105,8 +112,9 @@ export const mappenKontakt = {
 export const mappen: Mappe[] = [
   {
     /* Für Lulay (06.10.2026). Iwo schickt den Link per Mail. Erst
-       die SAAN-Kampagne, dann der A/B-Test von raum.Konzept, dann S-Tech,
-       zuletzt zwei Videos für die Kundengewinnung. Die Zahlen bei SAAN und DMK sind dieselben
+       die SAAN-Kampagne, dann der A/B-Test von raum.Konzept, dann die drei
+       Einstiege von S-Tech, zuletzt zwei Videos für die Kundengewinnung.
+       S-Tech Hook 1 steht bewusst hinten: Iwo findet ihn am schwächsten. Die Zahlen bei SAAN und DMK sind dieselben
        wie auf der Social-Media-Seite (geliefert von Iwo). Die Merkmale
        beschreiben, was im Video zu sehen und zu lesen ist. */
     slug: 'lulay',
@@ -145,6 +153,7 @@ export const mappen: Mappe[] = [
         datei: 'S-Tech-Recruiting-Hook-3.mp4',
         kunde: 'S-Tech Fahrzeugbau',
         art: 'Recruiting',
+        gruppe: 'stech',
         merkmal: 'Klare Ansage sofort',
         text: '„Wir suchen Monteure für Kran-Sonderaufbauten“ steht in der ersten Sekunde im Bild. Wer gemeint ist, bleibt dran.',
       },
@@ -152,8 +161,17 @@ export const mappen: Mappe[] = [
         datei: 'S-Tech-Recruiting-Hook-2.mp4',
         kunde: 'S-Tech Fahrzeugbau',
         art: 'Recruiting',
+        gruppe: 'stech',
         merkmal: 'Frage statt Ansage',
-        text: 'Gleiche Kampagne, anderer Einstieg: „Viel Technik im Blut?“ holt Mechaniker über ihr Interesse ab und zeigt dann Werkstatt, Fahrzeuge und Team.',
+        text: '„Viel Technik im Blut?“ holt Mechaniker über ihr Interesse ab. Danach Kipper, Hydraulik, Feierabend mit dem Team und: bewerben ohne Papierkram.',
+      },
+      {
+        datei: 'S-Tech-Recruiting-Hook-1.mp4',
+        kunde: 'S-Tech Fahrzeugbau',
+        art: 'Recruiting',
+        gruppe: 'stech',
+        merkmal: 'Einstieg über Empfehlung',
+        text: '„Du kennst jemanden, der gerne schraubt?“ spricht Freunde und Kollegen an und zeigt dann den vielfältigen Arbeitsalltag im Betrieb.',
       },
       {
         datei: 'raumKonzept-Recruiting-01.mp4',
@@ -197,16 +215,17 @@ export const mappen: Mappe[] = [
         text: 'Renovierung ohne fünf verschiedene Handwerker: Das Video zeigt jeden Schritt auf der Baustelle. Über 100.000 Aufrufe in den ersten Wochen.',
       },
     ],
-    /* Beschreibungen aus src/data/alle-projekte.ts, Merkmal und Zahl
-       aus der Projektseite von HEPA Baut */
+    /* Die vier Webseiten, die Iwo Lulay in der Mail verlinkt hat
+       (06.10.2026). Texte aus alle-projekte.ts und
+       webdesign-bergstrasse.ts; GDM steht dort noch nicht, der Text
+       beschreibt die Seite selbst. */
     webseiten: [
       {
-        name: 'HEPA Baut',
-        domain: 'hepabaut.de',
-        bild: 'projekte-intern/website-hepabaut.webp',
-        merkmal: 'Über 150 Ortsseiten',
-        text: 'Website-Relaunch mit Fokus auf planbare Projektanfragen.',
-        projektseite: '/projekte/hepa-baut',
+        name: 'GDM Gebäudeservice',
+        domain: 'gdm.stolz-marketing.de',
+        bild: 'projekte-intern/gdm-startseite.webp',
+        merkmal: 'Vier Leistungen, klar getrennt',
+        text: 'Gebäudereinigung, Gebäudeservice, Sonderreinigung und Baureinigung aus Lorsch, jede mit eigenem Bereich.',
       },
       {
         name: 'Jhoch2 Wasserschaden',
@@ -216,11 +235,18 @@ export const mappen: Mappe[] = [
         text: 'Website für schnelle Notfall-Anfragen bei Wasserschäden.',
       },
       {
-        name: 'NKN PV Elektrik',
-        domain: 'nkn-pv-elektrik.de',
-        bild: 'projekte/nkn-pv-elektrik-startseite.png',
-        merkmal: 'Lokal sichtbar',
-        text: 'Neuer Auftritt für Photovoltaik & Elektrotechnik mit lokaler Sichtbarkeit.',
+        name: 'Umzüge Bergstraße',
+        domain: 'umzuege-bergstrasse.de',
+        bild: 'projekte/umzuege-bergstrasse-startseite.png',
+        merkmal: 'Name, Logo, Website, Google-Profil',
+        text: 'Unser eigener Betrieb — und damit der Fall, an dem wir zuerst ausprobiert haben, was wir heute für andere bauen.',
+      },
+      {
+        name: 'Zehner Immobilien',
+        domain: 'www.zehner-immobilien.de',
+        bild: 'projekte/zehner-immobilien-startseite.webp',
+        merkmal: 'Klare Positionierung',
+        text: 'Neue Website mit klarer Positionierung für mehr Verkäufer-Anfragen.',
       },
     ],
   },

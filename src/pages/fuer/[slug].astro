@@ -152,6 +152,7 @@ const blaettern =
                       </span>
                       <span class="flex flex-col gap-6">
                         <span class="text-16 leading-card font-bold text-paper btn:text-19">{video.variante ?? video.kunde}</span>
+                        <span class="mt-4 font-mono text-11 tracking-eyebrow uppercase text-mint-dimmer">{w.labelMerkmal}</span>
                         <span class="text-14 leading-card font-bold text-lime btn:text-16">{video.merkmal}</span>
                         <span class="text-14 leading-tight-body text-mint btn:text-16">{video.text}</span>
                       </span>
@@ -176,7 +177,7 @@ const blaettern =
                 <p class="m-0 text-h3-proof leading-card font-bold tracking-heading text-paper">{w.ueberschrift}</p>
                 <p class="m-0 text-17 leading-body text-mint-light">{w.lead}</p>
               </div>
-              <ul class="m-0 mt-8 grid w-full list-none grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-x-32 gap-y-40 p-0 text-left">
+              <ul class="m-0 mt-8 grid w-full max-w-1000 list-none grid-cols-1 gap-x-32 gap-y-48 p-0 text-left btn:grid-cols-2">
                 {webseiten.map((seite) => (
                   <li class="flex flex-col gap-16">
                     <a
@@ -191,7 +192,7 @@ const blaettern =
                           src={seite.bild}
                           alt={`Startseite von ${seite.name}`}
                           widths={[420, 720]}
-                          sizes="(min-width: 1040px) 360px, 90vw"
+                          sizes="(min-width: 720px) 480px, 90vw"
                           loading="lazy"
                           class="block aspect-[16/10] h-auto w-full object-cover object-top"
                         />
@@ -199,6 +200,7 @@ const blaettern =
                     </a>
                     <div class="flex flex-col gap-6">
                       <span class="text-16 leading-card font-bold text-paper btn:text-19">{seite.name}</span>
+                      <span class="mt-4 font-mono text-11 tracking-eyebrow uppercase text-mint-dimmer">{w.labelMerkmal}</span>
                       <span class="text-14 leading-card font-bold text-lime btn:text-16">{seite.merkmal}</span>
                       <span class="text-14 leading-tight-body text-mint btn:text-16">{seite.text}</span>
                     </div>
@@ -307,7 +309,10 @@ const blaettern =
       <div class="flex w-full max-w-[min(280px,100%)] flex-col gap-10 text-center btn:text-left">
         <span class="self-center rounded-full bg-forest-card px-10 py-5 text-12 font-medium text-mint-light btn:self-start" data-mappe-art></span>
         <p class="m-0 text-19 leading-card font-bold text-paper btn:text-22" data-mappe-kunde></p>
-        <p class="m-0 text-16 leading-card font-bold text-lime" data-mappe-merkmal></p>
+        <p class="m-0 flex flex-col gap-4 text-16 leading-card font-bold text-lime">
+          <span class="font-mono text-11 font-normal tracking-eyebrow uppercase text-mint-dimmer">{w.labelMerkmal}</span>
+          <span data-mappe-merkmal></span>
+        </p>
         <p class="m-0 text-15 leading-body text-mint" data-mappe-text></p>
         <div class="mt-8 flex items-center justify-center gap-14 btn:justify-start">
           <button type="button" class={blaettern} data-mappe-schritt="-1" aria-label="Vorheriges Video">←</button>
