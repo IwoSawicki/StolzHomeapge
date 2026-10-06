@@ -36,8 +36,9 @@ export default defineConfig({
         /* Entwurf Meistermagnet v2 und interner Link-Generator */
         !seite.includes('/mitarbeiter-gewinnen-v2') &&
         !seite.includes('/intern/') &&
-        /* Videomappen für einzelne Interessenten, per Link verschickt */
-        !seite.includes('/videos/'),
+        /* Persönliche Mappen für einzelne Interessenten, per Link
+           verschickt (/fuer/<name>) */
+        !seite.includes('/fuer/'),
     }),
   ],
   vite: {
