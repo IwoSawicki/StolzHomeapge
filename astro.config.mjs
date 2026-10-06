@@ -22,8 +22,9 @@ export default defineConfig({
       filter: (seite) =>
         !seite.includes('/alle-projekte') &&
         !seite.includes('/korbaktion') &&
-        /* Videomappen für einzelne Interessenten, per Link verschickt */
-        !seite.includes('/videos/'),
+        /* Persönliche Mappen für einzelne Interessenten, per Link
+           verschickt (/fuer/<name>) */
+        !seite.includes('/fuer/'),
     }),
   ],
   vite: {

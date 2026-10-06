@@ -1,13 +1,14 @@
 ---
-/* Videomappe — /videos/<name>
+/* Persönliche Mappe — /fuer/<name>
 
-   Persönliche Seite für einen möglichen Kunden: ein paar Hochkant-Videos
-   zum Durchklicken. Texte und Videos je Mappe in src/data/video-mappen.ts.
-   noindex, nicht in der Sitemap, nirgends verlinkt (wie /alle-projekte).
+   Seite für einen möglichen Kunden: Videos und Webseiten aus unserer
+   Arbeit, für diese eine Firma ausgewählt. Texte, Videos und Webseiten je
+   Mappe in src/data/mappen.ts. noindex, nicht in der Sitemap, nirgends
+   verlinkt (wie /alle-projekte).
 
    Aufbau (Wunsch Iwo, 06.10.2026):
-     1. dunkles Band mit Überschrift und den Videos, getrennt nach
-        Recruiting und Kundengewinnung
+     1. dunkles Band mit Überschrift, den Videos in Gruppen (Recruiting,
+        A/B-Test, Kundengewinnung) und den Webseiten
      2. „Unsere Leistungen" wie auf der Startseite
      3. Hinweis auf den Bewerbungs-Simulator
      4. Iwo als Ansprechpartner, groß
@@ -25,14 +26,15 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import portraitIwo from '../../assets/portraits/iwo-sawicki.jpg';
+import BrowserRahmen from '../../components/BrowserRahmen.astro';
 import Leistungen from '../../components/sections/Leistungen.astro';
-import { videoMappen, mappenGruppen, mappenKontakt as k } from '../../data/video-mappen';
+import { mappen, mappenGruppen, mappenWebseiten as w, mappenKontakt as k } from '../../data/mappen';
 import { kontakt } from '../../data/navigation';
 import { hero as simulator } from '../../data/bewerbungs-simulator';
 import { vorauswahl } from '../../data/mitarbeiter-gewinnen';
 
 export function getStaticPaths() {
-  return videoMappen.map((mappe) => ({ params: { slug: mappe.slug }, props: { mappe } }));
+  return mappen.map((mappe) => ({ params: { slug: mappe.slug }, props: { mappe } }));
 }
 
 const { mappe } = Astro.props;
@@ -53,7 +55,7 @@ const videos = await Promise.all(
     const name = video.datei.replace(/\.mp4$/, '');
     const quelle = quellen[video.datei];
     const standbild = standbilder[`${name}-standbild.jpg`];
-    if (!quelle || !standbild) throw new Error(`Videomappe ${mappe.slug}: ${video.datei} oder Standbild fehlt`);
+    if (!quelle || !standbild) throw new Error(`Mappe ${mappe.slug}: ${video.datei} oder Standbild fehlt`);
     const poster = await getImage({ src: standbild.default, width: 480, format: 'webp' });
     return { ...video, src: quelle.default, poster: poster.src };
   }),
@@ -62,16 +64,27 @@ const videos = await Promise.all(
 /* Gruppen für die Anzeige. Die Nummer jedes Videos bleibt die aus der
    Gesamtliste, damit die Großansicht über alle Gruppen weiterblättert. */
 const gruppen = mappenGruppen
-  .map((g) => ({ ...g, videos: videos.map((v, i) => ({ ...v, i })).filter((v) => v.art === g.art) }))
+  .map((g) => ({ ...g, videos: videos.map((v, i) => ({ ...v, i })).filter((v) => (v.gruppe ?? v.art) === g.schluessel) }))
   .filter((g) => g.videos.length > 0);
+
+/* Bilder der Webseiten, Pfad ab src/assets/ */
+const webseitenBilder = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/projekte*/*.{webp,png,jpg}',
+  { eager: true },
+);
+const webseiten = (mappe.webseiten ?? []).map((seite) => {
+  const bild = webseitenBilder[`../../assets/${seite.bild}`];
+  if (!bild) throw new Error(`Mappe ${mappe.slug}: Bild ${seite.bild} fehlt`);
+  return { ...seite, bild: bild.default };
+});
 
 const blaettern =
   'flex h-44 w-44 cursor-pointer items-center justify-center rounded-full border border-lime-edge bg-transparent text-18 text-paper transition-colors hover:border-lime hover:bg-forest-card';
 ---
 
 <BaseLayout
-  title={`Videos für ${mappe.fuer} | Stolz Marketing`}
-  description="Eine persönliche Auswahl unserer Videos."
+  title={`Für ${mappe.fuer} | Stolz Marketing`}
+  description="Eine persönliche Auswahl aus unserer Arbeit."
   noindex
 >
   <main class="bg-forest">
@@ -88,7 +101,7 @@ const blaettern =
         </h1>
         <p class="m-0 mt-22 max-w-600 text-18 leading-body text-mint-light">{mappe.lead}</p>
 
-        {/* --- Videokarten, nach Art gruppiert --- */}
+        {/* --- Videokarten in Gruppen --- */}
         {
           gruppen.map((gruppe) => (
             <div class="mt-[clamp(40px,5vw,64px)] flex w-full flex-col items-center gap-24">
@@ -97,6 +110,12 @@ const blaettern =
                 {gruppe.titel}
                 <span class="h-1 flex-1 bg-edge" aria-hidden="true"></span>
               </h2>
+              {gruppe.ueberschrift && (
+                <div class="flex max-w-680 flex-col items-center gap-12">
+                  <p class="m-0 text-h3-proof leading-card font-bold tracking-heading text-paper">{gruppe.ueberschrift}</p>
+                  {gruppe.lead && <p class="m-0 text-17 leading-body text-mint-light">{gruppe.lead}</p>}
+                </div>
+              )}
               <ul class="m-0 flex w-full list-none flex-wrap items-start justify-center gap-16 p-0 btn:gap-32">
                 {gruppe.videos.map((video) => (
                   <li class="max-w-300 shrink-0 grow-0 basis-[calc(50%-8px)] btn:basis-[calc((100%-64px)/3)]">
@@ -104,7 +123,7 @@ const blaettern =
                       type="button"
                       class="group flex w-full cursor-pointer flex-col gap-16 border-0 bg-transparent p-0 text-left"
                       data-mappe-oeffnen={video.i}
-                      aria-label={`Video ${video.kunde} ansehen`}
+                      aria-label={`Video ${video.kunde}${video.variante ? `, ${video.variante}` : ''} ansehen`}
                     >
                       <span class="relative block aspect-[9/16] w-full overflow-hidden rounded-20 bg-forest-black ring-1 ring-edge transition-[box-shadow,translate] duration-300 group-hover:-translate-y-4 group-hover:shadow-ring-lime">
                         <video
@@ -119,6 +138,11 @@ const blaettern =
                           tabindex="-1"
                           data-vorschau
                         ></video>
+                        {video.variante && (
+                          <span class="absolute top-12 left-12 rounded-full bg-lime px-12 py-6 text-13 font-bold text-forest-deep">
+                            {video.variante}
+                          </span>
+                        )}
                         <span
                           class="absolute top-1/2 left-1/2 flex h-56 w-56 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-lime text-forest-deep shadow-glow-play transition-[scale,opacity] duration-300 group-hover:scale-110 btn:h-72 btn:w-72"
                           aria-hidden="true"
@@ -127,7 +151,8 @@ const blaettern =
                         </span>
                       </span>
                       <span class="flex flex-col gap-6">
-                        <span class="text-16 leading-card font-bold text-paper btn:text-19">{video.kunde}</span>
+                        <span class="text-16 leading-card font-bold text-paper btn:text-19">{video.variante ?? video.kunde}</span>
+                        <span class="text-14 leading-card font-bold text-lime btn:text-16">{video.merkmal}</span>
                         <span class="text-14 leading-tight-body text-mint btn:text-16">{video.text}</span>
                       </span>
                     </button>
@@ -136,6 +161,62 @@ const blaettern =
               </ul>
             </div>
           ))
+        }
+
+        {/* --- Webseiten --- */}
+        {
+          webseiten.length > 0 && (
+            <div class="mt-[clamp(56px,7vw,96px)] flex w-full flex-col items-center gap-24">
+              <h2 class="m-0 flex w-full items-center gap-16 font-mono text-13 font-medium tracking-eyebrow uppercase text-mint">
+                <span class="h-1 flex-1 bg-edge" aria-hidden="true"></span>
+                {w.titel}
+                <span class="h-1 flex-1 bg-edge" aria-hidden="true"></span>
+              </h2>
+              <div class="flex max-w-680 flex-col items-center gap-12">
+                <p class="m-0 text-h3-proof leading-card font-bold tracking-heading text-paper">{w.ueberschrift}</p>
+                <p class="m-0 text-17 leading-body text-mint-light">{w.lead}</p>
+              </div>
+              <ul class="m-0 mt-8 grid w-full list-none grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-x-32 gap-y-40 p-0 text-left">
+                {webseiten.map((seite) => (
+                  <li class="flex flex-col gap-16">
+                    <a
+                      href={`https://${seite.domain}`}
+                      target="_blank"
+                      rel="noopener"
+                      class="group block no-underline"
+                      aria-label={`${seite.name}: ${w.knopfWebseite} (neues Fenster)`}
+                    >
+                      <BrowserRahmen domain={seite.domain} radius="r12" class="transition-[box-shadow,translate] duration-300 group-hover:-translate-y-4 group-hover:shadow-ring-lime">
+                        <Image
+                          src={seite.bild}
+                          alt={`Startseite von ${seite.name}`}
+                          widths={[420, 720]}
+                          sizes="(min-width: 1040px) 360px, 90vw"
+                          loading="lazy"
+                          class="block aspect-[16/10] h-auto w-full object-cover object-top"
+                        />
+                      </BrowserRahmen>
+                    </a>
+                    <div class="flex flex-col gap-6">
+                      <span class="text-16 leading-card font-bold text-paper btn:text-19">{seite.name}</span>
+                      <span class="text-14 leading-card font-bold text-lime btn:text-16">{seite.merkmal}</span>
+                      <span class="text-14 leading-tight-body text-mint btn:text-16">{seite.text}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-x-20 gap-y-8 text-15 font-bold">
+                      <a href={`https://${seite.domain}`} target="_blank" rel="noopener" class="text-paper underline decoration-lime-edge underline-offset-4 transition-colors hover:decoration-lime">
+                        {w.knopfWebseite} <span aria-hidden="true">↗</span>
+                      </a>
+                      {seite.projektseite && (
+                        <a href={seite.projektseite} class="text-paper underline decoration-lime-edge underline-offset-4 transition-colors hover:decoration-lime">
+                          {w.knopfProjekt} <span aria-hidden="true">→</span>
+                        </a>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
         }
       </div>
     </section>
@@ -226,6 +307,7 @@ const blaettern =
       <div class="flex w-full max-w-[min(280px,100%)] flex-col gap-10 text-center btn:text-left">
         <span class="self-center rounded-full bg-forest-card px-10 py-5 text-12 font-medium text-mint-light btn:self-start" data-mappe-art></span>
         <p class="m-0 text-19 leading-card font-bold text-paper btn:text-22" data-mappe-kunde></p>
+        <p class="m-0 text-16 leading-card font-bold text-lime" data-mappe-merkmal></p>
         <p class="m-0 text-15 leading-body text-mint" data-mappe-text></p>
         <div class="mt-8 flex items-center justify-center gap-14 btn:justify-start">
           <button type="button" class={blaettern} data-mappe-schritt="-1" aria-label="Vorheriges Video">←</button>
@@ -267,6 +349,8 @@ const blaettern =
     poster: string;
     kunde: string;
     art: string;
+    variante?: string;
+    merkmal: string;
     text: string;
   }
 
@@ -285,7 +369,8 @@ const blaettern =
       player.poster = v.poster;
       player.src = v.src;
       feld('zaehler').textContent = `${aktuell + 1} / ${videos.length}`;
-      feld('art').textContent = v.art;
+      feld('art').textContent = v.variante ? `${v.art} · ${v.variante}` : v.art;
+      feld('merkmal').textContent = v.merkmal;
       feld('kunde').textContent = v.kunde;
       feld('text').textContent = v.text;
       dialog.setAttribute('aria-label', `Video ${v.kunde}`);
