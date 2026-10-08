@@ -9,10 +9,16 @@
    Aufbau (Wunsch Iwo, 06.10.2026):
      1. dunkles Band mit Überschrift, den Videos in Gruppen (Recruiting,
         A/B-Test, Kundengewinnung) und den Webseiten
-     2. „Unsere Leistungen" wie auf der Startseite
-     3. Hinweis auf den Bewerbungs-Simulator
-     4. Iwo als Ansprechpartner, groß
-     5. Footer (Impressum)
+     2. je Mappe einstellbar (`abschnitte`): „Unsere Leistungen" wie auf
+        der Startseite, Hinweis auf den Bewerbungs-Simulator, die
+        Vorauswahl („Aussortiert") und das Bewerber-Cockpit von der Seite
+        „Mitarbeiter gewinnen"
+     3. Iwo als Ansprechpartner, groß
+     4. Footer (Impressum)
+
+   Mit ?fuer=<Name> im Link steht der Name in der Eyebrow (nur bei
+   Mappen mit `eyebrowFuer`) und als „fuer" bei jedem Umami-Ereignis. So
+   lässt sich ein allgemeiner Einblick mehreren Interessenten schicken.
 
    Verhalten
    - Karte: Standbild, Play-Kreis, Marke. Auf dem Desktop läuft beim
@@ -39,6 +45,8 @@ import Leistungen from '../../components/sections/Leistungen.astro';
 import { mappen, mappenGruppen, mappenWebseiten as w, mappenKontakt as k } from '../../data/mappen';
 import { kontakt } from '../../data/navigation';
 import { hero as simulator } from '../../data/bewerbungs-simulator';
+import Vorauswahl from '../../components/sections/mitarbeiter/Vorauswahl.astro';
+import Cockpit from '../../components/sections/mitarbeiter/Cockpit.astro';
 import { vorauswahl } from '../../data/mitarbeiter-gewinnen';
 
 export function getStaticPaths() {
@@ -69,11 +77,20 @@ const videos = await Promise.all(
   }),
 );
 
-/* Gruppen für die Anzeige. Die Nummer jedes Videos bleibt die aus der
-   Gesamtliste, damit die Großansicht über alle Gruppen weiterblättert. */
-const gruppen = mappenGruppen
-  .map((g) => ({ ...g, videos: videos.map((v, i) => ({ ...v, i })).filter((v) => (v.gruppe ?? v.art) === g.schluessel) }))
+/* Gruppen für die Anzeige. Die Großansicht blättert in derselben
+   Reihenfolge, in der die Videos auf der Seite stehen; `i` ist die
+   Nummer in dieser Reihenfolge. */
+const gruppenOhneNummer = mappenGruppen
+  .map((g) => ({ ...g, videos: videos.filter((v) => (v.gruppe ?? v.art) === g.schluessel) }))
   .filter((g) => g.videos.length > 0);
+const reihenfolge = gruppenOhneNummer.flatMap((g) => g.videos);
+const gruppen = gruppenOhneNummer.map((g) => ({
+  ...g,
+  videos: g.videos.map((v) => ({ ...v, i: reihenfolge.indexOf(v) })),
+}));
+
+/* Der Kontaktblock setzt sich farblich von der Sektion davor ab */
+const kontaktGrund = mappe.abschnitte.at(-1) === 'cockpit' ? 'bg-paper' : 'bg-paper-soft';
 
 /* Bilder der Webseiten, Pfad ab src/assets/ */
 const webseitenBilder = import.meta.glob<{ default: ImageMetadata }>(
@@ -91,7 +108,7 @@ const blaettern =
 ---
 
 <BaseLayout
-  title={`Für ${mappe.fuer} | Stolz Marketing`}
+  title={`${mappe.seitentitel} | Stolz Marketing`}
   description="Eine persönliche Auswahl aus unserer Arbeit."
   noindex
 >
@@ -103,7 +120,7 @@ const blaettern =
       <Header variante="dunkel" />
 
       <div class="mx-auto flex max-w-content-wide flex-col items-center px-page-x pt-[clamp(40px,6vw,72px)] pb-section-y-md text-center">
-        <Eyebrow variante="lime">{mappe.eyebrow}</Eyebrow>
+        <Eyebrow variante="lime"><span data-mappe-eyebrow={mappe.eyebrowFuer ?? ""}>{mappe.eyebrow}</span></Eyebrow>
         <h1 class="m-0 mt-20 max-w-860 text-h1-sub leading-hero font-bold tracking-system text-paper">
           {mappe.titelVorn}<span class="font-display font-semibold tracking-none text-lime italic">{mappe.titelKursiv}</span>{mappe.titelHinten}
         </h1>
@@ -234,44 +251,59 @@ const blaettern =
       </div>
     </section>
 
-    {/* --- Leistungen, dieselbe Sektion wie auf der Startseite --- */}
-    <Leistungen />
-
-    {/* --- Bewerbungs-Simulator --- */}
-    <section class="bg-paper px-page-x pb-section-y">
-      <div class="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-48 gap-y-28 rounded-24 bg-forest px-20 py-panel btn:p-panel">
-        <div class="flex flex-1 basis-[min(460px,100%)] flex-col items-start gap-18">
-          <Eyebrow variante="lime">{simulator.eyebrow}</Eyebrow>
-          <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
-            {simulator.titelVorn}<span class="font-display font-semibold tracking-none text-lime italic">{simulator.titelKursiv}</span>{simulator.titelHinten}
-          </h2>
-          <p class="m-0 text-17 leading-body text-mint-light">{simulator.lead}</p>
-        </div>
-        <div class="flex flex-col items-start gap-24">
-          <ul class="m-0 flex list-none flex-col gap-12 p-0">
-            {
-              simulator.punkte.map((punkt) => (
-                <li class="flex items-center gap-12 text-16 text-paper">
-                  <span class="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-lime text-13 font-bold text-forest-deep" aria-hidden="true">✓</span>
-                  {punkt}
-                </li>
-              ))
-            }
-          </ul>
-          <a
-            href="/bewerbungs-simulator"
-            data-umami-event="Simulator geöffnet"
-            data-umami-event-mappe={mappe.slug}
-            class="inline-flex h-56 items-center gap-8 rounded-full bg-lime px-20 text-15 font-bold whitespace-nowrap text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright btn:px-28 btn:text-16"
+    {/* --- Abschnitte je Mappe --- */}
+    {
+      mappe.abschnitte.map((abschnitt, i) =>
+        abschnitt === 'leistungen' ? (
+          <Leistungen />
+        ) : abschnitt === 'vorauswahl' ? (
+          <Vorauswahl />
+        ) : abschnitt === 'cockpit' ? (
+          <Cockpit />
+        ) : (
+          <section
+            class:list={[
+              'bg-paper px-page-x pb-section-y',
+              /* direkt nach den Leistungen genügt deren Abstand */
+              mappe.abschnitte[i - 1] === 'leistungen' ? '' : 'pt-section-y',
+            ]}
           >
-            {vorauswahl.simulatorKnopf}<span class="hidden text-18 hero:inline" aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-    </section>
+            <div class="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-48 gap-y-28 rounded-24 bg-forest px-20 py-panel btn:p-panel">
+              <div class="flex flex-1 basis-[min(460px,100%)] flex-col items-start gap-18">
+                <Eyebrow variante="lime">{simulator.eyebrow}</Eyebrow>
+                <h2 class="m-0 text-h2-sub leading-tightest font-bold tracking-system text-paper">
+                  {simulator.titelVorn}<span class="font-display font-semibold tracking-none text-lime italic">{simulator.titelKursiv}</span>{simulator.titelHinten}
+                </h2>
+                <p class="m-0 text-17 leading-body text-mint-light">{simulator.lead}</p>
+              </div>
+              <div class="flex flex-col items-start gap-24">
+                <ul class="m-0 flex list-none flex-col gap-12 p-0">
+                  {
+                    simulator.punkte.map((punkt) => (
+                      <li class="flex items-center gap-12 text-16 text-paper">
+                        <span class="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-lime text-13 font-bold text-forest-deep" aria-hidden="true">✓</span>
+                        {punkt}
+                      </li>
+                    ))
+                  }
+                </ul>
+                <a
+                  href="/bewerbungs-simulator"
+                  data-umami-event="Simulator geöffnet"
+                  data-umami-event-mappe={mappe.slug}
+                  class="inline-flex h-56 items-center gap-8 rounded-full bg-lime px-20 text-15 font-bold whitespace-nowrap text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright btn:px-28 btn:text-16"
+                >
+                  {vorauswahl.simulatorKnopf}<span class="hidden text-18 hero:inline" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          </section>
+        ),
+      )
+    }
 
     {/* --- Ansprechpartner --- */}
-    <section class="bg-paper-soft px-page-x py-section-y-md">
+    <section class:list={[kontaktGrund, 'px-page-x py-section-y-md']}>
       <div class="mx-auto flex max-w-1000 flex-wrap items-center justify-center gap-x-[clamp(32px,6vw,80px)] gap-y-32 text-center btn:flex-nowrap btn:text-left">
         <Image
           src={portraitIwo}
@@ -349,7 +381,7 @@ const blaettern =
     </button>
   </dialog>
 
-  <script is:inline type="application/json" data-mappe-daten set:html={JSON.stringify(videos)} />
+  <script is:inline type="application/json" data-mappe-daten set:html={JSON.stringify(reihenfolge)} />
 
   <Footer />
 </BaseLayout>
@@ -376,12 +408,29 @@ const blaettern =
     text: string;
   }
 
+  /* ?fuer=<Name>: nur per textContent gesetzt, ohne Steuerzeichen und
+     spitze Klammern, höchstens 60 Zeichen */
+  const fuer = (new URLSearchParams(window.location.search).get('fuer') ?? '')
+    .replace(/[\u0000-\u001f\u007f<>]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 60);
+  if (fuer) {
+    const eyebrow = document.querySelector<HTMLElement>('[data-mappe-eyebrow]');
+    const vorlage = eyebrow?.dataset.mappeEyebrow;
+    if (eyebrow && vorlage) eyebrow.textContent = vorlage.replace('{name}', fuer);
+    /* auch die Klick-Ereignisse der Links tragen den Namen */
+    document.querySelectorAll<HTMLElement>('[data-umami-event]').forEach((el) => {
+      el.dataset.umamiEventFuer = fuer;
+    });
+  }
+
   /* Umami lädt per defer und nur auf der Produktionsdomain, kann also
      fehlen */
   const zaehlen = (ereignis: string, werte: Record<string, string>) => {
     (window as unknown as { umami?: { track: (e: string, d: Record<string, string>) => void } }).umami?.track(
       ereignis,
-      werte,
+      fuer ? { ...werte, fuer } : werte,
     );
   };
 
