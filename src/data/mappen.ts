@@ -39,18 +39,25 @@ export interface MappenWebseite {
   projektseite?: string;
 }
 
+/** Sektionen nach dem dunklen Band, in dieser Reihenfolge */
+export type MappenAbschnitt = 'vorauswahl' | 'cockpit' | 'leistungen' | 'simulator';
+
 export interface Mappe {
   /** Adresse: /einblick/<slug> */
   slug: string;
-  /** Für den Seitentitel im Browser-Tab */
-  fuer: string;
+  /** Seitentitel im Browser-Tab, vor „| Stolz Marketing" */
+  seitentitel: string;
   eyebrow: string;
+  /** Eyebrow, wenn der Link ?fuer=<Name> trägt; {name} wird ersetzt.
+      Ohne diesen Eintrag bleibt die Eyebrow fest. */
+  eyebrowFuer?: string;
   titelVorn: string;
   titelKursiv: string;
   titelHinten: string;
   lead: string;
   videos: MappenVideo[];
   webseiten?: MappenWebseite[];
+  abschnitte: MappenAbschnitt[];
 }
 
 export interface MappenGruppe {
@@ -109,6 +116,118 @@ export const mappenKontakt = {
   rolle: 'Inhaber Stolz Marketing',
 };
 
+/* ---- Videos, einmal gepflegt und in mehreren Mappen verwendet ---- */
+
+/* SAAN Wasserstrahltechnik: eine Kampagne, drei Videos. Die Zahl
+   („zehn neue Mitarbeiter in wenigen Wochen“) hat Iwo am 07.10.2026
+   bestätigt. */
+const saanVideos: MappenVideo[] = [
+  {
+    datei: 'SAAN-RecruitingAD-01.mp4',
+    kunde: 'SAAN Wasserstrahltechnik',
+    art: 'Recruiting',
+    gruppe: 'saan',
+    merkmal: 'Einstieg über Wünsche',
+    text: '„Du willst arbeiten? Du willst gutes Geld verdienen?“ Danach zeigt das Video, wo es hingeht: Brücken, Parkhäuser, Maschinen mit 3000 Bar.',
+  },
+  {
+    datei: 'SAAN-RecruitingAD-02.mp4',
+    kunde: 'SAAN Wasserstrahltechnik',
+    art: 'Recruiting',
+    gruppe: 'saan',
+    merkmal: 'Fakten statt Floskeln',
+    text: '„Wir suchen 10 neue Monteure“: Gehalt, Arbeitszeiten, Hotel und Frühstück stehen direkt im Video.',
+  },
+  {
+    datei: 'SAAN-RecruitingAD-03.mp4',
+    kunde: 'SAAN Wasserstrahltechnik',
+    art: 'Recruiting',
+    gruppe: 'saan',
+    merkmal: 'Die ausführliche Fassung',
+    text: '„Unzufrieden mit deinem aktuellen Job?“ Knapp 50 Sekunden für alle, die es genau wissen wollen: Einsatzorte, Arbeitszeiten, Hotel und Spesen.',
+  },
+];
+
+/* raum.Konzept: drei Fassungen derselben Recruiting-Anzeige als
+   A/B-Test-Vorführung */
+const raumKonzeptAbTest: MappenVideo[] = [
+  {
+    datei: 'raumKonzept-Recruiting-01.mp4',
+    kunde: 'raum.Konzept',
+    art: 'Recruiting',
+    gruppe: 'ab-test',
+    variante: 'Variante A',
+    merkmal: 'Einstieg über Empfehlung',
+    text: '„Du kennst jemanden …?“ spricht nicht den Maler an, sondern seine Freunde und Kollegen. Am Ende: Schick ihm dieses Video.',
+  },
+  {
+    datei: 'raumKonzept-Recruiting-02.mp4',
+    kunde: 'raum.Konzept',
+    art: 'Recruiting',
+    gruppe: 'ab-test',
+    variante: 'Variante B',
+    merkmal: 'Direkt an den Maler',
+    text: '„Du bist gelernter Maler …“ spricht die Fachkraft selbst an und zeigt mehr vom Arbeitsalltag auf der Baustelle.',
+  },
+  {
+    datei: 'raumKonzept-Recruiting-03.mp4',
+    kunde: 'raum.Konzept',
+    art: 'Recruiting',
+    gruppe: 'ab-test',
+    variante: 'Variante C',
+    merkmal: 'Die Kurzfassung',
+    text: 'Zehn Sekunden: Beruf, drei Gründe (cooles Team, Spaß, faire Bezahlung), Aufruf. Für alle, die schnell weiterscrollen.',
+  },
+];
+
+/* S-Tech Fahrzeugbau: drei Einstiege, eine Stelle. Hook 1 steht
+   bewusst hinten, Iwo findet ihn am schwächsten. */
+const stechVideos: MappenVideo[] = [
+  {
+    datei: 'S-Tech-Recruiting-Hook-3.mp4',
+    kunde: 'S-Tech Fahrzeugbau',
+    art: 'Recruiting',
+    gruppe: 'stech',
+    merkmal: 'Klare Ansage sofort',
+    text: '„Wir suchen Monteure für Kran-Sonderaufbauten“ steht in der ersten Sekunde im Bild. Wer gemeint ist, bleibt dran.',
+  },
+  {
+    datei: 'S-Tech-Recruiting-Hook-2.mp4',
+    kunde: 'S-Tech Fahrzeugbau',
+    art: 'Recruiting',
+    gruppe: 'stech',
+    merkmal: 'Frage statt Ansage',
+    text: '„Viel Technik im Blut?“ holt Mechaniker über ihr Interesse ab. Danach Kipper, Hydraulik, Feierabend mit dem Team und: bewerben ohne Papierkram.',
+  },
+  {
+    datei: 'S-Tech-Recruiting-Hook-1.mp4',
+    kunde: 'S-Tech Fahrzeugbau',
+    art: 'Recruiting',
+    gruppe: 'stech',
+    merkmal: 'Einstieg über Empfehlung',
+    text: '„Du kennst jemanden, der gerne schraubt?“ spricht Freunde und Kollegen an und zeigt dann den vielfältigen Arbeitsalltag im Betrieb.',
+  },
+];
+
+/* Kundengewinnung: raum.Konzept und DMK Bau. Die DMK-Zahl (über
+   100.000 Aufrufe) hat Iwo am 07.10.2026 bestätigt. */
+const kundengewinnungVideos: MappenVideo[] = [
+  {
+    datei: 'raumKonzept-Kundengewinnung-FugenlosesBad.mp4',
+    kunde: 'raum.Konzept',
+    art: 'Kundengewinnung',
+    merkmal: 'Erst der Wunsch, dann der Betrieb',
+    text: '„Sie träumen von einem fugenlosen Bad?“ Danach echte Projekte und ein zuverlässiger Ansprechpartner, der sich selbst vorstellt.',
+  },
+  {
+    datei: 'DMK-SM-01-5Handwerker_1.mp4',
+    kunde: 'DMK Bau',
+    art: 'Kundengewinnung',
+    merkmal: 'Alles aus einer Hand',
+    text: 'Renovierung ohne fünf verschiedene Handwerker: Das Video zeigt jeden Schritt auf der Baustelle. Über 100.000 Aufrufe in den ersten Wochen.',
+  },
+];
+
 export const mappen: Mappe[] = [
   {
     /* Für Lulay (06.10.2026). Iwo schickt den Link per Mail. Erst
@@ -118,103 +237,14 @@ export const mappen: Mappe[] = [
        wie auf der Social-Media-Seite (geliefert von Iwo). Die Merkmale
        beschreiben, was im Video zu sehen und zu lesen ist. */
     slug: 'lulay',
-    fuer: 'Lulay',
+    seitentitel: 'Für Lulay',
     eyebrow: 'Für Lulay zusammengestellt',
     titelVorn: 'Ein paar ',
     titelKursiv: 'Beispiele',
     titelHinten: ' aus unserer Arbeit.',
     lead: 'Videos für Recruiting und Kundengewinnung, gedreht direkt in den Betrieben, dazu ein paar unserer Webseiten. Klicken Sie auf ein Video, es startet mit Ton.',
-    videos: [
-      {
-        datei: 'SAAN-RecruitingAD-01.mp4',
-        kunde: 'SAAN Wasserstrahltechnik',
-        art: 'Recruiting',
-        gruppe: 'saan',
-        merkmal: 'Einstieg über Wünsche',
-        text: '„Du willst arbeiten? Du willst gutes Geld verdienen?“ Danach zeigt das Video, wo es hingeht: Brücken, Parkhäuser, Maschinen mit 3000 Bar.',
-      },
-      {
-        datei: 'SAAN-RecruitingAD-02.mp4',
-        kunde: 'SAAN Wasserstrahltechnik',
-        art: 'Recruiting',
-        gruppe: 'saan',
-        merkmal: 'Fakten statt Floskeln',
-        text: '„Wir suchen 10 neue Monteure“: Gehalt, Arbeitszeiten, Hotel und Frühstück stehen direkt im Video.',
-      },
-      {
-        datei: 'SAAN-RecruitingAD-03.mp4',
-        kunde: 'SAAN Wasserstrahltechnik',
-        art: 'Recruiting',
-        gruppe: 'saan',
-        merkmal: 'Die ausführliche Fassung',
-        text: '„Unzufrieden mit deinem aktuellen Job?“ Knapp 50 Sekunden für alle, die es genau wissen wollen: Einsatzorte, Arbeitszeiten, Hotel und Spesen.',
-      },
-      {
-        datei: 'S-Tech-Recruiting-Hook-3.mp4',
-        kunde: 'S-Tech Fahrzeugbau',
-        art: 'Recruiting',
-        gruppe: 'stech',
-        merkmal: 'Klare Ansage sofort',
-        text: '„Wir suchen Monteure für Kran-Sonderaufbauten“ steht in der ersten Sekunde im Bild. Wer gemeint ist, bleibt dran.',
-      },
-      {
-        datei: 'S-Tech-Recruiting-Hook-2.mp4',
-        kunde: 'S-Tech Fahrzeugbau',
-        art: 'Recruiting',
-        gruppe: 'stech',
-        merkmal: 'Frage statt Ansage',
-        text: '„Viel Technik im Blut?“ holt Mechaniker über ihr Interesse ab. Danach Kipper, Hydraulik, Feierabend mit dem Team und: bewerben ohne Papierkram.',
-      },
-      {
-        datei: 'S-Tech-Recruiting-Hook-1.mp4',
-        kunde: 'S-Tech Fahrzeugbau',
-        art: 'Recruiting',
-        gruppe: 'stech',
-        merkmal: 'Einstieg über Empfehlung',
-        text: '„Du kennst jemanden, der gerne schraubt?“ spricht Freunde und Kollegen an und zeigt dann den vielfältigen Arbeitsalltag im Betrieb.',
-      },
-      {
-        datei: 'raumKonzept-Recruiting-01.mp4',
-        kunde: 'raum.Konzept',
-        art: 'Recruiting',
-        gruppe: 'ab-test',
-        variante: 'Variante A',
-        merkmal: 'Einstieg über Empfehlung',
-        text: '„Du kennst jemanden …?“ spricht nicht den Maler an, sondern seine Freunde und Kollegen. Am Ende: Schick ihm dieses Video.',
-      },
-      {
-        datei: 'raumKonzept-Recruiting-02.mp4',
-        kunde: 'raum.Konzept',
-        art: 'Recruiting',
-        gruppe: 'ab-test',
-        variante: 'Variante B',
-        merkmal: 'Direkt an den Maler',
-        text: '„Du bist gelernter Maler …“ spricht die Fachkraft selbst an und zeigt mehr vom Arbeitsalltag auf der Baustelle.',
-      },
-      {
-        datei: 'raumKonzept-Recruiting-03.mp4',
-        kunde: 'raum.Konzept',
-        art: 'Recruiting',
-        gruppe: 'ab-test',
-        variante: 'Variante C',
-        merkmal: 'Die Kurzfassung',
-        text: 'Zehn Sekunden: Beruf, drei Gründe (cooles Team, Spaß, faire Bezahlung), Aufruf. Für alle, die schnell weiterscrollen.',
-      },
-      {
-        datei: 'raumKonzept-Kundengewinnung-FugenlosesBad.mp4',
-        kunde: 'raum.Konzept',
-        art: 'Kundengewinnung',
-        merkmal: 'Erst der Wunsch, dann der Betrieb',
-        text: '„Sie träumen von einem fugenlosen Bad?“ Danach echte Projekte und ein zuverlässiger Ansprechpartner, der sich selbst vorstellt.',
-      },
-      {
-        datei: 'DMK-SM-01-5Handwerker_1.mp4',
-        kunde: 'DMK Bau',
-        art: 'Kundengewinnung',
-        merkmal: 'Alles aus einer Hand',
-        text: 'Renovierung ohne fünf verschiedene Handwerker: Das Video zeigt jeden Schritt auf der Baustelle. Über 100.000 Aufrufe in den ersten Wochen.',
-      },
-    ],
+    videos: [...saanVideos, ...raumKonzeptAbTest, ...stechVideos, ...kundengewinnungVideos],
+    abschnitte: ['leistungen', 'simulator'],
     /* Die vier Webseiten, die Iwo Lulay in der Mail verlinkt hat
        (06.10.2026). Texte aus alle-projekte.ts und
        webdesign-bergstrasse.ts; GDM steht dort noch nicht, der Text
@@ -249,5 +279,23 @@ export const mappen: Mappe[] = [
         text: 'Neue Website mit klarer Positionierung für mehr Verkäufer-Anfragen.',
       },
     ],
+  },
+  {
+    /* Allgemeiner Recruiting-Einblick (08.10.2026), zuerst für Keil
+       Haus- und Gebäudetechnik. Nicht auf eine Firma zugeschnitten, damit
+       Iwo den Link mehreren Interessenten schicken kann; mit
+       ?fuer=<Name> steht der Name oben und in der Messung. Nur Recruiting:
+       die Videos, dazu die Vorauswahl („Aussortiert") und das
+       Bewerber-Cockpit von der Seite „Mitarbeiter gewinnen". */
+    slug: 'recruiting',
+    seitentitel: 'Einblick Recruiting',
+    eyebrow: 'Recruiting fürs Handwerk',
+    eyebrowFuer: 'Für {name} zusammengestellt',
+    titelVorn: 'Recruiting aus ',
+    titelKursiv: 'echten Betrieben',
+    titelHinten: '.',
+    lead: 'Videos, die wir für Handwerks- und Technikbetriebe gedreht haben. Darunter das Formular, das aussortiert, und unsere eigene Software, in der die Bewerbungen landen. Klicken Sie auf ein Video, es startet mit Ton.',
+    videos: [...saanVideos, ...raumKonzeptAbTest, ...stechVideos],
+    abschnitte: ['vorauswahl', 'cockpit'],
   },
 ];
