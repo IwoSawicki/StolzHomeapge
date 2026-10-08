@@ -19,7 +19,15 @@
      Darüberfahren eine stumme Vorschau; auf dem Handy nicht.
    - Klick öffnet einen <dialog> mit dem Video in groß, mit Ton und
      Steuerleiste. Pfeiltasten oder Knöpfe blättern weiter, Esc schließt.
-   - Laden: preload="none" überall. Ein Video lädt erst beim Abspielen. */
+   - Laden: preload="none" überall. Ein Video lädt erst beim Abspielen.
+
+   Messung (Umami, wie auf der ganzen Seite, cookielos): Damit Iwo sieht,
+   was sich der Empfänger angeschaut hat, zählt Umami zusätzlich einzelne
+   Ereignisse, jeweils mit dem Namen der Mappe: „Video geöffnet" und
+   „Video zu Ende" (mit Firma und Variante), „Webseite geöffnet",
+   „Projektseite geöffnet", „Simulator geöffnet", „Anruf" und „E-Mail".
+   Links über die data-umami-event-Attribute, die Videos im Skript. Umami
+   zählt nur auf der Produktionsdomain (data-domains im BaseLayout). */
 import { Image, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
@@ -186,6 +194,9 @@ const blaettern =
                       rel="noopener"
                       class="group block no-underline"
                       aria-label={`${seite.name}: ${w.knopfWebseite} (neues Fenster)`}
+                      data-umami-event="Webseite geöffnet"
+                      data-umami-event-mappe={mappe.slug}
+                      data-umami-event-webseite={seite.name}
                     >
                       <BrowserRahmen domain={seite.domain} radius="r12" class="transition-[box-shadow,translate] duration-300 group-hover:-translate-y-4 group-hover:shadow-ring-lime">
                         <Image
@@ -205,11 +216,11 @@ const blaettern =
                       <span class="text-14 leading-tight-body text-mint btn:text-16">{seite.text}</span>
                     </div>
                     <div class="flex flex-wrap gap-x-20 gap-y-8 text-15 font-bold">
-                      <a href={`https://${seite.domain}`} target="_blank" rel="noopener" class="text-paper underline decoration-lime-edge underline-offset-4 transition-colors hover:decoration-lime">
+                      <a href={`https://${seite.domain}`} target="_blank" rel="noopener" data-umami-event="Webseite geöffnet" data-umami-event-mappe={mappe.slug} data-umami-event-webseite={seite.name} class="text-paper underline decoration-lime-edge underline-offset-4 transition-colors hover:decoration-lime">
                         {w.knopfWebseite} <span aria-hidden="true">↗</span>
                       </a>
                       {seite.projektseite && (
-                        <a href={seite.projektseite} class="text-paper underline decoration-lime-edge underline-offset-4 transition-colors hover:decoration-lime">
+                        <a href={seite.projektseite} data-umami-event="Projektseite geöffnet" data-umami-event-mappe={mappe.slug} data-umami-event-webseite={seite.name} class="text-paper underline decoration-lime-edge underline-offset-4 transition-colors hover:decoration-lime">
                           {w.knopfProjekt} <span aria-hidden="true">→</span>
                         </a>
                       )}
@@ -249,6 +260,8 @@ const blaettern =
           </ul>
           <a
             href="/bewerbungs-simulator"
+            data-umami-event="Simulator geöffnet"
+            data-umami-event-mappe={mappe.slug}
             class="inline-flex h-56 items-center gap-8 rounded-full bg-lime px-20 text-15 font-bold whitespace-nowrap text-forest-deep no-underline shadow-glow transition-colors duration-200 hover:bg-lime-bright btn:px-28 btn:text-16"
           >
             {vorauswahl.simulatorKnopf}<span class="hidden text-18 hero:inline" aria-hidden="true">→</span>
@@ -275,12 +288,16 @@ const blaettern =
           <div class="mt-8 flex flex-wrap justify-center gap-12 btn:justify-start">
             <a
               href={kontakt.telefonLink}
+              data-umami-event="Anruf"
+              data-umami-event-mappe={mappe.slug}
               class="inline-flex h-56 items-center rounded-full bg-lime px-28 text-17 font-bold text-forest-deep no-underline shadow-glow transition-colors hover:bg-lime-bright"
             >
               {kontakt.telefonAnzeige}
             </a>
             <a
               href={`mailto:${kontakt.email}`}
+              data-umami-event="E-Mail"
+              data-umami-event-mappe={mappe.slug}
               class="inline-flex h-56 items-center rounded-full bg-paper px-28 text-17 font-bold text-ink no-underline ring-1 ring-line-strong transition-colors hover:bg-paper-hover"
             >
               {kontakt.email}
@@ -295,7 +312,7 @@ const blaettern =
   <dialog
     class="mappe-dialog fixed inset-0 m-0 h-full max-h-none w-full max-w-none overflow-y-auto border-0 bg-transparent p-0 text-paper"
     aria-label="Video"
-    data-mappe-dialog
+    data-mappe-dialog={mappe.slug}
   >
     <div class="flex min-h-full w-full flex-col items-center justify-center gap-16 px-16 pt-72 pb-24 btn:flex-row btn:gap-32 btn:px-page-x btn:py-64" data-mappe-flaeche>
       <video
@@ -359,6 +376,15 @@ const blaettern =
     text: string;
   }
 
+  /* Umami lädt per defer und nur auf der Produktionsdomain, kann also
+     fehlen */
+  const zaehlen = (ereignis: string, werte: Record<string, string>) => {
+    (window as unknown as { umami?: { track: (e: string, d: Record<string, string>) => void } }).umami?.track(
+      ereignis,
+      werte,
+    );
+  };
+
   const daten = document.querySelector<HTMLScriptElement>('[data-mappe-daten]');
   const dialog = document.querySelector<HTMLDialogElement>('[data-mappe-dialog]');
   const player = document.querySelector<HTMLVideoElement>('[data-mappe-player]');
@@ -367,6 +393,9 @@ const blaettern =
     const videos: Video[] = JSON.parse(daten.textContent ?? '[]');
     const feld = (name: string) => dialog.querySelector<HTMLElement>(`[data-mappe-${name}]`)!;
     let aktuell = 0;
+    const mappe = dialog.dataset.mappeDialog ?? '';
+    /* Mehrere Videos je Firma: Variante oder Merkmal macht sie unterscheidbar */
+    const bezeichnung = (v: Video) => `${v.kunde} · ${v.variante ?? v.merkmal}`;
 
     const zeigen = (i: number) => {
       aktuell = (i + videos.length) % videos.length;
@@ -380,7 +409,12 @@ const blaettern =
       feld('text').textContent = v.text;
       dialog.setAttribute('aria-label', `Video ${v.kunde}`);
       player.play().catch(() => {});
+      zaehlen('Video geöffnet', { mappe, video: bezeichnung(v) });
     };
+
+    player.addEventListener('ended', () => {
+      zaehlen('Video zu Ende', { mappe, video: bezeichnung(videos[aktuell]!) });
+    });
 
     /* Karten öffnen die Großansicht */
     document.querySelectorAll<HTMLButtonElement>('[data-mappe-oeffnen]').forEach((knopf) => {
